@@ -59,6 +59,19 @@ button{font-family:inherit}
 .grid.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
 
 .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+/* Khung cảnh báo dashboard */
+.alert-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.alert-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.alert-card .a-head{padding:10px 16px;color:#fff;font-weight:800;font-size:14px}
+.alert-card.a-red .a-head{background:linear-gradient(120deg,#c0392b,#e05252)}
+.alert-card.a-amber .a-head{background:linear-gradient(120deg,#c47b12,#f0ad1f)}
+.alert-card.a-blue .a-head{background:linear-gradient(120deg,#155bb5,#2f80ed)}
+.alert-card .a-body{padding:8px 16px;max-height:190px;overflow-y:auto}
+.alert-card .a-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed #eee;font-size:13px}
+.alert-card .a-row:last-child{border-bottom:none}
+.alert-card .a-empty{padding:12px 0;color:var(--muted);font-size:13px}
+.alert-card .a-total{display:flex;justify-content:space-between;padding:8px 0;font-weight:700;border-top:2px solid var(--border)}
+@media(max-width:900px){.alert-cards{grid-template-columns:1fr}}
 .kpi .k-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
 .kpi .k-value{font-size:20px;font-weight:800;margin-top:4px;color:var(--text)}
 .kpi .k-sub{font-size:12px;color:var(--muted);margin-top:2px}
@@ -171,6 +184,15 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 
 /* ========== MOBILE FIX (bổ sung) ========== */
 @media(max-width:900px){
+  /* Topbar gọn trên mobile: chỉ giữ nút menu + tiêu đề + avatar */
+  .userbox #globalSearch{display:none}
+  .userbox #userName, .userbox #userRole{display:none}
+  .topbar{gap:8px;padding:10px 12px}
+  .topbar h1{font-size:17px}
+  .topbar .crumb{display:none}
+  /* Đệm đáy tránh thanh điều hướng điện thoại che nội dung */
+  .content{padding-bottom:calc(24px + env(safe-area-inset-bottom, 0px))}
+  .footer{padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px))}
   /* Nút hamburger */
   .menu-toggle{display:flex !important;align-items:center;justify-content:center;
     width:44px;height:44px;border:none;background:var(--gold);color:#1a1d29;
@@ -519,6 +541,12 @@ function enterApp(){
 }
 
 /* ---------- Dashboard tổng — toàn bộ dự án ---------- */
+async function loadTongQuanChung(){
+  const box = $('tongQuanBox');
+  if (box) box.innerHTML = '<div class="empty">Đang tải dashboard...</div>';
+  const d = await safeApi('getTongQuan');
+  renderTongQuanChung(d);
+}
 function renderTongQuanChung(d){
   const box = $('tongQuanBox');
   if (!box) return;
@@ -637,16 +665,22 @@ function openProjectModal(){
     '<div class="f-group"><label>Mô tả</label><textarea id="npMoTa" rows="3"></textarea></div>' +
     '<div class="f-row"><div class="f-group"><label>Ngày bắt đầu</label><input id="npBd" type="date"></div>' +
     '<div class="f-group"><label>Ngày kết thúc</label><input id="npKt" type="date"></div></div>' +
-    '<div class="f-group"><label>Giá trị hợp đồng (đ)</label><input id="npGt" type="number" min="0" placeholder="VD: 5000000000"></div>',
+    '<div class="f-group"><label>Giá trị hợp đồng (VND)</label><input id="npGt" type="text" inputmode="numeric" placeholder="VD: 5.000.000.000"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Tạo dự án</button>');
   $('mCancel').onclick = closeModal;
+  // Format số tiền khi nhập: 5000000 -> 5.000.000
+  $('npGt').addEventListener('input', function(){
+    const num = this.value.replace(/\D/g, '');
+    this.value = num ? Number(num).toLocaleString('vi-VN') : '';
+  });
   $('mSave').onclick = async () => {
     const ma = $('npMa').value.trim(), ten = $('npTen').value.trim();
     if (!ma || !ten) { toast('Nhập mã và tên dự án.', 'error'); return; }
+    const gt = Number($('npGt').value.replace(/\D/g, '')) || 0;
     const d = await safeApi('createProject', { ma_du_an: ma, ten_du_an: ten,
       mo_ta: $('npMoTa').value.trim(), ngay_bat_dau: $('npBd').value, ngay_ket_thuc: $('npKt').value,
-      gia_tri_hop_dong: Number($('npGt').value) || 0 });
+      gia_tri_hop_dong: gt });
     if (d) { closeModal(); toast('Đã tạo dự án.', 'success'); loadProjects(); }
   };
 }
