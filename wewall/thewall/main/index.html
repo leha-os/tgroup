@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>The Wall — Quản lý Dự án Thi công</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -719,6 +720,7 @@ function goPageInner(page, params){
       '<input id="projSheetUrl" placeholder="Dán link Google Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">' +
       '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
       '<a class="btn btn-sm btn-primary'+(p.sheet_url?'':' hidden')+'" id="btnOpenSheet" target="_blank" href="'+esc(p.sheet_url||'')+'" style="text-decoration:none">Mở Sheet</a>' +
+      '<button class="btn btn-sm btn-gold'+(p.sheet_url?'':' hidden')+'" id="btnSyncSheet" title="Đọc Sheet và nạp dự trù vào app">Đồng bộ</button>' +
       '</div></div></div><div id="tab-'+tab+'"></div>';
     var bb = $('btnBack2');
     if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
@@ -727,10 +729,17 @@ function goPageInner(page, params){
     if (bs) bs.addEventListener('click', async function(){
       var r = await safeApi('setProjectSheet', { ma_du_an: p.ma_du_an, sheet_url: $('projSheetUrl').value.trim() });
       if (r) { p.sheet_url = r.sheet_url; toast('Đã lưu link Sheet.', 'success');
-        var bo = $('btnOpenSheet');
-        if (r.sheet_url) { bo.href = r.sheet_url; bo.classList.remove('hidden'); }
-        else bo.classList.add('hidden');
+        var bo = $('btnOpenSheet'), bsy = $('btnSyncSheet');
+        if (r.sheet_url) { bo.href = r.sheet_url; bo.classList.remove('hidden'); bsy.classList.remove('hidden'); }
+        else { bo.classList.add('hidden'); bsy.classList.add('hidden'); }
       }
+    });
+    // Đồng bộ: đọc Sheet → nạp dự trù
+    var by = $('btnSyncSheet');
+    if (by) by.addEventListener('click', async function(){
+      if (!confirm('Đọc Sheet đã link và tạo phiên bản dự trù mới từ dữ liệu Sheet?')) return;
+      var r = await safeApi('syncProjectSheet', { ma_du_an: p.ma_du_an });
+      if (r) { toast('Đã đồng bộ: ' + r.so_dong + ' dòng → phiên bản ' + r.phien_ban, 'success'); goPage(state.page, {project: p}); }
     });
     TAB_LOADERS[tab]();
     return;
@@ -2014,45 +2023,41 @@ function ngayFile(){
 }
 function xuatXlsChung(tenFile, tieuDe, headers, rows){
   try {
+    if (typeof XLSX === 'undefined') { toast('Chưa tải được thư viện Excel. Kiểm tra mạng.', 'error'); return; }
     const cfg = getConfig();
     const maDA = (state.project && state.project.ma_du_an) || 'duan';
     const tenDA = (state.project && state.project.ten_du_an) || '';
-    let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
-      '<head><meta charset="UTF-8"></head><body>' +
-      '<table><tr><td colspan="' + headers.length + '"><b>' + esc(cfg.coName) + '</b><br>' +
-      esc(cfg.coAddr) + '</td></tr></table>' +
-      '<h2 style="color:#a87b12">' + esc(tieuDe) + '</h2>' +
-      '<p>Dự án: ' + esc(maDA + (tenDA ? ' — ' + tenDA : '')) +
-      ' &nbsp;|&nbsp; Ngày xuất: ' + new Date().toLocaleDateString('vi-VN') + '</p>' +
-      '<table border="1" cellpadding="6"><thead><tr style="background:#f0ad1f;color:#1b1b1b">' +
-      headers.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr></thead><tbody>';
-    (rows || []).forEach(r => {
-      h += '<tr>' + r.map(c => '<td>' + esc(c == null ? '' : c) + '</td>').join('') + '</tr>';
+    const fileName = tenFile + '_' + maDA + '_' + ngayFile() + '.xlsx';
+    // Dựng sheet: header công ty + tiêu đề + bảng dữ liệu
+    const aoa = [];
+    aoa.push([cfg.coName]);
+    aoa.push([cfg.coAddr]);
+    aoa.push([]);
+    aoa.push([tieuDe]);
+    aoa.push(['Dự án: ' + maDA + (tenDA ? ' — ' + tenDA : ''), 'Ngày xuất: ' + new Date().toLocaleDateString('vi-VN')]);
+    aoa.push([]);
+    aoa.push(headers);
+    (rows || []).forEach(r => aoa.push(r.map(c => c == null ? '' : c)));
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    // Độ rộng cột tự động
+    const colW = headers.map((h, i) => {
+      let mx = String(h || '').length;
+      (rows || []).forEach(r => { const l = String(r[i] == null ? '' : r[i]).length; if (l > mx) mx = l; });
+      return { wch: Math.min(50, Math.max(12, mx + 2)) };
     });
-    h += '</tbody></table></body></html>';
-    const fileName = tenFile + '_' + maDA + '_' + ngayFile() + '.xls';
-    const blob = new Blob(["\ufeff" + h], { type: 'application/vnd.ms-excel' });
-    // Cách 1: blob URL (desktop)
-    try {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = fileName;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { try { URL.revokeObjectURL(url); } catch(e){} a.remove(); }, 3000);
-      toast('Đang tải file ' + fileName, 'success');
-    } catch(e2) {
-      // Cách 2: data URI fallback (mobile)
-      const reader = new FileReader();
-      reader.onload = function(){
-        const a = document.createElement('a');
-        a.href = reader.result; a.download = fileName;
-        document.body.appendChild(a); a.click();
-        setTimeout(() => a.remove(), 3000);
-      };
-      reader.readAsDataURL(blob);
-    }
+    ws['!cols'] = colW;
+    // Style header: nền vàng gold
+    const hr = 6; // dòng header (0-based)
+    headers.forEach((h, i) => {
+      const cell = XLSX.utils.encode_cell({r: hr, c: i});
+      if (ws[cell]) { ws[cell].s = { fill: { fgColor: { rgb: 'F0AD1F' } }, font: { bold: true, color: { rgb: '1B1B1B' } } }; }
+    });
+    // Tiêu đề công ty + tên báo cáo in đậm
+    [0, 3].forEach(r => { const cell = XLSX.utils.encode_cell({r: r, c: 0}); if (ws[cell]) ws[cell].s = { font: { bold: true, sz: 14 } }; });
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Du lieu');
+    XLSX.writeFile(wb, fileName);
+    toast('Đã xuất ' + fileName, 'success');
   } catch(e) {
     toast('Lỗi xuất Excel: ' + e.message, 'error');
   }
