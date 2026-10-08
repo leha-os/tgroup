@@ -375,36 +375,9 @@ async function init(){
   $('btnNewProject').addEventListener('click', openProjectModal);
   document.querySelectorAll('#tabBar .tab').forEach(b =>
     b.addEventListener('click', () => switchTab(b.dataset.tab)));
-  // Tạm bỏ đăng nhập: tự vào thẳng bằng admin
-  const tok = localStorage.getItem(LS_TOKEN);
-  if (tok) {
-    const d = await safeApi('verify');
-    if (d && d.user) {
-      state.user = d.user;
-      localStorage.setItem(LS_USER, JSON.stringify(d.user));
-      enterApp(); return;
-    }
-  }
-  try {
-    const d = await api('login', { username: 'admin', password: 'admin123' });
-    localStorage.setItem(LS_TOKEN, d.token);
-    localStorage.setItem(LS_USER, JSON.stringify(d.user));
-    state.user = d.user;
-    enterApp(); return;
-  } catch (e) {
-    $('loginStatus').textContent = 'Không tự vào được (sai mật khẩu admin?). Nhập tay:';
-    $('loginFallback').classList.remove('hidden');
-    $('btnLogin2').onclick = async () => {
-      try {
-        const d2 = await api('login', { username: $('lgUser').value.trim(), password: $('lgPass').value });
-        localStorage.setItem(LS_TOKEN, d2.token);
-        localStorage.setItem(LS_USER, JSON.stringify(d2.user));
-        state.user = d2.user;
-        enterApp();
-      } catch (e2) { toast(e2.message, 'error'); }
-    };
-  }
-  showScreen('screen-login');
+  // Tạm bỏ đăng nhập: vào thẳng, backend tự nhận admin
+  state.user = { username: 'admin', ho_ten: 'Quản trị viên', vai_tro: 'Admin' };
+  enterApp();
 }
 function enterApp(){
   const lbl = state.user.ho_ten + ' (' + (ROLE_LABEL[R()] || R()) + ')';
