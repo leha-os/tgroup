@@ -18,6 +18,10 @@
   --green:#12805c; --green-bg:#ecfdf3; --amber:#b54708; --amber-bg:#fffaeb;
   --blue:#175cd3; --blue-bg:#eff8ff; --gray-bg:#f3f4f6;
   --sidebar:#1a1d29;
+  /* Tông nâu-đen hiện đại */
+  --head-bg:linear-gradient(135deg,#1a1410 0%,#2d2118 50%,#1a1410 100%);
+  --head-accent:#f0ad1f;
+  --tab-active:linear-gradient(135deg,#f0ad1f,#e09a0a);
 }
 body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
 .hidden{display:none!important}
@@ -38,7 +42,9 @@ button{font-family:inherit}
 .nav-item.active{background:var(--gold);color:#1b1b1b;font-weight:700}
 .nav-item.active .ic{opacity:1}
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:40}
+.topbar{background:var(--head-bg);border-bottom:2px solid var(--head-accent);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:40;color:#fff}
+.topbar h1{color:#fff}
+.topbar .crumb{color:#d4c4a8}
 .topbar h1{font-size:17px;font-weight:700}
 .topbar .crumb{font-size:12.5px;color:var(--muted)}
 .topbar .userbox{display:flex;align-items:center;gap:10px;font-size:13px}
@@ -377,12 +383,14 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
   .menu-toggle{display:none!important}
   .sidebar{display:none!important}
   .content{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
-  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:205;background:var(--card);
-    border-top:1px solid var(--border);padding:6px 4px calc(8px + env(safe-area-inset-bottom,0px));
-    box-shadow:0 -4px 18px rgba(0,0,0,.08)}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:205;background:var(--head-bg);
+    border-top:2px solid var(--head-accent);padding:6px 4px calc(8px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -4px 18px rgba(0,0,0,.25)}
   .tabbar .tb-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;
-    font-size:10.5px;font-weight:600;color:var(--muted);cursor:pointer;padding:6px 2px;font-family:inherit}
+    font-size:10.5px;font-weight:600;color:#a89880;cursor:pointer;padding:6px 2px;font-family:inherit}
   .tabbar .tb-item .ic{font-size:20px;font-style:normal;line-height:1}
+  .tabbar .tb-item.active{color:var(--gold)}
+  .tabbar .tb-item.active .ic{filter:drop-shadow(0 0 6px rgba(240,173,31,.6))}
   .tabbar .tb-item.active{color:var(--gold-dark)}
   #toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 }
@@ -2802,6 +2810,51 @@ function closeSheet(){
   if (s) s.classList.remove('show');
   if (o) o.classList.remove('show');
 }
+
+/* Refresh trang hiện tại (dùng cho kéo-refresh) */
+function refreshCurrentPage(){
+  _apiCache = {};
+  if (state.page === 'dashboard') { loadTongQuanChung(); loadProjectsInto('dashProjWrap'); }
+  else goPage(state.page, {project: state.project});
+}
+/* Công nghệ mới: rung phản hồi + kéo refresh + thanh tiến trình */
+function buzz(ms){ try { if (navigator.vibrate) navigator.vibrate(ms || 10); } catch(e){} }
+document.addEventListener('click', function(e){
+  if (e.target.closest('.btn, .tb-item, .nav-item')) buzz(8);
+}, {passive:true});
+// Thanh tiến trình trên cùng khi tải
+(function(){
+  const bar = document.createElement('div');
+  bar.id = 'loadBar';
+  bar.style.cssText = 'position:fixed;top:0;left:0;height:3px;width:0;z-index:9999;background:linear-gradient(90deg,#f0ad1f,#ffd76a);transition:width .3s,opacity .4s;box-shadow:0 0 8px rgba(240,173,31,.7)';
+  document.body.appendChild(bar);
+  let t;
+  window._loadStart = function(){ bar.style.opacity='1'; bar.style.width='30%';
+    clearTimeout(t); t=setTimeout(()=>bar.style.width='75%', 800); };
+  window._loadDone = function(){ bar.style.width='100%'; clearTimeout(t);
+    setTimeout(()=>{ bar.style.opacity='0'; setTimeout(()=>bar.style.width='0',400); }, 250); };
+})();
+// Bọc safeApi để hiện thanh tiến trình
+const _safeApi = safeApi;
+safeApi = async function(action, params){
+  window._loadStart();
+  try { return await _safeApi(action, params); }
+  finally { window._loadDone(); }
+};
+// Kéo xuống để refresh (mobile)
+(function(){
+  let startY = 0, pulling = false;
+  const content = document.getElementById('content');
+  if (!content) return;
+  content.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, {passive:true});
+  content.addEventListener('touchmove', e => {
+    if (content.scrollTop === 0 && e.touches[0].clientY - startY > 90 && !pulling) {
+      pulling = true; buzz(20);
+      if (typeof refreshCurrentPage === 'function') refreshCurrentPage();
+      setTimeout(()=>pulling=false, 1500);
+    }
+  }, {passive:true});
+})();
 
 </script>
 </body>
