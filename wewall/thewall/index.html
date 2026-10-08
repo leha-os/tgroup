@@ -54,11 +54,18 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Aria
 .card .desc{color:var(--muted);font-size:13px;margin-bottom:16px}
 .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}
 .card-head h2{margin:0}
-/* ---------- Tabs ---------- */
-.tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto}
-.tab{padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
-.tab:hover{color:var(--text)}
-.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+/* ---------- Sidebar ---------- */
+.layout{display:flex;gap:20px;align-items:flex-start}
+.tabs{background:linear-gradient(180deg,#242424,#101010);padding:14px 10px;display:flex;flex-direction:column;gap:2px;min-width:220px;position:sticky;top:76px;border-radius:10px;flex-shrink:0}
+.nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#a08c5a;padding:12px 12px 6px;text-transform:uppercase}
+.nav-label:first-child{padding-top:2px}
+.tab{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13.5px;font-weight:500;color:#cfc8b4;cursor:pointer;border-left:3px solid transparent;white-space:nowrap;background:none;border-top:none;border-right:none;border-bottom:none;font-family:inherit;text-align:left;width:100%;border-radius:8px}
+.tab .ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.07);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-style:normal}
+.tab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.tab.active{color:#fff;border-left-color:var(--gold);background:rgba(240,173,31,.16);font-weight:700}
+.tab.active .ico{background:var(--gold);color:#1b1b1b}
+.tabpanes{flex:1;min-width:0}
+@media(max-width:768px){.layout{flex-direction:column}.tabs{position:static;min-width:0;width:100%;flex-direction:row;overflow-x:auto;padding:8px}.tab{border-left:none;border-bottom:3px solid transparent;white-space:nowrap;width:auto}.nav-label{display:none}.tab .ico{display:none}}
 /* ---------- KPI cards ---------- */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px}
@@ -190,7 +197,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 <!-- ============ MÀN HÌNH 2: DANH SÁCH DỰ ÁN ============ -->
 <div id="screen-projects" class="screen hidden">
   <div class="topbar">
-    <div class="brand">Quản lý Dự án Thi công<small id="roleLabel"></small></div>
+    <div class="brand"><img id="topLogo" alt="The Wall" style="height:36px;width:auto;margin-right:10px;vertical-align:middle">Quản lý Dự án Thi công<small id="roleLabel"></small></div>
     <div class="userbox">
       <span id="userLabel"></span>
       <button class="btn btn-ghost btn-sm" id="btnPass">Đổi mật khẩu</button>
@@ -215,7 +222,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 <!-- ============ MÀN HÌNH 3: CHI TIẾT DỰ ÁN ============ -->
 <div id="screen-detail" class="screen hidden">
   <div class="topbar">
-    <div class="brand">Quản lý Dự án Thi công<small id="roleLabel2"></small></div>
+    <div class="brand"><img id="topLogo2" alt="The Wall" style="height:36px;width:auto;margin-right:10px;vertical-align:middle">Quản lý Dự án Thi công<small id="roleLabel2"></small></div>
     <div class="userbox">
       <span id="userLabel2"></span>
       <button class="btn btn-ghost btn-sm" id="btnPass2">Đổi mật khẩu</button>
@@ -231,19 +238,24 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
       </div>
     </div>
   </div>
-  <div class="tabs" id="tabBar" style="margin-top:16px">
-    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan">Tổng quan</button>
-    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru">Dự trù/Định mức</button>
-    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang">Mua hàng/Chi phí</button>
-    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh">Phát sinh</button>
-    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo">Tiến độ</button>
-    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet">Phê duyệt</button>
-    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan">Thanh toán</button>
-    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao">Báo cáo</button>
-    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu">Lịch sử</button>
-    <button class="tab hidden" data-tab="admin" id="tabbtn-admin">Quản trị</button>
+  <div class="container layout">
+  <div class="tabs" id="tabBar">
+    <div class="nav-label">Quản lý</div>
+    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
+    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
+    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
+    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
+    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
+    <div class="nav-label">Phê duyệt & Thanh toán</div>
+    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
+    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">₫</i>Thanh toán</button>
+    <div class="nav-label">Báo cáo</div>
+    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
+    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
+    <div class="nav-label">Hệ thống</div>
+    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Quản trị</button>
   </div>
-  <div class="container">
+  <div class="tabpanes">
     <div id="tab-tongquan" class="tabpane hidden"></div>
     <div id="tab-dutru" class="tabpane hidden"></div>
     <div id="tab-muahang" class="tabpane hidden"></div>
@@ -254,6 +266,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
     <div id="tab-baocao" class="tabpane hidden"></div>
     <div id="tab-lichsu" class="tabpane hidden"></div>
     <div id="tab-admin" class="tabpane hidden"></div>
+  </div>
   </div>
 </div>
 
@@ -290,6 +303,8 @@ const TT_TD = { chua_bat_dau:['Chưa bắt đầu','b-gray'], dang_lam:['Đang l
   hoan_thanh:['Hoàn thành','b-green'] };
 const TT_TT = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'],
   tu_choi:['Từ chối','b-red'], da_chi:['Đã chi','b-blue'] };
+const TT_DA = { dang_lam:['Đang làm','b-blue'], tam_dung:['Tạm dừng','b-amber'],
+  hoan_thanh:['Hoàn thành','b-green'], huy:['Đã hủy','b-red'] };
 
 /* ---------- Tiện ích ---------- */
 const $ = id => document.getElementById(id);
@@ -353,7 +368,11 @@ function logout(){
 
 /* ---------- Đăng nhập ---------- */
 async function init(){
-  if (typeof LOGO_BT !== 'undefined') $('loginLogo').src = LOGO_BT;
+  if (typeof LOGO_BT !== 'undefined') {
+    $('loginLogo').src = LOGO_BT;
+    if ($('topLogo')) $('topLogo').src = LOGO_BT;
+    if ($('topLogo2')) $('topLogo2').src = LOGO_BT;
+  }
   if (API_URL.indexOf('DÁN_URL') !== -1) $('apiWarn').classList.remove('hidden');
   $('loginForm').addEventListener('submit', doLogin);
   $('btnLogout').addEventListener('click', logout);
@@ -457,7 +476,7 @@ async function loadProjects(){
   $('projectRows').innerHTML = state.projects.map(p =>
     '<tr><td><b>' + esc(p.ma_du_an) + '</b></td><td>' + esc(p.ten_du_an) + '</td>' +
     '<td>' + esc(p.ngay_bat_dau || '') + '</td><td>' + esc(p.ngay_ket_thuc || '') + '</td>' +
-    '<td>' + esc(p.trang_thai || '') + '</td>' +
+    '<td>' + badge(p.trang_thai || 'dang_lam', TT_DA) + '</td>' +
     '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>'
   ).join('');
   $('projectRows').querySelectorAll('button').forEach(b =>
@@ -491,7 +510,7 @@ function openProject(ma){
   state.project = p;
   $('projName').textContent = p.ma_du_an + ' — ' + p.ten_du_an;
   $('projMeta').textContent = (p.ngay_bat_dau || '') + ' → ' + (p.ngay_ket_thuc || '') +
-    (p.trang_thai ? ' · ' + p.trang_thai : '');
+    (p.trang_thai ? ' · ' + ((TT_DA[p.trang_thai] || [p.trang_thai])[0]) : '');
   // Ẩn/hiện tab theo vai trò
   $('tabbtn-tongquan').classList.toggle('hidden', false);
   $('tabbtn-dutru').classList.toggle('hidden', false);
@@ -582,7 +601,7 @@ async function loadTongQuan(){
       '<td class="num">' + fmt(it.con_lai) + '</td>' +
       '<td class="num ' + (Number(it.vuot) > 0 ? 'text-red' : '') + '">' + fmt(it.vuot) + '</td></tr>';
   });
-  html += '</tbody></table></div><div class="desc mt8"> </div></div>';
+  html += '</tbody></table></div><div class="desc mt8">Công thức: Định mức = dự trù gốc + phát sinh đã duyệt. Còn lại = Định mức − Đã cam kết − Đã chi. Dòng đỏ = vượt ngân sách.</div></div>';
   el.innerHTML = html;
 }
 
