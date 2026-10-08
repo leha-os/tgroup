@@ -88,7 +88,10 @@ body{font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-ser
 /* ---------- Sidebar ---------- */
 .layout{display:flex;gap:20px;align-items:flex-start}
 .tabs{width:244px;background:linear-gradient(180deg,var(--sidebar1),var(--sidebar2));color:#d8d2c2;flex-shrink:0;
-  padding:16px 10px;position:sticky;top:60px;max-height:calc(100vh - 60px);overflow-y:auto;display:flex;flex-direction:column;border-radius:10px}
+  padding:16px 10px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.app{display:flex;min-height:100vh}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.main .topbar{position:sticky;top:0}
 .nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#a08c5a;padding:12px 12px 6px;text-transform:uppercase}
 .side-logo{display:flex;align-items:center;gap:10px;padding:2px 12px 14px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
 .side-logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
@@ -110,11 +113,11 @@ body{font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-ser
 .tabpanes{flex:1;min-width:0}
 @media(max-width:1100px){.tabs{width:210px}}
 @media(max-width:768px){
-  .layout{flex-direction:column}
-  .tabs{position:static;width:100%;max-height:none;flex-direction:row;overflow-x:auto;padding:8px;align-items:center}
+  .app{flex-direction:column}
+  .tabs{position:static;width:100%;height:auto;flex-direction:row;overflow-x:auto;padding:8px;align-items:center}
   .tab{border-left:none;border-bottom:3px solid transparent;white-space:nowrap;width:auto;margin:0 2px;flex-shrink:0}
   .tab.active{border-bottom-color:var(--gold)}
-  .nav-label,.side-foot{display:none}
+  .nav-label,.side-foot,.side-logo{display:none}
   .tab .ico{display:none}
 }
 /* ---------- KPI cards ---------- */
@@ -285,6 +288,14 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
 
 <!-- ============ MÀN HÌNH 2: DANH SÁCH DỰ ÁN ============ -->
 <div id="screen-projects" class="screen hidden">
+  <div class="app">
+  <aside class="tabs">
+    <div class="side-logo"><img id="sideLogoP" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
+    <div class="nav-label">Menu</div>
+    <button class="tab active"><i class="ico">◈</i>Dashboard</button>
+    <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
+  </aside>
+  <div class="main">
   <header class="topbar">
     <div class="brand">
       <img class="brand-logo" id="topLogo" alt="The Wall">
@@ -314,10 +325,32 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
       </table></div>
     </div>
   </div>
+  </div>
+  </div>
 </div>
 
 <!-- ============ MÀN HÌNH 3: CHI TIẾT DỰ ÁN ============ -->
 <div id="screen-detail" class="screen hidden">
+  <div class="app">
+  <aside class="tabs" id="tabBar">
+    <div class="side-logo"><img id="sideLogo" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
+    <div class="nav-label">Quản lý</div>
+    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
+    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
+    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
+    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
+    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
+    <div class="nav-label">Phê duyệt & Thanh toán</div>
+    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
+    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">₫</i>Thanh toán</button>
+    <div class="nav-label">Báo cáo</div>
+    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
+    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
+    <div class="nav-label">Hệ thống</div>
+    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Quản trị</button>
+    <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
+  </aside>
+  <div class="main">
   <header class="topbar">
     <div class="brand">
       <img class="brand-logo" id="topLogo2" alt="The Wall">
@@ -343,25 +376,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
       </div>
     </div>
   </div>
-  <div class="container layout">
-  <div class="tabs" id="tabBar">
-    <div class="side-logo"><img id="sideLogo" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
-    <div class="nav-label">Quản lý</div>
-    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
-    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
-    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
-    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
-    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
-    <div class="nav-label">Phê duyệt & Thanh toán</div>
-    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
-    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">₫</i>Thanh toán</button>
-    <div class="nav-label">Báo cáo</div>
-    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
-    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
-    <div class="nav-label">Hệ thống</div>
-    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Quản trị</button>
-    <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
-  </div>
   <div class="tabpanes">
     <div id="tab-tongquan" class="tabpane hidden"></div>
     <div id="tab-dutru" class="tabpane hidden"></div>
@@ -373,6 +387,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
     <div id="tab-baocao" class="tabpane hidden"></div>
     <div id="tab-lichsu" class="tabpane hidden"></div>
     <div id="tab-admin" class="tabpane hidden"></div>
+  </div>
   </div>
   </div>
 </div>
@@ -480,6 +495,7 @@ async function init(){
     if ($('topLogo')) $('topLogo').src = LOGO_BT;
     if ($('topLogo2')) $('topLogo2').src = LOGO_BT;
     if ($('sideLogo')) $('sideLogo').src = LOGO_BT;
+    if ($('sideLogoP')) $('sideLogoP').src = LOGO_BT;
   }
   // Ô tìm kiếm trên topbar: lọc danh sách dự án
   ['globalSearch', 'globalSearch2'].forEach(function(id){
