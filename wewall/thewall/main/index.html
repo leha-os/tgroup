@@ -90,6 +90,13 @@ body{font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-ser
 .tabs{width:244px;background:linear-gradient(180deg,var(--sidebar1),var(--sidebar2));color:#d8d2c2;flex-shrink:0;
   padding:16px 10px;position:sticky;top:60px;max-height:calc(100vh - 60px);overflow-y:auto;display:flex;flex-direction:column;border-radius:10px}
 .nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#a08c5a;padding:12px 12px 6px;text-transform:uppercase}
+.side-logo{display:flex;align-items:center;gap:10px;padding:2px 12px 14px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
+.side-logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
+.side-logo b{color:#fff;font-size:14px;display:block;line-height:1.2}
+.side-logo small{font-size:11px;color:#a08c5a}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f6c445,#eaa91f);color:#1b1b1b;font-weight:800;font-size:15px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.page-title{font-size:16px;font-weight:800}
+.page-crumb{font-size:12px;color:var(--muted)}
 .nav-label:first-child{padding-top:2px}
 .tab{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;margin:2px 0;
   background:none;border:none;border-radius:8px;color:#cfc8b4;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left;
@@ -152,6 +159,25 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
 .progress{height:8px;background:#ece5d2;border-radius:4px;overflow:hidden;min-width:90px}
 .progress > div{display:block;height:100%;background:linear-gradient(90deg,#eaa91f,#f6c445);border-radius:4px}
 .progress.red > div{background:var(--red)}
+/* ---------- Dashboard giàu (MISA style) ---------- */
+.kpi .k-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600}
+.alert-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.alert-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.alert-card .a-head{padding:10px 16px;color:#fff;font-weight:800;font-size:14px}
+.alert-card.a-red .a-head{background:linear-gradient(120deg,#c0392b,#e05252)}
+.alert-card.a-amber .a-head{background:linear-gradient(120deg,#c47b12,#f0ad1f)}
+.alert-card.a-blue .a-head{background:linear-gradient(120deg,#155bb5,#2f80ed)}
+.alert-card .a-body{padding:8px 16px;max-height:190px;overflow-y:auto}
+.alert-card .a-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed #f0ebdd;font-size:13px}
+.alert-card .a-row:last-child{border-bottom:none}
+.alert-card .a-row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.alert-card .a-empty{color:var(--muted);font-size:13px;padding:8px 0}
+.alert-card .a-total{display:flex;justify-content:space-between;padding:9px 0 4px;font-weight:800;border-top:2px solid #f0ebdd;margin-top:4px;font-size:13.5px}
+.dash-time{text-align:right;color:var(--muted);font-size:12.5px;margin:10px 2px 0}
+.prog-cell{display:flex;align-items:center;gap:8px}
+.prog-cell .progress{flex:1}
+.prog-cell .pct{font-size:12px;color:var(--muted);min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:960px){.alert-cards{grid-template-columns:1fr}}
 /* ---------- Modal ---------- */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,12,5,.55);z-index:500;display:flex;
   align-items:center;justify-content:center;padding:16px;overflow-y:auto}
@@ -267,6 +293,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
       <span class="crumb">/ Danh sách dự án</span>
     </div>
     <div class="topbar-right">
+      <input id="globalSearch" placeholder="Tìm dự án..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:180px;background:#fffdf8">
+      <span class="avatar" id="avatarBox">A</span>
       <span class="uname" id="userLabel"></span>
       <span class="role-badge" id="roleLabel"></span>
       <button class="btn btn-sm" id="btnPass">Đổi mật khẩu</button>
@@ -298,6 +326,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
       <span class="crumb">/ Chi tiết dự án</span>
     </div>
     <div class="topbar-right">
+      <input id="globalSearch2" placeholder="Tìm kiếm..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:180px;background:#fffdf8">
+      <span class="avatar" id="avatarBox2">A</span>
       <span class="uname" id="userLabel2"></span>
       <span class="role-badge" id="roleLabel2"></span>
       <button class="btn btn-sm" id="btnPass2">Đổi mật khẩu</button>
@@ -315,6 +345,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
   </div>
   <div class="container layout">
   <div class="tabs" id="tabBar">
+    <div class="side-logo"><img id="sideLogo" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
     <div class="nav-label">Quản lý</div>
     <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
     <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
@@ -448,7 +479,18 @@ async function init(){
   if (typeof LOGO_BT !== 'undefined') {
     if ($('topLogo')) $('topLogo').src = LOGO_BT;
     if ($('topLogo2')) $('topLogo2').src = LOGO_BT;
+    if ($('sideLogo')) $('sideLogo').src = LOGO_BT;
   }
+  // Ô tìm kiếm trên topbar: lọc danh sách dự án
+  ['globalSearch', 'globalSearch2'].forEach(function(id){
+    const inp = $(id);
+    if (inp) inp.addEventListener('input', function(){
+      const kw = inp.value.trim().toLowerCase();
+      document.querySelectorAll('#projectTableBody tr').forEach(function(tr){
+        tr.style.display = !kw || tr.textContent.toLowerCase().indexOf(kw) !== -1 ? '' : 'none';
+      });
+    });
+  });
   $('btnLogout').addEventListener('click', logout);
   $('btnLogout2').addEventListener('click', logout);
   $('btnPass').addEventListener('click', doiMatKhau);
@@ -466,6 +508,9 @@ function enterApp(){
   $('userLabel').textContent = lbl; $('userLabel2').textContent = lbl;
   $('roleLabel').textContent = ROLE_LABEL[R()] || R();
   $('roleLabel2').textContent = ROLE_LABEL[R()] || R();
+  const av = (state.user.ho_ten || 'A').trim().charAt(0).toUpperCase();
+  if ($('avatarBox')) $('avatarBox').textContent = av;
+  if ($('avatarBox2')) $('avatarBox2').textContent = av;
   showScreen('screen-projects');
   loadProjects();
 }
@@ -480,19 +525,59 @@ async function loadTongQuanChung(){
   const list = d.projects || d || [];
   if (!list.length) { box.innerHTML = ''; return; }
   const T = f => list.reduce((s, x) => s + Number(x[f] || 0), 0);
+  const nowStr = (() => {
+    const n = new Date(), p = v => String(v).padStart(2, '0');
+    return p(n.getHours()) + ':' + p(n.getMinutes()) + ' ' + p(n.getDate()) + '/' + p(n.getMonth() + 1) + '/' + n.getFullYear();
+  })();
+  const dm = T('tong_dinh_muc'), ck = T('tong_cam_ket'), chi = T('tong_da_chi'), cl = T('tong_con_lai');
+  const pct = v => dm > 0 ? Math.round(v / dm * 100) + '%' : '—';
+  const soVuot = list.filter(p => Number(p.tong_vuot) > 0).length;
+  const vuotList = list.filter(p => Number(p.tong_vuot) > 0);
+  const treList = list.filter(p => Number(p.so_viec_tre) > 0);
+  const choList = list.filter(p => Number(p.cho_duyet) > 0);
+
   let html = '<div class="card"><div class="card-head"><h2>Dashboard tổng — toàn bộ dự án</h2></div>';
+  // KPI giàu: số chính + dòng breakdown
   html += '<div class="kpis">' +
-    kpi('Tổng định mức', fmt(T('tong_dinh_muc')), 'k-blue', ' đ') +
-    kpi('Đã cam kết', fmt(T('tong_cam_ket')), '', ' đ') +
-    kpi('Đã chi', fmt(T('tong_da_chi')), '', ' đ') +
-    kpi('Còn lại', fmt(T('tong_con_lai')), 'k-green', ' đ') +
-    kpi('Vượt', fmt(T('tong_vuot')), 'k-red', ' đ') + '</div>';
+    kpiSub('Tổng định mức', fmt(dm), 'k-blue', ' đ', list.length + ' dự án') +
+    kpiSub('Đã cam kết', fmt(ck), '', ' đ', pct(ck) + ' định mức') +
+    kpiSub('Đã chi', fmt(chi), '', ' đ', pct(chi) + ' định mức') +
+    kpiSub('Còn lại', fmt(cl), 'k-green', ' đ', pct(cl) + ' định mức') +
+    kpiSub('Vượt', fmt(T('tong_vuot')), 'k-red', ' đ', soVuot + ' dự án cần xử lý') + '</div>';
+
+  // 3 alert cards header màu (MISA style)
+  html += '<div class="alert-cards">';
+  html += '<div class="alert-card a-red"><div class="a-head">Vượt ngân sách (' + vuotList.length + ')</div><div class="a-body">';
+  if (!vuotList.length) html += '<div class="a-empty">Không có dự án vượt.</div>';
+  vuotList.forEach(p => {
+    html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b class="text-red">' + fmt(p.tong_vuot) + '</b></div>';
+  });
+  if (vuotList.length) html += '<div class="a-total"><span>Tổng vượt</span><span class="text-red">' + fmt(T('tong_vuot')) + '</span></div>';
+  html += '</div></div>';
+  html += '<div class="alert-card a-amber"><div class="a-head">Việc trễ hạn (' + treList.length + ' dự án)</div><div class="a-body">';
+  if (!treList.length) html += '<div class="a-empty">Không có việc trễ.</div>';
+  treList.forEach(p => {
+    html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b class="text-red">' + Number(p.so_viec_tre) + ' việc</b></div>';
+  });
+  html += '</div></div>';
+  html += '<div class="alert-card a-blue"><div class="a-head">Chờ phê duyệt (' + choList.length + ' dự án)</div><div class="a-body">';
+  if (!choList.length) html += '<div class="a-empty">Không có hồ sơ chờ.</div>';
+  choList.forEach(p => {
+    html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b>' + Number(p.cho_duyet) + ' hồ sơ</b></div>';
+  });
+  html += '</div></div>';
+  html += '</div>';
+
+  // Bảng dự án + progress bar sử dụng ngân sách
   html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th>' +
     '<th class="num">Định mức</th><th class="num">Cam kết</th><th class="num">Đã chi</th>' +
-    '<th class="num">Còn lại</th><th class="num">Vượt</th><th class="num">Tiến độ</th>' +
-    '<th class="num">Việc trễ</th><th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
+    '<th class="num">Còn lại</th><th class="num">Vượt</th><th style="min-width:150px">Sử dụng ngân sách</th>' +
+    '<th class="num">Tiến độ</th><th class="num">Việc trễ</th><th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
   list.forEach(p => {
     const alert = Number(p.tong_vuot) > 0 || Number(p.so_viec_tre) > 0;
+    const dmP = Number(p.tong_dinh_muc) || 0;
+    const pctP = dmP > 0 ? Math.min(100, Math.round(Number(p.tong_da_chi) / dmP * 100)) : 0;
+    const over = dmP > 0 && Number(p.tong_da_chi) > dmP;
     html += '<tr' + (alert ? ' class="row-alert"' : '') + '>' +
       '<td><b>' + esc(p.ma_du_an) + '</b><br><span class="desc">' + esc(p.ten_du_an || '') + '</span></td>' +
       '<td class="num">' + fmt(p.tong_dinh_muc) + '</td>' +
@@ -500,12 +585,14 @@ async function loadTongQuanChung(){
       '<td class="num">' + fmt(p.tong_da_chi) + '</td>' +
       '<td class="num">' + fmt(p.tong_con_lai) + '</td>' +
       '<td class="num' + (Number(p.tong_vuot) > 0 ? ' text-red' : '') + '">' + fmt(p.tong_vuot) + '</td>' +
+      '<td><div class="prog-cell"><div class="progress' + (over ? ' red' : '') + '"><div style="width:' + pctP + '%"></div></div><span class="pct">' + pctP + '%</span></div></td>' +
       '<td class="num">' + (p.tien_do == null ? '—' : Number(p.tien_do).toFixed(0) + '%') + '</td>' +
       '<td class="num' + (Number(p.so_viec_tre) > 0 ? ' text-red' : '') + '">' + Number(p.so_viec_tre || 0) + '</td>' +
       '<td class="num">' + Number(p.cho_duyet || 0) + '</td>' +
       '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>';
   });
   html += '</tbody></table></div><div class="desc mt8">Dòng đỏ = vượt ngân sách hoặc có việc trễ hạn.</div></div>';
+  html += '<div class="dash-time">Số liệu tính đến: ' + nowStr + '</div>';
   box.innerHTML = html;
   box.querySelectorAll('button[data-ma]').forEach(b =>
     b.addEventListener('click', () => openProject(b.dataset.ma)));
@@ -578,11 +665,16 @@ function openProject(ma){
 const TAB_LOADERS = { tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
   phatsinh: loadPhatSinh, tiendo: loadTienDo, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
   baocao: loadBaoCao, lichsu: loadLichSu, admin: loadAdmin };
+const TAB_TITLES = { tongquan:'Tổng quan', dutru:'Dự trù/Định mức', muahang:'Mua hàng/Chi phí',
+  phatsinh:'Phát sinh', tiendo:'Tiến độ', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
+  baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Quản trị' };
 function switchTab(name){
   state.tab = name;
   document.querySelectorAll('#tabBar .tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
   Object.keys(TAB_LOADERS).forEach(t => $('tab-' + t).classList.add('hidden'));
   $('tab-' + name).classList.remove('hidden');
+  const crumb = document.querySelector('#screen-detail .crumb');
+  if (crumb) crumb.textContent = '/ ' + (TAB_TITLES[name] || '');
   TAB_LOADERS[name]();
 }
 
@@ -606,6 +698,11 @@ function kpi(label, val, cls, suffix){
   return '<div class="kpi ' + (cls || '') + '"><div class="k-label">' + esc(label) +
     '</div><div class="k-value">' + val + (suffix || '') + '</div></div>';
 }
+function kpiSub(label, val, cls, suffix, sub){
+  return '<div class="kpi ' + (cls || '') + '"><div class="k-label">' + esc(label) +
+    '</div><div class="k-value">' + val + (suffix || '') + '</div>' +
+    (sub ? '<div class="k-sub">' + esc(sub) + '</div>' : '') + '</div>';
+}
 async function loadTongQuan(){
   const el = $('tab-tongquan');
   el.innerHTML = '<div class="empty">Đang tải...</div>';
@@ -623,6 +720,28 @@ async function loadTongQuan(){
     kpi('Tổng tiến độ', (d.tong_tien_do == null ? '—' : Number(d.tong_tien_do).toFixed(0)), 'k-blue', '%') +
     '</div>';
 
+  // Card cảnh báo (chỉ hiện khi có vấn đề cần xử lý)
+  const tongCho = (cd.de_nghi || 0) + (cd.phat_sinh != null ? cd.phat_sinh : (d.phat_sinh_cho_duyet || 0)) + (cd.du_tru || 0);
+  const vuotHm = items.filter(it => Number(it.vuot) > 0);
+  if (vuotHm.length || treList.length || tongCho > 0) {
+    html += '<div class="alert-cards">';
+    if (vuotHm.length) {
+      html += '<div class="alert-card a-red"><div class="a-head">Vượt ngân sách (' + vuotHm.length + ' hạng mục)</div><div class="a-body">' +
+        vuotHm.map(it => '<div class="a-row"><span>' + esc(it.hang_muc) + '</span><b class="text-red">' + fmt(it.vuot) + '</b></div>').join('') + '</div></div>';
+    }
+    if (treList.length) {
+      html += '<div class="alert-card a-amber"><div class="a-head">Công việc trễ (' + treList.length + ')</div><div class="a-body">' +
+        treList.map(t => '<div class="a-row"><span>' + esc(typeof t === 'string' ? t : (t.hang_muc || t.cong_viec || '')) + '</span></div>').join('') + '</div></div>';
+    }
+    if (tongCho > 0) {
+      html += '<div class="alert-card a-blue"><div class="a-head">Chờ phê duyệt (' + tongCho + ')</div><div class="a-body">' +
+        '<div class="a-row"><span>Đề nghị mua/chi</span><b>' + (cd.de_nghi || 0) + '</b></div>' +
+        '<div class="a-row"><span>Phát sinh</span><b>' + (cd.phat_sinh != null ? cd.phat_sinh : (d.phat_sinh_cho_duyet || 0)) + '</b></div>' +
+        '<div class="a-row"><span>Dự trù</span><b>' + (cd.du_tru || 0) + '</b></div></div></div>';
+    }
+    html += '</div>';
+  }
+
   // Cảnh báo + chờ duyệt
   html += '<div class="card"><div class="card-head"><h2>Cảnh báo & chờ xử lý</h2></div><div class="stat-grid">';
   html += '<div class="stat-item">Đề nghị chờ duyệt<b>' + (cd.de_nghi || 0) + '</b></div>';
@@ -636,20 +755,25 @@ async function loadTongQuan(){
   }
   html += '</div>';
 
-  // Bảng theo hạng mục
+  // Bảng theo hạng mục (+ progress bar sử dụng ngân sách)
   html += '<div class="card"><div class="card-head"><h2>Chi tiết theo hạng mục</h2></div>' +
     '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
     '<th>Hạng mục</th><th class="num">Định mức</th><th class="num">Đã cam kết</th>' +
-    '<th class="num">Đã chi</th><th class="num">Còn lại</th><th class="num">Vượt</th></tr></thead><tbody>';
-  if (!items.length) html += '<tr><td colspan="6" class="empty">Chưa có dự trù được duyệt.</td></tr>';
+    '<th class="num">Đã chi</th><th class="num">Còn lại</th><th class="num">Vượt</th>' +
+    '<th style="min-width:150px">Sử dụng</th></tr></thead><tbody>';
+  if (!items.length) html += '<tr><td colspan="7" class="empty">Chưa có dự trù được duyệt.</td></tr>';
   items.forEach(it => {
+    const dmI = Number(it.dinh_muc) || 0;
+    const pctI = dmI > 0 ? Math.min(100, Math.round(Number(it.da_chi) / dmI * 100)) : 0;
+    const overI = dmI > 0 && Number(it.da_chi) > dmI;
     html += '<tr' + (Number(it.vuot) > 0 ? ' class="row-alert"' : '') + '>' +
       '<td><b>' + esc(it.hang_muc) + '</b></td>' +
       '<td class="num">' + fmt(it.dinh_muc) + '</td>' +
       '<td class="num">' + fmt(it.da_cam_ket) + '</td>' +
       '<td class="num">' + fmt(it.da_chi) + '</td>' +
       '<td class="num">' + fmt(it.con_lai) + '</td>' +
-      '<td class="num ' + (Number(it.vuot) > 0 ? 'text-red' : '') + '">' + fmt(it.vuot) + '</td></tr>';
+      '<td class="num ' + (Number(it.vuot) > 0 ? 'text-red' : '') + '">' + fmt(it.vuot) + '</td>' +
+      '<td><div class="prog-cell"><div class="progress' + (overI ? ' red' : '') + '"><div style="width:' + pctI + '%"></div></div><span class="pct">' + pctI + '%</span></div></td></tr>';
   });
   html += '</tbody></table></div><div class="desc mt8">Công thức: Định mức = dự trù gốc + phát sinh đã duyệt. Còn lại = Định mức − Đã cam kết − Đã chi. Dòng đỏ = vượt ngân sách.</div></div>';
   el.innerHTML = html;
