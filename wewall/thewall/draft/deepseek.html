@@ -19,7 +19,6 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;back
 a{color:var(--blue);text-decoration:none}
 button{font-family:inherit}
 
-/* ========== LAYOUT ========== */
 .app{display:flex;min-height:100vh}
 .sidebar{width:230px;background:var(--sidebar);color:#cbd5e1;flex-shrink:0;padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sidebar .logo{padding:0 18px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
@@ -50,7 +49,6 @@ button{font-family:inherit}
   .nav-item .ic{display:none}
 }
 
-/* ========== CARDS ========== */
 .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .card h2{font-size:15px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .card .desc{color:var(--muted);font-size:12.5px;margin-bottom:14px}
@@ -60,7 +58,6 @@ button{font-family:inherit}
 .grid.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .grid.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
 
-/* ========== KPI ========== */
 .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
 .kpi .k-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
 .kpi .k-value{font-size:20px;font-weight:800;margin-top:4px;color:var(--text)}
@@ -71,7 +68,6 @@ button{font-family:inherit}
 .kpi.k-gold .k-value{color:var(--gold-dark)}
 .kpi.k-amber .k-value{color:var(--amber)}
 
-/* ========== TABLE ========== */
 .tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border)}
 table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .tbl th{background:#f8fafc;text-align:left;padding:10px 12px;font-weight:700;color:#475569;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;border-bottom:1px solid var(--border)}
@@ -82,7 +78,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .tbl .actions{text-align:right;white-space:nowrap}
 .tbl .muted{color:var(--muted);font-size:12px}
 
-/* ========== BUTTON ========== */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid transparent;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
 .btn-primary{background:var(--gold);color:#1b1b1b}
 .btn-primary:hover{background:var(--gold-dark);color:#fff}
@@ -94,9 +89,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .btn-blue{background:var(--blue);color:#fff}
 .btn-sm{padding:5px 11px;font-size:12.5px;border-radius:6px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-icon{padding:7px 10px}
 
-/* ========== FORM ========== */
 .f-group{margin-bottom:12px}
 .f-group label{display:block;font-weight:600;font-size:12.5px;margin-bottom:5px;color:#374151}
 .f-group input,.f-group select,.f-group textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:#fff}
@@ -105,7 +98,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .f-row .f-group{flex:1}
 @media(max-width:640px){.f-row{flex-direction:column}}
 
-/* ========== BADGE ========== */
 .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .b-blue{background:var(--blue-bg);color:var(--blue)}
 .b-green{background:var(--green-bg);color:var(--green)}
@@ -114,13 +106,11 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .b-gray{background:var(--gray-bg);color:#475569}
 .b-gold{background:var(--gold-bg);color:var(--gold-dark)}
 
-/* ========== PROGRESS ========== */
 .prog{height:8px;background:var(--gray-bg);border-radius:999px;overflow:hidden;flex:1;min-width:80px}
 .prog > i{display:block;height:100%;background:var(--gold);border-radius:999px;transition:width .3s}
 .prog.red > i{background:var(--red)}
 .prog.green > i{background:var(--green)}
 
-/* ========== MODAL ========== */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;z-index:100;overflow-y:auto}
 .modal{background:#fff;border-radius:12px;width:760px;max-width:100%;box-shadow:0 20px 50px rgba(0,0,0,.25)}
 .modal-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
@@ -129,14 +119,13 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .modal-body{padding:20px 22px;max-height:65vh;overflow-y:auto}
 .modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 
-/* ========== TOAST ========== */
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .toast-msg{background:#0f172a;color:#fff;padding:11px 20px;border-radius:8px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw;animation:slideUp .25s}
 .toast-msg.error{background:#b42318}
 .toast-msg.success{background:#12805c}
+.toast-msg.info{background:#175cd3}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ========== MISC ========== */
 .empty{padding:32px;text-align:center;color:var(--muted);font-size:13px}
 .text-red{color:var(--red)!important;font-weight:700}
 .text-green{color:var(--green)!important;font-weight:700}
@@ -145,13 +134,11 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .chip{display:inline-flex;align-items:center;gap:4px;background:var(--gray-bg);padding:3px 10px;border-radius:999px;font-size:12px;color:#475569}
 .chip.gold{background:var(--gold-bg);color:var(--gold-dark)}
 
-/* ========== TABS ========== */
 .tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:16px;overflow-x:auto}
 .tab{padding:10px 14px;font-size:13.5px;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
 
-/* ========== PRINT ========== */
 #printRoot{display:none}
 .print-bar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:8px;z-index:60}
 .phieu-wrap{max-width:820px;margin:24px auto;background:#fff;padding:32px 42px;border:1px solid var(--border);font-family:"Times New Roman",Arial,sans-serif;color:#000;font-size:13px;line-height:1.5}
@@ -186,7 +173,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 <body>
 
 <div class="app">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="logo">
       <img id="logoImg" alt="TW">
@@ -195,7 +181,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
     <nav class="side-nav" id="sideNav"></nav>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
     <div class="topbar">
       <div>
@@ -227,7 +212,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 var API_URL = 'https://script.google.com/macros/s/AKfycbxKOHzq2PRcuXrsUymhl69NgY66byJTTwUzkxjdWQDZw4j25p-YIJABPwYi-J6IplDsuw/exec';
 var TOKEN = 'app-token-v1';
 
-/* Logo SVG tạm */
 var LOGO_BT = "data:image/svg+xml;charset=utf8," + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
   '<rect width="100" height="100" rx="12" fill="#1a1d29"/>' +
@@ -237,11 +221,9 @@ var LOGO_BT = "data:image/svg+xml;charset=utf8," + encodeURIComponent(
   '</svg>'
 );
 
-/* User cứng (sẽ thay bằng login sau) */
 var USER = { username:'admin', ho_ten:'Quản trị viên', vai_tro:'Admin', bo_phan:'Ban Giám đốc' };
 var ROLE_LABEL = { Admin:'Quản trị viên', QuanLy:'Quản lý dự án', MuaHang:'Mua hàng', KeToan:'Kế toán', Approver:'Người phê duyệt', Viewer:'Chỉ xem' };
 
-/* Hằng số */
 var TT_DA   = { dang_lam:['Đang làm','b-blue'], tam_dung:['Tạm dừng','b-amber'], hoan_thanh:['Hoàn thành','b-green'], huy:['Đã hủy','b-red'] };
 var TT_DT   = { nhap:['Nháp','b-gray'], cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã khóa','b-green'], khoa_luu:['Lưu trữ','b-gray'] };
 var TT_DN   = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã cam kết','b-blue'], da_chi:['Đã chi','b-green'], tu_choi:['Từ chối','b-red'] };
@@ -250,11 +232,151 @@ var TT_TD   = { chua_bat_dau:['Chưa bắt đầu','b-gray'], dang_lam:['Đang l
 var TT_TT   = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'], tu_choi:['Từ chối','b-red'], da_chi:['Đã chi','b-blue'] };
 var LOAI_DN = { mua_hang:'Mua hàng', thanh_toan:'Thanh toán', thue_thau:'Thuê thầu', nhan_cong:'Nhân công' };
 
-/* State */
 var state = {
   page: 'dashboard',
   projects: [], project: null, projectTab: 'tongquan',
   hangMucs: [], mhHienThi: [], ttHienThi: [], bcHienThi: []
+};
+
+/* =====================================================================
+   DỮ LIỆU MẪU — Dự án Mỹ Phú
+   ===================================================================== */
+var SEED_PROJECT = {
+  ma_du_an: 'BT26.06/TC.K',
+  ten_du_an: 'Dự án Mỹ Phú — Cải tạo mở rộng',
+  khach_hang: 'CĐT Mỹ Phú',
+  pm: 'Nguyễn Ngọc Hoàng Thái Bảo',
+  ngay_bat_dau: '2026-05-19',
+  ngay_ket_thuc: '2026-12-31',
+  gia_tri_hop_dong: 1250000000,
+  mo_ta: 'Cải tạo mở rộng — 11 hạng mục chính theo dự toán 19.05.2026',
+  items: [
+    // 1. ĐẬP PHÁ, THÁO DỠ
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Bao che bằng bạt sàn trong nhà, bọc hệ tủ, bàn và sofa', don_vi:'gói', so_luong:1, don_gia:3000000},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Bao che khu vực ngoài nhà và lắp dựng lối đi giàn giáo thi công', don_vi:'gói', so_luong:1, don_gia:0},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Cắt và tháo dỡ chỉ gạch thân cột và đầu cột để xây tường bao', don_vi:'cột', so_luong:4, don_gia:400000},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Cắt trần hiện trạng hành lang (3 lỗ 800x800)', don_vi:'lỗ', so_luong:3, don_gia:250000},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Đục nhám gạch hoàn thiện hiện trạng để cán nền và lát gỗ', don_vi:'m2', so_luong:33.3, don_gia:50000},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Đục len gạch, đá ngạch cửa và trám trét tô lại', don_vi:'md', so_luong:6.2, don_gia:30000},
+    {hang_muc:'Đập phá, tháo dỡ', vat_tu:'Vận chuyển rác, xà bần từ trên cao xuống', don_vi:'xe', so_luong:1, don_gia:2500000},
+
+    // 2. CẢI TẠO PHẦN THÔ
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Xây tường dày 200, vữa xi măng mác 75', don_vi:'gói', so_luong:1, don_gia:5000000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Đổ bê tông chân tường M200', don_vi:'gói', so_luong:1, don_gia:600000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Gia cố đầu cửa bằng Bê Tông', don_vi:'md', so_luong:13.6, don_gia:500000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Tô dạ cửa đi tường 200, cửa sổ M75', don_vi:'md', so_luong:11.9, don_gia:70000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Phần tô tường', don_vi:'gói', so_luong:1, don_gia:3000000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Phần cán nền vữa M75, từ 3-5cm', don_vi:'gói', so_luong:1, don_gia:3000000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Chỉ mặt cửa trong (RxC - 70x120)', don_vi:'md', so_luong:12.35, don_gia:250000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Chỉ mặt cửa ngoài (RxC - 120x150)', don_vi:'md', so_luong:10.15, don_gia:250000},
+    {hang_muc:'Cải tạo phần thô', vat_tu:'Chỉ mái composite làm mới cao 300', don_vi:'md', so_luong:8.6, don_gia:2700000},
+
+    // 3. VẬT TƯ PHẦN THÔ
+    {hang_muc:'Vật tư phần thô', vat_tu:'Đá 1x2', don_vi:'bao', so_luong:60, don_gia:35000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Cát', don_vi:'bao', so_luong:500, don_gia:22000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Xi măng', don_vi:'bao', so_luong:70, don_gia:95000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Gạch đinh', don_vi:'viên', so_luong:1000, don_gia:1850},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Gạch ống', don_vi:'viên', so_luong:1500, don_gia:1850},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Sika 731', don_vi:'bộ', so_luong:1, don_gia:340000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Ram set', don_vi:'bộ', so_luong:1, don_gia:780000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Xà gồ 40x80', don_vi:'cây', so_luong:15, don_gia:380000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Đinh', don_vi:'kg', so_luong:5, don_gia:40000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Sắt phi 10', don_vi:'cây', so_luong:12, don_gia:136000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Đai phi 6', don_vi:'kg', so_luong:30, don_gia:20000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Kẽm', don_vi:'kg', so_luong:10, don_gia:20000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Lưới tô tường', don_vi:'cuộn', so_luong:5, don_gia:60000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Xà bần + rác', don_vi:'xe', so_luong:5, don_gia:450000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Bạt', don_vi:'cuộn', so_luong:2, don_gia:1250000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Bao xà bần', don_vi:'bao', so_luong:200, don_gia:2500},
+    {hang_muc:'Vật tư phần thô', vat_tu:'PE', don_vi:'cây', so_luong:5, don_gia:120000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Màng PE che sơn', don_vi:'cây', so_luong:5, don_gia:50000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Lưỡi cắt gạch', don_vi:'cái', so_luong:5, don_gia:50000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Lưỡi cắt sắt', don_vi:'cái', so_luong:15, don_gia:5000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Băng keo + que hàn + thùng bê + thùng hồ + xẻng', don_vi:'gói', so_luong:1, don_gia:1500000},
+    {hang_muc:'Vật tư phần thô', vat_tu:'Giàn giáo + chéo + mâm & vận chuyển', don_vi:'gói', so_luong:1, don_gia:1200000},
+
+    // 4. HOÀN THIỆN - TRẦN
+    {hang_muc:'Hoàn thiện - Trần', vat_tu:'Trần gỗ Tần Bì 12x100-115x3000 lau sơn dầu Saicos', don_vi:'m2', so_luong:36, don_gia:3280000},
+    {hang_muc:'Hoàn thiện - Trần', vat_tu:'Chỉ trần gỗ 80*200 ghép theo thiết kế', don_vi:'md', so_luong:30, don_gia:1260000},
+    {hang_muc:'Hoàn thiện - Trần', vat_tu:'Lỗ thăm trần 600 x 600', don_vi:'cái', so_luong:1, don_gia:600000},
+
+    // 5. HOÀN THIỆN - TƯỜNG
+    {hang_muc:'Hoàn thiện - Tường', vat_tu:'Sơn nước trong nhà Jotun (lót + 2 lớp hoàn thiện)', don_vi:'m2', so_luong:70, don_gia:185714},
+    {hang_muc:'Hoàn thiện - Tường', vat_tu:'Sơn tường ngoài nhà Sơn đá HODASTONE', don_vi:'m2', so_luong:100, don_gia:480000},
+    {hang_muc:'Hoàn thiện - Tường', vat_tu:'Nhân công sơn tường', don_vi:'công', so_luong:3, don_gia:700000},
+    {hang_muc:'Hoàn thiện - Tường', vat_tu:'Sơn lót trắng Hòa Bình', don_vi:'thùng', so_luong:2, don_gia:800000},
+
+    // 6. HOÀN THIỆN - SÀN
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Sàn gỗ kỹ thuật Óc chó, tấm 2P (MRVN-WAL-C)', don_vi:'m2', so_luong:33, don_gia:5180000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Nhân công lắp đặt sàn gỗ', don_vi:'m2', so_luong:30, don_gia:120000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Tấm lót SIL Hero cách âm, cách ẩm (Aliminium foil 3mm)', don_vi:'m2', so_luong:30, don_gia:100000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Nẹp kết thúc T,F hợp kim đồng màu sàn', don_vi:'md', so_luong:8, don_gia:120000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Thảm trải sàn bảo vệ sau lắp đặt', don_vi:'m2', so_luong:1, don_gia:40000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Vận chuyển vật tư tới công trình', don_vi:'gói', so_luong:1, don_gia:3000000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Ốp ngạch đá xám nung kết dày 1.5cm', don_vi:'m2', so_luong:3.5, don_gia:1950000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Nẹp T20 viền inox (2.44m)', don_vi:'md', so_luong:4, don_gia:450000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Nhân công xử lý ron đá & bắn ron Saveto 2 thành phần', don_vi:'gói', so_luong:1, don_gia:6000000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Keo Saveto ngoài nhà', don_vi:'chai', so_luong:10, don_gia:240000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Vật tư phụ (súng bơm, bi cầu, sủi, cây cạo ron)', don_vi:'bộ', so_luong:2, don_gia:350000},
+    {hang_muc:'Hoàn thiện - Sàn', vat_tu:'Chỉ thạch cao', don_vi:'md', so_luong:4, don_gia:150000},
+
+    // 7. HOÀN THIỆN - KHÁC
+    {hang_muc:'Hoàn thiện - Khác', vat_tu:'Chi phí vệ sinh công trình (khu vực tầng 2)', don_vi:'gói', so_luong:1, don_gia:8000000},
+    {hang_muc:'Hoàn thiện - Khác', vat_tu:'Chi phí lobby làm việc với cơ quan chức năng', don_vi:'gói', so_luong:1, don_gia:15000000},
+
+    // 8. ĐIỆN NƯỚC + THIẾT BỊ
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Nhân công tháo dỡ đèn hắt tường, ổ cắm, phễu thoát sàn', don_vi:'gói', so_luong:1, don_gia:18000000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Cáp cấp nguồn chiếu sáng 1Cx2.5mm2 Cu/PVC Cadivi', don_vi:'m', so_luong:511, don_gia:12737},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Cáp cấp nguồn ổ cắm 1Cx4.0mm2 Cu/PVC Cadivi', don_vi:'m', so_luong:320, don_gia:19274},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ống luồn mềm D20 Vega', don_vi:'cuộn', so_luong:1, don_gia:135600},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ống điện D25 Vega', don_vi:'cây', so_luong:34, don_gia:18360},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ống điện D20 Vega', don_vi:'cây', so_luong:59, don_gia:27540},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Vật tư phụ (co, lơi, băng keo, nối...)', don_vi:'gói', so_luong:1, don_gia:500000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Cáp Cat 6 UTP AMP', don_vi:'m', so_luong:40, don_gia:22000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Thông tắc sàn Floor Cleanout CL110S', don_vi:'cái', so_luong:2, don_gia:550000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Công tắc ba 1 chiều Panasonic', don_vi:'bộ', so_luong:1, don_gia:200250},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ổ cắm đôi 3 chấu Panasonic', don_vi:'bộ', so_luong:7, don_gia:206250},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ổ cắm âm sàn Panasonic', don_vi:'bộ', so_luong:2, don_gia:1026000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Ổ cắm mạng âm sàn Panasonic', don_vi:'bộ', so_luong:1, don_gia:1182750},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'RCBO 2P 25A _LB63N 6kA (LS)', don_vi:'cái', so_luong:2, don_gia:437450},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'MCB 2P 25A _6kA (LS)', don_vi:'cái', so_luong:1, don_gia:437450},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'RCBO 2P 20A _LB63N 6kA (LS)', don_vi:'cái', so_luong:1, don_gia:437450},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Vật tư phụ, phụ kiện thi công', don_vi:'gói', so_luong:1, don_gia:500000},
+    {hang_muc:'Điện nước + Thiết bị', vat_tu:'Đèn DN301B P12 D110 WH - Philips OEM by LEDEE (16W)', don_vi:'cái', so_luong:12, don_gia:410000},
+
+    // 9. ĐIỆN LẠNH
+    {hang_muc:'Điện lạnh', vat_tu:'Điều hòa Daikin FTKF71ZVMV/RKF71ZVMV 7.1kW - Gas R32', don_vi:'bộ', so_luong:1, don_gia:25700000},
+    {hang_muc:'Điện lạnh', vat_tu:'Ống đồng Ø6.4 dày 0.71mm Hailiang', don_vi:'m', so_luong:15, don_gia:91000},
+    {hang_muc:'Điện lạnh', vat_tu:'Ống đồng Ø12.7 dày 0.71mm Hailiang', don_vi:'m', so_luong:15, don_gia:174000},
+    {hang_muc:'Điện lạnh', vat_tu:'Cách nhiệt Ø6.4 dày 19mm Superlon', don_vi:'m', so_luong:15, don_gia:20000},
+    {hang_muc:'Điện lạnh', vat_tu:'Cách nhiệt Ø12.7 dày 19mm Superlon', don_vi:'m', so_luong:15, don_gia:27000},
+    {hang_muc:'Điện lạnh', vat_tu:'Vật tư phụ (co, tê, nối, gas hàn, si...)', don_vi:'hệ', so_luong:1, don_gia:585000},
+    {hang_muc:'Điện lạnh', vat_tu:'Ống nước PVC Ø27 dày 1.9mm Bình Minh', don_vi:'m', so_luong:10, don_gia:30331},
+    {hang_muc:'Điện lạnh', vat_tu:'Ống nước PVC Ø34 dày 1.9mm Bình Minh', don_vi:'m', so_luong:10, don_gia:39006},
+    {hang_muc:'Điện lạnh', vat_tu:'Cách nhiệt ống nước PVC Ø27 dày 13mm', don_vi:'m', so_luong:10, don_gia:31636},
+    {hang_muc:'Điện lạnh', vat_tu:'Cách nhiệt ống nước PVC Ø34 dày 13mm', don_vi:'m', so_luong:10, don_gia:36345},
+    {hang_muc:'Điện lạnh', vat_tu:'Vật tư phụ nước ngưng (co, lơi, tê, si...)', don_vi:'hệ', so_luong:1, don_gia:385000},
+    {hang_muc:'Điện lạnh', vat_tu:'Dây điện điều khiển 3Cx2.5 + 1Cx2.5 Cadivi', don_vi:'m', so_luong:17, don_gia:79000},
+    {hang_muc:'Điện lạnh', vat_tu:'Cáp nguồn dàn nóng 2x1Cx2.5+E2.5 Cadivi', don_vi:'m', so_luong:15, don_gia:73000},
+    {hang_muc:'Điện lạnh', vat_tu:'Vật tư phụ điện (hộp box, nối, tắc kê)', don_vi:'hệ', so_luong:1, don_gia:195000},
+    {hang_muc:'Điện lạnh', vat_tu:'Gas R32 nạp thêm', don_vi:'kg', so_luong:1, don_gia:510300},
+    {hang_muc:'Điện lạnh', vat_tu:'Nito thử xì, đuổi gió', don_vi:'chai', so_luong:1, don_gia:1275750},
+    {hang_muc:'Điện lạnh', vat_tu:'Chân đế đỡ giàn nóng cục bộ', don_vi:'cái', so_luong:1, don_gia:787000},
+    {hang_muc:'Điện lạnh', vat_tu:'Chi phí khoan rút lõi, cắt đục trám trét, vệ sinh', don_vi:'hệ', so_luong:1, don_gia:1000000},
+
+    // 10. CỬA NHÔM KÍNH (đã chiết khấu 15%)
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Cửa đi lùa 4 cánh D1 - WE PLUS - Kính 11.14mm solar (2700x2100)', don_vi:'bộ', so_luong:1, don_gia:29286257},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Cửa đi lùa 4 cánh D2 - WE PLUS - Kính 11.14mm solar (3100x2100)', don_vi:'bộ', so_luong:1, don_gia:32098724},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Cửa đi lùa 4 cánh D3 - WE PLUS - Kính 11.14mm solar (2700x2100)', don_vi:'bộ', so_luong:1, don_gia:29286257},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Cửa đi slim lùa ray treo 4 cánh DS5 - IN16 - Kính 8mm (3000x2196)', don_vi:'bộ', so_luong:1, don_gia:43002057},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Lưới côn trùng LD1 - WE Common (2700x2100)', don_vi:'bộ', so_luong:1, don_gia:4850590},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Lưới côn trùng LD2 - WE Common (3100x2100)', don_vi:'bộ', so_luong:1, don_gia:5006257},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Lưới côn trùng LD3 - WE Common (2700x2100)', don_vi:'bộ', so_luong:1, don_gia:4850590},
+    {hang_muc:'Cửa nhôm kính', vat_tu:'Chi phí tháo cửa hiện tại và lắp đặt lại', don_vi:'gói', so_luong:1, don_gia:6000000},
+
+    // 11. KHÓA CỬA
+    {hang_muc:'Khóa cửa', vat_tu:'Khóa cửa (phát sinh sau)', don_vi:'gói', so_luong:1, don_gia:8700000}
+  ]
 };
 
 /* =====================================================================
@@ -276,7 +398,7 @@ function toast(msg, type){
   t.className = 'toast-msg' + (type?' '+type:'');
   t.textContent = msg;
   $('toast').appendChild(t);
-  setTimeout(function(){ t.remove(); }, 3200);
+  setTimeout(function(){ t.remove(); }, 3500);
 }
 
 /* =====================================================================
@@ -295,7 +417,7 @@ function api(action, params){
       return j.data;
     })
     .catch(function(e){
-      if (e.message && e.message.indexOf('Lỗi') !== 0 && e.message.indexOf('Không') !== 0) {
+      if (e.message && e.message.indexOf('Lỗi') !== 0 && e.message.indexOf('Không') !== 0 && e.message.indexOf('Sai') !== 0) {
         throw new Error('Không kết nối được máy chủ. Kiểm tra API_URL và deploy.');
       }
       throw e;
@@ -306,7 +428,7 @@ function safeApi(action, params){
 }
 
 /* =====================================================================
-   MENU ĐIỀU HƯỚNG
+   MENU
    ===================================================================== */
 var MENU = [
   { group: 'Quản lý', items: [
@@ -353,7 +475,7 @@ function renderMenu(){
    ===================================================================== */
 function goPage(page, params){
   state.page = page;
-  state.project = params && params.project ? params.project : state.project;
+  if (params && params.project) state.project = params.project;
   renderMenu();
 
   var titles = {
@@ -376,8 +498,19 @@ function goPage(page, params){
 }
 
 /* =====================================================================
-   TRANG: DASHBOARD
+   DASHBOARD
    ===================================================================== */
+function kpi(label, val, cls, suffix, sub){
+  return '<div class="kpi k-'+cls+'"><div class="k-label">'+esc(label)+'</div>'+
+    '<div class="k-value">'+val+' '+(suffix||'')+'</div>'+
+    (sub?'<div class="k-sub">'+esc(sub)+'</div>':'')+'</div>';
+}
+function statBox(label, val, color){
+  var cls = color==='red' ? 'text-red' : '';
+  return '<div class="kpi"><div class="k-label">'+esc(label)+'</div>'+
+    '<div class="k-value '+cls+'">'+val+'</div></div>';
+}
+
 function renderDashboard(){
   var c = $('content');
   c.innerHTML = '<div class="empty">Đang tải dashboard...</div>';
@@ -394,9 +527,12 @@ function renderDashboard(){
       '</div>';
 
     html += '<div class="card"><div class="card-head"><h2>Chi tiết theo dự án</h2>' +
-      '<button class="btn btn-primary btn-sm" onclick="openProjectModal()">+ Dự án mới</button></div>';
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<button class="btn btn-ghost btn-sm" id="btnSeed">📥 Nạp dự án mẫu Mỹ Phú</button>' +
+      '<button class="btn btn-primary btn-sm" onclick="openProjectModal()">+ Dự án mới</button>' +
+      '</div></div>';
     if (!list.length) {
-      html += '<div class="empty">Chưa có dự án nào. Bấm "+ Dự án mới" để bắt đầu.</div>';
+      html += '<div class="empty">Chưa có dự án nào. Bấm "📥 Nạp dự án mẫu" để có dữ liệu test ngay, hoặc "+ Dự án mới" để tạo thủ công.</div>';
     } else {
       html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
         '<th>Mã DA</th><th>Tên dự án</th><th class="num">Định mức</th><th class="num">Cam kết</th>' +
@@ -420,6 +556,10 @@ function renderDashboard(){
     }
     html += '</div>';
     c.innerHTML = html;
+
+    var bs = $('btnSeed');
+    if (bs) bs.addEventListener('click', seedProject);
+
     c.querySelectorAll('button[data-open]').forEach(function(b){
       b.addEventListener('click', function(){
         var p = state.projects.find(function(x){ return x.ma_du_an===b.dataset.open; });
@@ -429,14 +569,46 @@ function renderDashboard(){
     });
   });
 }
-function kpi(label, val, cls, suffix, sub){
-  return '<div class="kpi k-'+cls+'"><div class="k-label">'+esc(label)+'</div>'+
-    '<div class="k-value">'+val+' '+(suffix||'')+'</div>'+
-    (sub?'<div class="k-sub">'+esc(sub)+'</div>':'')+'</div>';
+
+/* =====================================================================
+   NẠP DỮ LIỆU MẪU
+   ===================================================================== */
+function seedProject(){
+  if (!confirm('Nạp dự án mẫu "Mỹ Phú — Cải tạo mở rộng"?\n\nSẽ tạo dự án + ' + SEED_PROJECT.items.length + ' dòng dự trù.\n\nTiếp tục?')) return;
+  var btn = $('btnSeed');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Đang nạp...'; }
+  toast('Bước 1/2: Tạo dự án...', 'info');
+
+  safeApi('createProject', {
+    ma_du_an: SEED_PROJECT.ma_du_an,
+    ten_du_an: SEED_PROJECT.ten_du_an,
+    khach_hang: SEED_PROJECT.khach_hang,
+    pm: SEED_PROJECT.pm,
+    ngay_bat_dau: SEED_PROJECT.ngay_bat_dau,
+    ngay_ket_thuc: SEED_PROJECT.ngay_ket_thuc,
+    gia_tri_hop_dong: SEED_PROJECT.gia_tri_hop_dong,
+    mo_ta: SEED_PROJECT.mo_ta
+  }).then(function(r){
+    if (!r) { if (btn) { btn.disabled = false; btn.textContent = '📥 Nạp dự án mẫu Mỹ Phú'; } return; }
+    toast('Bước 2/2: Tạo ' + SEED_PROJECT.items.length + ' dòng dự trù...', 'info');
+    return safeApi('saveDuTru', {
+      ma_du_an: SEED_PROJECT.ma_du_an,
+      items: SEED_PROJECT.items
+    }).then(function(r2){
+      if (btn) { btn.disabled = false; btn.textContent = '📥 Nạp dự án mẫu Mỹ Phú'; }
+      if (r2) {
+        toast('✅ Đã nạp xong dự án Mỹ Phú (' + SEED_PROJECT.items.length + ' dòng)!', 'success');
+        safeApi('listProjects').then(function(d){
+          if (d) state.projects = d.projects || d || [];
+        });
+        goPage('dashboard');
+      }
+    });
+  });
 }
 
 /* =====================================================================
-   TRANG: DỰ ÁN
+   DỰ ÁN
    ===================================================================== */
 function renderProjects(){
   var c = $('content');
@@ -528,9 +700,9 @@ function renderProjectDetail(){
   loadProjectTab(state.projectTab || 'tongquan');
 }
 
-/* --------- Sub-tabs trong dự án --------- */
 function loadProjectTab(tab){
   var el = $('prjTabBody');
+  if (!el) return;
   el.innerHTML = '<div class="empty">Đang tải...</div>';
   var fns = {
     tongquan: ptTongQuan, dutru: ptDuTru, muahang: ptMuaHang,
@@ -540,10 +712,25 @@ function loadProjectTab(tab){
   (fns[tab] || ptTongQuan)(el);
 }
 
-/* ----- TAB CON: TỔNG QUAN ----- */
+/* ----- TỔNG QUAN ----- */
 function ptTongQuan(el){
   safeApi('getDashboard', { ma_du_an: state.project.ma_du_an }).then(function(d){
-    if (!d) return;
+    if (!d) {
+      // Fallback: tính từ dự trù nếu backend chưa có getDashboard
+      safeApi('getDuTru', {ma_du_an: state.project.ma_du_an}).then(function(dt){
+        if (!dt) { el.innerHTML='<div class="empty">Không tải được dữ liệu.</div>'; return; }
+        var active = dt.active;
+        var tong = active && active.items ? active.items.reduce(function(s,i){return s+Number(i.thanh_tien||0);},0) : 0;
+        el.innerHTML = '<div class="grid g4" style="margin-bottom:16px">'+
+          kpi('Định mức', fmt(tong), 'gold', 'đ')+
+          kpi('Cam kết', '0', 'blue', 'đ')+
+          kpi('Đã chi', '0', 'green', 'đ')+
+          kpi('Còn lại', fmt(tong), 'blue', 'đ')+
+          '</div>'+
+          '<div class="card"><h2>Chưa có dữ liệu chi tiết</h2><div class="desc">Tạo đề nghị mua hàng và duyệt để có số liệu cam kết/đã chi.</div></div>';
+      });
+      return;
+    }
     d = d || {};
     var cd = d.cho_duyet || {};
     var html = '<div class="grid g4" style="margin-bottom:16px">'+
@@ -554,14 +741,13 @@ function ptTongQuan(el){
       kpi('Vượt',      fmt(d.tong_vuot), 'red', 'đ')+
       kpi('Tiến độ',   (d.tong_tien_do==null?'—':Number(d.tong_tien_do).toFixed(0))+'%', 'gold', '')+
       '</div>';
-    html += '<div class="card"><h2>Cảnh báo & chờ xử lý</h2><div class="desc">Các mục cần bạn chú ý ngay</div>'+
+    html += '<div class="card"><h2>Cảnh báo & chờ xử lý</h2><div class="desc">Các mục cần chú ý</div>'+
       '<div class="grid g4">'+
       statBox('Đề nghị chờ duyệt', cd.de_nghi||0, 'amber')+
       statBox('Phát sinh chờ duyệt', cd.phat_sinh||0, 'amber')+
       statBox('Dự trù chờ duyệt', cd.du_tru||0, 'amber')+
       statBox('Công việc trễ', (d.hang_muc_tre||[]).length, 'red')+
       '</div></div>';
-
     var items = d.items || [];
     if (items.length) {
       html += '<div class="card"><h2>Chi tiết theo hạng mục</h2>'+
@@ -582,13 +768,8 @@ function ptTongQuan(el){
     el.innerHTML = html;
   });
 }
-function statBox(label, val, color){
-  var cls = color==='red' ? 'text-red' : color==='amber' ? '' : '';
-  return '<div class="kpi"><div class="k-label">'+esc(label)+'</div>'+
-    '<div class="k-value '+cls+'">'+val+'</div></div>';
-}
 
-/* ----- TAB CON: DỰ TRÙ ----- */
+/* ----- DỰ TRÙ ----- */
 function ptDuTru(el){
   safeApi('getDuTru', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -634,7 +815,7 @@ function ptDuTru(el){
     el.innerHTML = html;
     $('btnNewDT').onclick = function(){ openDraftModal(active ? active.items : []); };
     var bx = $('btnXlsDT');
-    if (bx) bx.onclick = function(){
+    if (bx && active && active.items) bx.onclick = function(){
       xls('dutru', 'Dự trù — '+state.project.ma_du_an,
         ['Hạng mục','Vật tư/CV','ĐVT','SL','Đơn giá','Thành tiền'],
         active.items.map(function(it){return [it.hang_muc, it.vat_tu||'', it.don_vi||'', it.so_luong, it.don_gia, it.thanh_tien];}));
@@ -655,10 +836,11 @@ function ptDuTru(el){
     });
   });
 }
+
 function openDraftModal(pre){
   var rows = pre && pre.length ? pre : [{hang_muc:'',vat_tu:'',don_vi:'',so_luong:'',don_gia:''}];
   openModal('Tạo bản nháp dự trù',
-    '<div class="desc">Điền hạng mục → vật tư → ĐVT → SL → đơn giá. Hệ thống tự tính thành tiền.</div>'+
+    '<div class="desc">Điền hạng mục → vật tư → ĐVT → SL → đơn giá.</div>'+
     '<div id="draftRows"></div>'+
     '<button class="btn btn-ghost btn-sm" id="dtAdd">+ Thêm dòng</button>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>'+
@@ -700,7 +882,7 @@ function openDraftModal(pre){
   };
 }
 
-/* ----- TAB CON: MUA HÀNG ----- */
+/* ----- MUA HÀNG ----- */
 function ptMuaHang(el){
   safeApi('listDeNghi', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -781,6 +963,7 @@ function ptMuaHang(el){
     };
   });
 }
+
 function openDeNghiModal(){
   var dl = state.hangMucs.map(function(h){return '<option value="'+esc(h)+'">';}).join('');
   openModal('Tạo đề nghị mua hàng / chi phí',
@@ -834,7 +1017,7 @@ function openDeNghiModal(){
   };
 }
 
-/* ----- TAB CON: PHÁT SINH ----- */
+/* ----- PHÁT SINH ----- */
 function ptPhatSinh(el){
   safeApi('listPhatSinh', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -880,6 +1063,7 @@ function ptPhatSinh(el){
     });
   });
 }
+
 function openPhatSinhModal(){
   var dl = state.hangMucs.map(function(h){return '<option value="'+esc(h)+'">';}).join('');
   openModal('Tạo phát sinh',
@@ -897,7 +1081,7 @@ function openPhatSinhModal(){
   };
 }
 
-/* ----- TAB CON: TIẾN ĐỘ ----- */
+/* ----- TIẾN ĐỘ ----- */
 function ptTienDo(el){
   safeApi('getTienDo', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -938,6 +1122,7 @@ function ptTienDo(el){
     };
   });
 }
+
 function openTienDoModal(list){
   var rows = list && list.length ? list : [{hang_muc:'',cong_viec:'',nguoi_phu_trach:'',ngay_bat_dau:'',ngay_ket_thuc:'',phan_tram:0}];
   openModal('Cập nhật tiến độ',
@@ -986,7 +1171,7 @@ function openTienDoModal(list){
   };
 }
 
-/* ----- TAB CON: PHÊ DUYỆT ----- */
+/* ----- PHÊ DUYỆT ----- */
 function ptPheDuyet(el){
   safeApi('getApprovalInbox', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -1079,7 +1264,7 @@ function ptPheDuyet(el){
   });
 }
 
-/* ----- TAB CON: THANH TOÁN ----- */
+/* ----- THANH TOÁN ----- */
 function ptThanhToan(el){
   safeApi('listThanhToan', { ma_du_an: state.project.ma_du_an }).then(function(d){
     if (!d) return;
@@ -1088,7 +1273,7 @@ function ptThanhToan(el){
       '<div style="display:flex;gap:6px">' +
       '<button class="btn btn-primary btn-sm" id="btnNewTT">+ Tạo phiếu</button>' +
       '<button class="btn btn-ghost btn-sm" id="btnXlsTT">Excel</button></div></div>';
-    if (!list.length) html += '<div class="empty">Chưa có phiếu. Tạo đề nghị → duyệt → tạo phiếu thanh toán.</div>';
+    if (!list.length) html += '<div class="empty">Chưa có phiếu. Vào tab Mua hàng → duyệt đề nghị → tạo phiếu TT.</div>';
     else {
       html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
         '<th>Mã phiếu</th><th>Nội dung</th><th>Hạng mục</th><th class="num">Số tiền</th>' +
@@ -1142,11 +1327,12 @@ function ptThanhToan(el){
     });
   });
 }
+
 function openThanhToanModal(deNghiId){
   safeApi('listDeNghi', {ma_du_an:state.project.ma_du_an, trang_thai:'da_duyet'}).then(function(d){
     if (!d) return;
     var dns = d.list || d || [];
-    if (!dns.length) { toast('Chưa có khoản chi nào đã duyệt.','error'); return; }
+    if (!dns.length) { toast('Chưa có khoản chi nào đã duyệt. Vào Mua hàng duyệt trước.','error'); return; }
     openModal('Tạo phiếu thanh toán',
       '<div class="f-group"><label>Khoản chi đã duyệt *</label><select id="ttDn">' +
       dns.map(function(x){
@@ -1188,7 +1374,7 @@ function openThanhToanModal(deNghiId){
   });
 }
 
-/* ----- TAB CON: BÁO CÁO ----- */
+/* ----- BÁO CÁO ----- */
 function ptBaoCao(el){
   var hms = state.hangMucs;
   el.innerHTML = '<div class="card"><div class="card-head"><h2>Báo cáo đề nghị</h2></div>' +
@@ -1246,7 +1432,7 @@ function ptBaoCao(el){
   };
 }
 
-/* ----- TAB CON: LỊCH SỬ ----- */
+/* ----- LỊCH SỬ ----- */
 function ptLichSu(el){
   safeApi('getLichSu', { ma_du_an: state.project.ma_du_an, gioi_han: 200 }).then(function(d){
     if (!d) return;
@@ -1294,6 +1480,7 @@ function docSoTien(n){
   var s = p.join(' ');
   return s.charAt(0).toUpperCase()+s.slice(1)+' đồng';
 }
+
 function inPhieuDNTT(id){
   safeApi('getPhieuDNTT', {id:id}).then(function(d){
     if (!d) return;
@@ -1377,188 +1564,4 @@ function xuatPhieuXls(d){
   a.click();
 }
 
-/* =====================================================================
-   TRANG: DỰ TRÙ / CHI PHÍ / PHÁT SINH / TIẾN ĐỘ / PHÊ DUYỆT / THANH TOÁN / BÁO CÁO / LỊCH SỬ
-   — Nếu chưa chọn dự án → yêu cầu chọn
-   ===================================================================== */
-function needProject(){
-  if (!state.project) {
-    $('content').innerHTML = '<div class="card"><h2>Cần chọn dự án</h2>' +
-      '<div class="desc">Vào menu <b>Dự án</b> để chọn 1 dự án cần làm việc.</div>' +
-      '<button class="btn btn-primary" onclick="goPage(\'projects\')">→ Đi tới Dự án</button></div>';
-    return true;
-  }
-  return false;
-}
-function renderBudget(){ if(needProject())return; renderProjectDetail(); state.projectTab='dutru'; loadProjectTab('dutru'); }
-function renderCost(){ if(needProject())return; renderProjectDetail(); state.projectTab='muahang'; loadProjectTab('muahang'); }
-function renderVariation(){ if(needProject())return; renderProjectDetail(); state.projectTab='phatsinh'; loadProjectTab('phatsinh'); }
-function renderProgress(){ if(needProject())return; renderProjectDetail(); state.projectTab='tiendo'; loadProjectTab('tiendo'); }
-function renderApproval(){ if(needProject())return; renderProjectDetail(); state.projectTab='pheduyet'; loadProjectTab('pheduyet'); }
-function renderPayment(){ if(needProject())return; renderProjectDetail(); state.projectTab='thanhtoan'; loadProjectTab('thanhtoan'); }
-function renderReports(){ if(needProject())return; renderProjectDetail(); state.projectTab='baocao'; loadProjectTab('baocao'); }
-function renderHistory(){ if(needProject())return; renderProjectDetail(); state.projectTab='lichsu'; loadProjectTab('lichsu'); }
-
-/* =====================================================================
-   TRANG: NGƯỜI DÙNG
-   ===================================================================== */
-function renderUsers(){
-  var c = $('content');
-  c.innerHTML = '<div class="empty">Đang tải...</div>';
-  safeApi('listUsers').then(function(d){
-    if (!d) { c.innerHTML = '<div class="card"><h2>Người dùng</h2><div class="empty">Không tải được danh sách.</div></div>'; return; }
-    var list = d.users || d || [];
-    var html = '<div class="card"><div class="card-head"><h2>Người dùng ('+list.length+')</h2>' +
-      '<button class="btn btn-primary btn-sm" id="btnNewUser">+ Thêm</button></div>' +
-      '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
-      '<th>Username</th><th>Họ tên</th><th>Vai trò</th><th>Bộ phận</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
-    if (!list.length) html += '<tr><td colspan="6" class="empty">Chưa có user.</td></tr>';
-    list.forEach(function(u){
-      var locked = u.trang_thai !== 'active';
-      html += '<tr><td><b>'+esc(u.username)+'</b></td>' +
-        '<td>'+esc(u.ho_ten||'')+'</td>' +
-        '<td>'+esc(ROLE_LABEL[u.vai_tro]||u.vai_tro||'')+'</td>' +
-        '<td>'+esc(u.bo_phan||'')+'</td>' +
-        '<td>'+(locked?'<span class="badge b-red">Khóa</span>':'<span class="badge b-green">Hoạt động</span>')+'</td>' +
-        '<td class="actions"><button class="btn btn-ghost btn-sm" data-lock="'+esc(u.username)+'" data-tt="'+(locked?'active':'locked')+'">'+
-          (locked?'Mở khóa':'Khóa')+'</button></td></tr>';
-    });
-    html += '</tbody></table></div></div>';
-    c.innerHTML = html;
-    $('btnNewUser').onclick = openUserModal;
-    c.querySelectorAll('button[data-lock]').forEach(function(b){
-      b.addEventListener('click', function(){
-        safeApi('setUserStatus', {username:b.dataset.lock, trang_thai:b.dataset.tt})
-          .then(function(r){ if(r){toast('Đã cập nhật.','success'); renderUsers();} });
-      });
-    });
-  });
-}
-function openUserModal(){
-  openModal('Tạo người dùng',
-    '<div class="f-row">' +
-    '<div class="f-group"><label>Username *</label><input id="nuUser"></div>' +
-    '<div class="f-group"><label>Mật khẩu *</label><input id="nuPass" type="password"></div></div>' +
-    '<div class="f-row">' +
-    '<div class="f-group"><label>Họ tên *</label><input id="nuName"></div>' +
-    '<div class="f-group"><label>Vai trò *</label><select id="nuRole">' +
-    Object.keys(ROLE_LABEL).map(function(k){return '<option value="'+k+'">'+ROLE_LABEL[k]+'</option>';}).join('') +
-    '</select></div></div>' +
-    '<div class="f-group"><label>Bộ phận</label><input id="nuBp"></div>',
-    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
-    '<button class="btn btn-primary" id="mSave">Tạo</button>');
-  $('mCancel').onclick = closeModal;
-  $('mSave').onclick = function(){
-    var un = $('nuUser').value.trim(), pw = $('nuPass').value, ht = $('nuName').value.trim();
-    if (!un||!pw||!ht) { toast('Nhập đủ username, mật khẩu, họ tên.','error'); return; }
-    safeApi('createUser', {
-      username:un, password:pw, ho_ten:ht,
-      vai_tro: $('nuRole').value, bo_phan: $('nuBp').value.trim()
-    }).then(function(r){ if(r){closeModal(); toast('Đã tạo.','success'); renderUsers();} });
-  };
-}
-
-/* =====================================================================
-   TRANG: CÀI ĐẶT
-   ===================================================================== */
-function renderSettings(){
-  var c = $('content');
-  c.innerHTML = '<div class="card"><h2>Cài đặt hệ thống</h2>' +
-    '<div class="desc">Thông tin hệ thống & thương hiệu</div>' +
-    '<div class="f-group"><label>API URL</label><input value="'+esc(API_URL)+'" readonly></div>' +
-    '<div class="f-group"><label>Phiên bản</label><input value="1.0.0" readonly></div>' +
-    '<div class="f-group"><label>Tên công ty</label><input value="CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL" readonly></div>' +
-    '<div class="f-group"><label>Địa chỉ</label><input value="1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM" readonly></div>' +
-    '<div class="desc">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha · Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>' +
-    '</div>';
-}
-
-/* =====================================================================
-   MODAL WRAPPER
-   ===================================================================== */
-function openModal(title, body, foot){
-  $('modalRoot').innerHTML =
-    '<div class="modal-overlay" id="mOverlay"><div class="modal">' +
-    '<div class="modal-head"><h3>'+esc(title)+'</h3><button class="modal-close" id="mClose">×</button></div>' +
-    '<div class="modal-body">'+body+'</div>' +
-    '<div class="modal-foot">'+(foot||'')+'</div></div></div>';
-  $('mClose').onclick = closeModal;
-  $('mOverlay').addEventListener('click', function(e){ if (e.target.id==='mOverlay') closeModal(); });
-}
-function closeModal(){ $('modalRoot').innerHTML=''; }
-
-/* =====================================================================
-   XUẤT EXCEL CHUNG
-   ===================================================================== */
-function ngayFile(){
-  var d = new Date();
-  var p = function(n){ return String(n).padStart(2,'0'); };
-  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate());
-}
-function xls(name, title, headers, rows){
-  var h = '<html xmlns:o="urn:schemas-microsoft-com:office:office">' +
-    '<head><meta charset="UTF-8"></head><body>' +
-    '<h3>'+esc(title)+'</h3>' +
-    '<table border="1" cellpadding="6"><thead><tr>' +
-    headers.map(function(c){return '<th>'+esc(c)+'</th>';}).join('') +
-    '</tr></thead><tbody>';
-  rows.forEach(function(r){
-    h += '<tr>' + r.map(function(c){return '<td>'+esc(c==null?'':c)+'</td>';}).join('') + '</tr>';
-  });
-  h += '</tbody></table></body></html>';
-  var blob = new Blob(['\ufeff'+h], {type:'application/vnd.ms-excel;charset=utf-8'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name+'_'+(state.project?state.project.ma_du_an:'all')+'_'+ngayFile()+'.xls';
-  a.click();
-}
-
-/* =====================================================================
-   KHỞI ĐỘNG
-   ===================================================================== */
-document.addEventListener('DOMContentLoaded', function(){
-  // Logo
-  var li = $('logoImg');
-  if (li) li.src = LOGO_BT;
-
-  // User label
-  $('userName').textContent = USER.ho_ten;
-  $('userRole').textContent = ROLE_LABEL[USER.vai_tro] || USER.vai_tro;
-  $('avatarBox').textContent = USER.ho_ten.charAt(0);
-
-  // Search toàn cục — chuyển tới trang dự án và lọc
-  var gs = $('globalSearch');
-  if (gs) {
-    gs.addEventListener('keydown', function(e){
-      if (e.key === 'Enter') {
-        var kw = gs.value.trim().toLowerCase();
-        if (!kw) return;
-        state.project = null;
-        goPage('projects');
-        setTimeout(function(){
-          if (state.projects && state.projects.length) {
-            var found = state.projects.find(function(p){
-              return (p.ma_du_an||'').toLowerCase().indexOf(kw)!==-1 ||
-                     (p.ten_du_an||'').toLowerCase().indexOf(kw)!==-1;
-            });
-            if (found) {
-              state.project = found;
-              goPage('projects', {project: found});
-            }
-          }
-        }, 600);
-      }
-    });
-  }
-
-  // Vào Dashboard
-  goPage('dashboard');
-
-  // Load danh sách dự án nền để search & mở nhanh
-  safeApi('listProjects').then(function(d){
-    if (d) state.projects = d.projects || d || [];
-  });
-});
-</script>
-</body>
-</html>
+/* =================================================================
