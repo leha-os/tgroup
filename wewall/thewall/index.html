@@ -582,7 +582,7 @@ async function loadTongQuan(){
       '<td class="num">' + fmt(it.con_lai) + '</td>' +
       '<td class="num ' + (Number(it.vuot) > 0 ? 'text-red' : '') + '">' + fmt(it.vuot) + '</td></tr>';
   });
-  html += '</tbody></table></div><div class="desc mt8">Công thức: Định mức = dự trù gốc + phát sinh đã duyệt. Còn lại = Định mức − Đã cam kết − Đã chi. Dòng đỏ = vượt ngân sách.</div></div>';
+  html += '</tbody></table></div><div class="desc mt8"> </div></div>';
   el.innerHTML = html;
 }
 
