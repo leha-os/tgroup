@@ -1564,4 +1564,175 @@ function xuatPhieuXls(d){
   a.click();
 }
 
-/* =================================================================
+/* =====================================================================
+   TRANG SUB ROUTES — dùng chung
+   ===================================================================== */
+function needProject(){
+  if (!state.project) {
+    $('content').innerHTML = '<div class="card"><h2>Cần chọn dự án</h2>' +
+      '<div class="desc">Vào menu <b>Dự án</b> để chọn 1 dự án cần làm việc.</div>' +
+      '<button class="btn btn-primary" onclick="goPage(\'projects\')">→ Đi tới Dự án</button></div>';
+    return true;
+  }
+  return false;
+}
+function renderBudget(){ if(needProject())return; state.projectTab='dutru'; renderProjectDetail(); }
+function renderCost(){ if(needProject())return; state.projectTab='muahang'; renderProjectDetail(); }
+function renderVariation(){ if(needProject())return; state.projectTab='phatsinh'; renderProjectDetail(); }
+function renderProgress(){ if(needProject())return; state.projectTab='tiendo'; renderProjectDetail(); }
+function renderApproval(){ if(needProject())return; state.projectTab='pheduyet'; renderProjectDetail(); }
+function renderPayment(){ if(needProject())return; state.projectTab='thanhtoan'; renderProjectDetail(); }
+function renderReports(){ if(needProject())return; state.projectTab='baocao'; renderProjectDetail(); }
+function renderHistory(){ if(needProject())return; state.projectTab='lichsu'; renderProjectDetail(); }
+
+/* =====================================================================
+   NGƯỜI DÙNG
+   ===================================================================== */
+function renderUsers(){
+  var c = $('content');
+  c.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('listUsers').then(function(d){
+    if (!d) { c.innerHTML = '<div class="card"><h2>Người dùng</h2><div class="empty">Không tải được.</div></div>'; return; }
+    var list = d.users || d || [];
+    var html = '<div class="card"><div class="card-head"><h2>Người dùng ('+list.length+')</h2>' +
+      '<button class="btn btn-primary btn-sm" id="btnNewUser">+ Thêm</button></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
+      '<th>Username</th><th>Họ tên</th><th>Vai trò</th><th>Bộ phận</th><th>Trạng thái</th></tr></thead><tbody>';
+    if (!list.length) html += '<tr><td colspan="5" class="empty">Chưa có user.</td></tr>';
+    list.forEach(function(u){
+      var locked = u.trang_thai !== 'active';
+      html += '<tr><td><b>'+esc(u.username)+'</b></td>' +
+        '<td>'+esc(u.ho_ten||'')+'</td>' +
+        '<td>'+esc(ROLE_LABEL[u.vai_tro]||u.vai_tro||'')+'</td>' +
+        '<td>'+esc(u.bo_phan||'')+'</td>' +
+        '<td>'+(locked?'<span class="badge b-red">Khóa</span>':'<span class="badge b-green">Hoạt động</span>')+'</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+    c.innerHTML = html;
+    $('btnNewUser').onclick = openUserModal;
+  });
+}
+
+function openUserModal(){
+  openModal('Tạo người dùng',
+    '<div class="f-row">' +
+    '<div class="f-group"><label>Username *</label><input id="nuUser"></div>' +
+    '<div class="f-group"><label>Mật khẩu *</label><input id="nuPass" type="password"></div></div>' +
+    '<div class="f-row">' +
+    '<div class="f-group"><label>Họ tên *</label><input id="nuName"></div>' +
+    '<div class="f-group"><label>Vai trò *</label><select id="nuRole">' +
+    Object.keys(ROLE_LABEL).map(function(k){return '<option value="'+k+'">'+ROLE_LABEL[k]+'</option>';}).join('') +
+    '</select></div></div>' +
+    '<div class="f-group"><label>Bộ phận</label><input id="nuBp"></div>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">Tạo</button>');
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = function(){
+    var un = $('nuUser').value.trim(), pw = $('nuPass').value, ht = $('nuName').value.trim();
+    if (!un||!pw||!ht) { toast('Nhập đủ username, mật khẩu, họ tên.','error'); return; }
+    safeApi('createUser', {
+      username:un, password:pw, ho_ten:ht,
+      vai_tro: $('nuRole').value, bo_phan: $('nuBp').value.trim()
+    }).then(function(r){ if(r){closeModal(); toast('Đã tạo.','success'); renderUsers();} });
+  };
+}
+
+/* =====================================================================
+   CÀI ĐẶT
+   ===================================================================== */
+function renderSettings(){
+  var c = $('content');
+  c.innerHTML = '<div class="card"><h2>Cài đặt hệ thống</h2>' +
+    '<div class="desc">Thông tin hệ thống & thương hiệu</div>' +
+    '<div class="f-group"><label>API URL</label><input value="'+esc(API_URL)+'" readonly></div>' +
+    '<div class="f-group"><label>Phiên bản</label><input value="1.0.0" readonly></div>' +
+    '<div class="f-group"><label>Tên công ty</label><input value="CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL" readonly></div>' +
+    '<div class="f-group"><label>Địa chỉ</label><input value="1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM" readonly></div>' +
+    '<div class="desc">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha · Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>' +
+    '</div>';
+}
+
+/* =====================================================================
+   MODAL
+   ===================================================================== */
+function openModal(title, body, foot){
+  $('modalRoot').innerHTML =
+    '<div class="modal-overlay" id="mOverlay"><div class="modal">' +
+    '<div class="modal-head"><h3>'+esc(title)+'</h3><button class="modal-close" id="mClose">×</button></div>' +
+    '<div class="modal-body">'+body+'</div>' +
+    '<div class="modal-foot">'+(foot||'')+'</div></div></div>';
+  $('mClose').onclick = closeModal;
+  $('mOverlay').addEventListener('click', function(e){ if (e.target.id==='mOverlay') closeModal(); });
+}
+function closeModal(){ $('modalRoot').innerHTML=''; }
+
+/* =====================================================================
+   XUẤT EXCEL
+   ===================================================================== */
+function ngayFile(){
+  var d = new Date();
+  var p = function(n){ return String(n).padStart(2,'0'); };
+  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate());
+}
+function xls(name, title, headers, rows){
+  var h = '<html xmlns:o="urn:schemas-microsoft-com:office:office">' +
+    '<head><meta charset="UTF-8"></head><body>' +
+    '<h3>'+esc(title)+'</h3>' +
+    '<table border="1" cellpadding="6"><thead><tr>' +
+    headers.map(function(c){return '<th>'+esc(c)+'</th>';}).join('') +
+    '</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h += '<tr>' + r.map(function(c){return '<td>'+esc(c==null?'':c)+'</td>';}).join('') + '</tr>';
+  });
+  h += '</tbody></table></body></html>';
+  var blob = new Blob(['\ufeff'+h], {type:'application/vnd.ms-excel;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name+'_'+(state.project?state.project.ma_du_an:'all')+'_'+ngayFile()+'.xls';
+  a.click();
+}
+
+/* =====================================================================
+   KHỞI ĐỘNG
+   ===================================================================== */
+document.addEventListener('DOMContentLoaded', function(){
+  var li = $('logoImg');
+  if (li) li.src = LOGO_BT;
+
+  $('userName').textContent = USER.ho_ten;
+  $('userRole').textContent = ROLE_LABEL[USER.vai_tro] || USER.vai_tro;
+  $('avatarBox').textContent = USER.ho_ten.charAt(0);
+
+  var gs = $('globalSearch');
+  if (gs) {
+    gs.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var kw = gs.value.trim().toLowerCase();
+        if (!kw) return;
+        state.project = null;
+        goPage('projects');
+        setTimeout(function(){
+          if (state.projects && state.projects.length) {
+            var found = state.projects.find(function(p){
+              return (p.ma_du_an||'').toLowerCase().indexOf(kw)!==-1 ||
+                     (p.ten_du_an||'').toLowerCase().indexOf(kw)!==-1;
+            });
+            if (found) {
+              state.project = found;
+              goPage('projects', {project: found});
+            }
+          }
+        }, 600);
+      }
+    });
+  }
+
+  goPage('dashboard');
+
+  safeApi('listProjects').then(function(d){
+    if (d) state.projects = d.projects || d || [];
+  });
+});
+</script>
+</body>
+</html>
