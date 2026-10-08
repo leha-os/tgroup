@@ -8,29 +8,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --gold:#f0ad1f; --gold-dark:#a87b12; --gold-bg:#fdf3dc;
-  --bg:#f4f2ec; --card:#ffffff; --text:#232323; --muted:#6b7686;
+  --bg:#f4f2ec; --card:#fff; --text:#232323; --muted:#6b7686;
   --border:#e2ddcf; --red:#d92d20; --red-bg:#fef3f2;
-  --green:#12805c; --green-bg:#ecfdf3;
-  --amber:#b54708; --amber-bg:#fffaeb;
-  --gray-bg:#f2f4f7; --dark:#1b1b1b;
+  --green:#12805c; --green-bg:#ecfdf3; --amber:#b54708; --amber-bg:#fffaeb;
+  --gray-bg:#f2f4f7;
 }
-body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
 .hidden{display:none!important}
-/* ---------- Login ---------- */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;flex-direction:column}
-.login-card{background:#fff;border:1px solid var(--gold);border-radius:12px;padding:36px 32px;width:400px;max-width:100%;box-shadow:0 6px 24px rgba(16,24,40,.08), inset 0 4px 0 var(--gold)}
-.login-foot{margin-top:20px;text-align:center;font-size:12px;color:#8a8578;line-height:1.7}
-@media(max-width:640px){
-  .login-wrap{padding:12px;min-height:100dvh}
-  #loginLogo{height:72px!important}
-  .login-card{padding:24px 20px}
-  .login-card h1{font-size:17px}
-  .login-foot{margin-top:14px;font-size:11px}
-}
-.login-card h1{font-size:20px;margin-bottom:4px;color:var(--text)}
-.login-card .sub{color:var(--muted);font-size:13px;margin-bottom:24px}
-.api-warn{background:var(--amber-bg);border:1px solid #fedf89;color:var(--amber);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:16px}
-/* ---------- Form ---------- */
 .f-group{margin-bottom:14px}
 .f-group label{display:block;font-weight:600;font-size:13px;margin-bottom:6px}
 .f-group input,.f-group select,.f-group textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
@@ -39,19 +23,15 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Aria
 .f-row .f-group{flex:1}
 .f-inline{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
 .f-inline .f-group{margin-bottom:0;min-width:150px}
-/* ---------- Buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:8px;border:1px solid transparent;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
 .btn-primary{background:var(--gold);color:#1b1b1b}
 .btn-primary:hover{background:var(--gold-dark);color:#fff}
 .btn-ghost{background:#fff;border-color:var(--border);color:var(--text)}
 .btn-ghost:hover{background:var(--gray-bg)}
 .btn-danger{background:var(--red);color:#fff}
-.btn-danger:hover{background:#b42318}
 .btn-success{background:var(--green);color:#fff}
 .btn-sm{padding:5px 12px;font-size:13px;border-radius:6px}
-.btn-block{width:100%}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-/* ---------- Layout ---------- */
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:inset 0 3px 0 var(--gold);flex-wrap:wrap;gap:10px}
 .topbar .brand{font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px}
 .topbar .brand small{display:block;font-weight:400;font-size:11.5px;color:var(--muted)}
@@ -62,19 +42,16 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Aria
 .card .desc{color:var(--muted);font-size:13px;margin-bottom:16px}
 .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}
 .card-head h2{margin:0}
-/* ---------- Sidebar ---------- */
 .layout{display:flex;gap:20px;align-items:flex-start}
 .tabs{background:linear-gradient(180deg,#242424,#101010);padding:14px 10px;display:flex;flex-direction:column;gap:2px;min-width:230px;position:sticky;top:76px;border-radius:10px;flex-shrink:0}
 .nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#a08c5a;padding:12px 12px 6px;text-transform:uppercase}
-.nav-label:first-child{padding-top:2px}
-.tab{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13.5px;font-weight:500;color:#cfc8b4;cursor:pointer;border-left:3px solid transparent;white-space:nowrap;background:none;border-top:none;border-right:none;border-bottom:none;font-family:inherit;text-align:left;width:100%;border-radius:8px}
+.tab{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13.5px;font-weight:500;color:#cfc8b4;cursor:pointer;border-left:3px solid transparent;background:none;border-top:none;border-right:none;border-bottom:none;font-family:inherit;text-align:left;width:100%;border-radius:8px}
 .tab .ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.07);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-style:normal}
 .tab:hover{color:#fff;background:rgba(255,255,255,.06)}
 .tab.active{color:#fff;border-left-color:var(--gold);background:rgba(240,173,31,.16);font-weight:700}
 .tab.active .ico{background:var(--gold);color:#1b1b1b}
 .tabpanes{flex:1;min-width:0}
 @media(max-width:768px){.layout{flex-direction:column}.tabs{position:static;min-width:0;width:100%;flex-direction:row;overflow-x:auto;padding:8px}.tab{border-left:none;border-bottom:3px solid transparent;white-space:nowrap;width:auto}.nav-label{display:none}.tab .ico{display:none}}
-/* ---------- KPI cards ---------- */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px}
 .kpi .k-label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
@@ -82,7 +59,6 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Aria
 .kpi.k-red .k-value{color:var(--red)}
 .kpi.k-green .k-value{color:var(--green)}
 .kpi.k-blue .k-value{color:var(--gold-dark)}
-/* ---------- Table ---------- */
 .tbl-wrap{overflow-x:auto}
 table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .tbl th{background:var(--gray-bg);text-align:left;padding:10px 12px;font-weight:600;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
@@ -90,14 +66,12 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .tbl tr.row-alert td{background:var(--red-bg)}
 .tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl .actions{white-space:nowrap;text-align:right}
-/* ---------- Badge ---------- */
 .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
 .b-blue{background:var(--gold-bg);color:var(--gold-dark)}
 .b-green{background:var(--green-bg);color:var(--green)}
 .b-amber{background:var(--amber-bg);color:var(--amber)}
 .b-red{background:var(--red-bg);color:var(--red)}
 .b-gray{background:var(--gray-bg);color:var(--muted)}
-/* ---------- Check panel ---------- */
 .check-panel{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0}
 .check-row{display:flex;padding:10px 14px;border-top:1px solid var(--border);font-size:13.5px}
 .check-row:first-child{border-top:none}
@@ -106,11 +80,9 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .check-row.warn{background:var(--red-bg)}
 .check-row.warn .a{color:var(--red)}
 .check-row.okk .a{color:var(--green)}
-/* ---------- Progress ---------- */
 .progress{height:8px;background:var(--gray-bg);border-radius:999px;overflow:hidden;min-width:100px}
 .progress > div{height:100%;background:var(--gold);border-radius:999px}
 .progress.red > div{background:var(--red)}
-/* ---------- Modal ---------- */
 .modal-overlay{position:fixed;inset:0;background:rgba(16,24,40,.5);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:100;overflow-y:auto}
 .modal{background:#fff;border-radius:12px;width:720px;max-width:100%;box-shadow:0 12px 40px rgba(0,0,0,.18)}
 .modal-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
@@ -120,12 +92,10 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .modal-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
 .dyn-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;flex-wrap:wrap}
 .dyn-row .f-group{margin-bottom:0}
-/* ---------- Toast ---------- */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center}
 .toast-msg{background:#101828;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.2);max-width:90vw}
 .toast-msg.error{background:#b42318}
 .toast-msg.success{background:#12805c}
-/* ---------- Misc ---------- */
 .empty{padding:32px;text-align:center;color:var(--muted);font-size:14px}
 .mt8{margin-top:8px}.mt16{margin-top:16px}
 .text-red{color:var(--red);font-weight:700}
@@ -140,8 +110,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .stat-item{background:var(--gray-bg);border-radius:8px;padding:12px 14px;font-size:13.5px}
 .stat-item b{font-size:18px;display:block}
 @media(max-width:640px){.container{padding:16px}.f-row{flex-direction:column}.kpi .k-value{font-size:17px}}
-
-/* ---------- Timeline ---------- */
 .gantt-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px}
 .gantt-label{width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
 .gantt-bar{flex:1;position:relative;height:22px;background:var(--gray-bg);border-radius:4px;overflow:hidden}
@@ -149,20 +117,16 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .gantt-bar .gantt-bg{background:rgba(240,173,31,.45);border-radius:4px}
 .gantt-bar .gantt-fill{background:var(--green);border-radius:4px}
 .gantt-pct{width:44px;text-align:right;font-weight:700;flex-shrink:0}
-
-/* ---------- Print phiếu DNTT (đúng form công ty) ---------- */
 #printRoot{display:none}
 .print-actions{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:10px;z-index:60;flex-wrap:wrap}
 .phieu-wrap{max-width:840px;margin:24px auto;background:#fff;padding:32px 42px;border:1px solid var(--border);font-family:"Times New Roman",Arial,sans-serif;color:#000;font-size:13.5px;line-height:1.5}
 .phieu-head{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid #000;padding-bottom:10px;margin-bottom:6px}
-.phieu-head img{height:64px;width:auto}
+.phieu-head .logo{width:70px;height:70px;flex-shrink:0}
 .phieu-head .co{font-size:12.5px;line-height:1.5}
 .phieu-head .co b{font-size:14px;display:block;text-transform:uppercase;margin-bottom:2px}
 .phieu-title{text-align:center;font-size:20px;font-weight:800;margin:18px 0 20px;letter-spacing:1px}
 .phieu-line{display:flex;gap:14px;margin-bottom:6px;flex-wrap:wrap}
-.phieu-line .lbl{color:#333}
 .phieu-line .cell{flex:1;min-width:180px}
-.phieu-line b{font-weight:700}
 .phieu-sign{display:flex;margin:22px 0;border:1px solid #000}
 .phieu-sign .box{flex:1;text-align:center;padding:8px 4px 55px;border-left:1px solid #000;font-size:11.5px;font-weight:700;min-width:0;line-height:1.3}
 .phieu-sign .box:first-child{border-left:none}
@@ -171,56 +135,25 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .phieu-money{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
 .phieu-money th,.phieu-money td{border:1px solid #000;padding:9px 8px;text-align:center}
 .phieu-money th{background:#f2f4f7;font-size:12px;font-weight:700}
-.phieu-words{margin:10px 0;font-size:13px}
 .phieu-section{font-weight:800;margin-top:14px;font-size:13px}
-.phieu-checkbox{font-size:13px;margin:4px 0 10px;letter-spacing:.5px}
 .phieu-underline{border-bottom:1px dotted #333;height:22px;margin:4px 0 10px}
 .phieu-note{text-align:center;font-weight:800;margin-top:22px;font-size:12px;text-transform:uppercase}
 .phieu-addr{text-align:center;font-size:11.5px;color:#444;margin-top:6px}
-
-@media print{
-  @page{size:A4 portrait;margin:10mm}
-  body{background:#fff}
-  body > *:not(#printRoot){display:none!important}
-  #printRoot{display:block!important}
-  .print-actions{display:none!important}
-  .phieu-wrap{max-width:none;margin:0;border:none;padding:0;font-size:12px}
-}
+@media print{@page{size:A4 portrait;margin:10mm}body{background:#fff}body > *:not(#printRoot){display:none!important}#printRoot{display:block!important}.print-actions{display:none!important}.phieu-wrap{max-width:none;margin:0;border:none;padding:0;font-size:12px}}
 </style>
 </head>
 <body>
 
-<!-- ============ MÀN HÌNH 1: ĐĂNG NHẬP ============ -->
-<div id="screen-login" class="screen">
-  <div class="login-wrap">
-    <div class="login-card">
-      <div style="text-align:center;margin-bottom:14px"><img id="loginLogo" alt="The Wall" style="height:96px;width:auto"></div>
-      <div style="text-align:center;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--gold-dark);margin-bottom:6px">THE WALL ARCHITECTURE</div>
-      <h1 style="text-align:center">Quản lý Dự án Thi công</h1>
-      <div class="sub" style="text-align:center;margin-bottom:20px">Đăng nhập để tiếp tục</div>
-      <div id="apiWarn" class="api-warn hidden">Chưa cấu hình API_URL. Mở file index.html, dán URL Web App vào dòng <b>const API_URL</b> ở đầu thẻ &lt;script&gt;.</div>
-      <form id="loginForm">
-        <div class="f-group"><label for="lgUser">Tên đăng nhập</label>
-          <input id="lgUser" type="text" autocomplete="username" placeholder="Nhập tên đăng nhập"></div>
-        <div class="f-group"><label for="lgPass">Mật khẩu</label>
-          <input id="lgPass" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu"></div>
-        <button type="submit" class="btn btn-primary btn-block" id="btnLogin">Đăng nhập</button>
-      </form>
-    </div>
-    <div class="login-foot">
-      © 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0
-    </div>
-  </div>
-</div>
-
-<!-- ============ MÀN HÌNH 2: DANH SÁCH DỰ ÁN ============ -->
-<div id="screen-projects" class="screen hidden">
+<!-- ============ DANH SÁCH DỰ ÁN ============ -->
+<div id="screen-projects" class="screen">
   <div class="topbar">
-    <div class="brand"><img id="topLogo" alt="The Wall" style="height:34px;width:auto"><div>Quản lý Dự án Thi công<small id="roleLabel"></small></div></div>
+    <div class="brand">
+      <span id="topLogo" style="display:inline-block;width:34px;height:34px"></span>
+      <div>Quản lý Dự án Thi công<small id="roleLabel"></small></div>
+    </div>
     <div class="userbox">
       <span id="userLabel"></span>
       <button class="btn btn-ghost btn-sm" id="btnPass">Đổi mật khẩu</button>
-      <button class="btn btn-ghost btn-sm" id="btnLogout">Đăng xuất</button>
     </div>
   </div>
   <div class="container">
@@ -230,7 +163,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
         <h2>Danh sách dự án</h2>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input id="prjSearch" placeholder="Tìm mã / tên / KH / PM..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:220px">
-          <button class="btn btn-primary btn-sm hidden" id="btnNewProject">+ Tạo dự án</button>
+          <button class="btn btn-primary btn-sm" id="btnNewProject">+ Tạo dự án</button>
         </div>
       </div>
       <div class="tbl-wrap"><table class="tbl">
@@ -241,54 +174,55 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
   </div>
 </div>
 
-<!-- ============ MÀN HÌNH 3: CHI TIẾT DỰ ÁN ============ -->
+<!-- ============ CHI TIẾT DỰ ÁN ============ -->
 <div id="screen-detail" class="screen hidden">
   <div class="topbar">
-    <div class="brand"><img id="topLogo2" alt="The Wall" style="height:34px;width:auto"><div>Quản lý Dự án Thi công<small id="roleLabel2"></small></div></div>
+    <div class="brand">
+      <span id="topLogo2" style="display:inline-block;width:34px;height:34px"></span>
+      <div>Quản lý Dự án Thi công<small id="roleLabel2"></small></div>
+    </div>
     <div class="userbox">
       <span id="userLabel2"></span>
       <button class="btn btn-ghost btn-sm" id="btnPass2">Đổi mật khẩu</button>
-      <button class="btn btn-ghost btn-sm" id="btnLogout2">Đăng xuất</button>
     </div>
   </div>
   <div class="container" style="padding-bottom:0">
     <div class="proj-head">
       <button class="back-link" id="btnBack">&larr; Danh sách dự án</button>
-      <div class="info" style="flex:1">
-        <h2 id="projName"></h2>
-        <div class="meta" id="projMeta"></div>
-      </div>
+      <div class="info" style="flex:1"><h2 id="projName"></h2><div class="meta" id="projMeta"></div></div>
     </div>
   </div>
   <div class="container layout">
-  <div class="tabs" id="tabBar">
-    <div class="nav-label">Quản lý</div>
-    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
-    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
-    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
-    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
-    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
-    <div class="nav-label">Phê duyệt & Thanh toán</div>
-    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
-    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">₫</i>Thanh toán</button>
-    <div class="nav-label">Báo cáo</div>
-    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
-    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
-    <div class="nav-label">Hệ thống</div>
-    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Quản trị</button>
-  </div>
-  <div class="tabpanes">
-    <div id="tab-tongquan" class="tabpane hidden"></div>
-    <div id="tab-dutru" class="tabpane hidden"></div>
-    <div id="tab-muahang" class="tabpane hidden"></div>
-    <div id="tab-phatsinh" class="tabpane hidden"></div>
-    <div id="tab-tiendo" class="tabpane hidden"></div>
-    <div id="tab-pheduyet" class="tabpane hidden"></div>
-    <div id="tab-thanhtoan" class="tabpane hidden"></div>
-    <div id="tab-baocao" class="tabpane hidden"></div>
-    <div id="tab-lichsu" class="tabpane hidden"></div>
-    <div id="tab-admin" class="tabpane hidden"></div>
-  </div>
+    <div class="tabs" id="tabBar">
+      <div class="nav-label">Quản lý</div>
+      <button class="tab hidden" data-tab="tongquan"><i class="ico">◈</i>Tổng quan</button>
+      <button class="tab hidden" data-tab="dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
+      <button class="tab hidden" data-tab="muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
+      <button class="tab hidden" data-tab="phatsinh"><i class="ico">✦</i>Phát sinh</button>
+      <button class="tab hidden" data-tab="tiendo"><i class="ico">◔</i>Tiến độ</button>
+      <div class="nav-label">Phê duyệt & Thanh toán</div>
+      <button class="tab hidden" data-tab="pheduyet"><i class="ico">✓</i>Phê duyệt</button>
+      <button class="tab hidden" data-tab="thanhtoan"><i class="ico">₫</i>Thanh toán</button>
+      <div class="nav-label">Báo cáo</div>
+      <button class="tab hidden" data-tab="baocao"><i class="ico">▥</i>Báo cáo</button>
+      <button class="tab hidden" data-tab="sheet"><i class="ico">⌗</i>Google Sheets</button>
+      <button class="tab hidden" data-tab="lichsu"><i class="ico">◷</i>Lịch sử</button>
+      <div class="nav-label">Hệ thống</div>
+      <button class="tab hidden" data-tab="admin"><i class="ico">⚙</i>Quản trị</button>
+    </div>
+    <div class="tabpanes">
+      <div id="tab-tongquan" class="tabpane hidden"></div>
+      <div id="tab-dutru" class="tabpane hidden"></div>
+      <div id="tab-muahang" class="tabpane hidden"></div>
+      <div id="tab-phatsinh" class="tabpane hidden"></div>
+      <div id="tab-tiendo" class="tabpane hidden"></div>
+      <div id="tab-pheduyet" class="tabpane hidden"></div>
+      <div id="tab-thanhtoan" class="tabpane hidden"></div>
+      <div id="tab-baocao" class="tabpane hidden"></div>
+      <div id="tab-sheet" class="tabpane hidden"></div>
+      <div id="tab-lichsu" class="tabpane hidden"></div>
+      <div id="tab-admin" class="tabpane hidden"></div>
+    </div>
   </div>
 </div>
 
@@ -298,26 +232,1249 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 
 <script>
 /* =====================================================================
-   HỆ THỐNG QUẢN LÝ DỰ ÁN THI CÔNG — THE WALL
-   Frontend SPA, khớp CONTRACT.md v2, form DNTT theo Excel công ty.
-   Cấu hình duy nhất cần sửa: dán URL Web App (api.gs) vào API_URL.
+   CẤU HÌNH API
    ===================================================================== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbyM9ZneUqIs0GwYFW90c3R3UzPJSdup5VTqoaRf6bwm2mapXnQMYqFOa2YV948YX1U0/exec';
-/* =====================================================================
-   CÔNG TẮC TẠM BỎ ĐĂNG NHẬP
-   - true  : Bỏ qua đăng nhập, tự vào app với quyền Admin (dùng khi dev/test)
-   - false : Bật lại màn hình đăng nhập bình thường (khi hoàn thiện)
-   ===================================================================== */
-const TAM_BO_DANG_NHAP = true;
+var API_URL = 'https://script.google.com/macros/s/AKfycbyM9ZneUqIs0GwYFW90c3R3UzPJSdup5VTqoaRf6bwm2mapXnQMYqFOa2YV948YX1U0/exec';
 
-/* User giả lập khi tạm bỏ đăng nhập — đổi tuỳ ý */
-const DEV_USER = {
-  username: 'dev',
-  ho_ten: 'Chế độ nhà phát triển',
+/* User mặc định — vào thẳng app */
+var CURRENT_USER = {
+  username: 'admin',
+  ho_ten: 'Quản trị viên',
   vai_tro: 'Admin',
-  bo_phan: 'Dev',
+  bo_phan: 'Ban Giám đốc',
   trang_thai: 'active'
 };
 
-/* Logo The Wall — base64 (giữ nguyên từ file cũ) */
-const LOGO_BT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA9AAAAKHCAYAAABpUqATAAAABGdBTUEAALGPC/xhBQAACklpQ0NQc1JHQiBJRUM2MTk2Ni0yLjEAAEiJnVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/stRzjPAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAACxMAAAsTAQCanBgAALR+SURBVHic7N13nFT1vf/x1/TZBgsssDRF7L2X9HaTm97bTXLTbm6MyS/RJCaWmJum2GNvsWABK3bsIHZREUSsdFjK9l6nnd8fY4wayy7sOZ89830/8+CRxMjuKzg7M5/5nvP9RjzPQ0RERERERETeXdQ6QERERERERCQMNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiAyCBmgRERERERGRQdAALSIiIiIiIjIIGqBFREREREREBkEDtIiIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiAyCBmgRERERERGRQdAALSIiIiIiIjIIGqBFREREREREBkEDtIiIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiAyCBmgRERERERGRQdAALSIiIiIiIjIIGqBFREREREREBkEDtIiIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiAyCBmgRERERERGRQdAALSIiIiIiIjIIGqBFREREREREBkEDtIiIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVEREREREQGQQO0iIiIiIiIyCBogBYREREREREZBA3QIiIiIiIiIoOgAVpERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAWERERERERGQQN0CIiIiIiIiKDoAFaREREREREZBA0QIuIiIiIiIgMggZoERERERERkUHQAC0iIiIiIiIyCBqgRURERERERAZBA7SIiIiIiIjIIGiAFhERERERERkEDdAiIiIiIiIig6ABWkRERERERGQQNECLiIiIiIiIDIIGaBEREREREZFB0AAtIiIiIiIiMggaoEVERERERERkEDRAi4iIiIiIiMggaIAm1M6dO0c+Pj7W4+3tbfX19WWfPn3ZvXt3ZmZmxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHjxo0bN27cuHHj
+/* Logo The Wall — SVG đơn giản, không cần file ngoài */
+var LOGO_BT = "data:image/svg+xml;charset=utf8," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+  '<rect width="100" height="100" rx="10" fill="#1b1b1b"/>' +
+  '<rect x="6" y="6" width="88" height="88" rx="6" fill="none" stroke="#f0ad1f" stroke-width="2"/>' +
+  '<text x="50" y="52" font-family="Georgia,serif" font-size="30" font-weight="900" fill="#f0ad1f" text-anchor="middle" letter-spacing="1">TW</text>' +
+  '<text x="50" y="76" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#f0ad1f" text-anchor="middle" letter-spacing="2">THE WALL</text>' +
+  '</svg>'
+);
+
+/* Hằng số */
+var LS_TOKEN = 'qlda_token';
+var LS_USER  = 'qlda_user';
+var ROLE_LABEL = { Admin:'Quản trị viên', QuanLy:'Quản lý dự án', MuaHang:'Mua hàng',
+  KeToan:'Kế toán', Approver:'Người phê duyệt', Viewer:'Chỉ xem' };
+var LOAI_DN = { mua_hang:'Mua hàng', thanh_toan:'Thanh toán', thue_thau:'Thuê thầu', nhan_cong:'Nhân công' };
+var TT_DN = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt (cam kết)','b-blue'],
+  da_chi:['Đã chi','b-green'], tu_choi:['Từ chối','b-red'] };
+var TT_DT = { nhap:['Nháp','b-gray'], cho_duyet:['Chờ duyệt','b-amber'],
+  da_duyet:['Đã duyệt (đã khóa)','b-green'], khoa_luu:['Lưu trữ','b-gray'] };
+var TT_PS = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'], tu_choi:['Từ chối','b-red'] };
+var TT_TD = { chua_bat_dau:['Chưa bắt đầu','b-gray'], dang_lam:['Đang làm','b-blue'], hoan_thanh:['Hoàn thành','b-green'] };
+var TT_TT = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'],
+  tu_choi:['Từ chối','b-red'], da_chi:['Đã chi','b-blue'] };
+var TT_DA = { dang_lam:['Đang làm','b-blue'], tam_dung:['Tạm dừng','b-amber'],
+  hoan_thanh:['Hoàn thành','b-green'], huy:['Đã hủy','b-red'] };
+
+/* State */
+var state = {
+  user: CURRENT_USER,
+  projects: [], project: null, tab: 'tongquan',
+  hangMucs: [], mhHienThi: [], ttHienThi: []
+};
+
+/* Tiện ích */
+function $(id){ return document.getElementById(id); }
+function fmt(n){ return (Number(n) || 0).toLocaleString('vi-VN'); }
+function esc(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function badge(val, map){
+  var m = map[val] || [val, 'b-gray'];
+  return '<span class="badge ' + m[1] + '">' + esc(m[0]) + '</span>';
+}
+function R(){ return state.user.vai_tro; }
+function can(){
+  var roles = Array.prototype.slice.call(arguments);
+  return roles.indexOf(R()) !== -1;
+}
+function toast(msg, type){
+  var t = document.createElement('div');
+  t.className = 'toast-msg' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  $('toast').appendChild(t);
+  setTimeout(function(){ t.remove(); }, 3200);
+}
+
+/* =====================================================================
+   API
+   ===================================================================== */
+function api(action, params){
+  params = params || {};
+  var payload = Object.assign({ action: action }, params);
+  payload.token = localStorage.getItem(LS_TOKEN) || 'NO_TOKEN';
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  }).then(function(res){
+    return res.json();
+  }).then(function(j){
+    if (!j.ok) throw new Error(j.error || 'Lỗi từ máy chủ.');
+    return j.data;
+  }).catch(function(e){
+    if (e.message && e.message.indexOf('Lỗi') === 0) throw e;
+    throw new Error('Không kết nối được máy chủ. Kiểm tra API_URL.');
+  });
+}
+function safeApi(action, params){
+  return api(action, params).catch(function(e){
+    toast(e.message, 'error');
+    return null;
+  });
+}
+
+/* =====================================================================
+   ĐIỀU HƯỚNG
+   ===================================================================== */
+function showScreen(id){
+  ['screen-projects','screen-detail'].forEach(function(s){
+    var el = $(s); if (el) el.classList.add('hidden');
+  });
+  $(id).classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+/* =====================================================================
+   DASHBOARD TỔNG
+   ===================================================================== */
+function kpi(label, val, cls, suffix){
+  return '<div class="kpi ' + (cls || '') + '"><div class="k-label">' + esc(label) + '</div>' +
+    '<div class="k-value">' + val + (suffix || '') + '</div></div>';
+}
+function loadTongQuanChung(){
+  var box = $('tongQuanBox');
+  if (!box) return;
+  box.innerHTML = '<div class="empty">Đang tải dashboard tổng...</div>';
+  safeApi('getTongQuan').then(function(d){
+    if (!d) { box.innerHTML = ''; return; }
+    var list = d.projects || d || [];
+    if (!list.length) { box.innerHTML = ''; return; }
+    var T = function(f){ return list.reduce(function(s, x){ return s + Number(x[f] || 0); }, 0); };
+    var html = '<div class="card"><div class="card-head"><h2>Dashboard tổng — toàn bộ dự án</h2></div>';
+    html += '<div class="kpis">' +
+      kpi('Tổng định mức', fmt(T('tong_dinh_muc')), 'k-blue', ' đ') +
+      kpi('Đã cam kết', fmt(T('tong_cam_ket')), '', ' đ') +
+      kpi('Đã chi', fmt(T('tong_da_chi')), '', ' đ') +
+      kpi('Còn lại', fmt(T('tong_con_lai')), 'k-green', ' đ') +
+      kpi('Vượt', fmt(T('tong_vuot')), 'k-red', ' đ') + '</div>';
+    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th>' +
+      '<th class="num">Định mức</th><th class="num">Cam kết</th><th class="num">Đã chi</th>' +
+      '<th class="num">Còn lại</th><th class="num">Vượt</th><th class="num">Tiến độ</th>' +
+      '<th class="num">Việc trễ</th><th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
+    list.forEach(function(p){
+      var alert = Number(p.tong_vuot) > 0 || Number(p.so_viec_tre) > 0;
+      html += '<tr' + (alert ? ' class="row-alert"' : '') + '>' +
+        '<td><b>' + esc(p.ma_du_an) + '</b><br><span class="desc">' + esc(p.ten_du_an || '') + '</span></td>' +
+        '<td class="num">' + fmt(p.tong_dinh_muc) + '</td>' +
+        '<td class="num">' + fmt(p.tong_cam_ket) + '</td>' +
+        '<td class="num">' + fmt(p.tong_da_chi) + '</td>' +
+        '<td class="num">' + fmt(p.tong_con_lai) + '</td>' +
+        '<td class="num' + (Number(p.tong_vuot) > 0 ? ' text-red' : '') + '">' + fmt(p.tong_vuot) + '</td>' +
+        '<td class="num">' + (p.tien_do == null ? '—' : Number(p.tien_do).toFixed(0) + '%') + '</td>' +
+        '<td class="num' + (Number(p.so_viec_tre) > 0 ? ' text-red' : '') + '">' + Number(p.so_viec_tre || 0) + '</td>' +
+        '<td class="num">' + Number(p.cho_duyet || 0) + '</td>' +
+        '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>';
+    });
+    html += '</tbody></table></div><div class="desc mt8">Dòng đỏ = vượt ngân sách hoặc có việc trễ hạn.</div></div>';
+    box.innerHTML = html;
+    box.querySelectorAll('button[data-ma]').forEach(function(b){
+      b.addEventListener('click', function(){ openProject(b.dataset.ma); });
+    });
+  });
+}
+
+/* =====================================================================
+   DANH SÁCH DỰ ÁN
+   ===================================================================== */
+function loadProjects(){
+  loadTongQuanChung();
+  $('projectRows').innerHTML = '<tr><td colspan="8" class="empty">Đang tải...</td></tr>';
+  safeApi('listProjects').then(function(d){
+    if (!d) return;
+    state.projects = d.projects || d || [];
+    var kw = (($('prjSearch') && $('prjSearch').value) || '').toLowerCase();
+    var filtered = kw ? state.projects.filter(function(p){
+      return (p.ma_du_an || '').toLowerCase().indexOf(kw) !== -1 ||
+             (p.ten_du_an || '').toLowerCase().indexOf(kw) !== -1 ||
+             (p.khach_hang || '').toLowerCase().indexOf(kw) !== -1 ||
+             (p.pm || '').toLowerCase().indexOf(kw) !== -1;
+    }) : state.projects;
+    if (!filtered.length) {
+      $('projectRows').innerHTML = '<tr><td colspan="8" class="empty">Không có dự án.</td></tr>';
+      return;
+    }
+    $('projectRows').innerHTML = filtered.map(function(p){
+      return '<tr><td><b>' + esc(p.ma_du_an) + '</b></td>' +
+        '<td>' + esc(p.ten_du_an) + '</td>' +
+        '<td>' + esc(p.khach_hang || '') + '</td>' +
+        '<td>' + esc(p.pm || '') + '</td>' +
+        '<td>' + esc(p.ngay_bat_dau || '') + '</td>' +
+        '<td>' + esc(p.ngay_ket_thuc || '') + '</td>' +
+        '<td>' + badge(p.trang_thai || 'dang_lam', TT_DA) + '</td>' +
+        '<td class="actions">' +
+          '<button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button> ' +
+          '<button class="btn btn-ghost btn-sm" data-edit="' + esc(p.ma_du_an) + '">Sửa</button>' +
+        '</td></tr>';
+    }).join('');
+    $('projectRows').querySelectorAll('button[data-ma]').forEach(function(b){
+      b.addEventListener('click', function(){ openProject(b.dataset.ma); });
+    });
+    $('projectRows').querySelectorAll('button[data-edit]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var p = state.projects.find(function(x){ return x.ma_du_an === b.dataset.edit; });
+        openProjectModal(p);
+      });
+    });
+  });
+}
+
+function openProjectModal(p){
+  var isEdit = !!p;
+  var html =
+    '<div class="f-row"><div class="f-group"><label>Mã dự án *</label>' +
+    '<input id="npMa" value="' + esc(p && p.ma_du_an || '') + '" ' + (isEdit ? 'readonly' : '') + ' placeholder="VD: BT25.20/TC.K"></div>' +
+    '<div class="f-group"><label>Tên dự án *</label><input id="npTen" value="' + esc(p && p.ten_du_an || '') + '"></div></div>' +
+    '<div class="f-row"><div class="f-group"><label>Khách hàng</label><input id="npKh" value="' + esc(p && p.khach_hang || '') + '"></div>' +
+    '<div class="f-group"><label>PM phụ trách</label><input id="npPm" value="' + esc(p && p.pm || '') + '"></div></div>' +
+    '<div class="f-row"><div class="f-group"><label>Ngày bắt đầu</label><input id="npBd" type="date" value="' + esc(p && p.ngay_bat_dau || '') + '"></div>' +
+    '<div class="f-group"><label>Ngày kết thúc</label><input id="npKt" type="date" value="' + esc(p && p.ngay_ket_thuc || '') + '"></div></div>' +
+    '<div class="f-group"><label>Giá trị hợp đồng (đ)</label><input id="npGt" type="number" value="' + (p && p.gia_tri_hop_dong || '') + '"></div>' +
+    '<div class="f-group"><label>Link Google Sheets (tuỳ chọn)</label>' +
+    '<input id="npSheet" value="' + esc(p && p.sheet_url || '') + '" placeholder="https://docs.google.com/spreadsheets/d/..."></div>' +
+    '<div class="f-group"><label>Mô tả</label><textarea id="npMoTa" rows="2">' + esc(p && p.mo_ta || '') + '</textarea></div>';
+  openModal(isEdit ? 'Sửa dự án' : 'Tạo dự án mới', html,
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">' + (isEdit ? 'Cập nhật' : 'Tạo dự án') + '</button>');
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = function(){
+    var data = {
+      ma_du_an: $('npMa').value.trim(),
+      ten_du_an: $('npTen').value.trim(),
+      khach_hang: $('npKh').value.trim(),
+      pm: $('npPm').value.trim(),
+      ngay_bat_dau: $('npBd').value,
+      ngay_ket_thuc: $('npKt').value,
+      gia_tri_hop_dong: Number($('npGt').value) || 0,
+      sheet_url: $('npSheet').value.trim(),
+      mo_ta: $('npMoTa').value.trim()
+    };
+    if (!data.ma_du_an || !data.ten_du_an) { toast('Nhập mã và tên dự án.', 'error'); return; }
+    var action = isEdit ? 'updateProject' : 'createProject';
+    safeApi(action, data).then(function(r){
+      if (r) { closeModal(); toast(isEdit ? 'Đã cập nhật.' : 'Đã tạo dự án.', 'success'); loadProjects(); }
+    });
+  };
+}
+
+/* =====================================================================
+   CHI TIẾT DỰ ÁN
+   ===================================================================== */
+function openProject(ma){
+  var p = state.projects.find(function(x){ return x.ma_du_an === ma; });
+  if (!p) return;
+  state.project = p;
+  $('projName').textContent = p.ma_du_an + ' — ' + p.ten_du_an;
+  $('projMeta').textContent = [
+    p.khach_hang ? 'KH: ' + p.khach_hang : '',
+    p.pm ? 'PM: ' + p.pm : '',
+    (p.ngay_bat_dau || '') + ' → ' + (p.ngay_ket_thuc || ''),
+    p.trang_thai ? (TT_DA[p.trang_thai] || [p.trang_thai])[0] : ''
+  ].filter(Boolean).join(' · ');
+  document.querySelectorAll('#tabBar .tab').forEach(function(b){ b.classList.remove('hidden'); });
+  showScreen('screen-detail');
+  switchTab('tongquan');
+}
+var TAB_LOADERS = {
+  tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
+  phatsinh: loadPhatSinh, tiendo: loadTienDo, pheduyet: loadPheDuyet,
+  thanhtoan: loadThanhToan, baocao: loadBaoCao, sheet: loadSheet,
+  lichsu: loadLichSu, admin: loadAdmin
+};
+function switchTab(name){
+  state.tab = name;
+  document.querySelectorAll('#tabBar .tab').forEach(function(b){
+    b.classList.toggle('active', b.dataset.tab === name);
+  });
+  Object.keys(TAB_LOADERS).forEach(function(t){
+    var el = $('tab-' + t); if (el) el.classList.add('hidden');
+  });
+  $('tab-' + name).classList.remove('hidden');
+  TAB_LOADERS[name]();
+}
+
+/* =====================================================================
+   MODAL
+   ===================================================================== */
+function openModal(title, bodyHtml, footHtml){
+  $('modalRoot').innerHTML =
+    '<div class="modal-overlay" id="mOverlay"><div class="modal">' +
+    '<div class="modal-head"><h3>' + esc(title) + '</h3><button class="modal-close" id="mClose">&times;</button></div>' +
+    '<div class="modal-body">' + bodyHtml + '</div>' +
+    '<div class="modal-foot">' + (footHtml || '') + '</div></div></div>';
+  $('mClose').onclick = closeModal;
+  $('mOverlay').addEventListener('click', function(e){ if (e.target.id === 'mOverlay') closeModal(); });
+}
+function closeModal(){ $('modalRoot').innerHTML = ''; }
+
+/* =====================================================================
+   TAB TỔNG QUAN
+   ===================================================================== */
+function loadTongQuan(){
+  var el = $('tab-tongquan');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('getDashboard', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var items = d.items || [];
+    var cd = d.cho_duyet || {};
+    var treList = d.hang_muc_tre || [];
+    var html = '<div class="kpis">' +
+      kpi('Tổng định mức', fmt(d.tong_dinh_muc), 'k-blue', ' đ') +
+      kpi('Đã cam kết', fmt(d.tong_cam_ket), '', ' đ') +
+      kpi('Đã chi thực tế', fmt(d.tong_da_chi), '', ' đ') +
+      kpi('Còn lại', fmt(d.tong_con_lai), 'k-green', ' đ') +
+      kpi('Vượt ngân sách', fmt(d.tong_vuot), 'k-red', ' đ') +
+      kpi('Tổng tiến độ', (d.tong_tien_do == null ? '—' : Number(d.tong_tien_do).toFixed(0)), 'k-blue', '%') +
+      '</div>';
+    html += '<div class="card"><div class="card-head"><h2>Cảnh báo & chờ xử lý</h2></div><div class="stat-grid">';
+    html += '<div class="stat-item">Đề nghị chờ duyệt<b>' + (cd.de_nghi || 0) + '</b></div>';
+    html += '<div class="stat-item">Phát sinh chờ duyệt<b>' + (cd.phat_sinh || 0) + '</b></div>';
+    html += '<div class="stat-item">Dự trù chờ duyệt<b>' + (cd.du_tru || 0) + '</b></div>';
+    html += '<div class="stat-item">Công việc trễ<b class="' + (treList.length ? 'text-red' : 'text-green') + '">' + treList.length + '</b></div>';
+    html += '</div></div>';
+    html += '<div class="card"><div class="card-head"><h2>Chi tiết theo hạng mục</h2></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
+      '<th>Hạng mục</th><th class="num">Định mức</th><th class="num">Đã cam kết</th>' +
+      '<th class="num">Đã chi</th><th class="num">Còn lại</th><th class="num">Vượt</th></tr></thead><tbody>';
+    if (!items.length) html += '<tr><td colspan="6" class="empty">Chưa có dự trù được duyệt.</td></tr>';
+    items.forEach(function(it){
+      html += '<tr' + (Number(it.vuot) > 0 ? ' class="row-alert"' : '') + '>' +
+        '<td><b>' + esc(it.hang_muc) + '</b></td>' +
+        '<td class="num">' + fmt(it.dinh_muc) + '</td>' +
+        '<td class="num">' + fmt(it.da_cam_ket) + '</td>' +
+        '<td class="num">' + fmt(it.da_chi) + '</td>' +
+        '<td class="num">' + fmt(it.con_lai) + '</td>' +
+        '<td class="num' + (Number(it.vuot) > 0 ? ' text-red' : '') + '">' + fmt(it.vuot) + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+    el.innerHTML = html;
+  });
+}
+
+/* =====================================================================
+   TAB DỰ TRÙ
+   ===================================================================== */
+function loadDuTru(){
+  var el = $('tab-dutru');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('getDuTru', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var active = d.active, versions = d.versions || [];
+    state.hangMucs = active && active.items ? active.items.map(function(i){ return i.hang_muc; }).filter(function(v, i, a){ return a.indexOf(v) === i; }) : [];
+    var html = '<div class="card"><div class="card-head"><h2>Bản dự trù đang áp dụng</h2>' +
+      '<div style="display:flex;gap:8px">' +
+      (active && active.items && active.items.length ? '<button class="btn btn-ghost btn-sm" id="btnXlsDuTru">Xuất Excel</button>' : '') +
+      '<button class="btn btn-primary btn-sm" id="btnDraft">+ Tạo bản nháp mới</button>' +
+      '</div></div>';
+    if (active && active.items && active.items.length) {
+      var tong = active.items.reduce(function(s, i){ return s + Number(i.thanh_tien || 0); }, 0);
+      html += '<div class="desc">Phiên bản ' + esc(active.phien_ban) + ' — đã duyệt, không được sửa trực tiếp.</div>' +
+        '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Vật tư / Công việc</th>' +
+        '<th>ĐVT</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th></tr></thead><tbody>' +
+        active.items.map(function(it){
+          return '<tr><td><b>' + esc(it.hang_muc) + '</b></td>' +
+            '<td>' + esc(it.vat_tu || '') + '</td>' +
+            '<td>' + esc(it.don_vi || '') + '</td>' +
+            '<td class="num">' + fmt(it.so_luong) + '</td>' +
+            '<td class="num">' + fmt(it.don_gia) + '</td>' +
+            '<td class="num"><b>' + fmt(it.thanh_tien) + '</b></td></tr>';
+        }).join('') +
+        '<tr><td colspan="5" class="num"><b>Tổng</b></td><td class="num"><b>' + fmt(tong) + '</b></td></tr>' +
+        '</tbody></table></div>';
+    } else {
+      html += '<div class="empty">Chưa có bản dự trù nào được duyệt.</div>';
+    }
+    html += '</div>';
+    html += '<div class="card"><div class="card-head"><h2>Lịch sử phiên bản</h2></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Phiên bản</th><th>Trạng thái</th>' +
+      '<th>Người tạo</th><th>Ngày tạo</th><th></th></tr></thead><tbody>';
+    if (!versions.length) html += '<tr><td colspan="5" class="empty">Chưa có phiên bản.</td></tr>';
+    versions.forEach(function(v){
+      var act = '';
+      if (v.trang_thai === 'nhap') act = '<button class="btn btn-ghost btn-sm" data-act="submit" data-v="' + esc(v.phien_ban) + '">Trình duyệt</button>';
+      else if (v.trang_thai === 'cho_duyet') act = '<button class="btn btn-success btn-sm" data-act="approve" data-v="' + esc(v.phien_ban) + '">Duyệt & khóa</button>';
+      html += '<tr><td><b>v' + esc(v.phien_ban) + '</b></td><td>' + badge(v.trang_thai, TT_DT) + '</td>' +
+        '<td>' + esc(v.nguoi_tao || '') + '</td><td>' + esc(v.ngay_tao || '') + '</td>' +
+        '<td class="actions">' + act + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+    el.innerHTML = html;
+    var bd = $('btnDraft'); if (bd) bd.onclick = function(){ openDraftModal(active ? active.items : []); };
+    var bx = $('btnXlsDuTru');
+    if (bx && active && active.items) bx.onclick = function(){
+      xuatXlsChung('dutru', 'Dự trù — ' + state.project.ma_du_an,
+        ['Hạng mục','Vật tư/Công việc','ĐVT','SL','Đơn giá','Thành tiền'],
+        active.items.map(function(it){ return [it.hang_muc, it.vat_tu||'', it.don_vi||'', it.so_luong, it.don_gia, it.thanh_tien]; }));
+    };
+    el.querySelectorAll('button[data-act]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var v = b.dataset.v, act = b.dataset.act;
+        if (act === 'submit') {
+          if (!confirm('Trình duyệt phiên bản ' + v + '?')) return;
+          safeApi('submitDuTru', { ma_du_an: state.project.ma_du_an, phien_ban: Number(v) }).then(function(r){
+            if (r) { toast('Đã trình duyệt.', 'success'); loadDuTru(); }
+          });
+        } else {
+          if (!confirm('Duyệt phiên bản ' + v + '?')) return;
+          safeApi('approveDuTru', { ma_du_an: state.project.ma_du_an, phien_ban: Number(v) }).then(function(r){
+            if (r) { toast('Đã duyệt.', 'success'); loadDuTru(); }
+          });
+        }
+      });
+    });
+  });
+}
+function openDraftModal(pre){
+  var rows = pre && pre.length ? pre : [{ hang_muc:'', vat_tu:'', don_vi:'', so_luong:'', don_gia:'' }];
+  openModal('Tạo bản nháp dự trù',
+    '<div class="desc">Mỗi dòng: hạng mục → vật tư → ĐVT → SL → đơn giá.</div>' +
+    '<div id="draftRows"></div>' +
+    '<button class="btn btn-ghost btn-sm" id="drAdd">+ Thêm dòng</button>' +
+    '<div class="f-group mt16"><label>Ghi chú</label><input id="drNote"></div>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">Lưu</button>');
+  $('mCancel').onclick = closeModal;
+  function addRow(it){
+    it = it || {};
+    var div = document.createElement('div');
+    div.className = 'dyn-row';
+    div.innerHTML =
+      '<div class="f-group" style="flex:1;min-width:120px"><input class="drHm" placeholder="Hạng mục" value="' + esc(it.hang_muc || '') + '"></div>' +
+      '<div class="f-group" style="flex:2;min-width:140px"><input class="drVt" placeholder="Vật tư / CV" value="' + esc(it.vat_tu || '') + '"></div>' +
+      '<div class="f-group" style="width:70px"><input class="drDv" placeholder="ĐVT" value="' + esc(it.don_vi || '') + '"></div>' +
+      '<div class="f-group" style="width:80px"><input class="drSl" type="number" placeholder="SL" value="' + esc(it.so_luong || '') + '"></div>' +
+      '<div class="f-group" style="width:110px"><input class="drDg" type="number" placeholder="ĐG" value="' + esc(it.don_gia || '') + '"></div>' +
+      '<button class="btn btn-ghost btn-sm drDel">Xóa</button>';
+    div.querySelector('.drDel').onclick = function(){ div.remove(); };
+    $('draftRows').appendChild(div);
+  }
+  rows.forEach(addRow);
+  $('drAdd').onclick = function(){ addRow({}); };
+  $('mSave').onclick = function(){
+    var items = [];
+    document.querySelectorAll('#draftRows .dyn-row').forEach(function(r){
+      var hm = r.querySelector('.drHm').value.trim();
+      if (!hm) return;
+      items.push({
+        hang_muc: hm,
+        vat_tu: r.querySelector('.drVt').value.trim(),
+        don_vi: r.querySelector('.drDv').value.trim(),
+        so_luong: Number(r.querySelector('.drSl').value) || 0,
+        don_gia: Number(r.querySelector('.drDg').value) || 0
+      });
+    });
+    if (!items.length) { toast('Nhập ít nhất 1 dòng.', 'error'); return; }
+    safeApi('saveDuTru', { ma_du_an: state.project.ma_du_an, items: items, ghi_chu: $('drNote').value.trim() })
+      .then(function(r){ if (r) { closeModal(); toast('Đã lưu.', 'success'); loadDuTru(); } });
+  };
+}
+
+/* =====================================================================
+   TAB MUA HÀNG
+   ===================================================================== */
+function loadMuaHang(){
+  var el = $('tab-muahang');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('listDeNghi', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var list = d.list || d || [];
+    var hms = list.map(function(x){ return x.hang_muc; }).filter(function(v, i, a){ return v && a.indexOf(v) === i; });
+    var html = '<div class="card"><div class="card-head"><h2>Đề nghị mua hàng / chi phí</h2>' +
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' +
+      '<input id="mhSearch" placeholder="Tìm..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:160px">' +
+      '<select id="mhTt" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px">' +
+      '<option value="">Tất cả trạng thái</option>' +
+      Object.keys(TT_DN).map(function(k){ return '<option value="' + k + '">' + TT_DN[k][0] + '</option>'; }).join('') + '</select>' +
+      '<select id="mhHm" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px">' +
+      '<option value="">Tất cả hạng mục</option>' +
+      hms.map(function(h){ return '<option value="' + esc(h) + '">' + esc(h) + '</option>'; }).join('') + '</select>' +
+      '<button class="btn btn-primary btn-sm" id="btnNewDN">+ Tạo đề nghị</button>' +
+      '<button class="btn btn-ghost btn-sm" id="btnXlsMH">Xuất Excel</button>' +
+      '</div></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Loại</th><th>Hạng mục</th>' +
+      '<th>Nội dung</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th>' +
+      '<th>NCC</th><th>Trạng thái</th><th>Người tạo</th><th></th></tr></thead><tbody id="mhRows"></tbody></table></div></div>';
+    el.innerHTML = html;
+    function render(){
+      var tt = $('mhTt').value, hm = $('mhHm').value, kw = ($('mhSearch').value || '').toLowerCase();
+      var rows = list.filter(function(x){ return (!tt || x.trang_thai === tt) && (!hm || x.hang_muc === hm); });
+      if (kw) rows = rows.filter(function(x){
+        return (x.noi_dung || '').toLowerCase().indexOf(kw) !== -1 ||
+               (x.nha_cung_cap || '').toLowerCase().indexOf(kw) !== -1 ||
+               (x.hang_muc || '').toLowerCase().indexOf(kw) !== -1;
+      });
+      state.mhHienThi = rows;
+      $('mhRows').innerHTML = rows.length ? rows.map(function(x){
+        var act = '';
+        if (x.trang_thai === 'cho_duyet')
+          act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
+                '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
+        else if (x.trang_thai === 'da_duyet')
+          act = '<button class="btn btn-primary btn-sm" data-a="tt" data-id="' + x.id + '">Tạo phiếu TT</button>';
+        return '<tr' + (x.vuot_dinh_muc ? ' class="row-alert"' : '') + '>' +
+          '<td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+          '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
+          '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
+          '<td>' + esc(x.noi_dung || '') + '</td>' +
+          '<td class="num">' + fmt(x.so_luong) + '</td>' +
+          '<td class="num">' + fmt(x.don_gia) + '</td>' +
+          '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+          '<td>' + esc(x.nha_cung_cap || '') + '</td>' +
+          '<td>' + badge(x.trang_thai, TT_DN) + '</td>' +
+          '<td>' + esc(x.nguoi_tao || '') + '</td>' +
+          '<td class="actions">' + act + '</td></tr>';
+      }).join('') : '<tr><td colspan="11" class="empty">Không có đề nghị.</td></tr>';
+      el.querySelectorAll('button[data-a]').forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.dataset.id, a = b.dataset.a;
+          if (a === 'ok') {
+            if (!confirm('Duyệt?')) return;
+            safeApi('approveDeNghi', { id: id }).then(function(r){ if (r) { toast('Đã duyệt.', 'success'); loadMuaHang(); } });
+          } else if (a === 'no') {
+            var ly = prompt('Lý do từ chối:'); if (ly === null) return;
+            safeApi('rejectDeNghi', { id: id, ly_do: ly }).then(function(r){ if (r) { toast('Đã từ chối.', 'success'); loadMuaHang(); } });
+          } else if (a === 'tt') {
+            openThanhToanModal(id);
+          }
+        });
+      });
+    }
+    render();
+    $('mhTt').onchange = render;
+    $('mhHm').onchange = render;
+    $('mhSearch').oninput = render;
+    $('btnXlsMH').onclick = function(){
+      xuatXlsChung('muahang', 'Mua hàng — ' + state.project.ma_du_an,
+        ['Ngày','Loại','Hạng mục','Nội dung','SL','Đơn giá','Thành tiền','NCC','Trạng thái','Người tạo'],
+        (state.mhHienThi || []).map(function(x){
+          return [x.ngay_de_nghi||'', LOAI_DN[x.loai]||x.loai||'', x.hang_muc||'', x.noi_dung||'',
+            x.so_luong, x.don_gia, x.so_tien, x.nha_cung_cap||'',
+            (TT_DN[x.trang_thai]||[x.trang_thai])[0], x.nguoi_tao||''];
+        }));
+    };
+    $('btnNewDN').onclick = function(){ openDeNghiModal(); };
+  });
+}
+
+function openDeNghiModal(){
+  var dl = state.hangMucs.map(function(h){ return '<option value="' + esc(h) + '">'; }).join('');
+  openModal('Tạo đề nghị mua hàng / chi phí',
+    '<div class="f-row"><div class="f-group"><label>Loại *</label><select id="dnLoai">' +
+    Object.keys(LOAI_DN).map(function(k){ return '<option value="' + k + '">' + LOAI_DN[k] + '</option>'; }).join('') +
+    '</select></div>' +
+    '<div class="f-group"><label>Hạng mục *</label><input id="dnHm" list="dlHm"><datalist id="dlHm">' + dl + '</datalist></div></div>' +
+    '<div class="f-group"><label>Nội dung *</label><input id="dnNd"></div>' +
+    '<div class="f-row"><div class="f-group"><label>SL *</label><input id="dnSl" type="number" min="0"></div>' +
+    '<div class="f-group"><label>Đơn giá *</label><input id="dnDg" type="number" min="0"></div>' +
+    '<div class="f-group"><label>Thành tiền</label><input id="dnTt" readonly></div></div>' +
+    '<div class="f-group"><label>Nhà cung cấp</label><input id="dnNcc"></div>' +
+    '<div class="f-row"><div class="f-group"><label>Hình thức *</label><select id="dnHt">' +
+    '<option value="chuyen_khoan">Chuyển khoản</option><option value="tien_mat">Tiền mặt</option></select></div>' +
+    '<div class="f-group"><label>Người nhận tiền</label><input id="dnNn"></div></div>' +
+    '<div class="f-row"><div class="f-group"><label>Ngân hàng</label><input id="dnNh"></div>' +
+    '<div class="f-group"><label>Số tài khoản</label><input id="dnStk"></div></div>' +
+    '<div class="f-row"><div class="f-group"><label>CMND/CCCD</label><input id="dnCmnd"></div>' +
+    '<div class="f-group"><label>Nơi cấp</label><input id="dnNoiCap"></div></div>' +
+    '<div class="f-group"><label>Mô tả</label><textarea id="dnMoTa" rows="2"></textarea></div>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">Lưu đề nghị</button>');
+  $('mCancel').onclick = closeModal;
+  function calc(){
+    var tt = (Number($('dnSl').value) || 0) * (Number($('dnDg').value) || 0);
+    $('dnTt').value = tt ? fmt(tt) + ' đ' : '';
+  }
+  $('dnSl').oninput = calc; $('dnDg').oninput = calc;
+  $('mSave').onclick = function(){
+    var loai = $('dnLoai').value;
+    safeApi('createDeNghi', {
+      ma_du_an: state.project.ma_du_an, loai: loai,
+      hang_muc: $('dnHm').value.trim(), noi_dung: $('dnNd').value.trim(),
+      so_luong: Number($('dnSl').value) || 0, don_gia: Number($('dnDg').value) || 0,
+      nha_cung_cap: $('dnNcc').value.trim(), hinh_thuc: $('dnHt').value,
+      ten_nguoi_nhan: $('dnNn').value.trim(), ngan_hang: $('dnNh').value.trim(),
+      so_tai_khoan: $('dnStk').value.trim(), cmnd: $('dnCmnd').value.trim(),
+      noi_cap: $('dnNoiCap').value.trim(), mo_ta: $('dnMoTa').value.trim()
+    }).then(function(r){
+      if (r) {
+        closeModal(); loadMuaHang();
+        toast('Đã tạo đề nghị.', 'success');
+      }
+    });
+  };
+}
+
+/* =====================================================================
+   PHIẾU ĐỀ NGHỊ THANH TOÁN — in theo mẫu công ty
+   ===================================================================== */
+function docSoTien(n){
+  n = Math.round(Math.abs(Number(n) || 0));
+  if (n === 0) return 'Không đồng';
+  var chu = ['không','một','hai','ba','bốn','năm','sáu','bảy','tám','chín'];
+  function doc3(x){
+    var s = '', tram = Math.floor(x / 100), du = x % 100;
+    var chuc = Math.floor(du / 10), don = du % 10;
+    if (tram) { s = chu[tram] + ' trăm'; if (chuc === 0 && don) s += ' lẻ'; }
+    if (chuc > 1) {
+      s += (s ? ' ' : '') + chu[chuc] + ' mươi';
+      if (don === 1) s += ' mốt'; else if (don === 5) s += ' lăm'; else if (don) s += ' ' + chu[don];
+    } else if (chuc === 1) {
+      s += (s ? ' ' : '') + 'mười';
+      if (don === 5) s += ' lăm'; else if (don) s += ' ' + chu[don];
+    } else if (don) s += (s ? ' ' : '') + chu[don];
+    return s;
+  }
+  var parts = [];
+  var ty = Math.floor(n / 1e9), tr = Math.floor((n % 1e9) / 1e6),
+      ng = Math.floor((n % 1e6) / 1e3), dv = n % 1e3;
+  if (ty) parts.push(doc3(ty) + ' tỷ');
+  if (tr) parts.push(doc3(tr) + ' triệu');
+  if (ng) parts.push(doc3(ng) + ' nghìn');
+  if (dv || !parts.length) parts.push(doc3(dv));
+  var s = parts.join(' ');
+  return s.charAt(0).toUpperCase() + s.slice(1) + ' đồng';
+}
+
+function inPhieuDNTT(id){
+  safeApi('getPhieuDNTT', { id: id }).then(function(d){
+    if (!d) return;
+    var sign = ['Người Đề Nghị','Trưởng Bộ Phận','Phụ trách DA','Trưởng phòng DA','Kế Toán','Giám Đốc']
+      .map(function(s){ return '<div class="box">' + s + '</div>'; }).join('');
+    var ht = d.hinh_thuc === 'tien_mat' ? '☑ Tiền mặt  ☐ Chuyển khoản' : '☐ Tiền mặt  ☑ Chuyển khoản';
+    $('printRoot').innerHTML =
+      '<div class="print-actions">' +
+      '<button class="btn btn-primary btn-sm" id="prIn">In</button>' +
+      '<button class="btn btn-ghost btn-sm" id="prXls">Tải Excel</button>' +
+      '<button class="btn btn-ghost btn-sm" id="prDong">Đóng</button></div>' +
+      '<div class="phieu-wrap">' +
+      '<div class="phieu-head"><img class="logo" src="' + LOGO_BT + '" alt="logo">' +
+      '<div class="co"><b>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</b>' +
+      'Add: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam<br>' +
+      'Tel: +848 3535 1905 — 0903 865 240<br>Website: www.thewall.com.vn</div></div>' +
+      '<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>' +
+      '<div class="phieu-line">' +
+      '<div class="cell">Ngày: <b>' + esc(d.ngay || '') + '</b></div>' +
+      '<div class="cell">Người đề nghị: <b>' + esc(d.nguoi_de_nghi || '') + '</b></div>' +
+      '<div class="cell">Bộ phận: <b>' + esc(d.bo_phan || '') + '</b></div></div>' +
+      '<div class="phieu-line"><div class="cell">Mục đích: <b>' + esc(d.muc_dich || '') + '</b></div></div>' +
+      '<div class="phieu-line"><div class="cell">Hạng mục: <b>' + esc(d.hang_muc || '') + '</b></div></div>' +
+      '<div class="phieu-line"><div class="cell">DỰ ÁN: <b>' + esc(d.ten_du_an || d.ma_du_an || '') + '</b></div></div>' +
+      '<div class="phieu-sign">' + sign + '</div>' +
+      '<div class="phieu-bank"><div class="t">Thông tin chuyển khoản</div>' +
+      'Họ và tên: <b>' + esc(d.ten_nguoi_nhan || '') + '</b><br>' +
+      'Ngân hàng: <b>' + esc(d.ngan_hang || '') + '</b><br>' +
+      'Số TK: <b>' + esc(d.so_tai_khoan || '') + '</b><br>' +
+      'CMND: <b>' + esc(d.cmnd || '') + '</b> — Nơi cấp: <b>' + esc(d.noi_cap || '') + '</b></div>' +
+      '<table class="phieu-money"><thead><tr>' +
+      '<th>Số tiền thanh toán</th><th>Lũy kế</th><th>Tổng giá trị HĐ</th><th>Còn lại</th>' +
+      '</tr></thead><tbody><tr>' +
+      '<td><b>' + fmt(d.so_tien) + '</b></td><td>' + fmt(d.luy_ke) + '</td>' +
+      '<td>' + fmt(d.tong_hd) + '</td><td>' + fmt(d.con_lai) + '</td></tr></tbody></table>' +
+      '<div class="phieu-section">A. Người nhận thanh toán</div>' +
+      '<div style="margin:6px 0 12px">' + esc(d.ten_nguoi_nhan || '') + '</div>' +
+      '<div class="phieu-section">B. Hình thức thanh toán</div>' +
+      '<div style="margin:4px 0 10px">' + ht + '  ☐ Trừ TƯ  ☐ Thu hồi</div>' +
+      '<div class="phieu-section">C. Chứng từ kèm theo</div>' +
+      '<div style="margin:6px 0">c1. Có chứng từ tài chính:</div><div class="phieu-underline"></div>' +
+      '<div style="margin:6px 0">c2. Không chứng từ tài chính:</div><div class="phieu-underline"></div>' +
+      '<div class="phieu-section">D. Số tiền thực nhận (c1+c2)</div><div class="phieu-underline"></div>' +
+      '<div class="phieu-section">E. Bằng chữ</div>' +
+      '<div style="margin:6px 0 12px"><i>' + esc(docSoTien(d.so_tien)) + '</i></div>' +
+      '<div style="display:flex;gap:24px;margin-top:18px">' +
+      '<div style="flex:1;text-align:center;font-weight:700">F. Ký nhận<br><br><br>....................</div>' +
+      '<div style="flex:1;text-align:center;font-weight:700">Ngày nhận<br><br><br>....................</div></div>' +
+      '<div class="phieu-note">XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN</div>' +
+      '<div class="phieu-addr">Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM</div>' +
+      '</div>';
+    $('printRoot').style.display = 'block';
+    window.scrollTo(0, 0);
+    $('prIn').onclick = function(){ window.print(); };
+    $('prXls').onclick = function(){ xuatPhieuXls(d); };
+    $('prDong').onclick = function(){ $('printRoot').style.display = 'none'; $('printRoot').innerHTML = ''; };
+  });
+}
+function xuatPhieuXls(d){
+  var h = '<html><head><meta charset="UTF-8"></head><body>' +
+    '<h3>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</h3>' +
+    '<h2 align="center">PHIẾU ĐỀ NGHỊ THANH TOÁN</h2>' +
+    '<table border="1" cellpadding="6">' +
+    '<tr><td>Ngày: <b>' + esc(d.ngay || '') + '</b></td><td>Người đề nghị: <b>' + esc(d.nguoi_de_nghi || '') + '</b></td></tr>' +
+    '<tr><td>Hạng mục: <b>' + esc(d.hang_muc || '') + '</b></td><td>Dự án: <b>' + esc(d.ten_du_an || d.ma_du_an || '') + '</b></td></tr>' +
+    '<tr><td colspan="2">Mục đích: <b>' + esc(d.muc_dich || '') + '</b></td></tr>' +
+    '</table>' +
+    '<table border="1" cellpadding="6" style="margin-top:12px"><tr>' +
+    ['Người ĐN','Trưởng BP','Phụ trách DA','Trưởng phòng DA','Kế Toán','Giám Đốc'].map(function(s){ return '<th>' + s + '</th>'; }).join('') +
+    '</tr><tr>' + new Array(6).fill('<td height="60"></td>').join('') + '</tr></table>' +
+    '<table border="1" cellpadding="6" style="margin-top:12px">' +
+    '<tr><td colspan="2"><b>Thông tin CK</b></td></tr>' +
+    '<tr><td>Họ tên</td><td>' + esc(d.ten_nguoi_nhan || '') + '</td></tr>' +
+    '<tr><td>Ngân hàng</td><td>' + esc(d.ngan_hang || '') + '</td></tr>' +
+    '<tr><td>Số TK</td><td>' + esc(d.so_tai_khoan || '') + '</td></tr>' +
+    '<tr><td>CMND</td><td>' + esc(d.cmnd || '') + '</td></tr>' +
+    '</table>' +
+    '<table border="1" cellpadding="6" style="margin-top:12px"><tr>' +
+    '<th>Số tiền thanh toán</th><th>Lũy kế</th><th>Tổng HĐ</th><th>Còn lại</th></tr>' +
+    '<tr><td><b>' + d.so_tien + '</b></td><td>' + d.luy_ke + '</td><td>' + d.tong_hd + '</td><td>' + d.con_lai + '</td></tr></table>' +
+    '<p><b>Bằng chữ:</b> <i>' + esc(docSoTien(d.so_tien)) + '</i></p>' +
+    '<p><b>A.</b> Người nhận: ' + esc(d.ten_nguoi_nhan || '') + '</p>' +
+    '<p><b>B.</b> Hình thức: ' + (d.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : 'Chuyển khoản') + '</p>' +
+    '<p><b>C.</b> Chứng từ: c1 ________  c2 ________</p>' +
+    '<p><b>D.</b> Số tiền thực nhận: ________</p>' +
+    '<p><b>E.</b> Bằng chữ: <i>' + esc(docSoTien(d.so_tien)) + '</i></p>' +
+    '<p><b>F.</b> Ký nhận: ________  Ngày nhận: ________</p>' +
+    '</body></html>';
+  var blob = new Blob(['\ufeff' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'phieu_dntt_' + (d.id || 'phieu') + '.xls';
+  a.click();
+}
+
+/* =====================================================================
+   TAB THANH TOÁN
+   ===================================================================== */
+function loadThanhToan(){
+  var el = $('tab-thanhtoan');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('listThanhToan', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var list = d.list || d || [];
+    var html = '<div class="card"><div class="card-head"><h2>Phiếu thanh toán</h2>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<button class="btn btn-primary btn-sm" id="btnNewTT">+ Tạo phiếu</button>' +
+      '<button class="btn btn-ghost btn-sm" id="btnXlsTT">Xuất Excel</button></div></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã</th><th>Nội dung</th><th>Hạng mục</th>' +
+      '<th class="num">Số tiền</th><th>Hình thức</th><th>Người nhận</th>' +
+      '<th>Trạng thái</th><th></th></tr></thead><tbody>';
+    if (!list.length) html += '<tr><td colspan="8" class="empty">Chưa có phiếu.</td></tr>';
+    list.forEach(function(x){
+      var act = '';
+      if (x.trang_thai === 'cho_duyet')
+        act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
+              '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
+      act += ' <button class="btn btn-ghost btn-sm" data-a="print" data-id="' + x.id + '">In</button>';
+      html += '<tr><td><b>' + esc(x.id) + '</b></td>' +
+        '<td>' + esc(x.noi_dung || '') + '</td>' +
+        '<td>' + esc(x.hang_muc || '') + '</td>' +
+        '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+        '<td>' + (x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : 'Chuyển khoản') + '</td>' +
+        '<td>' + esc(x.ten_nguoi_nhan || '') + '</td>' +
+        '<td>' + badge(x.trang_thai, TT_TT) + '</td>' +
+        '<td class="actions">' + act + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+    el.innerHTML = html;
+    el.querySelectorAll('button[data-a]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var id = b.dataset.id, a = b.dataset.a;
+        if (a === 'print') { inPhieuDNTT(id); return; }
+        if (a === 'ok') {
+          if (!confirm('Duyệt?')) return;
+          safeApi('approveThanhToan', { id: id }).then(function(r){ if (r) { toast('Đã duyệt.', 'success'); loadThanhToan(); } });
+        } else if (a === 'no') {
+          var ly = prompt('Lý do:'); if (ly === null) return;
+          safeApi('rejectThanhToan', { id: id, ly_do: ly }).then(function(r){ if (r) { toast('Đã từ chối.', 'success'); loadThanhToan(); } });
+        }
+      });
+    });
+    $('btnNewTT').onclick = function(){ openThanhToanModal(); };
+    $('btnXlsTT').onclick = function(){
+      xuatXlsChung('thanhtoan', 'Thanh toán — ' + state.project.ma_du_an,
+        ['Mã','Nội dung','Hạng mục','Số tiền','Hình thức','Người nhận','Trạng thái'],
+        list.map(function(x){ return [x.id, x.noi_dung||'', x.hang_muc||'', x.so_tien,
+          x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : 'Chuyển khoản', x.ten_nguoi_nhan||'',
+          (TT_TT[x.trang_thai]||[x.trang_thai])[0]]; }));
+    };
+  });
+}
+function openThanhToanModal(deNghiId){
+  safeApi('listDeNghi', { ma_du_an: state.project.ma_du_an, trang_thai: 'da_duyet' }).then(function(dnRes){
+    if (!dnRes) return;
+    var dns = dnRes.list || dnRes || [];
+    if (!dns.length) { toast('Không có khoản chi đã duyệt.', 'error'); return; }
+    openModal('Tạo phiếu thanh toán',
+      '<div class="f-group"><label>Khoản chi *</label><select id="ttDn">' +
+      dns.map(function(x){
+        return '<option value="' + esc(x.id) + '"' + (x.id === deNghiId ? ' selected' : '') + '>' +
+          esc(x.id + ' — ' + (x.noi_dung || '') + ' — ' + fmt(x.so_tien) + 'đ') + '</option>';
+      }).join('') + '</select></div>' +
+      '<div class="f-group"><label>Hình thức *</label><select id="ttHt">' +
+      '<option value="chuyen_khoan">Chuyển khoản</option><option value="tien_mat">Tiền mặt</option></select></div>' +
+      '<div class="f-group"><label>Người nhận</label><input id="ttNn"></div>' +
+      '<div class="f-row"><div class="f-group"><label>Ngân hàng</label><input id="ttNh"></div>' +
+      '<div class="f-group"><label>Số TK</label><input id="ttStk"></div></div>',
+      '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+      '<button class="btn btn-primary" id="mSave">Tạo phiếu</button>');
+    $('mCancel').onclick = closeModal;
+    function dien(){
+      var x = dns.find(function(k){ return k.id === $('ttDn').value; });
+      if (!x) return;
+      $('ttHt').value = x.hinh_thuc || 'chuyen_khoan';
+      $('ttNn').value = x.ten_nguoi_nhan || '';
+      $('ttNh').value = x.ngan_hang || '';
+      $('ttStk').value = x.so_tai_khoan || '';
+    }
+    $('ttDn').onchange = dien; dien();
+    $('mSave').onclick = function(){
+      safeApi('createThanhToan', {
+        de_nghi_id: $('ttDn').value, hinh_thuc: $('ttHt').value,
+        ten_nguoi_nhan: $('ttNn').value.trim(),
+        ngan_hang: $('ttNh').value.trim(), so_tai_khoan: $('ttStk').value.trim()
+      }).then(function(r){
+        if (r && r.id) {
+          closeModal(); loadThanhToan();
+          toast('Đã tạo phiếu ' + r.id, 'success');
+        }
+      });
+    };
+  });
+}
+
+/* =====================================================================
+   TAB PHÁT SINH
+   ===================================================================== */
+function loadPhatSinh(){
+  var el = $('tab-phatsinh');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('listPhatSinh', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var list = d.list || d || [];
+    var html = '<div class="note-box"><b>Lưu ý:</b> phát sinh sau khi duyệt sẽ tự động cộng vào ngân sách.</div>';
+    html += '<div class="card"><div class="card-head"><h2>Danh sách phát sinh</h2>' +
+      '<button class="btn btn-primary btn-sm" id="btnNewPS">+ Tạo phát sinh</button></div>';
+    if (!list.length) html += '<div class="empty">Chưa có phát sinh.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Hạng mục</th>' +
+        '<th>Lý do</th><th class="num">Số tiền</th><th>Trạng thái</th><th>Người đề xuất</th><th></th></tr></thead><tbody>';
+      list.forEach(function(x){
+        var act = '';
+        if (x.trang_thai === 'cho_duyet')
+          act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
+                '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
+        html += '<tr><td>' + esc(x.ngay_tao || '') + '</td>' +
+          '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
+          '<td>' + esc(x.ly_do || '') + '</td>' +
+          '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+          '<td>' + badge(x.trang_thai, TT_PS) + '</td>' +
+          '<td>' + esc(x.nguoi_de_xuat || '') + '</td>' +
+          '<td class="actions">' + act + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+    $('btnNewPS').onclick = function(){ openPhatSinhModal(); };
+    el.querySelectorAll('button[data-a]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var id = b.dataset.id;
+        if (b.dataset.a === 'ok') {
+          if (!confirm('Duyệt phát sinh?')) return;
+          safeApi('approvePhatSinh', { id: id }).then(function(r){ if (r) { toast('Đã duyệt.', 'success'); loadPhatSinh(); } });
+        } else {
+          var ly = prompt('Lý do:'); if (ly === null) return;
+          safeApi('rejectPhatSinh', { id: id, ly_do: ly }).then(function(r){ if (r) { toast('Đã từ chối.', 'success'); loadPhatSinh(); } });
+        }
+      });
+    });
+  });
+}
+function openPhatSinhModal(){
+  var dl = state.hangMucs.map(function(h){ return '<option value="' + esc(h) + '">'; }).join('');
+  openModal('Tạo phát sinh',
+    '<div class="f-group"><label>Hạng mục *</label><input id="psHm" list="dlPsHm"><datalist id="dlPsHm">' + dl + '</datalist></div>' +
+    '<div class="f-group"><label>Lý do *</label><textarea id="psLyDo" rows="3"></textarea></div>' +
+    '<div class="f-group"><label>Số tiền (đ) *</label><input id="psTien" type="number" min="1"></div>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">Tạo</button>');
+  $('mCancel').onclick = closeModal;
+  $('mSave').onclick = function(){
+    var hm = $('psHm').value.trim(), ly = $('psLyDo').value.trim(), tien = Number($('psTien').value) || 0;
+    if (!hm || !ly || !tien) { toast('Nhập đủ.', 'error'); return; }
+    safeApi('createPhatSinh', { ma_du_an: state.project.ma_du_an, hang_muc: hm, ly_do: ly, so_tien: tien })
+      .then(function(r){ if (r) { closeModal(); toast('Đã tạo phát sinh.', 'success'); loadPhatSinh(); } });
+  };
+}
+
+/* =====================================================================
+   TAB TIẾN ĐỘ
+   ===================================================================== */
+function loadTienDo(){
+  var el = $('tab-tiendo');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('getTienDo', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var list = d.list || d || [];
+    var html = '<div class="card"><div class="card-head"><h2>Tiến độ dự án</h2>' +
+      '<button class="btn btn-primary btn-sm" id="btnTdEdit">Cập nhật</button></div>';
+    if (!list.length) html += '<div class="empty">Chưa có dữ liệu.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Công việc</th>' +
+        '<th>Người phụ trách</th><th>Bắt đầu</th><th>Kết thúc</th>' +
+        '<th style="min-width:150px">Hoàn thành</th><th>Trạng thái</th></tr></thead><tbody>';
+      list.forEach(function(t){
+        var pc = Math.max(0, Math.min(100, Number(t.phan_tram) || 0));
+        html += '<tr' + (t.tre_han ? ' class="row-alert"' : '') + '>' +
+          '<td><b>' + esc(t.hang_muc || '') + '</b></td>' +
+          '<td>' + esc(t.cong_viec || '') + '</td>' +
+          '<td>' + esc(t.nguoi_phu_trach || '') + '</td>' +
+          '<td>' + esc(t.ngay_bat_dau || '') + '</td>' +
+          '<td>' + esc(t.ngay_ket_thuc || '') + '</td>' +
+          '<td><div style="display:flex;align-items:center;gap:8px"><div class="progress' + (t.tre_han ? ' red' : '') + '" style="flex:1"><div style="width:' + pc + '%"></div></div><b>' + pc + '%</b></div></td>' +
+          '<td>' + badge(t.trang_thai, TT_TD) + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+    $('btnTdEdit').onclick = function(){ openTienDoModal(list); };
+  });
+}
+function openTienDoModal(list){
+  var pre = list && list.length ? list : [{ hang_muc:'', cong_viec:'', nguoi_phu_trach:'', ngay_bat_dau:'', ngay_ket_thuc:'', phan_tram:0, trang_thai:'chua_bat_dau' }];
+  openModal('Cập nhật tiến độ',
+    '<div id="tdRows"></div><button class="btn btn-ghost btn-sm" id="tdAdd">+ Thêm</button>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    '<button class="btn btn-primary" id="mSave">Lưu</button>');
+  $('mCancel').onclick = closeModal;
+  function addRow(t){
+    t = t || {};
+    var div = document.createElement('div');
+    div.className = 'dyn-row';
+    div.innerHTML =
+      '<div class="f-group" style="flex:1;min-width:100px"><input class="tdHm" placeholder="Hạng mục" value="' + esc(t.hang_muc || '') + '"></div>' +
+      '<div class="f-group" style="flex:2;min-width:130px"><input class="tdCv" placeholder="Công việc" value="' + esc(t.cong_viec || '') + '"></div>' +
+      '<div class="f-group" style="flex:1;min-width:100px"><input class="tdPt" placeholder="Phụ trách" value="' + esc(t.nguoi_phu_trach || '') + '"></div>' +
+      '<div class="f-group" style="min-width:110px"><input class="tdBd" type="date" value="' + esc(t.ngay_bat_dau || '') + '"></div>' +
+      '<div class="f-group" style="min-width:110px"><input class="tdKt" type="date" value="' + esc(t.ngay_ket_thuc || '') + '"></div>' +
+      '<div class="f-group" style="width:65px"><input class="tdPc" type="number" placeholder="%" value="' + esc(t.phan_tram || '') + '"></div>' +
+      '<button class="btn btn-ghost btn-sm tdDel">Xóa</button>';
+    div.querySelector('.tdDel').onclick = function(){ div.remove(); };
+    $('tdRows').appendChild(div);
+  }
+  pre.forEach(addRow);
+  $('tdAdd').onclick = function(){ addRow({}); };
+  $('mSave').onclick = function(){
+    var items = [];
+    document.querySelectorAll('#tdRows .dyn-row').forEach(function(r){
+      var cv = r.querySelector('.tdCv').value.trim();
+      if (!cv) return;
+      items.push({
+        hang_muc: r.querySelector('.tdHm').value.trim(), cong_viec: cv,
+        nguoi_phu_trach: r.querySelector('.tdPt').value.trim(),
+        ngay_bat_dau: r.querySelector('.tdBd').value,
+        ngay_ket_thuc: r.querySelector('.tdKt').value,
+        phan_tram: Number(r.querySelector('.tdPc').value) || 0,
+        trang_thai: 'dang_lam'
+      });
+    });
+    if (!items.length) { toast('Nhập ít nhất 1 công việc.', 'error'); return; }
+    safeApi('saveTienDo', { ma_du_an: state.project.ma_du_an, items: items })
+      .then(function(r){ if (r) { closeModal(); toast('Đã lưu.', 'success'); loadTienDo(); } });
+  };
+}
+
+/* =====================================================================
+   TAB PHÊ DUYỆT
+   ===================================================================== */
+function loadPheDuyet(){
+  var el = $('tab-pheduyet');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('getApprovalInbox', { ma_du_an: state.project.ma_du_an }).then(function(d){
+    if (!d) return;
+    var html = '';
+    var dts = d.du_tru || [];
+    html += '<div class="card"><div class="card-head"><h2>Dự trù chờ duyệt (' + dts.length + ')</h2></div>';
+    if (!dts.length) html += '<div class="empty">Không có.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Phiên bản</th>' +
+        '<th class="num">Tổng</th><th>Người tạo</th><th></th></tr></thead><tbody>';
+      dts.forEach(function(x){
+        html += '<tr><td><b>' + esc(x.ma_du_an) + '</b></td><td>v' + esc(x.phien_ban) + '</td>' +
+          '<td class="num"><b>' + fmt(x.tong) + '</b></td>' +
+          '<td>' + esc(x.nguoi_tao || '') + '</td>' +
+          '<td class="actions"><button class="btn btn-success btn-sm" data-k="dt" data-v="' + esc(x.phien_ban) + '" data-ma="' + esc(x.ma_du_an) + '">Duyệt & khóa</button></td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    var dns = d.de_nghi || [];
+    html += '<div class="card"><div class="card-head"><h2>Đề nghị chờ duyệt (' + dns.length + ')</h2></div>';
+    if (!dns.length) html += '<div class="empty">Không có.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Nội dung</th>' +
+        '<th class="num">Số tiền</th><th>Người tạo</th><th></th></tr></thead><tbody>';
+      dns.forEach(function(x){
+        html += '<tr' + (x.vuot_dinh_muc ? ' class="row-alert"' : '') + '>' +
+          '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
+          '<td>' + esc(x.noi_dung || '') + '</td>' +
+          '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+          '<td>' + esc(x.nguoi_tao || '') + '</td>' +
+          '<td class="actions">' +
+            '<button class="btn btn-success btn-sm" data-k="dn" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
+            '<button class="btn btn-danger btn-sm" data-k="dn" data-a="no" data-id="' + x.id + '">Từ chối</button>' +
+          '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    var pss = d.phat_sinh || [];
+    html += '<div class="card"><div class="card-head"><h2>Phát sinh chờ duyệt (' + pss.length + ')</h2></div>';
+    if (!pss.length) html += '<div class="empty">Không có.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Lý do</th>' +
+        '<th class="num">Số tiền</th><th></th></tr></thead><tbody>';
+      pss.forEach(function(x){
+        html += '<tr><td><b>' + esc(x.hang_muc || '') + '</b></td>' +
+          '<td>' + esc(x.ly_do || '') + '</td>' +
+          '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+          '<td class="actions">' +
+            '<button class="btn btn-success btn-sm" data-k="ps" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
+            '<button class="btn btn-danger btn-sm" data-k="ps" data-a="no" data-id="' + x.id + '">Từ chối</button>' +
+          '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+    el.querySelectorAll('button[data-k]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var k = b.dataset.k, a = b.dataset.a;
+        var ok = a === 'ok';
+        if (ok && !confirm('Duyệt?')) return;
+        var ly = '';
+        if (!ok) { ly = prompt('Lý do:'); if (ly === null) return; }
+        var p;
+        if (k === 'dt') p = safeApi('approveDuTru', { ma_du_an: b.dataset.ma, phien_ban: Number(b.dataset.v) });
+        else if (k === 'dn') p = ok ? safeApi('approveDeNghi', { id: b.dataset.id }) : safeApi('rejectDeNghi', { id: b.dataset.id, ly_do: ly });
+        else p = ok ? safeApi('approvePhatSinh', { id: b.dataset.id }) : safeApi('rejectPhatSinh', { id: b.dataset.id, ly_do: ly });
+        p.then(function(r){ if (r) { toast(ok ? 'Đã duyệt.' : 'Đã từ chối.', 'success'); loadPheDuyet(); } });
+      });
+    });
+  });
+}
+
+/* =====================================================================
+   TAB BÁO CÁO
+   ===================================================================== */
+function loadBaoCao(){
+  var el = $('tab-baocao');
+  var hms = state.hangMucs;
+  el.innerHTML =
+    '<div class="card"><div class="card-head"><h2>Báo cáo đề nghị</h2></div>' +
+    '<div class="f-inline">' +
+    '<div class="f-group"><label>Hạng mục</label><select id="bcHm"><option value="">Tất cả</option>' +
+    hms.map(function(h){ return '<option value="' + esc(h) + '">' + esc(h) + '</option>'; }).join('') + '</select></div>' +
+    '<div class="f-group"><label>Trạng thái</label><select id="bcTt"><option value="">Tất cả</option>' +
+    Object.keys(TT_DN).map(function(k){ return '<option value="' + k + '">' + TT_DN[k][0] + '</option>'; }).join('') + '</select></div>' +
+    '<button class="btn btn-primary" id="btnBcGo">Xem</button>' +
+    '</div><div id="bcResult"><div class="empty">Bấm "Xem" để tải báo cáo.</div></div></div>';
+  $('btnBcGo').onclick = function(){
+    var p = { ma_du_an: state.project.ma_du_an };
+    if ($('bcHm').value) p.hang_muc = $('bcHm').value;
+    if ($('bcTt').value) p.trang_thai = $('bcTt').value;
+    $('bcResult').innerHTML = '<div class="empty">Đang tải...</div>';
+    safeApi('getBaoCao', p).then(function(d){
+      if (!d) return;
+      var items = d.items || [];
+      var tong = d.tong || {};
+      var h = '<div class="stat-grid" style="margin-bottom:14px">' +
+        '<div class="stat-item">Số đề nghị<b>' + items.length + '</b></div>' +
+        '<div class="stat-item">Tổng tiền<b>' + fmt(tong.tong_tien) + ' đ</b></div></div>';
+      if (!items.length) h += '<div class="empty">Không có dữ liệu.</div>';
+      else {
+        h += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Hạng mục</th>' +
+          '<th>Nội dung</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th>' +
+          '<th>Trạng thái</th></tr></thead><tbody>';
+        items.forEach(function(x){
+          h += '<tr><td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+            '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
+            '<td>' + esc(x.noi_dung || '') + '</td>' +
+            '<td class="num">' + fmt(x.so_luong) + '</td>' +
+            '<td class="num">' + fmt(x.don_gia) + '</td>' +
+            '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
+            '<td>' + badge(x.trang_thai, TT_DN) + '</td></tr>';
+        });
+        h += '</tbody></table></div>';
+      }
+      $('bcResult').innerHTML = h;
+    });
+  };
+}
+
+/* =====================================================================
+   XUẤT EXCEL CHUNG
+   ===================================================================== */
+function ngayFile(){
+  var d = new Date();
+  var p = function(n){ return String(n).padStart(2, '0'); };
+  return d.getFullYear() + p(d.getMonth()+1) + p(d.getDate());
+}
+function xuatXlsChung(tenFile, tieuDe, headers, rows){
+  var h = '<html xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta charset="UTF-8"></head><body>' +
+    '<h3>' + esc(tieuDe) + '</h3>' +
+    '<table border="1" cellpadding="6"><thead><tr>' +
+    headers.map(function(c){ return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h += '<tr>' + r.map(function(c){ return '<td>' + esc(c == null ? '' : c) + '</td>'; }).join('') + '</tr>';
+  });
+  h += '</tbody></table></body></html>';
+  var blob = new Blob(['\ufeff' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = tenFile + '_' + (state.project ? state.project.ma_du_an : '') + '_' + ngayFile() + '.xls';
+  a.click();
+}
+
+/* =====================================================================
+   TAB GOOGLE SHEETS
+   ===================================================================== */
+function loadSheet(){
+  var el = $('tab-sheet');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  var url = state.project.sheet_url || '';
+  safeApi('getSyncStatus', { ma_du_an: state.project.ma_du_an }).then(function(sync){
+    var html = '<div class="card"><div class="card-head"><h2>Google Sheets cho dự án ' + esc(state.project.ma_du_an) + '</h2></div>' +
+      '<div class="desc">Dán link Google Sheets để app và sheet cùng nhập liệu.</div>' +
+      '<div class="f-group"><label>Link Google Sheets</label>' +
+      '<input id="shUrl" value="' + esc(url) + '" placeholder="https://docs.google.com/spreadsheets/d/..."></div>';
+    if (url) {
+      html += '<div class="stat-grid" style="margin-bottom:14px">' +
+        '<div class="stat-item">Trạng thái<b class="' + (sync && sync.ok ? 'text-green' : 'text-red') + '">' + (sync && sync.ok ? 'Đã kết nối' : 'Chưa kết nối') + '</b></div>' +
+        '<div class="stat-item">Đồng bộ cuối<b>' + esc(sync && sync.last_sync || '—') + '</b></div>' +
+        '<div class="stat-item">Số bản ghi<b>' + (sync && sync.row_count || 0) + '</b></div>' +
+        '</div>';
+    }
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+      '<button class="btn btn-primary btn-sm" id="btnSaveSheet">Lưu link</button>' +
+      (url ? '<button class="btn btn-ghost btn-sm" id="btnSync">Đồng bộ ngay</button>' : '') +
+      (url ? '<a class="btn btn-ghost btn-sm" href="' + esc(url) + '" target="_blank">Mở Sheets</a>' : '') +
+      (url ? '<button class="btn btn-ghost btn-sm" id="btnClearSheet">Xóa</button>' : '') +
+      '</div></div>';
+    el.innerHTML = html;
+    $('btnSaveSheet').onclick = function(){
+      var u = $('shUrl').value.trim();
+      if (u && u.indexOf('https://docs.google.com/') !== 0) { toast('Link không hợp lệ.', 'error'); return; }
+      safeApi('updateProject', { ma_du_an: state.project.ma_du_an, sheet_url: u }).then(function(r){
+        if (r) { state.project.sheet_url = u; toast('Đã lưu.', 'success'); loadSheet(); }
+      });
+    };
+    var bs = $('btnSync'); if (bs) bs.onclick = function(){
+      toast('Đang đồng bộ...');
+      safeApi('syncFromSheet', { ma_du_an: state.project.ma_du_an }).then(function(r){
+        if (r) { toast('Đồng bộ xong.', 'success'); loadSheet(); }
+      });
+    };
+    var bc = $('btnClearSheet'); if (bc) bc.onclick = function(){
+      if (!confirm('Xóa kết nối?')) return;
+      safeApi('updateProject', { ma_du_an: state.project.ma_du_an, sheet_url: '' }).then(function(r){
+        if (r) { state.project.sheet_url = ''; toast('Đã xóa.', 'success'); loadSheet(); }
+      });
+    };
+  });
+}
+
+/* =====================================================================
+   TAB LỊCH SỬ
+   ===================================================================== */
+function loadLichSu(){
+  var el = $('tab-lichsu');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('getLichSu', { ma_du_an: state.project.ma_du_an, gioi_han: 100 }).then(function(d){
+    if (!d) return;
+    var list = d.list || d || [];
+    var html = '<div class="card"><div class="card-head"><h2>Lịch sử thay đổi</h2></div>';
+    if (!list.length) html += '<div class="empty">Chưa có lịch sử.</div>';
+    else {
+      html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
+        '<th>Thời gian</th><th>Người làm</th><th>Hành động</th><th>Đối tượng</th><th>Lý do</th></tr></thead><tbody>';
+      list.forEach(function(x){
+        html += '<tr><td>' + esc(x.thoi_gian || '') + '</td>' +
+          '<td><b>' + esc(x.username || '') + '</b></td>' +
+          '<td>' + esc(x.hanh_dong || '') + '</td>' +
+          '<td>' + esc(x.doi_tuong || '') + '</td>' +
+          '<td>' + esc(x.ly_do || '') + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  });
+}
+
+/* =====================================================================
+   TAB ADMIN
+   ===================================================================== */
+function loadAdmin(){
+  var el = $('tab-admin');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  safeApi('listUsers').then(function(d){
+    if (!d) return;
+    var list = d.users || d || [];
+    var html = '<div class="card"><div class="card-head"><h2>Quản lý người dùng</h2>' +
+      '<button class="btn btn-primary btn-sm" id="btnNewUser">+ Tạo user</button></div>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Tên đăng nhập</th><th>Họ tên</th>' +
+      '<th>Vai trò</th><th>Trạng thái</th></tr></thead><tbody>';
+    if (!list.length) html += '<tr><td colspan="4" class="empty">Chưa có user.</td></tr>';
+    list.forEach(function(u){
+      var locked = u.trang_thai !== 'active';
+      html += '<tr><td><b>' + esc(u.username) + '</b></td><td>' + esc(u.ho_ten || '') + '</td>' +
+        '<td>' + esc(ROLE_LABEL[u.vai_tro] || u.vai_tro || '') + '</td>' +
+        '<td>' + (locked ? '<span class="badge b-red">Khóa</span>' : '<span class="badge b-green">Hoạt động</span>') + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+    el.innerHTML = html;
+  });
+}
+
+/* =====================================================================
+   KHỞI ĐỘNG — VÀO THẲNG, KHÔNG LOGIN
+   ===================================================================== */
+document.addEventListener('DOMContentLoaded', function(){
+  // Logo
+  ['topLogo','topLogo2'].forEach(function(id){
+    var el = $(id);
+    if (el) el.innerHTML = '<img src="' + LOGO_BT + '" style="width:100%;height:100%;object-fit:contain" alt="TW">';
+  });
+
+  // Tên user
+  var lbl = CURRENT_USER.ho_ten + ' (' + (ROLE_LABEL[CURRENT_USER.vai_tro] || CURRENT_USER.vai_tro) + ')';
+  $('userLabel').textContent = lbl;
+  $('userLabel2').textContent = lbl;
+  $('roleLabel').textContent = ROLE_LABEL[CURRENT_USER.vai_tro] || CURRENT_USER.vai_tro;
+  $('roleLabel2').textContent = ROLE_LABEL[CURRENT_USER.vai_tro] || CURRENT_USER.vai_tro;
+
+  // Sự kiện
+  $('btnBack').addEventListener('click', function(){ showScreen('screen-projects'); });
+  $('btnNewProject').addEventListener('click', function(){ openProjectModal(); });
+  $('btnPass').addEventListener('click', function(){ toast('Chức năng đổi mật khẩu tạm ẩn.', 'error'); });
+  $('btnPass2').addEventListener('click', function(){ toast('Chức năng đổi mật khẩu tạm ẩn.', 'error'); });
+  document.querySelectorAll('#tabBar .tab').forEach(function(b){
+    b.addEventListener('click', function(){ switchTab(b.dataset.tab); });
+  });
+  var s = $('prjSearch');
+  if (s) s.addEventListener('input', function(){ loadProjects(); });
+
+  // VÀO THẲNG DASHBOARD
+  showScreen('screen-projects');
+  loadProjects();
+});
+</script>
+</body>
+</html>
