@@ -3,407 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hệ thống Quản lý Dự án Thi công</title>
+<title>The Wall — Quản lý Dự án Thi công</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  color-scheme:light;
-  --gold:#f0ad1f; --gold-deep:#a87b12; --gold-pale:#fdf3dc; --ink:#1b1b1b;
-  --gold-dark:#a87b12; --gold-bg:#fdf3dc;
-  --sidebar1:#242424; --sidebar2:#101010;
-  --bg:#f4f2ec; --card:#ffffff; --text:#232323; --muted:#6b7686;
-  --border:#e2ddcf;
-  --green:#1f9d55; --green-dark:#177a42; --green-bg:#e2f4e9;
-  --red:#d64545; --red-dark:#b23535; --red-bg:#fde2e2;
-  --amber:#b25f14; --amber-bg:#fdeeda;
-  --orange:#dd7f26; --orange-bg:#fef3e6;
-  --gray-bg:#f4f2ec;
-  --radius:10px; --shadow:0 1px 4px rgba(30,25,10,.10); --shadow-lg:0 4px 16px rgba(30,25,10,.12);
+  --gold:#f0ad1f; --gold-dark:#a87b12; --gold-bg:#fdf3dc;
+  --bg:#eef1f5; --card:#fff; --text:#1f2937; --muted:#6b7280;
+  --border:#e5e7eb; --red:#d92d20; --red-bg:#fef3f2;
+  --green:#12805c; --green-bg:#ecfdf3; --amber:#b54708; --amber-bg:#fffaeb;
+  --blue:#175cd3; --blue-bg:#eff8ff; --gray-bg:#f3f4f6;
+  --sidebar:#1a1d29;
 }
-body{font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
 .hidden{display:none!important}
-/* ---------- Login ---------- */
-.login-wrap{max-width:440px;margin:7vh auto 0;padding:0 16px}
-.login-card{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);padding:36px 32px;text-align:center;border-top:4px solid var(--gold);border-left:1px solid #e8e2d2;border-right:1px solid #e8e2d2;border-bottom:1px solid #e8e2d2}
-.login-foot{text-align:center;font-size:11px;color:var(--muted);margin-top:18px}
-@media(max-width:640px){
-  .login-wrap{margin-top:4vh}
-  .login-card{padding:28px 22px}
+a{color:var(--blue);text-decoration:none}
+button{font-family:inherit}
+
+.app{display:flex;min-height:100vh}
+.sidebar{width:230px;background:var(--sidebar);color:#cbd5e1;flex-shrink:0;padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar .logo{padding:0 18px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
+.sidebar .logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
+.sidebar .logo b{color:#fff;font-size:15px;display:block;line-height:1.2}
+.sidebar .logo small{font-size:11px;color:#94a3b8}
+.side-nav{display:flex;flex-direction:column;padding:0 10px}
+.nav-label{font-size:10px;letter-spacing:1.5px;color:#64748b;padding:14px 10px 6px;font-weight:700;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:8px;color:#cbd5e1;font-size:13.5px;cursor:pointer;border:none;background:none;text-align:left;width:100%;font-weight:500;transition:background .15s}
+.nav-item .ic{width:22px;text-align:center;font-style:normal;font-size:15px;opacity:.85}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--gold);color:#1b1b1b;font-weight:700}
+.nav-item.active .ic{opacity:1}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:40}
+.topbar h1{font-size:17px;font-weight:700}
+.topbar .crumb{font-size:12.5px;color:var(--muted)}
+.topbar .userbox{display:flex;align-items:center;gap:10px;font-size:13px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#1b1b1b;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.content{padding:22px 24px;flex:1}
+@media(max-width:900px){
+  .app{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;padding:10px 0}
+  .sidebar .logo{padding:0 14px 12px}
+  .side-nav{flex-direction:row;overflow-x:auto;padding:0 8px}
+  .nav-label{display:none}
+  .nav-item{white-space:nowrap;padding:8px 12px;font-size:13px}
+  .nav-item .ic{display:none}
 }
-.login-card h1{font-size:20px;margin-bottom:4px;color:var(--text)}
-.login-card .sub{color:var(--muted);font-size:13px;margin-bottom:24px}
-.api-warn{background:var(--amber-bg);border:1px solid #fedf89;color:var(--amber);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:16px}
-/* ---------- Form ---------- */
-.f-group{margin-bottom:14px}
-.f-group label{display:block;font-size:12.5px;color:#4a4438;margin-bottom:6px;font-weight:600}
-.f-group input,.f-group select,.f-group textarea{width:100%;padding:9px 11px;font-size:14px;
-  border:1px solid #cfc8b4;border-radius:7px;background:#fffdf8;color:var(--text);font-family:inherit;
-  transition:border-color .15s,box-shadow .15s}
-.f-group input:hover,.f-group select:hover,.f-group textarea:hover{border-color:#c9a94f}
-.f-group textarea{resize:vertical;min-height:64px}
-.f-group input:focus,.f-group select:focus,.f-group textarea:focus{outline:none;border-color:var(--gold);background:#fff;
-  box-shadow:0 0 0 3px rgba(240,173,31,.20)}
-.f-group input[readonly]{background:#f2f0e9;color:var(--muted)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card h2{font-size:15px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card .desc{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.grid{display:grid;gap:14px}
+.grid.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.grid.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+
+.kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.kpi .k-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.kpi .k-value{font-size:20px;font-weight:800;margin-top:4px;color:var(--text)}
+.kpi .k-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi.k-red .k-value{color:var(--red)}
+.kpi.k-green .k-value{color:var(--green)}
+.kpi.k-blue .k-value{color:var(--blue)}
+.kpi.k-gold .k-value{color:var(--gold-dark)}
+.kpi.k-amber .k-value{color:var(--amber)}
+
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border)}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+.tbl th{background:#f8fafc;text-align:left;padding:10px 12px;font-weight:700;color:#475569;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.tbl td{padding:10px 12px;border-top:1px solid var(--border);vertical-align:middle}
+.tbl tr:hover td{background:#fafbfc}
+.tbl tr.row-alert td{background:var(--red-bg)}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl .actions{text-align:right;white-space:nowrap}
+.tbl .muted{color:var(--muted);font-size:12px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid transparent;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.btn-primary{background:var(--gold);color:#1b1b1b}
+.btn-primary:hover{background:var(--gold-dark);color:#fff}
+.btn-ghost{background:#fff;border-color:var(--border);color:var(--text)}
+.btn-ghost:hover{background:var(--gray-bg)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#b42318}
+.btn-success{background:var(--green);color:#fff}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-sm{padding:5px 11px;font-size:12.5px;border-radius:6px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.f-group{margin-bottom:12px}
+.f-group label{display:block;font-weight:600;font-size:12.5px;margin-bottom:5px;color:#374151}
+.f-group input,.f-group select,.f-group textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:#fff}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,173,31,.2)}
 .f-row{display:flex;gap:12px}
 .f-row .f-group{flex:1}
-.f-inline{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
-.f-inline .f-group{margin-bottom:0;min-width:150px}
-/* ---------- Buttons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 18px;font-size:14px;font-weight:600;
-  border-radius:7px;border:1px solid #cfc8b4;background:#fff;color:var(--text);cursor:pointer;font-family:inherit;
-  box-shadow:0 1px 2px rgba(30,25,10,.10);white-space:nowrap}
-.btn:hover{filter:brightness(.97)}
-.btn:active{transform:translateY(1px)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.btn-primary{background:linear-gradient(180deg,#f6c445,#eaa91f);border-color:#c98f1b;color:#1b1b1b}
-.btn-primary:hover{background:#eaa91f}
-.btn-success{background:linear-gradient(180deg,#26ad61,var(--green));border-color:var(--green-dark);color:#fff}
-.btn-success:hover{background:var(--green-dark)}
-.btn-danger{background:linear-gradient(180deg,#e05252,var(--red));border-color:var(--red-dark);color:#fff}
-.btn-danger:hover{background:var(--red-dark)}
-.btn-ghost{background:#fff;border-color:#cfc8b4;color:var(--text);box-shadow:0 1px 2px rgba(30,25,10,.10)}
-.btn-ghost:hover{background:#faf7ee}
-.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px}
-.btn-block{width:100%}
-/* ---------- Layout ---------- */
-.topbar{height:60px;background:#ffffff;color:#1f2a37;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 18px;gap:12px;position:sticky;top:0;z-index:200;
-  box-shadow:inset 0 3px 0 var(--gold), 0 2px 8px rgba(60,45,10,.10)}
-.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:15px;letter-spacing:.4px;color:var(--ink)}
-.brand-logo{height:44px;width:auto;display:block;flex-shrink:0}
-.brand-sep{width:1px;height:30px;background:var(--border)}
-.crumb{font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px}
-.uname{font-weight:600;white-space:nowrap}
-.role-badge{background:linear-gradient(135deg,#f6c445,#eaa91f);color:#1b1b1b;
-  padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;box-shadow:0 1px 3px rgba(150,110,20,.35);white-space:nowrap}
-.container{max-width:1220px;width:100%;margin:0 auto;padding:22px}
-.card{background:var(--card);border-radius:12px;box-shadow:var(--shadow-lg);padding:20px;margin-bottom:18px;border:1px solid #e8e2d2}
-.card h2{font-size:16px;margin-bottom:4px}
-.card .desc,.desc{color:var(--muted);font-size:13px}
-.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;
-  border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
-.card-head h2{margin:0;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
-.card-head h2::before{content:"";width:4px;height:18px;background:var(--gold);border-radius:2px;flex-shrink:0}
-/* ---------- Sidebar ---------- */
-.layout{display:flex;gap:20px;align-items:flex-start}
-.tabs{width:244px;background:linear-gradient(180deg,var(--sidebar1),var(--sidebar2));color:#d8d2c2;flex-shrink:0;
-  padding:16px 10px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
-.app{display:flex;min-height:100vh}
-.main{flex:1;min-width:0;display:flex;flex-direction:column}
-.main .topbar{position:sticky;top:0}
-.nav-label{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#a08c5a;padding:12px 12px 6px;text-transform:uppercase}
-.side-logo{display:flex;align-items:center;gap:10px;padding:2px 12px 14px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
-.side-logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
-.side-logo b{color:#fff;font-size:14px;display:block;line-height:1.2}
-.side-logo small{font-size:11px;color:#a08c5a}
-.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f6c445,#eaa91f);color:#1b1b1b;font-weight:800;font-size:15px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
-.page-title{font-size:16px;font-weight:800}
-.page-crumb{font-size:12px;color:var(--muted)}
-.nav-label:first-child{padding-top:2px}
-.tab{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;margin:2px 0;
-  background:none;border:none;border-radius:8px;color:#cfc8b4;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left;
-  border-left:3px solid transparent;white-space:nowrap;font-family:inherit;transition:background .15s ease}
-.tab .ico{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.07);
-  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-style:normal}
-.tab:hover{background:rgba(255,255,255,.06);color:#fff}
-.tab.active{background:rgba(240,173,31,.16);border-left-color:var(--gold);color:#fff;font-weight:700}
-.tab.active .ico{background:var(--gold);color:#1b1b1b}
-.side-foot{margin-top:auto;padding:14px 12px 4px;font-size:11px;color:#8d8168;border-top:1px solid rgba(255,255,255,.08);line-height:1.6}
-.tabpanes{flex:1;min-width:0}
-@media(max-width:1100px){.tabs{width:210px}}
-@media(max-width:768px){
-  .app{flex-direction:column}
-  .tabs{position:static;width:100%;height:auto;flex-direction:row;overflow-x:auto;padding:8px;align-items:center}
-  .tab{border-left:none;border-bottom:3px solid transparent;white-space:nowrap;width:auto;margin:0 2px;flex-shrink:0}
-  .tab.active{border-bottom-color:var(--gold)}
-  .nav-label,.side-foot,.side-logo{display:none}
-  .tab .ico{display:none}
-}
-/* ---------- KPI cards ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.kpi{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;
-  border-top:3px solid var(--gold);position:relative;overflow:hidden}
-.kpi .k-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
-.kpi .k-value{font-size:21px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}
-.kpi.k-blue{border-top-color:var(--gold)} .kpi.k-blue .k-value{color:var(--gold-deep)}
-.kpi.k-green{border-top-color:var(--green)} .kpi.k-green .k-value{color:var(--green-dark)}
-.kpi.k-red{border-top-color:var(--red)} .kpi.k-red .k-value{color:var(--red)}
-@media(max-width:1100px){.kpis{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.kpis{grid-template-columns:1fr 1fr}.kpi .k-value{font-size:17px}}
-/* ---------- Table ---------- */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
-table.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl thead th{background:linear-gradient(180deg,#faf7ef,#f1ebda);color:#4a4132;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;
-  padding:11px 12px;text-align:left;border-bottom:2px solid #d9b545;white-space:nowrap}
-.tbl tbody td{padding:10px 12px;border-bottom:1px solid #f0ebdd;vertical-align:middle}
-.tbl tbody tr:hover{background:#fdf9ef}
-.tbl tbody tr:last-child td{border-bottom:none}
-.tbl td.num,.tbl th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.tbl tr.row-alert td{background:#fdf0f0}
-.tbl .actions{white-space:nowrap;text-align:right}
-/* ---------- Badge ---------- */
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
-.b-blue{background:#e8f2fb;color:#0f5a9c}
-.b-green{background:#e2f4e9;color:#14703c}
-.b-amber{background:#fdeeda;color:#b25f14}
-.b-red{background:#fde2e2;color:#b23535}
-.b-gray{background:var(--gray-bg);color:var(--muted)}
-/* ---------- Check panel ---------- */
-.check-panel{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:16px 0}
-.check-row{display:flex;padding:10px 14px;border-bottom:1px solid #f0ebdd;font-size:13.5px;background:#fff}
-.check-row:last-child{border-bottom:none}
-.check-row .q{width:230px;flex-shrink:0;font-weight:600;color:var(--muted)}
-.check-row .a{font-weight:600}
-.check-row.warn{background:#fdf0f0}
-.check-row.warn .a{color:var(--red)}
-.check-row.okk .a{color:var(--green-dark)}
-/* ---------- Progress ---------- */
-.progress{height:8px;background:#ece5d2;border-radius:4px;overflow:hidden;min-width:90px}
-.progress > div{display:block;height:100%;background:linear-gradient(90deg,#eaa91f,#f6c445);border-radius:4px}
-.progress.red > div{background:var(--red)}
-/* ---------- Dashboard giàu (MISA style) ---------- */
-.kpi .k-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600}
-.alert-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
-.alert-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.alert-card .a-head{padding:10px 16px;color:#fff;font-weight:800;font-size:14px}
-.alert-card.a-red .a-head{background:linear-gradient(120deg,#c0392b,#e05252)}
-.alert-card.a-amber .a-head{background:linear-gradient(120deg,#c47b12,#f0ad1f)}
-.alert-card.a-blue .a-head{background:linear-gradient(120deg,#155bb5,#2f80ed)}
-.alert-card .a-body{padding:8px 16px;max-height:190px;overflow-y:auto}
-.alert-card .a-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed #f0ebdd;font-size:13px}
-.alert-card .a-row:last-child{border-bottom:none}
-.alert-card .a-row b{font-variant-numeric:tabular-nums;white-space:nowrap}
-.alert-card .a-empty{color:var(--muted);font-size:13px;padding:8px 0}
-.alert-card .a-total{display:flex;justify-content:space-between;padding:9px 0 4px;font-weight:800;border-top:2px solid #f0ebdd;margin-top:4px;font-size:13.5px}
-.dash-time{text-align:right;color:var(--muted);font-size:12.5px;margin:10px 2px 0}
-.prog-cell{display:flex;align-items:center;gap:8px}
-.prog-cell .progress{flex:1}
-.prog-cell .pct{font-size:12px;color:var(--muted);min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
-@media(max-width:960px){.alert-cards{grid-template-columns:1fr}}
-/* ---------- Modal ---------- */
-.modal-overlay{position:fixed;inset:0;background:rgba(15,12,5,.55);z-index:500;display:flex;
-  align-items:center;justify-content:center;padding:16px;overflow-y:auto}
-.modal{background:#fff;border-radius:12px;max-width:680px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.3);overflow:hidden}
-.modal-head{padding:16px 20px;font-weight:800;font-size:15px;color:var(--gold);background:linear-gradient(120deg,#141414,#2b2b2b);letter-spacing:.3px;
-  display:flex;justify-content:space-between;align-items:center}
-.modal-head h3{font-size:15px}
-.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--gold);line-height:1}
-.modal-body{padding:18px 20px;font-size:14px}
-.modal-foot{padding:14px 20px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--border);background:#faf7ee;flex-wrap:wrap}
-.dyn-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-end;flex-wrap:wrap}
-.dyn-row .f-group{margin-bottom:0}
-/* ---------- Toast ---------- */
-#toast{position:fixed;right:18px;bottom:18px;z-index:999;display:flex;flex-direction:column;gap:8px;max-width:min(92vw,380px)}
-.toast-msg{background:#241f14;color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);
-  font-size:13.5px;border-left:4px solid var(--gold);animation:slideIn .25s ease;max-width:90vw}
-.toast-msg.success{border-left-color:var(--green)}
-.toast-msg.error{border-left-color:var(--red)}
-@keyframes slideIn{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
-/* ---------- Misc ---------- */
-.empty{text-align:center;color:var(--muted);padding:34px 10px;font-size:14px}
-.mt8{margin-top:8px}.mt16{margin-top:16px}
-.text-red{color:var(--red);font-weight:700}
-.text-green{color:var(--green-dark);font-weight:700}
+@media(max-width:640px){.f-row{flex-direction:column}}
+
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.b-blue{background:var(--blue-bg);color:var(--blue)}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-gray{background:var(--gray-bg);color:#475569}
+.b-gold{background:var(--gold-bg);color:var(--gold-dark)}
+
+.prog{height:8px;background:var(--gray-bg);border-radius:999px;overflow:hidden;flex:1;min-width:80px}
+.prog > i{display:block;height:100%;background:var(--gold);border-radius:999px;transition:width .3s}
+.prog.red > i{background:var(--red)}
+.prog.green > i{background:var(--green)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;z-index:100;overflow-y:auto}
+.modal{background:#fff;border-radius:12px;width:760px;max-width:100%;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{font-size:15.5px;font-weight:700}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px}
+.modal-body{padding:20px 22px;max-height:65vh;overflow-y:auto}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast-msg{background:#0f172a;color:#fff;padding:11px 20px;border-radius:8px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw;animation:slideUp .25s}
+.toast-msg.error{background:#b42318}
+.toast-msg.success{background:#12805c}
+.toast-msg.info{background:#175cd3}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.empty{padding:32px;text-align:center;color:var(--muted);font-size:13px}
+.text-red{color:var(--red)!important;font-weight:700}
+.text-green{color:var(--green)!important;font-weight:700}
 .text-muted{color:var(--muted)}
-.back-link{background:none;border:none;color:var(--gold-deep);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;padding:0}
-.back-link:hover{text-decoration:underline}
-.proj-head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
-.proj-head .info h2{font-size:18px}
-.proj-head .info .meta{color:var(--muted);font-size:13px}
-.note-box{font-size:13px;color:var(--muted);background:#faf7ee;border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin-bottom:14px}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.stat-item{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;border-top:3px solid var(--gold);font-size:13.5px}
-.stat-item b{font-size:18px;display:block;margin-top:4px;font-variant-numeric:tabular-nums}
-.result-meta{font-size:13px;color:var(--muted);margin:6px 0 10px;background:#faf7ee;border:1px solid var(--border);
-  border-radius:8px;padding:8px 14px}
-.result-meta b{color:var(--gold-deep)}
-@media(max-width:1280px){
-  .container{padding:18px}
-  .kpi{padding:12px 13px}
-  .kpi .k-value{font-size:18px}
-  .card{padding:16px}
-  table.tbl{font-size:12.5px}
-  .tbl thead th{padding:9px 10px}
-  .tbl tbody td{padding:8px 10px}
-}
-@media(max-width:960px){
-  .f-row{flex-direction:column}
-  .stat-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  .container{padding:14px}
-  .crumb{display:none}
-  .topbar-right .uname{display:none}
-  .stat-grid{grid-template-columns:1fr 1fr}
-}
-/* ---------- Màn hình in phiếu DNTT ---------- */
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--gray-bg);padding:3px 10px;border-radius:999px;font-size:12px;color:#475569}
+.chip.gold{background:var(--gold-bg);color:var(--gold-dark)}
+
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:16px;overflow-x:auto}
+.tab{padding:10px 14px;font-size:13.5px;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
+
 #printRoot{display:none}
-.print-actions{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:10px;z-index:60}
-.phieu-wrap{max-width:800px;margin:24px auto;background:#fff;padding:40px 48px;border:1px solid var(--border)}
-.phieu-head{display:flex;gap:16px;align-items:flex-start;border-bottom:2px solid #1f2937;padding-bottom:12px;margin-bottom:16px}
-.phieu-head img{height:72px;width:auto}
-.phieu-head .co{font-size:13px;line-height:1.6}
-.phieu-head .co b{font-size:15px}
-.phieu-title{text-align:center;font-size:24px;font-weight:800;margin:18px 0;letter-spacing:1px}
-.phieu-row{display:flex;gap:24px;margin-bottom:8px;font-size:14px;flex-wrap:wrap}
-.phieu-row .cell{flex:1;min-width:200px}
-.phieu-row .lbl{color:var(--muted)}
-.phieu-sign{display:flex;margin:28px 0 8px;border:1px solid #1f2937}
-.phieu-sign .box{flex:1;text-align:center;padding:10px 4px 60px;border-left:1px solid #1f2937;font-size:13px;font-weight:700}
+.print-bar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:8px;z-index:60}
+.phieu-wrap{max-width:820px;margin:24px auto;background:#fff;padding:32px 42px;border:1px solid var(--border);font-family:"Times New Roman",Arial,sans-serif;color:#000;font-size:13px;line-height:1.5}
+.phieu-head{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid #000;padding-bottom:10px;margin-bottom:6px}
+.phieu-head .logo{width:70px;height:70px;flex-shrink:0;object-fit:contain}
+.phieu-head .co{font-size:12.5px;line-height:1.5}
+.phieu-head .co b{font-size:14px;display:block;text-transform:uppercase;margin-bottom:2px}
+.phieu-title{text-align:center;font-size:20px;font-weight:800;margin:18px 0 20px;letter-spacing:1px}
+.phieu-line{display:flex;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.phieu-line .cell{flex:1;min-width:180px}
+.phieu-sign{display:flex;margin:22px 0;border:1px solid #000}
+.phieu-sign .box{flex:1;text-align:center;padding:8px 4px 55px;border-left:1px solid #000;font-size:11px;font-weight:700;min-width:0}
 .phieu-sign .box:first-child{border-left:none}
-.phieu-bank{border:1px solid #1f2937;padding:12px 16px;margin:12px 0;font-size:14px}
-.phieu-bank .t{font-weight:800;margin-bottom:8px}
-.phieu-money{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
-.phieu-money th,.phieu-money td{border:1px solid #1f2937;padding:10px;text-align:center}
-.phieu-money th{background:#f2f4f7;font-size:13px}
-.phieu-words{margin:12px 0;font-size:14px}
-.phieu-foot{display:flex;gap:24px;margin-top:28px;font-size:14px}
-.phieu-foot .cell{flex:1;text-align:center;font-weight:700}
+.phieu-bank{border:1px solid #000;padding:10px 14px;margin:12px 0;font-size:13px;line-height:1.85}
+.phieu-bank .t{font-weight:800;margin-bottom:6px;text-transform:uppercase}
+.phieu-money{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.phieu-money th,.phieu-money td{border:1px solid #000;padding:9px 8px;text-align:center}
+.phieu-money th{background:#f2f4f7;font-size:12px}
+.phieu-section{font-weight:800;margin-top:14px;font-size:13px}
+.phieu-underline{border-bottom:1px dotted #333;height:22px;margin:4px 0 10px}
+.phieu-note{text-align:center;font-weight:800;margin-top:22px;font-size:12px;text-transform:uppercase}
 @media print{
-  @page{size:A4;margin:12mm}
-  body{background:#fff}
-  body > *:not(#printRoot){display:none!important}
+  @page{size:A4 portrait;margin:10mm}
+  body>*:not(#printRoot){display:none!important}
   #printRoot{display:block!important}
-  .print-actions{display:none!important}
-  .phieu-wrap{max-width:none;margin:0;border:none;padding:0}
+  .print-bar{display:none!important}
+  .phieu-wrap{max-width:none;margin:0;border:none;padding:0;font-size:12px}
 }
+.footer{text-align:center;padding:16px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:24px}
+
+/* ========== MOBILE FIX (bổ sung) ========== */
+@media(max-width:900px){
+  /* Nút hamburger */
+  .menu-toggle{display:flex !important;align-items:center;justify-content:center;
+    width:44px;height:44px;border:none;background:var(--gold);color:#1a1d29;
+    border-radius:10px;font-size:20px;cursor:pointer;flex-shrink:0}
+  .sidebar{position:fixed !important;left:0;top:0;bottom:0;z-index:200;width:270px !important;
+    height:100vh !important;transform:translateX(-105%);transition:transform .25s ease;
+    flex-direction:column !important;padding:16px 0 !important;box-shadow:8px 0 30px rgba(0,0,0,.25)}
+  .sidebar.open{transform:translateX(0)}
+  .side-nav{flex-direction:column !important;overflow-y:auto !important;padding:0 !important}
+  .nav-label{display:block !important}
+  .nav-item{white-space:normal !important;padding:11px 18px !important;font-size:14px !important}
+  .nav-item .ic{display:inline-block !important}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:199}
+  .sidebar-backdrop.show{display:block}
+  .topbar{flex-wrap:wrap;gap:8px}
+  .topbar h1{font-size:17px}
+  /* Bảng cuộn ngang */
+  .tbl{min-width:640px}
+  .tbl th,.tbl td{padding:9px 10px;font-size:13px;white-space:nowrap}
+  .tbl td.wrap,.tbl th.wrap{white-space:normal;min-width:140px}
+  /* Nút đủ to để bấm */
+  .btn{min-height:44px;padding:11px 18px;font-size:14.5px}
+  .btn-sm{min-height:38px;padding:8px 14px;font-size:13.5px}
+  /* Cards xếp dọc */
+  .kpi-grid{grid-template-columns:repeat(2,1fr) !important}
+  .grid-2{grid-template-columns:1fr !important}
+  /* Modal full màn hình */
+  .modal{width:calc(100vw - 24px) !important;max-width:560px;max-height:92vh;overflow-y:auto}
+  .modal-body{max-height:calc(92vh - 140px);overflow-y:auto}
+  /* Form */
+  .f-group input,.f-group select,.f-group textarea{font-size:16px !important;min-height:44px}
+  /* Trang chi tiết */
+  .proj-head{flex-direction:column;align-items:flex-start !important;gap:10px}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr 1fr !important;gap:8px}
+  .kpi{padding:12px}
+  .kpi .v{font-size:19px}
+  .content{padding:12px}
+  .card{padding:14px}
+}
+.menu-toggle{display:none}
+@media(min-width:901px){.sidebar-backdrop{display:none !important}}
+
 </style>
 </head>
 <body>
 
-<!-- ============ MÀN HÌNH 1: ĐĂNG NHẬP ============ -->
-<div id="screen-login" class="screen">
-  <div class="login-wrap">
-    <div class="login-card" style="text-align:center;min-width:300px">
-      <div style="font-size:14px;color:var(--muted)" id="loginStatus">Đang vào hệ thống...</div>
-      <div id="loginFallback" class="hidden" style="margin-top:16px;text-align:left">
-        <div class="f-group"><label for="lgUser">Tên đăng nhập</label><input id="lgUser" type="text" autocomplete="username"></div>
-        <div class="f-group"><label for="lgPass">Mật khẩu</label><input id="lgPass" type="password" autocomplete="current-password"></div>
-        <button class="btn btn-primary btn-block" id="btnLogin2">Vào</button>
-      </div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <img id="logoImg" alt="TW">
+      <div><b>THE WALL</b><small>Quản lý dự án</small></div>
     </div>
-  </div>
-</div>
-
-<!-- ============ MÀN HÌNH 2: DANH SÁCH DỰ ÁN ============ -->
-<div id="screen-projects" class="screen hidden">
-  <div class="app">
-  <aside class="tabs">
-    <div class="side-logo"><img id="sideLogoP" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
-    <div class="nav-label">Menu</div>
-    <button class="tab active"><i class="ico">◈</i>Dashboard</button>
-    <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
+    <nav class="side-nav" id="sideNav"></nav>
   </aside>
-  <div class="main">
-  <header class="topbar">
-    <div class="brand">
-      <img class="brand-logo" id="topLogo" alt="The Wall">
-      
-      <span class="brand-sep"></span>
-      <span class="crumb">/ Danh sách dự án</span>
-    </div>
-    <div class="topbar-right">
-      <input id="globalSearch" placeholder="Tìm dự án..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:180px;background:#fffdf8">
-      <span class="avatar" id="avatarBox">A</span>
-      <span class="uname" id="userLabel"></span>
-      <span class="role-badge" id="roleLabel"></span>
-      <button class="btn btn-sm" id="btnPass">Đổi mật khẩu</button>
-      <button class="btn btn-sm" id="btnLogout">Đăng xuất</button>
-    </div>
-  </header>
-  <div class="container">
-    <div id="tongQuanBox" style="margin-bottom:16px"></div>
-    <div class="card">
-      <div class="card-head">
-        <h2>Danh sách dự án</h2>
-        <button class="btn btn-primary btn-sm hidden" id="btnNewProject">+ Tạo dự án</button>
-      </div>
-      <div class="tbl-wrap"><table class="tbl">
-        <thead><tr><th>Mã dự án</th><th>Tên dự án</th><th>Bắt đầu</th><th>Kết thúc</th><th>Trạng thái</th><th></th></tr></thead>
-        <tbody id="projectRows"><tr><td colspan="6" class="empty">Đang tải...</td></tr></tbody>
-      </table></div>
-    </div>
-  </div>
-  </div>
-  </div>
-</div>
 
-<!-- ============ MÀN HÌNH 3: CHI TIẾT DỰ ÁN ============ -->
-<div id="screen-detail" class="screen hidden">
-  <div class="app">
-  <aside class="tabs" id="tabBar">
-    <div class="side-logo"><img id="sideLogo" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
-    <div class="nav-label">Quản lý</div>
-    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Dashboard</button>
-    <button class="tab" id="tabbtn-back"><i class="ico">▤</i>Dự án</button>
-    <div class="nav-label">Kinh doanh</div>
-    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▦</i>Dự trù / Định mức</button>
-    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">₫</i>Mua hàng / Chi phí</button>
-    <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
-    <div class="nav-label">Thực thi</div>
-    <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
-    <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
-    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">⎙</i>Thanh toán</button>
-    <div class="nav-label">Báo cáo</div>
-    <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
-    <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
-    <div class="nav-label">Hệ thống</div>
-    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Người dùng</button>
-    <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
-  </aside>
-  <div class="main">
-  <header class="topbar">
-    <div class="brand">
-      <img class="brand-logo" id="topLogo2" alt="The Wall">
-      
-      <span class="brand-sep"></span>
-      <span class="crumb">/ Chi tiết dự án</span>
-    </div>
-    <div class="topbar-right">
-      <input id="globalSearch2" placeholder="Tìm kiếm..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:180px;background:#fffdf8">
-      <span class="avatar" id="avatarBox2">A</span>
-      <span class="uname" id="userLabel2"></span>
-      <span class="role-badge" id="roleLabel2"></span>
-      <button class="btn btn-sm" id="btnPass2">Đổi mật khẩu</button>
-      <button class="btn btn-sm" id="btnLogout2">Đăng xuất</button>
-    </div>
-  </header>
-  <div class="container" style="padding-bottom:0">
-    <div class="proj-head">
-      <button class="back-link" id="btnBack">&larr; Danh sách dự án</button>
-      <div class="info">
-        <h2 id="projName"></h2>
-        <div class="meta" id="projMeta"></div>
+  <main class="main">
+    <div class="sidebar-backdrop" id="sideBackdrop" onclick="toggleSidebar(false)"></div>
+<div class="topbar">
+  <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <div class="crumb" id="pageCrumb">Tổng quan toàn hệ thống</div>
       </div>
-      <div class="sheet-linkbox" style="margin-left:auto;display:flex;gap:8px;align-items:center">
-        <input id="projSheetUrl" placeholder="Dán link Google Sheet dự án..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:220px">
-        <button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>
-        <a class="btn btn-sm btn-primary hidden" id="btnOpenSheet" target="_blank" style="text-decoration:none">Mở Sheet</a>
+      <div class="userbox">
+        <input id="globalSearch" placeholder="🔍 Tìm dự án..." style="padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">
+        <div class="avatar" id="avatarBox">A</div>
+        <div>
+          <div id="userName" style="font-weight:700">Admin</div>
+          <div id="userRole" style="font-size:11.5px;color:var(--muted)">Quản trị viên</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="tabpanes">
-    <div id="tab-tongquan" class="tabpane hidden"></div>
-    <div id="tab-dutru" class="tabpane hidden"></div>
-    <div id="tab-muahang" class="tabpane hidden"></div>
-    <div id="tab-phatsinh" class="tabpane hidden"></div>
-    <div id="tab-tiendo" class="tabpane hidden"></div>
-    <div id="tab-pheduyet" class="tabpane hidden"></div>
-    <div id="tab-thanhtoan" class="tabpane hidden"></div>
-    <div id="tab-baocao" class="tabpane hidden"></div>
-    <div id="tab-lichsu" class="tabpane hidden"></div>
-    <div id="tab-admin" class="tabpane hidden"></div>
-  </div>
-  </div>
-  </div>
+    <div class="content" id="content"></div>
+    <div class="footer">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha · Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
+  </main>
 </div>
 
 <div id="modalRoot"></div>
 <div id="printRoot"></div>
 <div id="toast"></div>
 
+
 <script>
+
 /* =====================================================================
    HỆ THỐNG QUẢN LÝ DỰ ÁN THI CÔNG (MVP) — Frontend SPA, khớp CONTRACT.md v2
    Cấu hình duy nhất cần sửa: dán URL Web App (api.gs) vào API_URL.
@@ -516,53 +369,159 @@ function logout(){
 }
 
 /* ---------- Đăng nhập ---------- */
-async function init(){
-  if (typeof LOGO_BT !== 'undefined') {
-    if ($('topLogo')) $('topLogo').src = LOGO_BT;
-    if ($('topLogo2')) $('topLogo2').src = LOGO_BT;
-    if ($('sideLogo')) $('sideLogo').src = LOGO_BT;
-    if ($('sideLogoP')) $('sideLogoP').src = LOGO_BT;
-  }
-  // Ô tìm kiếm trên topbar: lọc danh sách dự án
-  ['globalSearch', 'globalSearch2'].forEach(function(id){
-    const inp = $(id);
-    if (inp) inp.addEventListener('input', function(){
-      const kw = inp.value.trim().toLowerCase();
-      document.querySelectorAll('#projectTableBody tr').forEach(function(tr){
-        tr.style.display = !kw || tr.textContent.toLowerCase().indexOf(kw) !== -1 ? '' : 'none';
-      });
+
+/* ================= ROUTER (theo shell DeepSeek) ================= */
+var MENU = [
+  { group: 'Quản lý', items: [
+    { key:'dashboard', label:'Dashboard', icon:'◈' },
+    { key:'projects',  label:'Dự án',     icon:'▤' }
+  ]},
+  { group: 'Kinh doanh', items: [
+    { key:'budget',    label:'Dự trù / Định mức', icon:'▦' },
+    { key:'cost',      label:'Mua hàng / Chi phí', icon:'₫' },
+    { key:'variation', label:'Phát sinh',          icon:'✦' }
+  ]},
+  { group: 'Thực thi', items: [
+    { key:'progress',  label:'Tiến độ',     icon:'◔' },
+    { key:'approval',  label:'Phê duyệt',   icon:'✓' },
+    { key:'payment',   label:'Thanh toán',  icon:'⎙' }
+  ]},
+  { group: 'Báo cáo', items: [
+    { key:'reports',   label:'Báo cáo',     icon:'▥' },
+    { key:'history',   label:'Lịch sử',     icon:'◷' }
+  ]},
+  { group: 'Hệ thống', items: [
+    { key:'users',     label:'Người dùng',  icon:'☺' },
+    { key:'settings',  label:'Cài đặt',     icon:'⚙' }
+  ]}
+];
+// Map page DeepSeek -> tab của em
+var PAGE2TAB = {
+  budget:'dutru', cost:'muahang', variation:'phatsinh', progress:'tiendo',
+  approval:'pheduyet', payment:'thanhtoan', reports:'baocao', history:'lichsu'
+};
+var PAGE_TITLES = {
+  dashboard:'Dashboard', projects:'Dự án', budget:'Dự trù / Định mức',
+  cost:'Mua hàng / Chi phí', variation:'Phát sinh', progress:'Tiến độ',
+  approval:'Phê duyệt', payment:'Thanh toán', reports:'Báo cáo',
+  history:'Lịch sử', users:'Người dùng', settings:'Cài đặt'
+};
+
+function renderMenu(){
+  var html = '';
+  MENU.forEach(function(g){
+    html += '<div class="nav-label">'+g.group+'</div>';
+    g.items.forEach(function(it){
+      html += '<button class="nav-item'+(state.page===it.key?' active':'')+'" data-page="'+it.key+'">'+
+        '<i class="ic">'+it.icon+'</i>'+it.label+'</button>';
     });
   });
-  $('btnLogout').addEventListener('click', logout);
-  $('btnLogout2').addEventListener('click', logout);
-  $('btnPass').addEventListener('click', doiMatKhau);
-  $('btnPass2').addEventListener('click', doiMatKhau);
-  $('btnBack').addEventListener('click', () => showScreen('screen-projects'));
-  $('tabbtn-back').addEventListener('click', () => showScreen('screen-projects'));
-  $('btnNewProject').addEventListener('click', openProjectModal);
-  document.querySelectorAll('#tabBar .tab').forEach(b =>
-    b.addEventListener('click', () => switchTab(b.dataset.tab)));
-  // Tạm bỏ đăng nhập: vào thẳng, backend tự nhận admin
-  state.user = { username: 'admin', ho_ten: 'Quản trị viên', vai_tro: 'Admin' };
+  $('sideNav').innerHTML = html;
+  $('sideNav').querySelectorAll('button[data-page]').forEach(function(b){
+    b.addEventListener('click', function(){ goPage(b.dataset.page); });
+  });
+}
+
+function goPage(page, params){
+  state.page = page;
+  if (params && params.project) state.project = params.project;
+  renderMenu();
+  if ($('pageTitle')) $('pageTitle').textContent = PAGE_TITLES[page] || page;
+  var crumb = state.project ? (state.project.ma_du_an + ' — ' + (state.project.ten_du_an||'')) : 'Toàn hệ thống';
+  if ($('pageCrumb')) $('pageCrumb').textContent = crumb;
+  window.scrollTo(0, 0);
+
+  var c = $('content');
+  if (page === 'dashboard') {
+    c.innerHTML = '<div id="tongQuanBox"></div><div id="dashProjWrap"></div>';
+    loadTongQuanChung(); loadProjectsInto('dashProjWrap');
+    return;
+  }
+  if (page === 'projects') {
+    c.innerHTML = '<div id="projListWrap"></div>';
+    loadProjectsInto('projListWrap');
+    return;
+  }
+  if (page === 'settings') {
+    loadSettings();
+    return;
+  }
+  if (page === 'users') {
+    loadUsers();
+    return;
+  }
+  var tab = PAGE2TAB[page];
+  if (tab) {
+    if (!state.project) {
+      c.innerHTML = '<div class="card"><div class="empty">Chọn một dự án trước (vào mục <b>Dự án</b> rồi bấm <b>Mở</b>).</div></div>';
+      return;
+    }
+    var p = state.project;
+    // Header dự án + ô link Google Sheet riêng
+    c.innerHTML = '<div class="card" style="margin-bottom:16px"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
+      '<button class="back-link" id="btnBack2">&larr;</button>' +
+      '<div><b style="font-size:16px">'+esc(p.ma_du_an)+' — '+esc(p.ten_du_an||'')+'</b>' +
+      '<div class="desc">'+esc(p.ngay_bat_dau||'')+' → '+esc(p.ngay_ket_thuc||'')+'</div></div>' +
+      '<div style="margin-left:auto;display:flex;gap:8px;align-items:center">' +
+      '<input id="projSheetUrl" placeholder="Dán link Google Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">' +
+      '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
+      '<a class="btn btn-sm btn-primary'+(p.sheet_url?'':' hidden')+'" id="btnOpenSheet" target="_blank" href="'+esc(p.sheet_url||'')+'" style="text-decoration:none">Mở Sheet</a>' +
+      '</div></div></div><div id="tab-'+tab+'"></div>';
+    var bb = $('btnBack2');
+    if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
+    // Lưu link Sheet của dự án
+    var bs = $('btnSaveSheetUrl');
+    if (bs) bs.addEventListener('click', async function(){
+      var r = await safeApi('setProjectSheet', { ma_du_an: p.ma_du_an, sheet_url: $('projSheetUrl').value.trim() });
+      if (r) { p.sheet_url = r.sheet_url; toast('Đã lưu link Sheet.', 'success');
+        var bo = $('btnOpenSheet');
+        if (r.sheet_url) { bo.href = r.sheet_url; bo.classList.remove('hidden'); }
+        else bo.classList.add('hidden');
+      }
+    });
+    TAB_LOADERS[tab]();
+    return;
+  }
+  goPage('dashboard');
+}
+
+// Tương thích: switchTab cũ -> goPage
+function switchTab(name){
+  var pageMap = { tongquan:'dashboard', dutru:'budget', muahang:'cost', phatsinh:'variation',
+    tiendo:'progress', pheduyet:'approval', thanhtoan:'payment', baocao:'reports',
+    lichsu:'history', admin:'users' };
+  goPage(pageMap[name] || 'dashboard');
+}
+
+async function init(){
+  // Logo
+  if (typeof LOGO_BT !== 'undefined' && $('logoImg')) $('logoImg').src = LOGO_BT;
+  // Tìm kiếm toàn cục
+  var gs = $('globalSearch');
+  if (gs) gs.addEventListener('input', function(){
+    var kw = gs.value.trim().toLowerCase();
+    document.querySelectorAll('#content table.tbl tbody tr').forEach(function(tr){
+      tr.style.display = !kw || tr.textContent.toLowerCase().indexOf(kw) !== -1 ? '' : 'none';
+    });
+  });
+  // Bypass đăng nhập: vào thẳng
   enterApp();
 }
+document.addEventListener('DOMContentLoaded', init);
 function enterApp(){
-  $('userLabel').textContent = state.user.ho_ten; $('userLabel2').textContent = state.user.ho_ten;
-  $('roleLabel').textContent = ROLE_LABEL[R()] || R();
-  $('roleLabel2').textContent = ROLE_LABEL[R()] || R();
+  // Bypass đăng nhập: vào thẳng với admin
+  state.user = { username: 'admin', ho_ten: 'Quản trị viên', vai_tro: 'Admin' };
+  if ($('userName')) $('userName').textContent = state.user.ho_ten;
+  if ($('userRole')) $('userRole').textContent = ROLE_LABEL[R()] || R();
   const av = (state.user.ho_ten || 'A').trim().charAt(0).toUpperCase();
   if ($('avatarBox')) $('avatarBox').textContent = av;
-  if ($('avatarBox2')) $('avatarBox2').textContent = av;
-  showScreen('screen-projects');
-  loadProjects();
+  goPage('dashboard');
 }
 
 /* ---------- Dashboard tổng — toàn bộ dự án ---------- */
-async function loadTongQuanChung(){
+function renderTongQuanChung(d){
   const box = $('tongQuanBox');
   if (!box) return;
-  box.innerHTML = '<div class="empty">Đang tải dashboard tổng...</div>';
-  const d = await safeApi('getTongQuan');
   if (!d) { box.innerHTML = ''; return; }
   const list = d.projects || d || [];
   if (!list.length) { box.innerHTML = ''; return; }
@@ -641,26 +600,36 @@ async function loadTongQuanChung(){
 }
 
 /* ---------- Danh sách dự án ---------- */
-async function loadProjects(){
-  loadTongQuanChung();
-  $('projectRows').innerHTML = '<tr><td colspan="6" class="empty">Đang tải...</td></tr>';
-  $('btnNewProject').classList.toggle('hidden', !can('Admin','QuanLy'));
+async function loadProjectsInto(wrapId){
+  const wrap = $(wrapId);
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="card"><div class="card-head"><h2>Danh sách dự án</h2>' +
+    (can('Admin','QuanLy') ? '<button class="btn btn-primary btn-sm" id="btnNewProject2">+ Tạo dự án</button>' : '') +
+    '</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã dự án</th><th>Tên dự án</th>' +
+    '<th>Bắt đầu</th><th>Kết thúc</th><th>Trạng thái</th><th></th></tr></thead>' +
+    '<tbody id="projectRows"><tr><td colspan="6" class="empty">Đang tải...</td></tr></tbody></table></div></div>';
+  const bp = $('btnNewProject2');
+  if (bp) bp.addEventListener('click', openProjectModal);
   const d = await safeApi('listProjects');
   if (!d) return;
   state.projects = d.projects || d || [];
+  const tb = $('projectRows');
+  if (!tb) return;
   if (!state.projects.length) {
-    $('projectRows').innerHTML = '<tr><td colspan="6" class="empty">Chưa có dự án nào.</td></tr>';
+    tb.innerHTML = '<tr><td colspan="6" class="empty">Chưa có dự án nào.</td></tr>';
     return;
   }
-  $('projectRows').innerHTML = state.projects.map(p =>
+  tb.innerHTML = state.projects.map(p =>
     '<tr><td><b>' + esc(p.ma_du_an) + '</b></td><td>' + esc(p.ten_du_an) + '</td>' +
     '<td>' + esc(p.ngay_bat_dau || '') + '</td><td>' + esc(p.ngay_ket_thuc || '') + '</td>' +
     '<td>' + badge(p.trang_thai || 'dang_lam', TT_DA) + '</td>' +
     '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>'
   ).join('');
-  $('projectRows').querySelectorAll('button').forEach(b =>
+  tb.querySelectorAll('button').forEach(b =>
     b.addEventListener('click', () => openProject(b.dataset.ma)));
 }
+// Giữ tên cũ để tương thích
+async function loadProjects(){ return loadProjectsInto('projListWrap'); }
 function openProjectModal(){
   openModal('Tạo dự án mới',
     '<div class="f-group"><label>Mã dự án *</label><input id="npMa" placeholder="VD: DA-001"></div>' +
@@ -687,50 +656,14 @@ function openProject(ma){
   const p = state.projects.find(x => x.ma_du_an === ma);
   if (!p) return;
   state.project = p;
-  $('projName').textContent = p.ma_du_an + ' — ' + p.ten_du_an;
-  $('projMeta').textContent = (p.ngay_bat_dau || '') + ' → ' + (p.ngay_ket_thuc || '') +
-    (p.trang_thai ? ' · ' + ((TT_DA[p.trang_thai] || [p.trang_thai])[0]) : '');
-  // Link Google Sheet của dự án
-  $('projSheetUrl').value = p.sheet_url || '';
-  const btnOpen = $('btnOpenSheet');
-  if (p.sheet_url) { btnOpen.href = p.sheet_url; btnOpen.classList.remove('hidden'); }
-  else btnOpen.classList.add('hidden');
-  $('btnSaveSheetUrl').onclick = async () => {
-    const r = await safeApi('setProjectSheet', { ma_du_an: p.ma_du_an, sheet_url: $('projSheetUrl').value.trim() });
-    if (r) { p.sheet_url = r.sheet_url; toast('Đã lưu link Sheet.', 'success');
-      if (r.sheet_url) { btnOpen.href = r.sheet_url; btnOpen.classList.remove('hidden'); }
-      else btnOpen.classList.add('hidden');
-    }
-  };
-  // Ẩn/hiện tab theo vai trò
-  $('tabbtn-tongquan').classList.toggle('hidden', false);
-  $('tabbtn-dutru').classList.toggle('hidden', false);
-  $('tabbtn-muahang').classList.toggle('hidden', false);
-  $('tabbtn-phatsinh').classList.toggle('hidden', false);
-  $('tabbtn-tiendo').classList.toggle('hidden', false);
-  $('tabbtn-pheduyet').classList.toggle('hidden', !can('Admin','QuanLy','Approver'));
-  $('tabbtn-thanhtoan').classList.toggle('hidden', false);
-  $('tabbtn-baocao').classList.toggle('hidden', false);
-  $('tabbtn-lichsu').classList.toggle('hidden', false);
-  $('tabbtn-admin').classList.toggle('hidden', !can('Admin'));
-  showScreen('screen-detail');
-  switchTab('tongquan');
+  goPage('dashboard');
 }
-const TAB_LOADERS = { tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
+const TAB_LOADERS = { dutru: loadDuTru, muahang: loadMuaHang,
   phatsinh: loadPhatSinh, tiendo: loadTienDo, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
-  baocao: loadBaoCao, lichsu: loadLichSu, admin: loadAdmin };
+  baocao: loadBaoCao, lichsu: loadLichSu };
 const TAB_TITLES = { tongquan:'Dashboard', dutru:'Dự trù / Định mức', muahang:'Mua hàng / Chi phí',
   phatsinh:'Phát sinh', tiendo:'Tiến độ', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
   baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Người dùng' };
-function switchTab(name){
-  state.tab = name;
-  document.querySelectorAll('#tabBar .tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-  Object.keys(TAB_LOADERS).forEach(t => $('tab-' + t).classList.add('hidden'));
-  $('tab-' + name).classList.remove('hidden');
-  const crumb = document.querySelector('#screen-detail .crumb');
-  if (crumb) crumb.textContent = '/ ' + (TAB_TITLES[name] || '');
-  TAB_LOADERS[name]();
-}
 
 /* ---------- Modal ---------- */
 function openModal(title, bodyHtml, footHtml){
@@ -745,7 +678,6 @@ function openModal(title, bodyHtml, footHtml){
 }
 function closeModal(){ $('modalRoot').innerHTML = ''; }
 
-document.addEventListener('DOMContentLoaded', init);
 
 /* ================= TAB: TỔNG QUAN ================= */
 function kpi(label, val, cls, suffix){
@@ -1700,27 +1632,49 @@ function ngayFile(){
   return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
 }
 function xuatXlsChung(tenFile, tieuDe, headers, rows){
-  const cfg = getConfig();
-  let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
-    '<head><meta charset="UTF-8"></head><body>' +
-    '<table><tr><td colspan="' + headers.length + '"><b>' + esc(cfg.coName) + '</b><br>' +
-    esc(cfg.coAddr) + '</td></tr></table>' +
-    '<h2 style="color:#a87b12">' + esc(tieuDe) + '</h2>' +
-    '<p>Dự án: ' + esc(state.project.ma_du_an + ' — ' + (state.project.ten_du_an || '')) +
-    ' &nbsp;|&nbsp; Ngày xuất: ' + new Date().toLocaleDateString('vi-VN') + '</p>' +
-    '<table border="1" cellpadding="6"><thead><tr style="background:#f0ad1f;color:#1b1b1b">' +
-    headers.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr></thead><tbody>';
-  rows.forEach(r => {
-    h += '<tr>' + r.map(c => '<td>' + esc(c == null ? '' : c) + '</td>').join('') + '</tr>';
-  });
-  h += '</tbody></table></body></html>';
-  const blob = new Blob(['﻿' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = tenFile + '_' + state.project.ma_du_an + '_' + ngayFile() + '.xls';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  try {
+    const cfg = getConfig();
+    const maDA = (state.project && state.project.ma_du_an) || 'duan';
+    const tenDA = (state.project && state.project.ten_du_an) || '';
+    let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
+      '<head><meta charset="UTF-8"></head><body>' +
+      '<table><tr><td colspan="' + headers.length + '"><b>' + esc(cfg.coName) + '</b><br>' +
+      esc(cfg.coAddr) + '</td></tr></table>' +
+      '<h2 style="color:#a87b12">' + esc(tieuDe) + '</h2>' +
+      '<p>Dự án: ' + esc(maDA + (tenDA ? ' — ' + tenDA : '')) +
+      ' &nbsp;|&nbsp; Ngày xuất: ' + new Date().toLocaleDateString('vi-VN') + '</p>' +
+      '<table border="1" cellpadding="6"><thead><tr style="background:#f0ad1f;color:#1b1b1b">' +
+      headers.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr></thead><tbody>';
+    (rows || []).forEach(r => {
+      h += '<tr>' + r.map(c => '<td>' + esc(c == null ? '' : c) + '</td>').join('') + '</tr>';
+    });
+    h += '</tbody></table></body></html>';
+    const fileName = tenFile + '_' + maDA + '_' + ngayFile() + '.xls';
+    const blob = new Blob(["\ufeff" + h], { type: 'application/vnd.ms-excel' });
+    // Cách 1: blob URL (desktop)
+    try {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = fileName;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch(e){} a.remove(); }, 3000);
+      toast('Đang tải file ' + fileName, 'success');
+    } catch(e2) {
+      // Cách 2: data URI fallback (mobile)
+      const reader = new FileReader();
+      reader.onload = function(){
+        const a = document.createElement('a');
+        a.href = reader.result; a.download = fileName;
+        document.body.appendChild(a); a.click();
+        setTimeout(() => a.remove(), 3000);
+      };
+      reader.readAsDataURL(blob);
+    }
+  } catch(e) {
+    toast('Lỗi xuất Excel: ' + e.message, 'error');
+  }
 }
 /* Xuất Excel: file .xls dạng HTML table, có BOM để tiếng Việt không lỗi font */
 function exportXls(d){
@@ -1784,12 +1738,10 @@ async function loadLichSu(){
 }
 
 /* ================= TAB: QUẢN TRỊ (Admin) ================= */
-async function loadAdmin(){
-  const el = $('tab-admin');
+/* ---------- Cài đặt hệ thống ---------- */
+async function loadSettings(){
+  const el = $('content');
   el.innerHTML = '<div class="empty">Đang tải...</div>';
-  const d = await safeApi('listUsers');
-  if (!d) return;
-  const list = d.users || d || [];
   const sh = await safeApi('getSheetLink');
   const cfg = getConfig();
   let html = '<div class="card"><div class="card-head"><h2>Cài đặt hệ thống</h2></div>' +
@@ -1799,17 +1751,42 @@ async function loadAdmin(){
     '<input id="cfgCoName" value="' + esc(cfg.coName || '') + '"></div>' +
     '<div class="f-group" style="flex:1"><label>Địa chỉ</label>' +
     '<input id="cfgCoAddr" value="' + esc(cfg.coAddr || '') + '"></div></div>' +
-    '<div class="f-group"><label>Phiên bản</label>' +
-    '<input value="1.0.0" disabled style="background:var(--gray-bg)"></div>' +
     '<button class="btn btn-primary btn-sm" id="btnSaveCfg">Lưu cài đặt</button></div>';
   html += '<div class="card"><div class="card-head"><h2>Kết nối Sheet dữ liệu</h2></div>' +
-    '<div style="padding:4px 0 8px;color:var(--muted);font-size:13px">Sheet đang dùng: <b id="curSheetName">' +
+    '<div style="padding:4px 0 8px;color:var(--muted);font-size:13px">Sheet đang dùng: <b>' +
     esc(sh ? sh.name : '') + '</b>' + (sh && sh.linked ? ' <span class="badge b-green">Đã link</span>' : ' <span class="badge">Mặc định</span>') + '</div>' +
     '<div class="f-row"><div class="f-group" style="flex:1"><label>Dán link Google Sheet để chuyển kho dữ liệu</label>' +
     '<input id="sheetLink" placeholder="https://docs.google.com/spreadsheets/d/..."></div></div>' +
     '<div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" id="btnLinkSheet">Kết nối</button>' +
     (sh && sh.linked ? '<button class="btn btn-ghost btn-sm" id="btnUnlinkSheet">Về sheet mặc định</button>' : '') + '</div></div>';
-  html += '<div class="card"><div class="card-head"><h2>Quản lý người dùng</h2>' +
+  el.innerHTML = html;
+  $('btnSaveCfg').onclick = () => {
+    const c = { apiUrl: $('cfgApiUrl').value.trim(), coName: $('cfgCoName').value.trim(), coAddr: $('cfgCoAddr').value.trim() };
+    if (c.apiUrl && !/script\.google\.com\/macros\/s\//.test(c.apiUrl)) { toast('API URL không đúng định dạng.', 'error'); return; }
+    localStorage.setItem(LS_CFG, JSON.stringify(c));
+    toast('Đã lưu cài đặt.', 'success');
+  };
+  $('btnLinkSheet').onclick = async () => {
+    const link = $('sheetLink').value.trim();
+    if (!link) { toast('Dán link Google Sheet.', 'error'); return; }
+    const r = await safeApi('setSheetLink', { link: link });
+    if (r) { toast('Đã kết nối Sheet.', 'success'); loadSettings(); }
+  };
+  const btnUn = $('btnUnlinkSheet');
+  if (btnUn) btnUn.onclick = async () => {
+    const r = await safeApi('clearSheetLink');
+    if (r) { toast('Đã về sheet mặc định.', 'success'); loadSettings(); }
+  };
+}
+
+/* ---------- Người dùng ---------- */
+async function loadUsers(){
+  const el = $('content');
+  el.innerHTML = '<div class="empty">Đang tải...</div>';
+  const d = await safeApi('listUsers');
+  if (!d) return;
+  const list = d.users || d || [];
+  let html = '<div class="card"><div class="card-head"><h2>Quản lý người dùng</h2>' +
     '<button class="btn btn-primary btn-sm" id="btnNewUser">+ Tạo người dùng</button></div>' +
     '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Tên đăng nhập</th><th>Họ tên</th>' +
     '<th>Vai trò</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
@@ -1818,8 +1795,7 @@ async function loadAdmin(){
     const locked = u.trang_thai !== 'active';
     html += '<tr><td><b>' + esc(u.username) + '</b></td><td>' + esc(u.ho_ten || '') + '</td>' +
       '<td>' + esc(ROLE_LABEL[u.vai_tro] || u.vai_tro || '') + '</td>' +
-      '<td>' + (locked ? '<span class="badge b-red">Đã khóa</span>'
-                       : '<span class="badge b-green">Đang hoạt động</span>') + '</td>' +
+      '<td>' + (locked ? '<span class="badge b-red">Đã khóa</span>' : '<span class="badge b-green">Đang hoạt động</span>') + '</td>' +
       '<td>' + (u.username === state.user.username ? '' :
         '<button class="btn btn-ghost btn-sm" data-lock="' + esc(u.username) + '" data-tt="' + (locked ? 'active' : 'locked') + '">' +
         (locked ? 'Mở khóa' : 'Khóa') + '</button>') + '</td></tr>';
@@ -1829,30 +1805,9 @@ async function loadAdmin(){
   el.querySelectorAll('[data-lock]').forEach(b => {
     b.onclick = async () => {
       const r = await safeApi('setUserStatus', { username: b.getAttribute('data-lock'), trang_thai: b.getAttribute('data-tt') });
-      if (r) { toast('Đã cập nhật.', 'success'); loadAdmin(); }
+      if (r) { toast('Đã cập nhật.', 'success'); loadUsers(); }
     };
   });
-  $('btnSaveCfg').onclick = () => {
-    const c = {
-      apiUrl: $('cfgApiUrl').value.trim(),
-      coName: $('cfgCoName').value.trim(),
-      coAddr: $('cfgCoAddr').value.trim()
-    };
-    if (c.apiUrl && !/script\.google\.com\/macros\/s\//.test(c.apiUrl)) { toast('API URL không đúng định dạng.', 'error'); return; }
-    localStorage.setItem(LS_CFG, JSON.stringify(c));
-    toast('Đã lưu cài đặt.', 'success');
-  };
-  $('btnLinkSheet').onclick = async () => {
-    const url = $('sheetLink').value.trim();
-    if (!url) { toast('Dán link Google Sheet vào ô.', 'error'); return; }
-    const r = await safeApi('setSheetLink', { url: url });
-    if (r) { toast('Đã kết nối: ' + r.name, 'success'); loadAdmin(); }
-  };
-  const btnUn = $('btnUnlinkSheet');
-  if (btnUn) btnUn.onclick = async () => {
-    const r = await safeApi('clearSheetLink');
-    if (r) { toast('Đã về sheet mặc định.', 'success'); loadAdmin(); }
-  };
   $('btnNewUser').onclick = () => {
     openModal('Tạo người dùng mới',
       '<div class="f-row"><div class="f-group"><label>Tên đăng nhập *</label><input id="nuUser" placeholder="VD: nguyen.vana"></div>' +
@@ -1869,7 +1824,7 @@ async function loadAdmin(){
       const un = $('nuUser').value.trim(), pw = $('nuPass').value, ht = $('nuName').value.trim();
       if (!un || !pw || !ht) { toast('Nhập đủ tên đăng nhập, mật khẩu, họ tên.', 'error'); return; }
       const r = await safeApi('createUser', { username: un, password: pw, ho_ten: ht, vai_tro: $('nuRole').value, bo_phan: $('nuBp').value.trim() });
-      if (r) { closeModal(); toast('Đã tạo người dùng.', 'success'); loadAdmin(); }
+      if (r) { closeModal(); toast('Đã tạo người dùng.', 'success'); loadUsers(); }
     };
   };
 }
@@ -1892,6 +1847,24 @@ function doiMatKhau(){
     if (r) { closeModal(); toast('Đã đổi mật khẩu.', 'success'); }
   };
 }
+
+
+/* ---------- Sidebar mobile ---------- */
+function toggleSidebar(force){
+  var sb = document.querySelector('.sidebar');
+  var bd = document.getElementById('sideBackdrop');
+  if (!sb) return;
+  var open = typeof force === 'boolean' ? force : !sb.classList.contains('open');
+  sb.classList.toggle('open', open);
+  if (bd) bd.classList.toggle('show', open);
+  // Tự đóng sidebar sau khi chọn menu trên mobile
+  if (open) {
+    sb.querySelectorAll('.nav-item').forEach(function(it){
+      it.onclick = function(){ if (window.innerWidth <= 900) toggleSidebar(false); };
+    });
+  }
+}
+
 </script>
 </body>
 </html>
