@@ -299,7 +299,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
   <header class="topbar">
     <div class="brand">
       <img class="brand-logo" id="topLogo" alt="The Wall">
-      <span>Quản lý Dự án Thi công</span>
+      
       <span class="brand-sep"></span>
       <span class="crumb">/ Danh sách dự án</span>
     </div>
@@ -335,26 +335,28 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
   <aside class="tabs" id="tabBar">
     <div class="side-logo"><img id="sideLogo" alt="The Wall"><div><b>THE WALL</b><small>Quản lý dự án</small></div></div>
     <div class="nav-label">Quản lý</div>
-    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Tổng quan</button>
-    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▤</i>Dự trù/Định mức</button>
-    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">▦</i>Mua hàng/Chi phí</button>
+    <button class="tab hidden" data-tab="tongquan" id="tabbtn-tongquan"><i class="ico">◈</i>Dashboard</button>
+    <button class="tab" id="tabbtn-back"><i class="ico">▤</i>Dự án</button>
+    <div class="nav-label">Kinh doanh</div>
+    <button class="tab hidden" data-tab="dutru" id="tabbtn-dutru"><i class="ico">▦</i>Dự trù / Định mức</button>
+    <button class="tab hidden" data-tab="muahang" id="tabbtn-muahang"><i class="ico">₫</i>Mua hàng / Chi phí</button>
     <button class="tab hidden" data-tab="phatsinh" id="tabbtn-phatsinh"><i class="ico">✦</i>Phát sinh</button>
+    <div class="nav-label">Thực thi</div>
     <button class="tab hidden" data-tab="tiendo" id="tabbtn-tiendo"><i class="ico">◔</i>Tiến độ</button>
-    <div class="nav-label">Phê duyệt & Thanh toán</div>
     <button class="tab hidden" data-tab="pheduyet" id="tabbtn-pheduyet"><i class="ico">✓</i>Phê duyệt</button>
-    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">₫</i>Thanh toán</button>
+    <button class="tab hidden" data-tab="thanhtoan" id="tabbtn-thanhtoan"><i class="ico">⎙</i>Thanh toán</button>
     <div class="nav-label">Báo cáo</div>
     <button class="tab hidden" data-tab="baocao" id="tabbtn-baocao"><i class="ico">▥</i>Báo cáo</button>
     <button class="tab hidden" data-tab="lichsu" id="tabbtn-lichsu"><i class="ico">◷</i>Lịch sử</button>
     <div class="nav-label">Hệ thống</div>
-    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Quản trị</button>
+    <button class="tab hidden" data-tab="admin" id="tabbtn-admin"><i class="ico">⚙</i>Người dùng</button>
     <div class="side-foot">© 2026 Tgroup Ecosystem · WeWall Group | Le Ha<br>Hệ thống Quản lý Dự án Nội bộ v1.0.0</div>
   </aside>
   <div class="main">
   <header class="topbar">
     <div class="brand">
       <img class="brand-logo" id="topLogo2" alt="The Wall">
-      <span>Quản lý Dự án Thi công</span>
+      
       <span class="brand-sep"></span>
       <span class="crumb">/ Chi tiết dự án</span>
     </div>
@@ -373,6 +375,11 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
       <div class="info">
         <h2 id="projName"></h2>
         <div class="meta" id="projMeta"></div>
+      </div>
+      <div class="sheet-linkbox" style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <input id="projSheetUrl" placeholder="Dán link Google Sheet dự án..." style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:220px">
+        <button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>
+        <a class="btn btn-sm btn-primary hidden" id="btnOpenSheet" target="_blank" style="text-decoration:none">Mở Sheet</a>
       </div>
     </div>
   </div>
@@ -402,6 +409,25 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
    Cấu hình duy nhất cần sửa: dán URL Web App (api.gs) vào API_URL.
    ===================================================================== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbyM9ZneUqIs0GwYFW90c3R3UzPJSdup5VTqoaRf6bwm2mapXnQMYqFOa2YV948YX1U0/exec';
+/* Cấu hình hệ thống: lưu localStorage, đổi được trong trang Quản trị */
+const LS_CFG = 'tw_cfg_v1';
+function getConfig(){
+  try {
+    const c = JSON.parse(localStorage.getItem(LS_CFG) || '{}');
+    return {
+      apiUrl: c.apiUrl || API_URL,
+      coName: c.coName || 'CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG',
+      coAddr: c.coAddr || '15 Đường số 14, KDC Nam Long, P.Tân Thuận Đông, Q.7, TP HCM',
+      coTel: c.coTel || '+848 5410 4013 - 0903 865 240',
+      coWeb: c.coWeb || 'www.thewall.com.vn'
+    };
+  } catch(e) {
+    return { apiUrl: API_URL, coName:'CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG',
+      coAddr:'15 Đường số 14, KDC Nam Long, P.Tân Thuận Đông, Q.7, TP HCM',
+      coTel:'+848 5410 4013 - 0903 865 240', coWeb:'www.thewall.com.vn' };
+  }
+}
+function apiUrl(){ return getConfig().apiUrl; }
 const TAM_BO_DANG_NHAP = true; // (tạm thời) mở app vào thẳng, không qua màn hình đăng nhập
 
 /* Logo Bức Tường — nhúng base64 để up hosting/GitHub nào cũng hiện */
@@ -451,7 +477,7 @@ async function api(action, params){
   if (action !== 'login') payload.token = localStorage.getItem(LS_TOKEN);
   let res;
   try {
-    res = await fetch(API_URL, {
+    res = await fetch(apiUrl(), {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
@@ -512,6 +538,7 @@ async function init(){
   $('btnPass').addEventListener('click', doiMatKhau);
   $('btnPass2').addEventListener('click', doiMatKhau);
   $('btnBack').addEventListener('click', () => showScreen('screen-projects'));
+  $('tabbtn-back').addEventListener('click', () => showScreen('screen-projects'));
   $('btnNewProject').addEventListener('click', openProjectModal);
   document.querySelectorAll('#tabBar .tab').forEach(b =>
     b.addEventListener('click', () => switchTab(b.dataset.tab)));
@@ -520,8 +547,7 @@ async function init(){
   enterApp();
 }
 function enterApp(){
-  const lbl = state.user.ho_ten + ' (' + (ROLE_LABEL[R()] || R()) + ')';
-  $('userLabel').textContent = lbl; $('userLabel2').textContent = lbl;
+  $('userLabel').textContent = state.user.ho_ten; $('userLabel2').textContent = state.user.ho_ten;
   $('roleLabel').textContent = ROLE_LABEL[R()] || R();
   $('roleLabel2').textContent = ROLE_LABEL[R()] || R();
   const av = (state.user.ho_ten || 'A').trim().charAt(0).toUpperCase();
@@ -607,7 +633,7 @@ async function loadTongQuanChung(){
       '<td class="num">' + Number(p.cho_duyet || 0) + '</td>' +
       '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>';
   });
-  html += '</tbody></table></div><div class="desc mt8">Dòng đỏ = vượt ngân sách hoặc có việc trễ hạn.</div></div>';
+  html += '</tbody></table></div></div>';
   html += '<div class="dash-time">Số liệu tính đến: ' + nowStr + '</div>';
   box.innerHTML = html;
   box.querySelectorAll('button[data-ma]').forEach(b =>
@@ -664,6 +690,18 @@ function openProject(ma){
   $('projName').textContent = p.ma_du_an + ' — ' + p.ten_du_an;
   $('projMeta').textContent = (p.ngay_bat_dau || '') + ' → ' + (p.ngay_ket_thuc || '') +
     (p.trang_thai ? ' · ' + ((TT_DA[p.trang_thai] || [p.trang_thai])[0]) : '');
+  // Link Google Sheet của dự án
+  $('projSheetUrl').value = p.sheet_url || '';
+  const btnOpen = $('btnOpenSheet');
+  if (p.sheet_url) { btnOpen.href = p.sheet_url; btnOpen.classList.remove('hidden'); }
+  else btnOpen.classList.add('hidden');
+  $('btnSaveSheetUrl').onclick = async () => {
+    const r = await safeApi('setProjectSheet', { ma_du_an: p.ma_du_an, sheet_url: $('projSheetUrl').value.trim() });
+    if (r) { p.sheet_url = r.sheet_url; toast('Đã lưu link Sheet.', 'success');
+      if (r.sheet_url) { btnOpen.href = r.sheet_url; btnOpen.classList.remove('hidden'); }
+      else btnOpen.classList.add('hidden');
+    }
+  };
   // Ẩn/hiện tab theo vai trò
   $('tabbtn-tongquan').classList.toggle('hidden', false);
   $('tabbtn-dutru').classList.toggle('hidden', false);
@@ -681,9 +719,9 @@ function openProject(ma){
 const TAB_LOADERS = { tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
   phatsinh: loadPhatSinh, tiendo: loadTienDo, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
   baocao: loadBaoCao, lichsu: loadLichSu, admin: loadAdmin };
-const TAB_TITLES = { tongquan:'Tổng quan', dutru:'Dự trù/Định mức', muahang:'Mua hàng/Chi phí',
+const TAB_TITLES = { tongquan:'Dashboard', dutru:'Dự trù / Định mức', muahang:'Mua hàng / Chi phí',
   phatsinh:'Phát sinh', tiendo:'Tiến độ', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
-  baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Quản trị' };
+  baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Người dùng' };
 function switchTab(name){
   state.tab = name;
   document.querySelectorAll('#tabBar .tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
@@ -791,7 +829,7 @@ async function loadTongQuan(){
       '<td class="num ' + (Number(it.vuot) > 0 ? 'text-red' : '') + '">' + fmt(it.vuot) + '</td>' +
       '<td><div class="prog-cell"><div class="progress' + (overI ? ' red' : '') + '"><div style="width:' + pctI + '%"></div></div><span class="pct">' + pctI + '%</span></div></td></tr>';
   });
-  html += '</tbody></table></div><div class="desc mt8">Công thức: Định mức = dự trù gốc + phát sinh đã duyệt. Còn lại = Định mức − Đã cam kết − Đã chi. Dòng đỏ = vượt ngân sách.</div></div>';
+  html += '</tbody></table></div></div>';
   el.innerHTML = html;
 }
 
@@ -803,7 +841,7 @@ async function loadDuTru(){
   if (!d) return;
   const active = d.active, versions = d.versions || [];
   state.hangMucs = active && active.items ? [...new Set(active.items.map(i => i.hang_muc))] : [];
-  let html = '<div class="card"><div class="card-head"><h2>Bản dự trù đang áp dụng (đã khóa)</h2>' +
+  let html = '<div class="card"><div class="card-head"><h2>Bảng dự trù đang áp dụng (đã khóa)</h2>' +
     '<div style="display:flex;gap:8px">' +
     (active && active.items && active.items.length ? '<button class="btn btn-ghost btn-sm" id="btnXlsDuTru">Xuất Excel</button>' : '') +
     (can('Admin','QuanLy') ? '<button class="btn btn-primary btn-sm" id="btnDraft">+ Tạo bản nháp mới</button>' : '') +
@@ -1121,9 +1159,9 @@ async function inPhieuDNTT(id){
     '<button class="btn btn-ghost btn-sm" id="prDong">Đóng</button></div>' +
     '<div class="phieu-wrap">' +
     '<div class="phieu-head"><img src="' + LOGO_BT + '" alt="logo">' +
-    '<div class="co"><b>CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG</b><br>' +
-    'Add: 15 Đường số 14, KDC Nam Long, P.Tân Thuận Đông, Q.7, TP HCM<br>' +
-    'Tel: +848 5410 4013 - 0903 865 240<br>Website: www.thewall.com.vn</div></div>' +
+    '<div class="co"><b>' + esc(getConfig().coName) + '</b><br>' +
+    'Add: ' + esc(getConfig().coAddr) + '<br>' +
+    'Tel: ' + esc(getConfig().coTel) + '<br>Website: ' + esc(getConfig().coWeb) + '</div></div>' +
     '<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>' +
     '<div class="phieu-row">' +
     '<div class="cell"><span class="lbl">Ngày:</span> <b>' + esc(d.ngay || '') + '</b></div>' +
@@ -1158,9 +1196,9 @@ function xuatPhieuXls(d){
   const h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
     '<head><meta charset="UTF-8"></head><body>' +
     '<table><tr><td><img src="' + LOGO_BT + '" width="120"></td><td>' +
-    '<b>CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG</b><br>' +
-    'Add: 15 Đường số 14, KDC Nam Long, P.Tân Thuận Đông, Q.7, TP HCM<br>' +
-    'Tel: +848 5410 4013 - 0903 865 240<br>Website: www.thewall.com.vn</td></tr></table>' +
+    '<b>' + esc(getConfig().coName) + '</b><br>' +
+    'Add: ' + esc(getConfig().coAddr) + '<br>' +
+    'Tel: ' + esc(getConfig().coTel) + '<br>Website: ' + esc(getConfig().coWeb) + '</td></tr></table>' +
     '<h2 align="center">PHIẾU ĐỀ NGHỊ THANH TOÁN</h2>' +
     '<table border="1" cellpadding="6">' +
     '<tr><td>Ngày: <b>' + esc(d.ngay || '') + '</b></td><td>Người đề nghị: <b>' + esc(d.nguoi_de_nghi || '') + '</b></td><td>Bộ phận: <b>' + esc(d.bo_phan || '') + '</b></td></tr>' +
@@ -1414,7 +1452,7 @@ async function loadTienDo(){
         '<td>' + badge(t.trang_thai, TT_TD) + (tre ? ' <span class="badge b-red">Trễ hạn</span>' : '') + '</td>' +
         '<td class="text-muted">' + esc(t.nguoi_cap_nhat || '') + '</td></tr>';
     });
-    html += '</tbody></table></div><div class="desc mt8">Dòng đỏ = quá ngày kết thúc mà chưa đạt 100% (trễ hạn).</div>';
+    html += '</tbody></table></div>';
   }
   html += '</div>';
   el.innerHTML = html;
@@ -1662,10 +1700,15 @@ function ngayFile(){
   return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
 }
 function xuatXlsChung(tenFile, tieuDe, headers, rows){
+  const cfg = getConfig();
   let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
     '<head><meta charset="UTF-8"></head><body>' +
-    '<h3>' + esc(tieuDe) + '</h3>' +
-    '<table border="1" cellpadding="6"><thead><tr>' +
+    '<table><tr><td colspan="' + headers.length + '"><b>' + esc(cfg.coName) + '</b><br>' +
+    esc(cfg.coAddr) + '</td></tr></table>' +
+    '<h2 style="color:#a87b12">' + esc(tieuDe) + '</h2>' +
+    '<p>Dự án: ' + esc(state.project.ma_du_an + ' — ' + (state.project.ten_du_an || '')) +
+    ' &nbsp;|&nbsp; Ngày xuất: ' + new Date().toLocaleDateString('vi-VN') + '</p>' +
+    '<table border="1" cellpadding="6"><thead><tr style="background:#f0ad1f;color:#1b1b1b">' +
     headers.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr></thead><tbody>';
   rows.forEach(r => {
     h += '<tr>' + r.map(c => '<td>' + esc(c == null ? '' : c) + '</td>').join('') + '</tr>';
@@ -1675,8 +1718,9 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = tenFile + '_' + state.project.ma_du_an + '_' + ngayFile() + '.xls';
+  document.body.appendChild(a);
   a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 /* Xuất Excel: file .xls dạng HTML table, có BOM để tiếng Việt không lỗi font */
 function exportXls(d){
@@ -1747,7 +1791,18 @@ async function loadAdmin(){
   if (!d) return;
   const list = d.users || d || [];
   const sh = await safeApi('getSheetLink');
-  let html = '<div class="card"><div class="card-head"><h2>Kết nối Sheet dữ liệu</h2></div>' +
+  const cfg = getConfig();
+  let html = '<div class="card"><div class="card-head"><h2>Cài đặt hệ thống</h2></div>' +
+    '<div class="f-group"><label>API URL (backend Apps Script)</label>' +
+    '<input id="cfgApiUrl" value="' + esc(cfg.apiUrl || '') + '" placeholder="https://script.google.com/macros/s/.../exec"></div>' +
+    '<div class="f-row"><div class="f-group" style="flex:1"><label>Tên công ty</label>' +
+    '<input id="cfgCoName" value="' + esc(cfg.coName || '') + '"></div>' +
+    '<div class="f-group" style="flex:1"><label>Địa chỉ</label>' +
+    '<input id="cfgCoAddr" value="' + esc(cfg.coAddr || '') + '"></div></div>' +
+    '<div class="f-group"><label>Phiên bản</label>' +
+    '<input value="1.0.0" disabled style="background:var(--gray-bg)"></div>' +
+    '<button class="btn btn-primary btn-sm" id="btnSaveCfg">Lưu cài đặt</button></div>';
+  html += '<div class="card"><div class="card-head"><h2>Kết nối Sheet dữ liệu</h2></div>' +
     '<div style="padding:4px 0 8px;color:var(--muted);font-size:13px">Sheet đang dùng: <b id="curSheetName">' +
     esc(sh ? sh.name : '') + '</b>' + (sh && sh.linked ? ' <span class="badge b-green">Đã link</span>' : ' <span class="badge">Mặc định</span>') + '</div>' +
     '<div class="f-row"><div class="f-group" style="flex:1"><label>Dán link Google Sheet để chuyển kho dữ liệu</label>' +
@@ -1777,6 +1832,16 @@ async function loadAdmin(){
       if (r) { toast('Đã cập nhật.', 'success'); loadAdmin(); }
     };
   });
+  $('btnSaveCfg').onclick = () => {
+    const c = {
+      apiUrl: $('cfgApiUrl').value.trim(),
+      coName: $('cfgCoName').value.trim(),
+      coAddr: $('cfgCoAddr').value.trim()
+    };
+    if (c.apiUrl && !/script\.google\.com\/macros\/s\//.test(c.apiUrl)) { toast('API URL không đúng định dạng.', 'error'); return; }
+    localStorage.setItem(LS_CFG, JSON.stringify(c));
+    toast('Đã lưu cài đặt.', 'success');
+  };
   $('btnLinkSheet').onclick = async () => {
     const url = $('sheetLink').value.trim();
     if (!url) { toast('Dán link Google Sheet vào ô.', 'error'); return; }
