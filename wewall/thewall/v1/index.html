@@ -413,8 +413,8 @@ const DB={
 /* ================= AUTH ================= */
 const Auth={
  user:null,
- login(u,p){const f=DB.data.users.find(x=>x.username===u&&x.pass===p);if(f){this.user={id:f.id,name:f.name,role:f.role,projectIds:f.projectIds||[]};return true;}return false;},
- logout(){this.user=null;location.hash='#/login';showLogin();},
+ login(u,p){const f=DB.data.users.find(x=>x.username===u&&x.pass===p);if(f){this.user={id:f.id,name:f.name,role:f.role,projectIds:f.projectIds||[]};saveSession();return true;}return false;},
+ logout(){this.user=null;clearSession();location.hash='#/login';showLogin();},
  isSM(){return this.user&&this.user.role==='Chỉ huy công trình';},
  canAdmin(){return this.user&&(this.user.role==='Giám đốc'||this.user.role==='Kế toán');},
  canSuper(){return this.user&&this.user.role==='Giám đốc';}
@@ -1142,7 +1142,7 @@ function firstId(coll){const l=scoped(DB.data[coll]);return l.length?l[0].id:'';
 /* ================= USERS ================= */
 ROUTES['#/users']=function(){
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Phân quyền: Giám đốc / Kế toán / Chỉ huy công trình</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Thêm người dùng</button></div></div>';
+ let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Phân quyền: Giám đốc / Kế toán / Chỉ huy công trình • Thêm trực tiếp trên Sheet (tab Users) cũng được, rồi bấm Tải từ server trong Cài đặt</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Thêm người dùng</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th></th></tr></thead><tbody>';
  DB.data.users.forEach(u=>{h+='<tr><td><b>'+esc(u.name)+'</b></td><td>'+esc(u.username)+'</td><td>'+(u.role==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':u.role==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':'<span class="badge b-amber">Chỉ huy công trình</span>')+'</td><td style="font-size:12.5px">'+(u.projectIds||[]).map(projCode).join(', ')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')"></button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="delObj(\'users\',\''+u.id+'\',\'Xóa user '+esc(u.username)+'?\')"></button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
@@ -1521,7 +1521,7 @@ doLogin=async function(){
  const u=$('#lgUser').value.trim(),pw=$('#lgPass').value;
  if(CFG.apiUrl){
   try{const r=await apiCall('login',{username:u,pass:pw});
-   if(r&&r.user){Auth.user={id:r.user.id,name:r.user.name||r.user.ho_ten,role:r.user.role||r.user.vai_tro,projectIds:r.user.projectIds||(r.user.du_an?[r.user.du_an]:[])};DB.log('Đăng nhập','qua server');enterApp();pullAll(true).catch(()=>{});return;}
+   if(r&&r.user){Auth.user={id:r.user.id,name:r.user.name||r.user.ho_ten,role:r.user.role||r.user.vai_tro,projectIds:r.user.projectIds||(r.user.du_an?[r.user.du_an]:[])};DB.log('Đăng nhập','qua server');saveSession();enterApp();pullAll(true).catch(()=>{});return;}
    $('#lgErr').style.display='block';$('#lgErr').textContent='Sai tên đăng nhập hoặc mật khẩu.';return;
   }catch(e){/* rớt về local */}
  }
@@ -1530,7 +1530,20 @@ doLogin=async function(){
 };
 $('#lgPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 $('#lgUser').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-showLogin();
+const SES_KEY='twpro_session';
+function saveSession(){try{localStorage.setItem(SES_KEY,JSON.stringify(Auth.user));}catch(e){}}
+function clearSession(){try{localStorage.removeItem(SES_KEY);}catch(e){}}
+function restoreSession(){
+ try{
+  const s=JSON.parse(localStorage.getItem(SES_KEY)||'null');
+  if(!s||!s.id)return false;
+  const f=DB.data.users.find(x=>x.id===s.id);
+  Auth.user=f?{id:f.id,name:f.name,role:f.role,projectIds:f.projectIds||[]}:s;
+  return !!Auth.user;
+ }catch(e){return false;}
+}
+if(restoreSession()){enterApp();if(CFG.apiUrl)pullAll(true).catch(()=>{});}
+else{showLogin();}
 </script>
 </body>
 </html>
