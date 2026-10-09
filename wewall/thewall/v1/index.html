@@ -198,7 +198,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 @media(max-width:900px){
 .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
 .sidebar.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
-.burger{display:block}
+.burger{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
 .g7,.g5,.g4,.g3{grid-template-columns:repeat(2,1fr)}
 .g2{grid-template-columns:1fr}
 #view{padding:14px}
@@ -252,7 +252,7 @@ body{background:#fff}
     <aside class="sidebar" id="sidebar"></aside>
     <div class="main">
       <div class="topbar">
-        <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')"></button>
+        <button class="burger" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu">☰</button>
         <h2>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</h2>
         <div class="proj-pick noprint"><span style="font-size:12.5px;color:var(--mut);font-weight:600">Dự án:</span><select id="projPick" class="inp" onchange="setProject(this.value)"></select></div>
       </div>
@@ -1109,10 +1109,22 @@ function printPhieu(){const a=$('#phieuPrintArea');if(!a)return;document.body.cl
 function xuatPhieuXls(id){
  const t=DB.data.thanhtoan.find(x=>x.id===id);if(!t)return;
  const p=DB.data.projects.find(x=>x.id===t.projectId)||{};
- const h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>'
-  +'<h3>PHIẾU ĐỀ NGHỊ THANH TOÁN</h3><p>Ngày: '+fmtDate(t.date)+' • Dự án: '+esc(p.code+' • '+p.name)+'</p>'
-  +'<table border="1"><tr><th>Số tiền thanh toán</th><th>Hình thức</th><th>Bằng chữ</th></tr><tr><td>'+t.sotien+'</td><td>'+esc(t.hinhthuc)+'</td><td>'+esc(docSoTien(t.sotien))+'</td></tr></table></body></html>';
+ const dn=DB.data.denghi.find(x=>x.id===t.denghiId)||{};
+ const lk=DB.data.thanhtoan.filter(x=>x.projectId===t.projectId&&x.trangthai==='da_chi'&&x.date<=t.date).reduce((s,x)=>s+x.sotien,0);
+ const tong=dn.sotien||t.sotien;
+ let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
+ h+='<table width="100%"><tr><td><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
+ h+='<h2 align="center">PHIẾU ĐỀ NGHỊ THANH TOÁN</h2>';
+ h+='<table><tr><td>Ngày:</td><td><b>'+fmtDate(t.date)+'</b></td><td>Người đề nghị:</td><td><b>'+esc(dn.nguoitao||'')+'</b></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="3"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td><b>'+esc(p.code+' • '+p.name)+'</b></td><td>Hình thức thanh toán:</td><td><b>'+esc(t.hinhthuc)+'</b></td></tr></table><br>';
+ h+='<table border="1"><tr><th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng giá trị HĐ</th><th>Giá trị còn lại</th></tr>'
+  +'<tr><td>'+t.sotien+'</td><td>'+lk+'</td><td>'+tong+'</td><td>'+(tong-lk)+'</td></tr></table>';
+ h+='<p><b>Bằng chữ:</b> <i>'+esc(docSoTien(t.sotien))+'</i></p>';
+ h+='<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>';
+ h+='</body></html>';
  dlXls(h,'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xls');
+ toast('Đã tải Excel phiếu thanh toán');
 }
 /* ================= TẠM ỨNG ================= */
 ROUTES['#/tamung']=function(){
@@ -1200,6 +1212,14 @@ const CFG_KEY='twpro_cfg';
 let CFG={apiUrl:'',key:''};
 function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
+function syncCfgForm(){
+ const a=document.querySelector('#mBody [name="apiUrl"]');
+ const k=document.querySelector('#mBody [name="apiKey"]');
+ let ch=false;
+ if(a&&a.value.trim()!==CFG.apiUrl){CFG.apiUrl=a.value.trim();ch=true;}
+ if(k&&k.value!==CFG.key){CFG.key=k.value;ch=true;}
+ if(ch){saveCfg();renderSyncPill();}
+}
 const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTru',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
@@ -1207,7 +1227,13 @@ async function apiCall(action,params){
  const r=await fetch(CFG.apiUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(Object.assign({action:action,key:CFG.key||''},params||{}))});
  const j=await r.json();if(j&&j.error)throw new Error(j.error);return j;
 }
-function markDirty(){SYNC.dirty=true;renderSyncPill();}
+let pushTimer=null;
+function markDirty(){SYNC.dirty=true;renderSyncPill();schedulePush();}
+function schedulePush(){
+ if(!CFG.apiUrl)return;
+ clearTimeout(pushTimer);
+ pushTimer=setTimeout(()=>{pushAll(true).catch(()=>{});},4000);
+}
 function renderSyncPill(){
  const el=$('#syncPill');if(!el)return;
  if(!CFG.apiUrl){el.innerHTML='<span class="badge b-gray">Chưa cấu hình API</span>';return;}
@@ -1215,6 +1241,7 @@ function renderSyncPill(){
  el.innerHTML='<span class="badge b-green">Đã đồng bộ</span>'+(SYNC.msg?' <span style="font-size:11px;color:var(--mut)">'+esc(SYNC.msg)+'</span>':'');
 }
 async function pullAll(silent){
+ syncCfgForm();
  const d=await apiCall('pull',{});
  let n=0;
  Object.keys(SYNC_MAP).forEach(k=>{const sh=SYNC_MAP[k];if(d[sh]&&Array.isArray(d[sh])){DB.data[k]=d[sh];n++;}});
@@ -1223,14 +1250,16 @@ async function pullAll(silent){
  renderSyncPill();if(!silent)toast('Đã tải '+n+' bảng từ server');
  nav(false);
 }
-async function pushAll(){
+async function pushAll(silent){
+ syncCfgForm();
  let n=0;
  for(const k of Object.keys(SYNC_MAP)){await apiCall('push',{sheet:SYNC_MAP[k],rows:DB.data[k]||[]});n++;}
  SYNC.dirty=false;SYNC.connected=true;SYNC.msg='Lúc '+new Date().toLocaleTimeString('vi-VN');
- renderSyncPill();toast('Đã đẩy '+n+' bảng lên server');
+ renderSyncPill();if(!silent)toast('Đã đẩy '+n+' bảng lên server');
  DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên server');
 }
 async function testApi(){
+ syncCfgForm();
  try{const d=await apiCall('ping',{});SYNC.connected=true;renderSyncPill();toast('Kết nối OK — '+(d.time||'server phản hồi'));return true;}
  catch(e){toast('Lỗi kết nối: '+e.message);return false;}
 }
