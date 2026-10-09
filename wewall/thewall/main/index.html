@@ -9,7 +9,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>The Wall — Quản lý Dự án Thi công</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -568,6 +567,18 @@ function fmtNgay(v){
   if (m) return m[3].padStart(2,'0') + '/' + m[2].padStart(2,'0') + '/' + m[1];
   return s;
 }
+/* Chuyển ngày bất kỳ về yyyy-MM-dd để gán vào input[type=date] */
+function ngayInput(v){
+  if (v == null) return '';
+  var s = String(v).trim();
+  if (!s) return '';
+  var m = s.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (m) return m[1] + '-' + m[2].padStart(2,'0') + '-' + m[3].padStart(2,'0');
+  var d = new Date(s);
+  if (!isNaN(d.getTime()))
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  return '';
+}
 function badge(val, map){ const m = map[val] || [val, 'b-gray']; return '<span class="badge ' + m[1] + '">' + esc(m[0]) + '</span>'; }
 function toast(msg, type){
   const t = document.createElement('div');
@@ -770,46 +781,47 @@ function goPageInner(page, params){
   var tab = PAGE2TAB[page];
   if (tab) {
     state.tab = tab;
-    if (!state.project) {
-      c.innerHTML = '<div class="card"><div class="empty">Chọn một dự án trước (vào mục <b>Dự án</b> rồi bấm <b>Mở</b>).</div></div>';
-      return;
-    }
     var p = state.project;
-    // Header dự án + ô link Google Sheet riêng
-    c.innerHTML = '<div class="card" style="margin-bottom:16px"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
-      '<button class="back-link" id="btnBack2">&larr;</button>' +
-      '<div><b style="font-size:16px">'+esc(p.ma_du_an)+' — '+esc(p.ten_du_an||'')+'</b>' +
-      '<div class="desc">'+fmtNgay(p.ngay_bat_dau)+' → '+fmtNgay(p.ngay_ket_thuc)+'</div></div>' +
-      '<div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:420px">' +
-      '<input id="projSheetUrl" placeholder="Dán link hoặc mã Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px;flex:1">' +
-      '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
-      '<a class="btn btn-sm btn-primary'+(p.sheet_url?'':' hidden')+'" id="btnOpenSheet" target="_blank" href="'+esc(p.sheet_url||'')+'" style="text-decoration:none">Mở Sheet</a>' +
-      '<button class="btn btn-sm btn-gold'+(p.sheet_url?'':' hidden')+'" id="btnSyncSheet" title="Đọc Sheet và nạp dự trù vào app">Đồng bộ</button>' +
-      
-      '</div></div></div><div id="tab-'+tab+'"></div>';
-    var bb = $('btnBack2');
-    if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
-    // Lưu link Sheet của dự án
-    var bs = $('btnSaveSheetUrl');
-    if (bs) bs.addEventListener('click', async function(){
-      var r = await safeApi('setProjectSheet', { ma_du_an: p.ma_du_an, sheet_url: $('projSheetUrl').value.trim() });
-      if (r) { p.sheet_url = r.sheet_url; toast('Đã lưu link Sheet.', 'success');
-        var bo = $('btnOpenSheet'), bsy = $('btnSyncSheet');
-        if (r.sheet_url) { bo.href = r.sheet_url; bo.classList.remove('hidden'); bsy.classList.remove('hidden'); }
-        else { bo.classList.add('hidden'); bsy.classList.add('hidden'); }
-      }
-    });
-    // Đồng bộ: đọc Sheet → nạp dự trù
-    var by = $('btnSyncSheet');
-    if (by) by.addEventListener('click', async function(){
-      if (!confirm('Đọc Sheet đã link và tạo phiên bản dự trù mới từ dữ liệu Sheet?')) return;
-      var r = await safeApi('syncProjectSheet', { ma_du_an: p.ma_du_an });
-      if (r) { toast('Đã đồng bộ: ' + r.so_dong + ' dòng → phiên bản ' + r.phien_ban, 'success'); goPage(state.page, {project: p}); }
-    });
+    if (p) {
+      // Header dự án (đã chọn)
+      c.innerHTML = '<div class="card" style="margin-bottom:16px"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
+        '<button class="back-link" id="btnBack2">&larr;</button>' +
+        '<div><b style="font-size:16px">'+esc(p.ma_du_an)+' — '+esc(p.ten_du_an||'')+'</b>' +
+        '<div class="desc">'+fmtNgay(p.ngay_bat_dau)+' → '+fmtNgay(p.ngay_ket_thuc)+'</div></div>' +
+        '<div style="margin-left:auto"><button class="btn btn-sm btn-ghost" id="btnClearProject">Xem tất cả dự án</button></div>' +
+        '</div></div><div id="tab-'+tab+'"></div>';
+      var bb = $('btnBack2');
+      if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
+      var bc = $('btnClearProject');
+      if (bc) bc.addEventListener('click', function(){ state.project = null; goPageInner(state.page, {}); });
+    } else {
+      // Chế độ tổng: gộp tất cả dự án + dropdown chọn nhanh
+      c.innerHTML = '<div class="card" style="margin-bottom:16px"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
+        '<div><b style="font-size:16px">Chế độ tổng — tất cả dự án</b>' +
+        '<div class="desc">Bảng bên dưới gộp dữ liệu mọi dự án. Chọn dự án để xem chi tiết:</div></div>' +
+        '<div style="margin-left:auto"><select id="selProjectTong" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;max-width:260px">' +
+        '<option value="">-- Chọn dự án --</option></select></div>' +
+        '</div></div><div id="tab-'+tab+'"></div>';
+      napDropdownDuAn();
+    }
     TAB_LOADERS[tab]();
     return;
   }
   goPage('dashboard');
+}
+/* Dropdown chọn nhanh dự án ở chế độ tổng */
+async function napDropdownDuAn(){
+  if (!state.projects || !state.projects.length) {
+    const d = await safeApi('listProjects', {}, { force: true });
+    if (d) state.projects = d.projects || d || [];
+  }
+  const sel = $('selProjectTong'); if (!sel) return;
+  (state.projects || []).forEach(function(p){
+    const o = document.createElement('option');
+    o.value = p.ma_du_an; o.textContent = p.ma_du_an + ' — ' + (p.ten_du_an || '');
+    sel.appendChild(o);
+  });
+  sel.onchange = function(){ if (sel.value) openProject(sel.value); };
 }
 
 // Tương thích: switchTab cũ -> goPage
@@ -854,8 +866,12 @@ document.addEventListener('DOMContentLoaded', init);
 /* ---------- Chuyển người dùng nhanh (test giao diện nhân viên) ---------- */
 const LS_TESTUSER = 'tw_test_user_v1';
 const TEST_USERS = [
-  { username: 'admin', ho_ten: 'Quản trị viên', vai_tro: 'Admin' },
-  { username: 'nv_muahang', ho_ten: 'NV Mua hàng (test)', vai_tro: 'MuaHang' }
+  { username:'admin', ho_ten:'Quản trị viên', vai_tro:'Admin' },
+  { username:'test_quanly', ho_ten:'Quản lý (test)', vai_tro:'QuanLy' },
+  { username:'test_muahang', ho_ten:'NV Mua hàng (test)', vai_tro:'MuaHang' },
+  { username:'test_ketoan', ho_ten:'Kế toán (test)', vai_tro:'KeToan' },
+  { username:'test_duyet', ho_ten:'Người duyệt (test)', vai_tro:'Approver' },
+  { username:'test_xem', ho_ten:'Người xem (test)', vai_tro:'Viewer' }
 ];
 function getTestUser(){
   try {
@@ -871,11 +887,25 @@ function applyUser(u){
   if ($('userRole')) $('userRole').textContent = ROLE_LABEL[u.vai_tro] || u.vai_tro;
 }
 function switchTestUser(){
-  const cur = state.user ? state.user.username : 'admin';
-  const next = TEST_USERS.find(t => t.username !== cur) || TEST_USERS[0];
-  applyUser(next);
-  toast('Đang xem với quyền: ' + (ROLE_LABEL[next.vai_tro] || next.vai_tro), 'info');
-  goPageInner(state.page || 'dashboard', { project: state.project });
+  const cur = state.user ? state.user.username : '';
+  openModal('Chuyển người dùng (test)',
+    '<div class="desc">Chọn vai trò để xem giao diện tương ứng:</div>' +
+    TEST_USERS.map(function(u){
+      return '<button class="btn ' + (u.username === cur ? 'btn-primary' : 'btn-ghost') + ' btn-block" data-tu="' + u.username + '" style="margin-bottom:8px;justify-content:flex-start;text-align:left">' +
+        '<b>' + esc(u.ho_ten) + '</b><span class="desc" style="margin-left:8px">' + esc(ROLE_LABEL[u.vai_tro] || u.vai_tro) + '</span></button>';
+    }).join(''),
+    '<button class="btn btn-ghost" id="mCancel">Đóng</button>');
+  $('mCancel').onclick = closeModal;
+  Array.prototype.forEach.call($('modalRoot').querySelectorAll('[data-tu]'), function(b){
+    b.onclick = function(){
+      const u = TEST_USERS.find(function(x){ return x.username === b.dataset.tu; });
+      if (!u) return;
+      closeModal();
+      applyUser(u);
+      toast('Đang xem với quyền: ' + (ROLE_LABEL[u.vai_tro] || u.vai_tro), 'info');
+      goPageInner(state.page || 'dashboard', { project: state.project });
+    };
+  });
 }
 function enterApp(){
   // Bypass đăng nhập: vào thẳng (nhớ user test đã chọn)
@@ -1013,16 +1043,12 @@ function renderTongQuanChung(d){
       var label = kpi.querySelector('.k-label').textContent;
       var map = {'Tổng định mức':'reports','Đã cam kết':'cost','Đã chi':'payment','Còn lại':'reports','Vượt':'reports'};
       var g = map[label] || 'reports';
-      if (state.project) goPage(g, {project: state.project});
-      else toast('Chọn một dự án trước.', 'info');
+      goPage(g);
     });
   });
   box.querySelectorAll('.alert-card[data-goto]').forEach(function(card){
     card.addEventListener('click', function(){
-      var g = card.dataset.goto;
-      if (state.project) goPage(g, {project: state.project});
-      else if (g === 'approval') goPage('approval');
-      else toast('Chọn một dự án trước.', 'info');
+      goPage(card.dataset.goto);
     });
   });
   // Bấm vào dòng bảng dự án thì mở dự án
@@ -1051,7 +1077,7 @@ async function loadProjectsInto(wrapId){
     '<tbody id="projectRows"><tr><td colspan="6" class="empty">Đang tải...</td></tr></tbody></table></div></div>';
   const bp = $('btnNewProject2');
   if (bp) bp.addEventListener('click', openProjectModal);
-  const d = await safeApi('listProjects');
+  const d = await safeApi('listProjects', {}, { force: true });
   if (!d) return;
   state.projects = d.projects || d || [];
   const tb = $('projectRows');
@@ -1064,10 +1090,17 @@ async function loadProjectsInto(wrapId){
     '<tr><td><b>' + esc(p.ma_du_an) + '</b></td><td>' + esc(p.ten_du_an) + '</td>' +
     '<td>' + fmtNgay(p.ngay_bat_dau) + '</td><td>' + fmtNgay(p.ngay_ket_thuc) + '</td>' +
     '<td>' + badge(p.trang_thai || 'dang_lam', TT_DA) + '</td>' +
-    '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>'
+    '<td class="actions">' +
+    (can('Admin','QuanLy') ? '<button class="btn btn-ghost btn-sm" data-edit="' + esc(p.ma_du_an) + '">Sửa</button> ' : '') +
+    (can('Admin') ? '<button class="btn btn-danger btn-sm" data-del="' + esc(p.ma_du_an) + '">Xóa</button> ' : '') +
+    '<button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>'
   ).join('');
-  tb.querySelectorAll('button').forEach(b =>
+  tb.querySelectorAll('button[data-ma]').forEach(b =>
     b.addEventListener('click', () => openProject(b.dataset.ma)));
+  tb.querySelectorAll('button[data-edit]').forEach(b =>
+    b.addEventListener('click', () => openProjectEditModal(b.dataset.edit)));
+  tb.querySelectorAll('button[data-del]').forEach(b =>
+    b.addEventListener('click', () => xoaDuAn(b.dataset.del)));
 }
 // Giữ tên cũ để tương thích
 async function loadProjects(){ return loadProjectsInto('projListWrap'); }
@@ -1078,7 +1111,8 @@ function openProjectModal(){
     '<div class="f-group"><label>Mô tả</label><textarea id="npMoTa" rows="3"></textarea></div>' +
     '<div class="f-row"><div class="f-group"><label>Ngày bắt đầu</label><input id="npBd" type="date"></div>' +
     '<div class="f-group"><label>Ngày kết thúc</label><input id="npKt" type="date"></div></div>' +
-    '<div class="f-group"><label>Giá trị hợp đồng (VND)</label><input id="npGt" type="text" inputmode="numeric" placeholder="VD: 5.000.000.000"></div>',
+    '<div class="f-group"><label>Giá trị hợp đồng (VND)</label><input id="npGt" type="text" inputmode="numeric" placeholder="VD: 5.000.000.000"></div>' +
+    '<div class="f-group"><label>Link Google Sheet</label><input id="npSheet" placeholder="Dán link hoặc mã Sheet — sẽ đồng bộ dự trù ngay khi tạo"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Tạo dự án</button>');
   $('mCancel').onclick = closeModal;
@@ -1091,14 +1125,80 @@ function openProjectModal(){
     const ma = $('npMa').value.trim(), ten = $('npTen').value.trim();
     if (!ma || !ten) { toast('Nhập mã và tên dự án.', 'error'); return; }
     const gt = Number($('npGt').value.replace(/\D/g, '')) || 0;
+    const link = $('npSheet').value.trim();
     const params = { ma_du_an: ma, ten_du_an: ten,
       mo_ta: $('npMoTa').value.trim(), ngay_bat_dau: $('npBd').value, ngay_ket_thuc: $('npKt').value,
-      gia_tri_hop_dong: gt };
-    closeModal(); // B3
-    toast('Đã tạo dự án.', 'success');
+      gia_tri_hop_dong: gt, sheet_url: link };
+    closeModal();
+    toast('Đang tạo dự án...', 'info');
     const d = await safeApi('createProject', params);
-    if (d) loadProjects();
+    if (!d) return;
+    if (link) {
+      toast('Đang đồng bộ dự trù từ Sheet...', 'info');
+      const r = await safeApi('syncProjectSheet', { ma_du_an: ma });
+      if (r) toast('Đã tạo dự án và đồng bộ ' + r.so_dong + ' dòng dự trù.', 'success');
+      else toast('Đã tạo dự án (đồng bộ Sheet thất bại — kiểm tra lại link).', 'error');
+    } else {
+      toast('Đã tạo dự án.', 'success');
+    }
+    loadProjects();
   };
+}
+/* Sửa dự án (Admin/Quản lý): thông tin chung + link Google Sheet riêng */
+function openProjectEditModal(ma){
+  const p = state.projects.find(x => x.ma_du_an === ma);
+  if (!p) return;
+  openModal('Sửa dự án ' + p.ma_du_an,
+    '<div class="f-group"><label>Tên dự án *</label><input id="epTen" value="' + esc(p.ten_du_an || '') + '"></div>' +
+    '<div class="f-group"><label>Mô tả</label><textarea id="epMoTa" rows="3">' + esc(p.mo_ta || '') + '</textarea></div>' +
+    '<div class="f-row"><div class="f-group"><label>Ngày bắt đầu</label><input id="epBd" type="date" value="' + esc(ngayInput(p.ngay_bat_dau)) + '"></div>' +
+    '<div class="f-group"><label>Ngày kết thúc</label><input id="epKt" type="date" value="' + esc(ngayInput(p.ngay_ket_thuc)) + '"></div></div>' +
+    '<div class="f-group"><label>Trạng thái</label><select id="epTt">' +
+    Object.keys(TT_DA).map(function(k){ return '<option value="' + k + '"' + (p.trang_thai === k ? ' selected' : '') + '>' + TT_DA[k][0] + '</option>'; }).join('') +
+    '</select></div>' +
+    '<div class="f-group"><label>Giá trị hợp đồng (VND)</label><input id="epGt" type="text" inputmode="numeric" value="' + (p.gia_tri_hop_dong ? Number(p.gia_tri_hop_dong).toLocaleString('vi-VN') : '') + '"></div>' +
+    '<div class="f-group"><label>Link Google Sheet riêng</label>' +
+    '<div style="display:flex;gap:8px"><input id="epSheet" placeholder="Dán link hoặc mã Sheet..." value="' + esc(p.sheet_url || '') + '" style="flex:1">' +
+    (p.sheet_url ? '<a class="btn btn-sm btn-primary" target="_blank" href="' + esc(p.sheet_url) + '" style="text-decoration:none">Mở</a>' : '') +
+    '</div><div class="desc">Dán link rồi bấm Lưu. Nút "Đồng bộ" đọc Sheet và nạp dự trù vào app.</div></div>',
+    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
+    (can('Admin','QuanLy') && p.sheet_url ? '<button class="btn btn-gold" id="mSync">Đồng bộ</button>' : '') +
+    '<button class="btn btn-primary" id="mSave">Lưu</button>');
+  $('mCancel').onclick = closeModal;
+  const inpGt = $('epGt');
+  if (inpGt) inpGt.addEventListener('input', function(){
+    const num = this.value.replace(/\D/g, '');
+    this.value = num ? Number(num).toLocaleString('vi-VN') : '';
+  });
+  const bsy = $('mSync');
+  if (bsy) bsy.onclick = async () => {
+    if (!confirm('Đọc Sheet đã link và tạo phiên bản dự trù mới từ dữ liệu Sheet?')) return;
+    const r = await safeApi('syncProjectSheet', { ma_du_an: p.ma_du_an });
+    if (r) { toast('Đã đồng bộ: ' + r.so_dong + ' dòng → phiên bản ' + r.phien_ban, 'success'); closeModal(); loadProjects(); }
+  };
+  $('mSave').onclick = async () => {
+    const ten = $('epTen').value.trim();
+    if (!ten) { toast('Nhập tên dự án.', 'error'); return; }
+    const gt = Number($('epGt').value.replace(/\D/g, '')) || 0;
+    const r = await safeApi('updateProject', {
+      ma_du_an: p.ma_du_an, ten_du_an: ten, mo_ta: $('epMoTa').value.trim(),
+      ngay_bat_dau: $('epBd').value, ngay_ket_thuc: $('epKt').value,
+      trang_thai: $('epTt').value, gia_tri_hop_dong: gt,
+      sheet_url: $('epSheet').value.trim()
+    });
+    if (r) { closeModal(); toast('Đã lưu.', 'success'); loadProjects(); }
+  };
+}
+/* Xóa dự án (chỉ Admin): xác nhận 2 lần, xóa toàn bộ dữ liệu liên quan */
+async function xoaDuAn(ma){
+  if (!confirm('Xóa dự án ' + ma + '?')) return;
+  if (!confirm('XÁC NHẬN LẦN 2: Xóa toàn bộ dự trù, đề nghị, phát sinh, thanh toán, tạm ứng của dự án ' + ma + '? Không thể hoàn tác!')) return;
+  const r = await safeApi('deleteProject', { ma_du_an: ma });
+  if (r) {
+    if (state.project && state.project.ma_du_an === ma) state.project = null;
+    toast('Đã xóa dự án ' + ma + '.', 'success');
+    loadProjects();
+  }
 }
 
 /* ---------- Chi tiết dự án + 9 tab ---------- */
@@ -1143,6 +1243,37 @@ async function loadTongQuan(){
   const el = $('tab-tongquan');
   if (!el) return;
   el.innerHTML = skelCard(4);
+  // Chế độ tổng: bảng tóm tắt từng dự án (bấm dòng để mở)
+  if (!state.project) {
+    const g = await safeApi('getTongQuan', {}, { force: true });
+    if (!g) return;
+    const list = g.list || g || [];
+    let h = '<div class="card"><div class="card-head"><h2>Tổng quan từng dự án</h2></div>';
+    if (!list.length) h += '<div class="empty">Chưa có dự án nào.</div>';
+    else {
+      h += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th>' +
+        '<th class="num">Định mức</th><th class="num">Cam kết</th><th class="num">Đã chi</th>' +
+        '<th class="num">Còn lại</th><th class="num">Vượt</th><th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
+      list.forEach(function(p){
+        h += '<tr data-ma="' + esc(p.ma_du_an) + '"' + (Number(p.tong_vuot) > 0 ? ' class="row-alert"' : '') + '>' +
+          '<td><b>' + esc(p.ma_du_an) + '</b><br><span class="desc">' + esc(p.ten_du_an || '') + '</span></td>' +
+          '<td class="num">' + fmt(p.tong_dinh_muc) + '</td>' +
+          '<td class="num">' + fmt(p.tong_cam_ket) + '</td>' +
+          '<td class="num">' + fmt(p.tong_da_chi) + '</td>' +
+          '<td class="num">' + fmt(p.tong_con_lai) + '</td>' +
+          '<td class="num' + (Number(p.tong_vuot) > 0 ? ' text-red' : '') + '">' + fmt(p.tong_vuot) + '</td>' +
+          '<td class="num">' + Number(p.cho_duyet || 0) + '</td>' +
+          '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    h += '</div>';
+    el.innerHTML = h;
+    el.querySelectorAll('button[data-ma]').forEach(function(b){
+      b.addEventListener('click', function(){ openProject(b.dataset.ma); });
+    });
+    return;
+  }
   const fd = await ensureFullData();
   const d = (fd && fd.dashboard) || await safeApi('getDashboard', { ma_du_an: state.project.ma_du_an }, { force: true });
   if (!d) return;
@@ -1217,6 +1348,35 @@ async function loadTongQuan(){
 async function loadDuTru(){
   const el = $('tab-dutru');
   el.innerHTML = skelCard(3);
+  // Chế độ tổng: bảng dự trù mới nhất của từng dự án
+  if (!state.project) {
+    const t = await safeApi('listDuTruTong', {}, { force: true });
+    if (!t) return;
+    const list = t.list || t || [];
+    let h = '<div class="card"><div class="card-head"><h2>Dự trù đang áp dụng — tất cả dự án</h2></div>';
+    if (!list.length) h += '<div class="empty">Chưa có dự trù nào.</div>';
+    else {
+      h += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Phiên bản</th>' +
+        '<th class="num">Tổng định mức</th><th>Trạng thái</th><th>Người duyệt</th><th>Ngày tạo</th><th></th></tr></thead><tbody>';
+      list.forEach(function(v){
+        h += '<tr data-ma="' + esc(v.ma_du_an) + '">' +
+          '<td><b>' + esc(v.ma_du_an) + '</b><br><span class="desc">' + esc(v.ten_du_an || '') + '</span></td>' +
+          '<td>v' + esc(String(v.phien_ban)) + '</td>' +
+          '<td class="num"><b>' + fmt(v.tong) + '</b></td>' +
+          '<td>' + badge(v.trang_thai, TT_DT) + '</td>' +
+          '<td>' + esc(v.nguoi_duyet || '') + '</td>' +
+          '<td>' + fmtNgay(v.ngay_tao) + '</td>' +
+          '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(v.ma_du_an) + '">Mở</button></td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    h += '</div>';
+    el.innerHTML = h;
+    el.querySelectorAll('button[data-ma]').forEach(function(b){
+      b.addEventListener('click', function(){ openProject(b.dataset.ma); });
+    });
+    return;
+  }
   const fd = await ensureFullData();
   const d = (fd && fd.dutru) || await safeApi('getDuTru', { ma_du_an: state.project.ma_du_an }, { force: true });
   if (!d) return;
@@ -1404,10 +1564,11 @@ function openDraftModal(pre){
 async function loadMuaHang(){
   const el = $('tab-muahang');
   el.innerHTML = skelCard(4);
-  const fd = await ensureFullData();
-  const d = (fd && fd.muahang) || await safeApi('listDeNghi', { ma_du_an: state.project.ma_du_an }, { force: true });
+  const maMH = state.project ? state.project.ma_du_an : null;
+  const fd = maMH ? await ensureFullData() : null;
+  const d = (fd && fd.muahang) || await safeApi('listDeNghi', maMH ? { ma_du_an: maMH } : {}, { force: true });
   if (!d) return;
-  const ttRes = (fd && fd.thanhtoan) || await safeApi('listThanhToan', { ma_du_an: state.project.ma_du_an }, { force: true });
+  const ttRes = (fd && fd.thanhtoan) || await safeApi('listThanhToan', maMH ? { ma_du_an: maMH } : {}, { force: true });
   const ttIds = new Set(((ttRes && (ttRes.list || ttRes)) || []).map(t => t.de_nghi_id));
   const canTaoTT = can('Admin','QuanLy','MuaHang','KeToan','Approver');
   const list = d.list || d || [];
@@ -1420,10 +1581,10 @@ async function loadMuaHang(){
     '<select id="mhHm" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px">' +
     '<option value="">Tất cả hạng mục</option>' +
     hms.map(h => '<option value="' + esc(h) + '">' + esc(h) + '</option>').join('') + '</select>' +
-    (can('Admin','QuanLy','MuaHang','Approver') ? '<button class="btn btn-primary btn-sm" id="btnNewDN">+ Tạo đề nghị</button>' : '') +
+    (maMH && can('Admin','QuanLy','MuaHang','Approver') ? '<button class="btn btn-primary btn-sm" id="btnNewDN">+ Tạo đề nghị</button>' : '') +
     '<button class="btn btn-ghost btn-sm" id="btnXlsMH">Xuất Excel</button>' +
     '</div></div>' +
-    '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Loại</th><th>Hạng mục</th>' +
+    '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + (maMH ? '' : '<th>Dự án</th>') + '<th>Ngày</th><th>Loại</th><th>Hạng mục</th>' +
     '<th>Nội dung</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th>' +
     '<th>NCC</th><th>Trạng thái</th><th>Người tạo</th><th></th></tr></thead><tbody id="mhRows"></tbody></table></div><div id="mhPager"></div></div>';
   el.innerHTML = html;
@@ -1434,10 +1595,11 @@ async function loadMuaHang(){
               '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
       else if (x.trang_thai === 'da_duyet' && can('Admin','KeToan'))
         act = '<button class="btn btn-primary btn-sm" data-a="paid" data-id="' + x.id + '">Đánh dấu đã chi</button>';
-      if (x.trang_thai === 'da_duyet' && !ttIds.has(x.id) && canTaoTT)
+      if (maMH && x.trang_thai === 'da_duyet' && !ttIds.has(x.id) && canTaoTT)
         act += ' <button class="btn btn-ghost btn-sm" data-a="taott" data-id="' + x.id + '">Tạo phiếu TT</button>';
       const vuotTag = x.vuot_dinh_muc ? ' <span class="badge b-red">Vượt định mức</span>' : '';
       return '<tr' + (x.vuot_dinh_muc ? ' class="row-alert"' : '') + '>' +
+        (maMH ? '' : '<td><b>' + esc(x.ma_du_an || '') + '</b></td>') +
         '<td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
@@ -1456,7 +1618,7 @@ async function loadMuaHang(){
     state.mhHienThi = rows;
     const p = paginateRender(rows, pg || 1, 25); // B5: phân trang
     state.pg_muahang = p.pg;
-    $('mhRows').innerHTML = rows.length ? p.rows.map(mhRowHtml).join('') : '<tr><td colspan="11" class="empty">Không có đề nghị nào.</td></tr>';
+    $('mhRows').innerHTML = rows.length ? p.rows.map(mhRowHtml).join('') : '<tr><td colspan="' + (maMH ? 11 : 12) + '" class="empty">Không có đề nghị nào.</td></tr>';
     const pgEl = $('mhPager');
     if (pgEl) pgEl.innerHTML = rows.length ? p.bar : '';
     bindRowActions();
@@ -1489,14 +1651,20 @@ async function loadMuaHang(){
     const b = e.target.closest ? e.target.closest('[data-pg]') : null;
     if (b && !b.disabled) render($('mhTt').value, $('mhHm').value, Number(b.dataset.pg));
   });
-  $('btnXlsMH').onclick = () => xuatXlsChung('muahang_chiphi',
-    'Mua hàng/Chi phí — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
-    ['Ngày', 'Loại', 'Hạng mục', 'Nội dung', 'Số lượng', 'Đơn giá', 'Thành tiền', 'NCC', 'Hình thức', 'Người nhận', 'Ngân hàng', 'STK', 'Trạng thái', 'Người tạo'],
-    (state.mhHienThi || []).map(x => [fmtNgay(x.ngay_de_nghi), LOAI_DN[x.loai] || x.loai || '', x.hang_muc || '',
-      x.noi_dung || x.mo_ta || '', x.so_luong, x.don_gia, x.so_tien, x.nha_cung_cap || '',
-      x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : (x.hinh_thuc ? 'Chuyển khoản' : ''),
-      x.ten_nguoi_nhan || '', x.ngan_hang || '', x.so_tai_khoan || '',
-      (TT_DN[x.trang_thai] || [x.trang_thai])[0], x.nguoi_tao || '']));
+  $('btnXlsMH').onclick = () => {
+    const hd = maMH ? ['Ngày', 'Loại', 'Hạng mục', 'Nội dung', 'Số lượng', 'Đơn giá', 'Thành tiền', 'NCC', 'Hình thức', 'Người nhận', 'Ngân hàng', 'STK', 'Trạng thái', 'Người tạo']
+      : ['Dự án', 'Ngày', 'Loại', 'Hạng mục', 'Nội dung', 'Số lượng', 'Đơn giá', 'Thành tiền', 'NCC', 'Hình thức', 'Người nhận', 'Ngân hàng', 'STK', 'Trạng thái', 'Người tạo'];
+    const mc = maMH ? [4, 5, 6] : [5, 6, 7];
+    xuatXlsChung('muahang_chiphi',
+      'Mua hàng/Chi phí' + (maMH ? ' — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an : ' — Tất cả dự án'),
+      hd,
+      (state.mhHienThi || []).map(x => (maMH ? [] : [x.ma_du_an || '']).concat([fmtNgay(x.ngay_de_nghi), LOAI_DN[x.loai] || x.loai || '', x.hang_muc || '',
+        x.noi_dung || x.mo_ta || '', x.so_luong, x.don_gia, x.so_tien, x.nha_cung_cap || '',
+        x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : (x.hinh_thuc ? 'Chuyển khoản' : ''),
+        x.ten_nguoi_nhan || '', x.ngan_hang || '', x.so_tai_khoan || '',
+        (TT_DN[x.trang_thai] || [x.trang_thai])[0], x.nguoi_tao || ''])),
+      mc);
+  };
   const nb = $('btnNewDN');
   if (nb) nb.onclick = () => openDeNghiModal();
 }
@@ -1714,19 +1882,20 @@ function xuatPhieuXls(d){
 async function loadThanhToan(){
   const el = $('tab-thanhtoan');
   el.innerHTML = skelCard(4);
-  const fd = await ensureFullData();
-  const d = (fd && fd.thanhtoan) || await safeApi('listThanhToan', { ma_du_an: state.project.ma_du_an }, { force: true });
+  const maTT = state.project ? state.project.ma_du_an : null;
+  const fd = maTT ? await ensureFullData() : null;
+  const d = (fd && fd.thanhtoan) || await safeApi('listThanhToan', maTT ? { ma_du_an: maTT } : {}, { force: true });
   if (!d) return;
   const list = d.list || d || [];
   const canTao = can('Admin','QuanLy','MuaHang','KeToan','Approver');
   let html = '<div class="card"><div class="card-head"><h2>Phiếu thanh toán</h2>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-    (canTao ? '<button class="btn btn-primary btn-sm" id="btnNewTT">+ Tạo phiếu</button>' : '') +
+    (maTT && canTao ? '<button class="btn btn-primary btn-sm" id="btnNewTT">+ Tạo phiếu</button>' : '') +
     '<button class="btn btn-ghost btn-sm" id="btnXlsTT">Xuất Excel</button></div></div>' +
-    '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã phiếu</th><th>Khoản chi</th><th>Hạng mục</th>' +
+    '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + (maTT ? '' : '<th>Dự án</th>') + '<th>Mã phiếu</th><th>Khoản chi</th><th>Hạng mục</th>' +
     '<th>NCC</th><th class="num">Số tiền</th><th>Hình thức</th><th>Người nhận</th>' +
     '<th>Trạng thái</th><th>Người tạo</th><th></th></tr></thead><tbody>';
-  if (!list.length) html += '<tr><td colspan="10" class="empty">Chưa có phiếu thanh toán.</td></tr>';
+  if (!list.length) html += '<tr><td colspan="' + (maTT ? 10 : 11) + '" class="empty">Chưa có phiếu thanh toán.</td></tr>';
   list.forEach(x => {
     let act = '';
     if (x.trang_thai === 'cho_duyet' && can('Admin','QuanLy','Approver'))
@@ -1735,7 +1904,7 @@ async function loadThanhToan(){
     else if (x.trang_thai === 'da_duyet' && can('Admin','KeToan'))
       act = '<button class="btn btn-primary btn-sm" data-a="paid" data-id="' + x.id + '">Đã chi</button>';
     act += ' <button class="btn btn-ghost btn-sm" data-a="print" data-id="' + x.id + '">In phiếu</button>';
-    html += '<tr><td><b>' + esc(x.id) + '</b></td>' +
+    html += '<tr>' + (maTT ? '' : '<td><b>' + esc(x.ma_du_an || '') + '</b></td>') + '<td><b>' + esc(x.id) + '</b></td>' +
       '<td>' + esc(x.noi_dung || '') + '<br><span class="desc">' + esc(x.de_nghi_id || '') + '</span></td>' +
       '<td>' + esc(x.hang_muc || '') + '</td>' +
       '<td>' + esc(x.nha_cung_cap || '') + '</td>' +
@@ -1768,11 +1937,13 @@ async function loadThanhToan(){
   }));
   state.ttHienThi = list;
   $('btnXlsTT').onclick = () => xuatXlsChung('thanhtoan',
-    'Phiếu thanh toán — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
-    ['Mã phiếu','Khoản chi','Hạng mục','NCC','Số tiền','Hình thức','Người nhận','Ngân hàng','STK','Trạng thái','Người tạo'],
-    (state.ttHienThi || []).map(x => [x.id, x.noi_dung || '', x.hang_muc || '', x.nha_cung_cap || '', x.so_tien,
+    'Phiếu thanh toán' + (maTT ? ' — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an : ' — Tất cả dự án'),
+    maTT ? ['Mã phiếu','Khoản chi','Hạng mục','NCC','Số tiền','Hình thức','Người nhận','Ngân hàng','STK','Trạng thái','Người tạo']
+         : ['Dự án','Mã phiếu','Khoản chi','Hạng mục','NCC','Số tiền','Hình thức','Người nhận','Ngân hàng','STK','Trạng thái','Người tạo'],
+    (state.ttHienThi || []).map(x => (maTT ? [] : [x.ma_du_an || '']).concat([x.id, x.noi_dung || '', x.hang_muc || '', x.nha_cung_cap || '', x.so_tien,
       x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : 'Chuyển khoản', x.ten_nguoi_nhan || '', x.ngan_hang || '',
-      x.so_tai_khoan || '', (TT_TT[x.trang_thai] || [x.trang_thai])[0], x.nguoi_tao || '']));
+      x.so_tai_khoan || '', (TT_TT[x.trang_thai] || [x.trang_thai])[0], x.nguoi_tao || ''])),
+    maTT ? [4] : [5]);
   const nb = $('btnNewTT');
   if (nb) nb.onclick = () => openThanhToanModal();
 }
@@ -1829,8 +2000,9 @@ async function openThanhToanModal(deNghiIdMacDinh){
 async function loadPhatSinh(filter){
   const el = $('tab-phatsinh');
   el.innerHTML = skelCard(3);
-  const fd = await ensureFullData();
-  const d = (fd && fd.phatsinh) || await safeApi('listPhatSinh', { ma_du_an: state.project.ma_du_an }, { force: true });
+  const maPS = state.project ? state.project.ma_du_an : null;
+  const fd = maPS ? await ensureFullData() : null;
+  const d = (fd && fd.phatsinh) || await safeApi('listPhatSinh', maPS ? { ma_du_an: maPS } : {}, { force: true });
   if (!d) return;
   const list = d.list || d || [];
   const rows = list.filter(x => !filter || x.trang_thai === filter);
@@ -1841,12 +2013,12 @@ async function loadPhatSinh(filter){
     '<option value="">Tất cả trạng thái</option>' +
     Object.keys(TT_PS).map(k => '<option value="' + k + '"' + (filter === k ? ' selected' : '') + '>' + TT_PS[k][0] + '</option>').join('') +
     '</select>' +
-    (can('Admin','QuanLy','MuaHang','Approver') ? '<button class="btn btn-primary btn-sm" id="btnNewPS">+ Tạo phát sinh</button>' : '') +
+    (maPS && can('Admin','QuanLy','MuaHang','Approver') ? '<button class="btn btn-primary btn-sm" id="btnNewPS">+ Tạo phát sinh</button>' : '') +
     '<button class="btn btn-ghost btn-sm" id="btnXlsPS">Xuất Excel</button>' +
     '</div></div>';
   if (!rows.length) html += '<div class="empty">Chưa có phát sinh nào.</div>';
   else {
-    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày tạo</th><th>Hạng mục</th>' +
+    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + (maPS ? '' : '<th>Dự án</th>') + '<th>Ngày tạo</th><th>Hạng mục</th>' +
       '<th>Lý do</th><th class="num">Số tiền</th><th>Trạng thái</th><th>Người đề xuất</th>' +
       '<th>Người duyệt</th><th></th></tr></thead><tbody>';
     rows.forEach(x => {
@@ -1854,7 +2026,7 @@ async function loadPhatSinh(filter){
       if (x.trang_thai === 'cho_duyet' && can('Admin','Approver'))
         act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
               '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
-      html += '<tr><td>' + fmtNgay(x.ngay_tao) + '</td>' +
+      html += '<tr>' + (maPS ? '' : '<td><b>' + esc(x.ma_du_an || '') + '</b></td>') + '<td>' + fmtNgay(x.ngay_tao) + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
         '<td>' + esc(x.ly_do || '') + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
@@ -1869,11 +2041,16 @@ async function loadPhatSinh(filter){
   el.innerHTML = html;
 
   $('psFilter').onchange = e => loadPhatSinh(e.target.value || null);
-  $('btnXlsPS').onclick = () => xuatXlsChung('phatsinh',
-    'Phát sinh — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
-    ['Ngày tạo', 'Hạng mục', 'Lý do', 'Số tiền', 'Trạng thái', 'Người đề xuất', 'Người duyệt', 'Ngày duyệt'],
-    rows.map(x => [fmtNgay(x.ngay_tao), x.hang_muc || '', x.ly_do || '', x.so_tien,
-      (TT_PS[x.trang_thai] || [x.trang_thai])[0], x.nguoi_de_xuat || '', x.nguoi_duyet || '', fmtNgay(x.ngay_duyet)]));
+  $('btnXlsPS').onclick = () => {
+    const hd = maPS ? ['Ngày tạo', 'Hạng mục', 'Lý do', 'Số tiền', 'Trạng thái', 'Người đề xuất', 'Người duyệt', 'Ngày duyệt']
+      : ['Dự án', 'Ngày tạo', 'Hạng mục', 'Lý do', 'Số tiền', 'Trạng thái', 'Người đề xuất', 'Người duyệt', 'Ngày duyệt'];
+    xuatXlsChung('phatsinh',
+      'Phát sinh' + (maPS ? ' — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an : ' — Tất cả dự án'),
+      hd,
+      rows.map(x => (maPS ? [] : [x.ma_du_an || '']).concat([fmtNgay(x.ngay_tao), x.hang_muc || '', x.ly_do || '', x.so_tien,
+        (TT_PS[x.trang_thai] || [x.trang_thai])[0], x.nguoi_de_xuat || '', x.nguoi_duyet || '', fmtNgay(x.ngay_duyet)])),
+      maPS ? [3] : [4]);
+  };
   const nb = $('btnNewPS');
   if (nb) nb.onclick = () => openPhatSinhModal();
   el.querySelectorAll('button[data-a]').forEach(b => b.addEventListener('click', async () => {
@@ -1891,15 +2068,20 @@ async function loadPhatSinh(filter){
   }));
 }
 async function openPhatSinhModal(){
-  await ensureHangMucs();
+  // Mở popup ngay, tải hạng mục nền (không chặn)
   openModal('Tạo phát sinh',
-    '<div class="f-group"><label>Hạng mục liên quan *</label>' + hmSelectHtml('psHm', '') + '</div>' +
+    '<div class="f-group"><label>Hạng mục liên quan *</label><div id="psHmWrap"><div class="desc">Đang tải hạng mục...</div></div></div>' +
     '<div class="f-group"><label>Lý do phát sinh *</label><textarea id="psLyDo" rows="3" placeholder="Nêu rõ lý do phát sinh"></textarea></div>' +
-    '<div class="f-group"><label>Giá trị phát sinh (VND) *</label><input id="psTien" type="text" placeholder="VD: 5.000.000"></div>' +
+    '<div class="f-group"><label>Giá trị phát sinh (VND) *</label><input id="psTien" type="text" placeholder="VD: 5.000.000"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Tạo phát sinh</button>');
   $('mCancel').onclick = closeModal;
-  hmSelectBind('psHm'); formatMoneyInput('psTien');
+  ensureHangMucs().then(function(){
+    var w = $('psHmWrap'); if (!w) return;
+    w.innerHTML = hmSelectHtml('psHm', '');
+    hmSelectBind('psHm');
+  });
+  formatMoneyInput('psTien');
   $('mSave').onclick = async () => {
     const hm = hmSelectVal('psHm'), ly = $('psLyDo').value.trim(), tien = parseMoney($('psTien').value);
     if (!hm || !ly || !tien) { toast('Nhập đủ hạng mục, lý do và số tiền.', 'error'); return; }
@@ -1915,7 +2097,8 @@ async function openPhatSinhModal(){
 async function loadPheDuyet(){
   const el = $('tab-pheduyet');
   el.innerHTML = skelCard(4);
-  const d = await safeApi('getApprovalInbox', { ma_du_an: state.project.ma_du_an });
+  const maPD = state.project ? state.project.ma_du_an : null;
+  const d = await safeApi('getApprovalInbox', maPD ? { ma_du_an: maPD } : {});
   if (!d) return;
   const canDT = can('Admin','Approver'), canDN = can('Admin','QuanLy','Approver');
   let html = '';
@@ -1948,7 +2131,7 @@ async function loadPheDuyet(){
       '<th>Nội dung</th><th class="num">Thành tiền</th><th>Người tạo</th><th></th></tr></thead><tbody>';
     dns.forEach(x => {
       html += '<tr' + (x.vuot_dinh_muc ? ' class="row-alert"' : '') + '>' +
-        '<td><b>' + esc(x.ma_du_an || state.project.ma_du_an) + '</b></td>' +
+        '<td><b>' + esc(x.ma_du_an || '') + '</b></td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td>' + esc(x.hang_muc || '') + '</td>' +
         '<td>' + esc(x.noi_dung || x.mo_ta || '') + (x.vuot_dinh_muc ? ' <span class="badge b-red">Vượt</span>' : '') + '</td>' +
@@ -1971,7 +2154,7 @@ async function loadPheDuyet(){
     html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Hạng mục</th>' +
       '<th>Lý do</th><th class="num">Số tiền</th><th>Người đề xuất</th><th></th></tr></thead><tbody>';
     pss.forEach(x => {
-      html += '<tr><td><b>' + esc(x.ma_du_an || state.project.ma_du_an) + '</b></td>' +
+      html += '<tr><td><b>' + esc(x.ma_du_an || '') + '</b></td>' +
         '<td>' + esc(x.hang_muc || '') + '</td>' +
         '<td>' + esc(x.ly_do || '') + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
@@ -1993,7 +2176,7 @@ async function loadPheDuyet(){
     html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Mã phiếu</th><th>Hạng mục</th>' +
       '<th>Nội dung</th><th class="num">Số tiền</th><th>Người tạo</th><th></th></tr></thead><tbody>';
     tts.forEach(x => {
-      html += '<tr><td><b>' + esc(x.ma_du_an || state.project.ma_du_an) + '</b></td>' +
+      html += '<tr><td><b>' + esc(x.ma_du_an || '') + '</b></td>' +
         '<td><b>' + esc(x.id) + '</b></td>' +
         '<td>' + esc(x.hang_muc || '') + '</td>' +
         '<td>' + esc(x.noi_dung || '') + '</td>' +
@@ -2047,7 +2230,8 @@ async function loadBaoCao(){
     '</div>' +
     '<div id="bcResult"><div class="empty">Chọn điều kiện và bấm "Xem báo cáo".</div></div></div>';
   $('btnBcGo').onclick = async () => {
-    const p = { ma_du_an: state.project.ma_du_an };
+    const p = {};
+    if (state.project) p.ma_du_an = state.project.ma_du_an;
     if ($('bcHm').value) p.hang_muc = $('bcHm').value;
     if ($('bcTt').value) p.trang_thai = $('bcTt').value;
     if ($('bcTu').value) p.tu_ngay = $('bcTu').value;
@@ -2067,11 +2251,11 @@ function renderBaoCao(d){
     '<div class="stat-item">Tổng tiền<b>' + fmt(tong.tong_tien) + ' đ</b></div></div>';
   if (!items.length) html += '<div class="empty">Không có dữ liệu phù hợp.</div>';
   else {
-    html += '<div class="tbl-wrap"><table class="tbl" id="bcTable"><thead><tr><th>Ngày</th><th>Loại</th>' +
+    html += '<div class="tbl-wrap"><table class="tbl" id="bcTable"><thead><tr>' + (state.project ? '' : '<th>Dự án</th>') + '<th>Ngày</th><th>Loại</th>' +
       '<th>Hạng mục</th><th>Nội dung</th><th class="num">SL</th><th class="num">Đơn giá</th>' +
       '<th class="num">Thành tiền</th><th>NCC</th><th>Trạng thái</th><th>Người tạo</th></tr></thead><tbody>';
     items.forEach(x => {
-      html += '<tr><td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
+      html += '<tr>' + (state.project ? '' : '<td><b>' + esc(x.ma_du_an || '') + '</b></td>') + '<td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
         '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
@@ -2099,79 +2283,62 @@ function ngayFile(){
   return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
 }
 function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
+  // Xuất Excel dạng HTML table: giữ được font Arial, màu sắc, kẻ khung, logo
+  // (SheetJS bản miễn phí không hỗ trợ style nên file ra bị xấu)
   try {
-    if (typeof XLSX === 'undefined') { toast('Chưa tải được thư viện Excel. Kiểm tra mạng.', 'error'); return; }
     const cfg = getConfig();
-    const maDA = (state.project && state.project.ma_du_an) || 'duan';
-    const tenDA = (state.project && state.project.ten_du_an) || '';
-    const fileName = tenFile + '_' + maDA + '_' + ngayFile() + '.xlsx';
+    const tongMode = !state.project;
+    const maDA = (state.project && state.project.ma_du_an) || 'tong';
+    const tenDA = (state.project && state.project.ten_du_an) || 'Tất cả dự án';
+    const fileName = tenFile + '_' + maDA + '_' + ngayFile() + '.xls';
     const nC = headers.length;
-    const aoa = [];
-    aoa.push([cfg.coName]);
-    aoa.push([cfg.coAddr]);
-    aoa.push([]);
-    aoa.push([tieuDe]);
-    aoa.push(['Dự án: ' + maDA + (tenDA ? ' — ' + tenDA : '') + '    |    Ngày xuất: ' + new Date().toLocaleDateString('vi-VN')]);
-    aoa.push([]);
-    aoa.push(headers);
-    (rows || []).forEach(r => aoa.push(r.map(c => c == null ? '' : c)));
-    const ws = XLSX.utils.aoa_to_sheet(aoa);
-    // Gộp ô tiêu đề (dòng 0,3,4)
-    ws['!merges'] = [
-      { s: { r: 0, c: 0 }, e: { r: 0, c: nC - 1 } },
-      { s: { r: 3, c: 0 }, e: { r: 3, c: nC - 1 } },
-      { s: { r: 4, c: 0 }, e: { r: 4, c: nC - 1 } }
-    ];
-    // Độ rộng cột
-    ws['!cols'] = headers.map((h, i) => {
-      let mx = String(h || '').length;
-      (rows || []).forEach(r => { const l = String(r[i] == null ? '' : r[i]).length; if (l > mx) mx = l; });
-      return { wch: Math.min(45, Math.max(14, mx + 3)) };
+    const mc = {}; (moneyCols || []).forEach(function(i){ mc[i] = 1; });
+    const AR = 'font-family:Arial,sans-serif';
+    const B = 'border:1px solid #000000';
+    let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
+      '<head><meta charset="UTF-8"></head><body>' +
+      '<table style="' + AR + ';font-size:11pt;border-collapse:collapse">';
+    // Logo + thông tin công ty
+    h += '<tr><td colspan="' + nC + '" style="' + B + ';padding:8px"><table style="' + AR + '"><tr>' +
+      '<td style="padding-right:12px;vertical-align:middle"><img src="' + LOGO_BT + '" width="90"></td>' +
+      '<td style="' + AR + ';font-size:10pt;vertical-align:middle"><b style="font-size:12pt">' + esc(cfg.coName) + '</b><br>' +
+      esc(cfg.coAddr) + '<br>Tel: ' + esc(cfg.coTel) + ' | Website: ' + esc(cfg.coWeb) + '</td>' +
+      '</tr></table></td></tr>';
+    // Tiêu đề báo cáo
+    h += '<tr><td colspan="' + nC + '" style="' + B + ';background:#B45309;color:#FFFFFF;font-weight:bold;font-size:14pt;text-align:center;padding:10px">' +
+      esc(tieuDe) + '</td></tr>';
+    h += '<tr><td colspan="' + nC + '" style="' + B + ';text-align:center;padding:6px;font-size:10pt">Dự án: <b>' +
+      esc(tongMode ? 'Tất cả dự án' : (maDA + (tenDA ? ' — ' + tenDA : ''))) + '</b> &nbsp;|&nbsp; Ngày xuất: ' +
+      new Date().toLocaleDateString('vi-VN') + '</td></tr>';
+    // Header bảng
+    h += '<tr>';
+    headers.forEach(function(hd){
+      h += '<th style="' + B + ';background:#B45309;color:#FFFFFF;font-weight:bold;text-align:center;padding:8px;vertical-align:middle">' + esc(hd) + '</th>';
     });
-    // Freeze pane dưới dòng header
-    ws['!freeze'] = 'A8';
-    const thin = { style: 'thin', color: { rgb: 'B0B0B0' } };
-    const borderAll = { top: thin, bottom: thin, left: thin, right: thin };
-    const cellAt = (r, c) => XLSX.utils.encode_cell({ r: r, c: c });
-    // Tên công ty + tiêu đề: đậm, size lớn
-    [0, 3].forEach(r => { const cl = ws[cellAt(r, 0)]; if (cl) cl.s = { font: { bold: true, sz: 14, color: { rgb: '8B5E00' } }, alignment: { horizontal: 'center', vertical: 'center' } }; });
-    // Header bảng: nền vàng đậm + chữ trắng in đậm + border
-    const hr = 6;
-    headers.forEach((h, i) => {
-      const cl = ws[cellAt(hr, i)];
-      if (cl) cl.s = {
-        fill: { fgColor: { rgb: 'B45309' } },
-        font: { bold: true, color: { rgb: 'FFFFFF' }, sz: 11 },
-        alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
-        border: borderAll
-      };
-    });
-    ws['!rows'] = []; ws['!rows'][hr] = { hpt: 28 };
-    // Dữ liệu: border + format số cho cột tiền
-    const mc = moneyCols || [];
-    for (let r = hr + 1; r < hr + 1 + (rows || []).length; r++) {
+    h += '</tr>';
+    // Dữ liệu
+    (rows || []).forEach(function(r, ri){
+      const bg = (ri % 2 === 1) ? 'background:#FFF8E7;' : '';
+      h += '<tr>';
       for (let c = 0; c < nC; c++) {
-        const cl = ws[cellAt(r, c)];
-        if (!cl) continue;
-        cl.s = cl.s || {};
-        cl.s.border = borderAll;
-        cl.s.alignment = { vertical: 'center', wrapText: true };
-        if (mc.includes(c) && typeof cl.v === 'number') {
-          cl.s.numFmt = '#,##0';
-          cl.s.alignment = Object.assign(cl.s.alignment, { horizontal: 'right' });
+        let v = r[c]; if (v == null) v = '';
+        let st = B + ';' + bg + 'padding:6px 8px;vertical-align:middle';
+        if (mc[c]) {
+          const num = Number(String(v).replace(/[^\d.-]/g, '')) || 0;
+          h += '<td x:num="' + num + '" style="' + st + ';text-align:right">' + num.toLocaleString('vi-VN') + '</td>';
+        } else {
+          h += '<td style="' + st + '">' + esc(String(v)) + '</td>';
         }
       }
-      // Dòng zebra
-      if ((r - hr) % 2 === 0) {
-        for (let c = 0; c < nC; c++) {
-          const cl = ws[cellAt(r, c)];
-          if (cl) { cl.s = cl.s || {}; cl.s.fill = { fgColor: { rgb: 'FFF8E7' } }; }
-        }
-      }
-    }
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Du lieu');
-    XLSX.writeFile(wb, fileName);
+      h += '</tr>';
+    });
+    h += '</table></body></html>';
+    const blob = new Blob(['﻿' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 800);
     toast('Đã xuất ' + fileName, 'success');
   } catch(e) {
     toast('Lỗi xuất Excel: ' + e.message, 'error');
@@ -2181,14 +2348,16 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
 function exportXls(d){
   const items = d.items || [];
   const tong = d.tong || {};
+  const tongMode = !state.project;
+  const tenDA = tongMode ? 'Tất cả dự án' : (state.project.ma_du_an + ' — ' + state.project.ten_du_an);
   let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">' +
     '<head><meta charset="UTF-8"></head><body>' +
-    '<h3>Báo cáo đề nghị — ' + esc(state.project.ma_du_an + ' — ' + state.project.ten_du_an) + '</h3>' +
+    '<h3>Báo cáo đề nghị — ' + esc(tenDA) + '</h3>' +
     '<table border="1"><thead><tr>' +
-    ['Ngày','Loại','Hạng mục','Nội dung','Số lượng','Đơn giá','Thành tiền','Nhà cung cấp','Trạng thái','Người tạo']
+    (tongMode ? ['Dự án'] : []).concat(['Ngày','Loại','Hạng mục','Nội dung','Số lượng','Đơn giá','Thành tiền','Nhà cung cấp','Trạng thái','Người tạo'])
       .map(c => '<th>' + c + '</th>').join('') + '</tr></thead><tbody>';
   items.forEach(x => {
-    h += '<tr><td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
+    h += '<tr>' + (tongMode ? '<td>' + esc(x.ma_du_an || '') + '</td>' : '') + '<td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
       '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
       '<td>' + esc(x.hang_muc || '') + '</td>' +
       '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
@@ -2204,7 +2373,7 @@ function exportXls(d){
   const blob = new Blob(['﻿' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'baocao_' + state.project.ma_du_an + '_' + ngayFile() + '.xls';
+  a.download = 'baocao_' + (tongMode ? 'tong' : state.project.ma_du_an) + '_' + ngayFile() + '.xls';
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
@@ -2213,7 +2382,7 @@ function exportXls(d){
 async function loadLichSu(){
   const el = $('tab-lichsu');
   el.innerHTML = skelCard(4);
-  const d = await safeApi('getLichSu', { ma_du_an: state.project.ma_du_an, gioi_han: 200 });
+  const d = await safeApi('getLichSu', state.project ? { ma_du_an: state.project.ma_du_an, gioi_han: 200 } : { gioi_han: 200 });
   if (!d) return;
   const list = d.list || d || [];
   el.innerHTML = '<div class="card"><div class="card-head"><h2>Lịch sử thay đổi (' + list.length + ' mới nhất)</h2></div>' +
@@ -2267,7 +2436,18 @@ async function loadSettings(){
     '<input id="sheetLink" placeholder="https://docs.google.com/spreadsheets/d/..."></div></div>' +
     '<div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" id="btnLinkSheet">Kết nối</button>' +
     (sh && sh.linked ? '<button class="btn btn-ghost btn-sm" id="btnUnlinkSheet">Về sheet mặc định</button>' : '') + '</div></div>';
+  if (can('Admin')) {
+    html += '<div class="card"><div class="card-head"><h2>Tiêu đề cột Google Sheet</h2></div>' +
+      '<div class="desc" style="margin-bottom:10px">Đổi dòng tiêu đề (dòng 1) tất cả các tab sang tiếng Việt có dấu (VD: <b>MÃ DỰ ÁN</b>, <b>CHI PHÍ</b>). App đọc dữ liệu theo vị trí cột nên đổi tên không ảnh hưởng hoạt động.</div>' +
+      '<button class="btn btn-gold btn-sm" id="btnVietHoa">Đổi sang tiếng Việt có dấu</button></div>';
+  }
   el.innerHTML = html;
+  const btnVH = $('btnVietHoa');
+  if (btnVH) btnVH.onclick = async () => {
+    if (!confirm('Đổi tiêu đề cột (dòng 1) của tất cả tab sang tiếng Việt có dấu?')) return;
+    const r = await safeApi('vietHoaHeaders', {});
+    if (r) toast('Đã đổi tiêu đề ' + (r.tabs || 0) + ' tab sang tiếng Việt.', 'success');
+  };
   $('btnSaveCfg').onclick = () => {
     const c = { apiUrl: $('cfgApiUrl').value.trim(), coName: $('cfgCoName').value.trim(), coAddr: $('cfgCoAddr').value.trim() };
     if (c.apiUrl && !/script\.google\.com\/macros\/s\//.test(c.apiUrl)) { toast('API URL không đúng định dạng.', 'error'); return; }
@@ -2439,7 +2619,8 @@ async function loadTamUng(){
   const el = $('tab-tamung');
   if (!el) return;
   el.innerHTML = skelCard(3);
-  const d = await safeApi('listTamUng', { ma_du_an: state.project.ma_du_an }, { force: true });
+  const maTU = state.project ? state.project.ma_du_an : null;
+  const d = await safeApi('listTamUng', maTU ? { ma_du_an: maTU } : {}, { force: true });
   if (!d) return;
   const list = d.list || d || [];
   const canDuyet = can('Admin', 'Approver', 'KeToan');
@@ -2452,7 +2633,7 @@ async function loadTamUng(){
     }
   });
   let html = '<div class="card"><div class="card-head"><h2>Số dư tạm ứng theo người</h2>' +
-    (can('Admin', 'QuanLy', 'MuaHang', 'KeToan') ? '<button class="btn btn-primary btn-sm" id="btnNewTU">+ Đề nghị tạm ứng</button>' : '') +
+    (maTU && can('Admin', 'QuanLy', 'MuaHang', 'KeToan') ? '<button class="btn btn-primary btn-sm" id="btnNewTU">+ Đề nghị tạm ứng</button>' : '') +
     '</div><div class="desc">Tổng các khoản đã duyệt nhưng chưa quyết toán, nhóm theo người tạm ứng.</div>';
   const bKeys = Object.keys(balances);
   if (!bKeys.length) html += '<div class="empty">Không có khoản tạm ứng nào đang treo.</div>';
@@ -2462,7 +2643,7 @@ async function loadTamUng(){
   html += '<div class="card"><div class="card-head"><h2>Danh sách tạm ứng / hoàn ứng</h2></div>';
   if (!list.length) html += '<div class="empty">Chưa có đề nghị tạm ứng nào.</div>';
   else {
-    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Người tạm ứng</th>' +
+    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + (maTU ? '' : '<th>Dự án</th>') + '<th>Ngày</th><th>Người tạm ứng</th>' +
       '<th class="num">Số tiền</th><th>Lý do</th><th>Trạng thái</th>' +
       '<th class="num">Đã hoàn ứng</th><th>Chứng từ</th><th></th></tr></thead><tbody>';
     list.forEach(x => {
@@ -2471,7 +2652,7 @@ async function loadTamUng(){
         act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + esc(String(x.id)) + '">Duyệt</button>';
       else if (x.trang_thai === 'da_duyet' && canQT)
         act = '<button class="btn btn-primary btn-sm" data-a="settle" data-id="' + esc(String(x.id)) + '" data-tien="' + esc(String(x.so_tien)) + '">Quyết toán</button>';
-      html += '<tr><td style="white-space:nowrap">' + fmtNgay(x.ngay_tam_ung) + '</td>' +
+      html += '<tr>' + (maTU ? '' : '<td><b>' + esc(x.ma_du_an || '') + '</b></td>') + '<td style="white-space:nowrap">' + fmtNgay(x.ngay_tam_ung) + '</td>' +
         '<td><b>' + esc(x.nguoi_tam_ung || '') + '</b></td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
         '<td>' + esc(x.ly_do || '') + '</td>' +
