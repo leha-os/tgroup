@@ -1054,7 +1054,7 @@ function savePartner(coll,id){
  if(!cfg.noProj)o.projectId=formVal('projectId');
  if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data[coll].find(x=>x.id===id),o);else DB.data[coll].push(Object.assign({id:uid(coll[0])},o));
- DB.log(id?'Sửa '+cfg.t:'Thêm '+cfg.t,o.name);DB.save();closeModal();nav(false);toast('Đã lưu');
+ DB.log(id?'Sửa '+cfg.t:'Thêm '+cfg.t,o.name);DB.save();closeModal();nav(false);/* saved silently */;
 }
 function partnerTxForm(coll,oid){
  const cfg=Object.values(PCFG).find(c=>c.coll===coll);
@@ -1107,7 +1107,7 @@ function contractorForm(id){
 }
 function saveContractor(id){const o={name:formVal('name'),phone:formVal('phone'),projectId:formVal('projectId'),note:formVal('note')};if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.contractors.find(x=>x.id===id),o);else DB.data.contractors.push(Object.assign({id:uid('k')},o));
- DB.log(id?'Sửa nhà thầu':'Thêm nhà thầu',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.log(id?'Sửa nhà thầu':'Thêm nhà thầu',o.name);DB.save();closeModal();nav(false);/* saved silently */;}
 function contractorTxForm(oid){
  const o=DB.data.contractors.find(x=>x.id===oid);
  openModal('Ghi giao dịch — '+esc(o.name),fld('Loại',sel('type',[{v:'entry',t:'Nghiệm thu khối lượng'},{v:'payment',t:'Tạm ứng/Thanh toán'}],'entry'))+'<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số tiền (VND)',inp('amount','','number','min="0"'))+'</div>'+fld('Diễn giải',txa('note','')),
@@ -1148,7 +1148,7 @@ function bankForm(id){
 }
 function saveBank(id){const o={name:formVal('name'),number:formVal('number'),note:formVal('note')};if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.bankAccounts.find(x=>x.id===id),o);else DB.data.bankAccounts.push(Object.assign({id:uid('b')},o));
- DB.log(id?'Sửa tài khoản':'Thêm tài khoản',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.log(id?'Sửa tài khoản':'Thêm tài khoản',o.name);DB.save();closeModal();nav(false);/* saved silently */;}
 function bankTxForm(aid,defType){
  const a=DB.data.bankAccounts.find(x=>x.id===aid);if(!a){toast('Chưa có tài khoản ngân hàng/quỹ');return;}
  openModal((defType==='outflow'?'Chi tiền':'Thu tiền')+' — '+esc(a.name),
@@ -1207,7 +1207,7 @@ function expenseForm(id){
 function saveExpense(id){const o={projectId:formVal('projectId'),date:formVal('date')||todayISO(),category:formVal('category'),amount:+formVal('amount')||0,by:formVal('by'),note:formVal('note')};
  if(!o.amount){toast('Nhập số tiền');return;}
  if(id)Object.assign(DB.data.expenses.find(x=>x.id===id),o);else DB.data.expenses.push(Object.assign({id:uid('x')},o));
- DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);/* saved silently */;}
 /* ================= LIABILITIES ================= */
 ROUTES['#/liabilities']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
@@ -1296,7 +1296,7 @@ function saveUser(id){const pids=[];document.querySelectorAll('#mBody [data-proj
  if(!o.name||!o.username||!o.pass){toast('Nhập đủ họ tên, tên đăng nhập, mật khẩu');return;}
  if(DB.data.users.some(x=>x.username===o.username&&x.id!==id)){toast('Tên đăng nhập đã tồn tại');return;}
  if(id)Object.assign(DB.data.users.find(x=>x.id===id),o);else DB.data.users.push(Object.assign({id:uid('u')},o));
- DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);/* saved silently */;}
 /* checklist phân quyền chi tiết */
 function userPerms(u){
  if(u.role==='Giám đốc')return null; // full
@@ -1444,7 +1444,7 @@ function saveDuTru(id){
  if(!o.hangmuc||!o.thanhtien){toast('Nhập hạng mục và đơn giá');return;}
  if(id)Object.assign(DB.data.dutru.find(x=>x.id===id),o);
  else DB.data.dutru.push(Object.assign({id:uid('dt'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
- DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);toast('Đã lưu');
+ DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);/* saved silently */;
 }
 /* ---------- PHÁT SINH ---------- */
 ROUTES['#/phatsinh']=function(){if(!Auth.can('phatsinh_view')){location.hash='#/dashboard';return;}
@@ -1468,7 +1468,7 @@ function savePhatSinh(id){
  if(!o.noidung||!o.sotien){toast('Nhập nội dung và số tiền');return;}
  if(id)Object.assign(DB.data.phatsinh.find(x=>x.id===id),o);
  else DB.data.phatsinh.push(Object.assign({id:uid('ps'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
- DB.log(id?'Sửa phát sinh':'Thêm phát sinh',fmtVND(o.sotien)+' — '+o.noidung);DB.save();closeModal();nav(false);toast('Đã lưu');
+ DB.log(id?'Sửa phát sinh':'Thêm phát sinh',fmtVND(o.sotien)+' — '+o.noidung);DB.save();closeModal();nav(false);/* saved silently */;
 }
 
 /* ================= THANH TOÁN ================= */
@@ -1910,7 +1910,7 @@ function danhmucForm(id){
 }
 function saveDanhMuc(id){const o={nhom:formVal('nhom'),ten:formVal('ten')};if(!o.ten){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.danhmuc.find(x=>x.id===id),o);else DB.data.danhmuc.push(Object.assign({id:uid('dm')},o));
- DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.save();closeModal();nav(false);/* saved silently */;}
 
 /* ================= EXCEL EXPORT (kiểu TW cũ) ================= */
 function dlXls(html,filename){
