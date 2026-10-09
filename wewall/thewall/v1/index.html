@@ -274,7 +274,8 @@ body.printing-phieu .ptitle{font-size:16px!important;margin:6px 0 2px!important}
 body.printing-phieu .psec{margin:5px 0 1px!important}
 body.printing-phieu .pdot{height:10px!important}
 body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
-@page{size:A4;margin:10mm}
+@page{size:A4;margin:8mm}
+body.printing-phieu .phieu-wrap{page-break-inside:avoid}
 #view{padding:0;overflow:visible}
 .main{overflow:visible}
 .card{box-shadow:none;break-inside:avoid}
@@ -1241,13 +1242,13 @@ function xlsxMake(sheets){
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
   +'<font><sz val="12"/><name val="Calibri"/></font>'
   +'</fonts>'
-  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFBBC04"/><bgColor indexed="64"/></patternFill></fill></fills>'
+  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFBBC04"/></patternFill></fill></fills>'
   +'<borders count="2">'
   +'<border><left/><right/><top/><bottom/><diagonal/></border>'
   +'<border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border>'
   +'</borders>'
   +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
-  +'<cellXfs count="11">'
+  +'<cellXfs count="10">'
   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
   +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
@@ -1258,7 +1259,6 @@ function xlsxMake(sheets){
   +'<xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
-  +'<xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'</cellXfs>'
   +'<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
   +'</styleSheet>';
@@ -1397,7 +1397,7 @@ function inPhieuDNTT(id){
   +'<tr><td>Mục đích thanh toán:</td><td colspan="3"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
   +'<tr><td>Hạng mục:</td><td colspan="3"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
   +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
-  +'<tr class="ctr"><td class="ul">Người Đề Nghị</td><td class="ul">Trưởng Bộ Phận</td><td class="ul">Phụ trách DA</td><td class="ul">Trưởng phòng DA</td><td class="ul">Kế Toán</td><td class="ul">Giám Đốc</td></tr>'
+  +'<tr class="ctr"><td class="ul" style="width:16.66%">Người Đề Nghị</td><td class="ul" style="width:16.66%">Trưởng Bộ Phận</td><td class="ul" style="width:16.66%">Phụ trách DA</td><td class="ul" style="width:16.66%">Trưởng phòng DA</td><td class="ul" style="width:16.66%">Kế Toán</td><td class="ul" style="width:16.66%">Giám Đốc</td></tr>'
   +'<tr><td style="height:70px"></td><td></td><td></td><td></td><td></td><td></td></tr>'
   +'<tr><td colspan="6" class="gray">Thông CK - Họ và tên:</td></tr>'
   +'<tr><td colspan="3" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="3" class="gray">Số TK:</td></tr>'
@@ -1516,7 +1516,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rc=new Array(n).fill(null);rc[0]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:5};R.push(rc);
  const ra=new Array(n).fill(null);ra[0]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[0]={v:title,s:2};R.push(rt);
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:5};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
  if(foot){const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const rf=new Array(n).fill(null);rf[0]={v:clean,s:2};R.push(rf);}
  const mg='A1:'+xlsxColL(n)+'1',mg2='A2:'+xlsxColL(n)+'2',mg3='A3:'+xlsxColL(n)+'3';
