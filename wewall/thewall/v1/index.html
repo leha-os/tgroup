@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Wall — Quản lý Dự án Thi công</title>
+<title>The Wall - Project Management System [DEMO]</title>
 <style>
 :root{--bg:#faf7f2;--card:#ffffff;--ink:#1a1410;--mut:#8a7f70;--line:#ece5d8;--pri:#e8930c;--pri-d:#c97a08;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--info:#0891b2;--radius:12px;--sh:0 1px 3px rgba(26,20,16,.08)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -106,9 +106,9 @@ textarea.inp{resize:vertical;min-height:70px}
 .tbl-wrap{display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;position:relative}
 .tbl-wrap::-webkit-scrollbar{height:6px}
 .tbl-wrap::-webkit-scrollbar-thumb{background:#d4c9b3;border-radius:6px}
-table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border-collapse:collapse;font-size:13px;min-width:600px}
 .tbl th,.tbl td{padding:10px 12px}
-.tbl th{background:#fef3c7;color:#92400e;font-weight:700;text-align:left;padding:10px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);background:#f8fafc;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{background:linear-gradient(135deg,#1a1d29,#2d3142);color:#f0ad1f;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.5px;text-align:left;padding:10px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);background:#f8fafc;border-bottom:1px solid var(--line);white-space:nowrap}
 .tbl td{padding:11px 14px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tbody tr:hover{background:#f8fafc}
@@ -289,7 +289,7 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
 <div id="loginView">
   <div class="login-card">
     <img id="loginLogo" class="login-logo" alt="THE WALL">
-    <h1 style="text-align:center">THE WALL ARCHITECTURE</h1>
+    <h1 style="text-align:center;font-size:18px">The Wall - Project Management System [DEMO]</h1>
     <div class="fld"><label>Tên đăng nhập</label><input class="inp" id="lgUser" placeholder="Tên đăng nhập"></div>
     <div class="fld"><label>Mật khẩu</label><input class="inp" id="lgPass" type="password" placeholder="Mật khẩu"></div>
     <div id="lgErr" class="alert alert-red" style="display:none"></div>
@@ -490,7 +490,7 @@ const NAV=[
 let navExpanded={};
 function buildSidebar(){
  const u=Auth.user;
- let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL ARCHITECTURE</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
+ let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
  if(Auth.isSM())h+='<div class="sb-proj" style="display:block">'+esc(projName(Auth.user.projectIds[0]))+'</div>';
  h+='<div class="sb-nav">';
  h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>';
@@ -640,7 +640,7 @@ ROUTES['#/projects/:id']=null;
 function renderProjectLedger(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p){location.hash='#/projects';return;}
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid),bal=p.budget-s;
- let h='<div class="page-head" style="background:#fef9e7;color:#1a1d29;padding:14px 16px;border-radius:12px;border:1px solid #f0ad1f;margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
+ let h='<div class="page-head" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#1a1d29;padding:14px 16px;border-radius:12px;border:1px solid #f0ad1f;box-shadow:0 2px 8px rgba(240,173,31,.15);margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
   +'<div><b style="color:#64748b">Mã dự án:</b> '+esc(p.code||'')+'</div>'
   +'<div><b style="color:#64748b">Tên dự án:</b> '+esc(p.name||'')+'</div>'
   +'<div><b style="color:#64748b">Địa chỉ:</b> '+esc(p.location||p.address||'')+'</div>'
@@ -1447,10 +1447,10 @@ function inPhieuDeNghi(id){
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="ptbl">'
-  +'<tr><td style="width:18%">Người đề nghị:</td><td style="width:32%"><b>'+nguoide+'</b></td><td style="width:15%">Bộ phận:</td><td></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="3"><b>'+esc(dn.noidung||'')+'</b></td></tr>'
-  +'<tr><td>Hạng mục:</td><td colspan="3"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr><td colspan="2" style="width:33%">Người đề nghị: <b>'+nguoide+'</b></td><td colspan="2" style="width:33%">Bộ phận:</td><td colspan="2" style="width:34%"></td></tr>'
+  +'<tr><td colspan="2">Mục đích thanh toán:</td><td colspan="4"><b>'+esc(dn.noidung||'')+'</b></td></tr>'
+  +'<tr><td colspan="2">Hạng mục:</td><td colspan="4"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td colspan="2">Dự án:</td><td colspan="4"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
   +'<tr class="ctr"><td class="ul" style="width:16.66%">Người Đề Nghị</td><td class="ul" style="width:16.66%">Trưởng Bộ Phận</td><td class="ul" style="width:16.66%">Phụ trách DA</td><td class="ul" style="width:16.66%">Trưởng phòng DA</td><td class="ul" style="width:16.66%">Kế Toán</td><td class="ul" style="width:16.66%">Giám Đốc</td></tr>'
   +'<tr><td style="height:68px"></td><td></td><td></td><td></td><td></td><td></td></tr>'
   +'<tr><td colspan="6" class="gray">Thông CK - Họ và tên:</td></tr>'
