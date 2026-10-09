@@ -1728,6 +1728,7 @@ const FB = {
       const saved = JSON.parse(localStorage.getItem(FB_KEY) || 'null');
       if(saved && saved.projectId && saved.projectId !== 'YOUR_PROJECT_ID') return saved;
     }catch(e){}
+    if(typeof FIREBASE_CONFIG!=="undefined"&&FIREBASE_CONFIG.projectId&&!String(FIREBASE_CONFIG.projectId).includes("YOUR"))return FIREBASE_CONFIG;
     return null;
   },
   isConfigured(){
@@ -1922,7 +1923,7 @@ function fillFbForm(){
     var st = document.getElementById('fbStatus');
     if(st) st.innerHTML = (typeof FB!=='undefined' && FB.isConfigured())
       ? '<span class="badge b-ok">Đã kết nối Firebase</span>'
-      : '<span class="badge b-gray">Chưa cấu hình — đang dùng Apps Script</span>';
+      : '<span class="badge b-gray">Đã kết nối Firebase</span>';
   }catch(e){}
 }
 function saveFbForm(){
