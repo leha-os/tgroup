@@ -359,6 +359,7 @@ danhmuc:[
  {id:'dm1',nhom:'Vật tư',ten:'Xi măng'},{id:'dm2',nhom:'Vật tư',ten:'Sắt thép'},{id:'dm3',nhom:'Vật tư',ten:'Bê tông'},
  {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}]
 };
+
 /* ================= DB ================= */
 const DBKEY='twpro_v1';
 const DB={
@@ -927,6 +928,15 @@ ROUTES['#/audit']=function(){
 const LOAI_DN={mua_hang:'Mua hàng',thanh_toan:'Thanh toán',thue_thau:'Thuê thầu',nhan_cong:'Nhân công'};
 const TT_DN={cho_duyet:['Chờ duyệt','b-amber'],da_duyet:['Đã duyệt','b-blue'],da_chi:['Đã chi','b-green'],tu_choi:['Từ chối','b-red']};
 const TT_TU={cho_duyet:['Chờ duyệt','b-amber'],da_duyet:['Đã duyệt','b-blue'],da_quyet_toan:['Đã quyết toán','b-green']};
+/* chuẩn hóa Việt <-> code cho cột loại/trạng thái (Sheet lưu tiếng Việt đầy đủ) */
+const VI2CODE={};
+Object.entries(LOAI_DN).forEach(e=>{VI2CODE[e[1]]=e[0];});
+[TT_DN,TT_TU].forEach(m=>Object.entries(m).forEach(e=>{if(!VI2CODE[e[1][0]])VI2CODE[e[1][0]]=e[0];}));
+VI2CODE['Chờ chi']='cho_chi';
+const CODE2VI={};Object.entries(VI2CODE).forEach(e=>{if(!CODE2VI[e[1]])CODE2VI[e[1]]=e[0];});
+const CODE_FIELDS={denghi:['loai','trangthai'],phatsinh:['trangthai'],dutru:['trangthai'],thanhtoan:['trangthai'],tamung:['trangthai']};
+function toCode(k,o){const f=CODE_FIELDS[k];if(!f)return o;const c=Object.assign({},o);f.forEach(fd=>{if(typeof c[fd]==='string'&&VI2CODE[c[fd]])c[fd]=VI2CODE[c[fd]];});return c;}
+function toVI(k,o){const f=CODE_FIELDS[k];if(!f)return o;const c=Object.assign({},o);f.forEach(fd=>{if(typeof c[fd]==='string'&&CODE2VI[c[fd]])c[fd]=CODE2VI[c[fd]];});return c;}
 function ttBadge(st,map){const m=(map||TT_DN)[st]||[st,'b-gray'];return '<span class="badge '+m[1]+'">'+m[0]+'</span>';}
 let DN_F={loai:'',tt:''},DT_P='';
 /* ---------- ĐỀ NGHỊ ---------- */
@@ -1291,7 +1301,7 @@ async function pullAll(silent){
  syncCfgForm();
  const d=await apiCall('pull',{});
  let n=0;
- Object.keys(SYNC_MAP).forEach(k=>{const sh=SYNC_MAP[k];if(d[sh]&&Array.isArray(d[sh])){DB.data[k]=d[sh];n++;}});
+ Object.keys(SYNC_MAP).forEach(k=>{const sh=SYNC_MAP[k];if(d[sh]&&Array.isArray(d[sh])){DB.data[k]=CODE_FIELDS[k]?d[sh].map(o=>toCode(k,o)):d[sh];n++;}});
  DB.save0=1;try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}
  SYNC.dirty=false;SYNC.connected=true;SYNC.msg='Lúc '+new Date().toLocaleTimeString('vi-VN');
  renderSyncPill();if(!silent)toast('Đã tải '+n+' bảng từ server');
@@ -1300,7 +1310,7 @@ async function pullAll(silent){
 async function pushAll(silent){
  syncCfgForm();
  let n=0;
- for(const k of Object.keys(SYNC_MAP)){await apiCall('push',{sheet:SYNC_MAP[k],rows:DB.data[k]||[]});n++;}
+ for(const k of Object.keys(SYNC_MAP)){await apiCall('push',{sheet:SYNC_MAP[k],rows:(DB.data[k]||[]).map(o=>toVI(k,o))});n++;}
  SYNC.dirty=false;SYNC.connected=true;SYNC.msg='Lúc '+new Date().toLocaleTimeString('vi-VN');
  renderSyncPill();if(!silent)toast('Đã đẩy '+n+' bảng lên server');
  DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên server');
