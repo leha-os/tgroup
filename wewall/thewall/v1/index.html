@@ -1781,6 +1781,9 @@ ROUTES['#/caidat']=function(){
   +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
+      +'</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
+  +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
+  +'</tbody></table></div></div></div></div>';
  h+='</div></details><div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Kéo/đẩy toàn bộ giữa máy và Google Sheet</div></div></div><div class="card-b">'
   +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ server</button><button class="btn btn-sec" onclick="diagSync()">Chẩn đoán</button><button class="btn btn-warn" onclick="if(confirm(\'Ghi đè toàn bộ sheet server bằng dữ liệu máy?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên server</button></div>'
   +'<div style="margin:12px 0;padding:12px;background:#f8fafc;border-radius:8px">'
@@ -1788,9 +1791,6 @@ ROUTES['#/caidat']=function(){
       +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl2" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl2\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
       +fld('Access Key',inp('apiKey2',CFG.key))
       +'<div style="display:flex;gap:8px"><button class="btn btn-pri" onclick="CFG.apiUrl=formVal(\'apiUrl2\');CFG.key=formVal(\'apiKey2\');saveCfg();renderSyncPill();toast(\'Đã lưu\')">Lưu</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra</button></div>'
-      +'</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
-  +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
-  +'</tbody></table></div></div></div></div>';
  $('#view').innerHTML=h;
 };
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
