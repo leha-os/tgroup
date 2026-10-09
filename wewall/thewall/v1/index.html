@@ -106,7 +106,8 @@ textarea.inp{resize:vertical;min-height:70px}
 .tbl-wrap{display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;position:relative}
 .tbl-wrap::-webkit-scrollbar{height:6px}
 .tbl-wrap::-webkit-scrollbar-thumb{background:#d4c9b3;border-radius:6px}
-table.tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+.tbl th,.tbl td{padding:10px 12px}
 .tbl th{text-align:left;padding:10px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);background:#f8fafc;border-bottom:1px solid var(--line);white-space:nowrap}
 .tbl td{padding:11px 14px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
@@ -203,6 +204,8 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
 /* ===== RESPONSIVE FIX ===== */
 @media(max-width:1100px){.g7{grid-template-columns:repeat(4,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
+  .proj-pick .inp{max-width:130px!important;font-size:12px!important;padding:6px 8px!important}
+  .proj-pick span{display:none!important}
   .sidebar{position:fixed!important;left:0;top:0;bottom:0;z-index:60;width:min(280px,84vw)!important;max-width:84vw;transform:translateX(-106%);transition:transform .22s ease;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;border-radius:0 20px 20px 0}
   .sidebar.open{transform:translateX(0)!important;box-shadow:0 0 50px rgba(0,0,0,.45)}
   #sbBackdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:59}
@@ -637,7 +640,16 @@ ROUTES['#/projects/:id']=null;
 function renderProjectLedger(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p){location.hash='#/projects';return;}
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid),bal=p.budget-s;
- let h='<div class="page-head"><div><h1>Sổ cái: '+esc(p.code+' • '+p.name)+'</h1><p>'+esc(p.client||'')+' • '+fmtDate(p.start)+' → '+fmtDate(p.end)+' • '+statusBadge(p.status)+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">← Danh sách</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
+ let h='<div class="page-head"><div><h1>'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:13px;color:var(--mut);line-height:1.7;margin-top:6px">'
+  +'<div><b>Mã dự án:</b> '+esc(p.code||'')+'</div>'
+  +'<div><b>Tên dự án:</b> '+esc(p.name||'')+'</div>'
+  +'<div><b>Địa chỉ:</b> '+esc(p.location||p.address||'')+'</div>'
+  +'<div><b>Chủ đầu tư:</b> '+esc(p.client||'')+'</div>'
+  +'<div><b>Ngày bắt đầu:</b> '+fmtDate(p.start)+'</div>'
+  +'<div><b>Ngày kết thúc:</b> '+fmtDate(p.end)+'</div>'
+  +'<div><b>Trạng thái:</b> '+statusBadge(p.status)+'</div>'
+  +'<div><b>Quản lý dự án:</b> '+esc(p.manager||'')+'</div>'
+  +'</div></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">← Danh sách</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  if(s>p.budget)h+='<div class="alert alert-red">Dự án đã <b>vượt ngân sách</b> '+(fmtVND(s-p.budget))+' ('+Math.round(100*s/p.budget)+'% ngân sách)</div>';
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
  h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Ngân sách',fmtVND(p.budget),'','st-info')+stat('Đã chi',fmtVND(s),'','st-warn')+stat('Công nợ phải trả',fmtVND(l.total),'','st-bad')+stat('Còn lại',fmtVND(bal),'',bal<0?'st-bad':'st-ok')+'</div>';
@@ -1240,13 +1252,13 @@ function xlsxMake(sheets){
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
   +'<font><sz val="12"/><name val="Calibri"/></font>'
   +'</fonts>'
-  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFBBC04"/></patternFill></fill></fills>'
+  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill></fills>'
   +'<borders count="2">'
   +'<border><left/><right/><top/><bottom/><diagonal/></border>'
   +'<border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border>'
   +'</borders>'
   +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
-  +'<cellXfs count="10">'
+  +'<cellXfs count="11">'
   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
   +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
@@ -1257,6 +1269,7 @@ function xlsxMake(sheets){
   +'<xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
+  +'<xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'</cellXfs>'
   +'<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
   +'</styleSheet>';
@@ -1514,7 +1527,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rc=new Array(n).fill(null);rc[0]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:5};R.push(rc);
  const ra=new Array(n).fill(null);ra[0]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[0]={v:title,s:2};R.push(rt);
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:5};});R.push(rh);
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
  if(foot){const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const rf=new Array(n).fill(null);rf[0]={v:clean,s:2};R.push(rf);}
  const mg='A1:'+xlsxColL(n)+'1',mg2='A2:'+xlsxColL(n)+'2',mg3='A3:'+xlsxColL(n)+'3';
