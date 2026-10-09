@@ -776,7 +776,7 @@ function buildSidebar(){
 }
 function buildProjPick(){
  const ps=visibleProjects();
- $('#projPick').innerHTML='<option value="">-- Tất cả dự án --</option>'+ps.map(p=>'<option value="'+p.id+'">'+esc(p.code+' • '+p.name)+'</option>').join('');
+ $('#projPick').innerHTML='<option value="">-- Tất cả dự án --</option>'+ps.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('');
  const ap=Auth.assignedProjects();
  if(ap&&ap.length===1){$('#projPick').value=ap[0];SEL.projectId=ap[0];$('#projPick').disabled=true;}
  else{$('#projPick').disabled=false;if(SEL.projectId&&!ps.some(p=>p.id===SEL.projectId)){SEL.projectId=null;}}
@@ -845,7 +845,7 @@ ROUTES['#/dashboard']=function(){
   +stat('Nợ nhà thầu',fmtVND(liab.contractor),'','st-bad')+'</div>';
  h+='<div class="grid g3" style="margin-bottom:16px">';
  h+='<div class="card"><div class="card-h"><div><h3>Đã chi và ngân sách còn lại</h3><div class="sub">Từng dự án đang thi công</div></div></div><div class="card-b">'
-  +hbarChart(actives.map(p=>({label:p.code+' • '+p.name,value:projectSpent(p.id)})),'#e8930c')+'</div></div>';
+  +hbarChart(actives.map(p=>({label:p.name,value:projectSpent(p.id)})),'#e8930c')+'</div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Cơ cấu công nợ</h3><div class="sub">Tổng hợp các dự án đang làm</div></div></div><div class="card-b">'
   +(liab.total>0?donutChart([{label:'Nợ NCC',value:liab.vendor,color:'#dc2626'},{label:'Nợ nhà thầu',value:liab.contractor,color:'#e8930c'}]):'<div class="empty"><div class="big"></div>Không còn công nợ tồn đọng</div>')+'</div></div>';
  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
@@ -853,7 +853,7 @@ ROUTES['#/dashboard']=function(){
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
  h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.code+' • '+p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
  h+='<div class="grid g4">'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/vendors\'"><div style="font-size:12px;color:var(--mut)">Nhà cung cấp</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.vendors).length+'</div></div>'
@@ -901,7 +901,7 @@ ROUTES['#/projects/:id']=null;
 function renderProjectLedger(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p){location.hash='#/projects';return;}
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid),bal=p.budget-s;
- let h='<div class="page-head" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#1a1d29;padding:14px 16px;border-radius:12px;border:1px solid #f0ad1f;box-shadow:0 2px 8px rgba(240,173,31,.15);margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
+ let h='<div class="page-head" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#1a1d29;padding:14px 16px;border-radius:12px;border:1px solid #f0ad1f;box-shadow:0 2px 8px rgba(240,173,31,.15);margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
   +'<div><b style="color:#64748b">Mã dự án:</b> '+esc(p.code||'')+'</div>'
   +'<div><b style="color:#64748b">Địa chỉ:</b> '+esc(p.location||p.address||'')+'</div>'
   +'<div><b style="color:#64748b">Chủ đầu tư:</b> '+esc(p.client||'')+'</div>'
@@ -979,7 +979,7 @@ function partnerForm(coll,id){
  openModal((id?'Sửa':'Thêm')+' '+cfg.t.toLowerCase(),
   fld('Tên',inp('name',o.name))+
   '<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Địa chỉ',inp('address',o.address))+'</div>'+
-  (cfg.noProj?'':fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId)))+
+  (cfg.noProj?'':fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),o.projectId)))+
   fld('Ghi chú',txa('note',o.note)),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="savePartner(\''+coll+'\',\''+(id||'')+'\')">Lưu</button>');
 }
@@ -997,7 +997,7 @@ function partnerTxForm(coll,oid){
  openModal('Ghi giao dịch — '+esc(o.name),
   fld('Loại',sel('type',[{v:cfg.inT,t:cfg.inL},{v:cfg.outT,t:cfg.outL}],cfg.inT))+
   '<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số tiền (VND)',inp('amount','','number','min="0"'))+'</div>'+
-  (cfg.noProj?fld('Dự án',sel('projectId',DB.data.projects.map(p=>({v:p.id,t:p.code+' • '+p.name})),SEL.projectId||'')):'')+
+  (cfg.noProj?fld('Dự án',sel('projectId',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||'')):'')+
   fld('Diễn giải',txa('note','')),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="savePartnerTx(\''+coll+'\',\''+oid+'\')">Lưu</button>');
 }
@@ -1037,7 +1037,7 @@ ROUTES['#/contractors']=function(){
 function contractorForm(id){
  const o=id?DB.data.contractors.find(x=>x.id===id):{name:'',phone:'',note:'',projectId:SEL.projectId||''};
  const projs=visibleProjects();
- openModal((id?'Sửa':'Thêm')+' nhà thầu',fld('Tên đội/tổ',inp('name',o.name))+'<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId))+'</div>'+fld('Ghi chú',txa('note',o.note)),
+ openModal((id?'Sửa':'Thêm')+' nhà thầu',fld('Tên đội/tổ',inp('name',o.name))+'<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),o.projectId))+'</div>'+fld('Ghi chú',txa('note',o.note)),
  '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveContractor(\''+(id||'')+'\')">Lưu</button>');
 }
 function saveContractor(id){const o={name:formVal('name'),phone:formVal('phone'),projectId:formVal('projectId'),note:formVal('note')};if(!o.name){toast('Nhập tên');return;}
@@ -1089,7 +1089,7 @@ function bankTxForm(aid,defType){
  openModal((defType==='outflow'?'Chi tiền':'Thu tiền')+' — '+esc(a.name),
   fld('Loại',sel('type',[{v:'inflow',t:'Thu vào'},{v:'outflow',t:'Chi ra'}],defType||'inflow'))+
   '<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số tiền (VND)',inp('amount','','number','min="0"'))+'</div>'+
-  fld('Dự án',sel('projectId',[{v:'',t:'-- Chung/chưa phân bổ --'}].concat(DB.data.projects.map(p=>({v:p.id,t:p.code+' • '+p.name}))),SEL.projectId||''))+
+  fld('Dự án',sel('projectId',[{v:'',t:'-- Chung/chưa phân bổ --'}].concat(DB.data.projects.map(p=>({v:p.id,t:p.name}))),SEL.projectId||''))+
   fld('Diễn giải',txa('note','')),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveBankTx(\''+aid+'\')">Lưu</button>');
 }
@@ -1136,7 +1136,7 @@ ROUTES['#/expenses']=function(){if(!Auth.can('thuchi_view')){location.hash='#/da
 function expenseForm(id){
  const e=id?DB.data.expenses.find(x=>x.id===id):{projectId:SEL.projectId||'',date:todayISO(),category:'Nhân công',amount:'',note:'',by:Auth.user.name};
  const projs=visibleProjects();
- openModal((id?'Sửa':'Thêm')+' chi phí','<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),e.projectId))+fld('Ngày',inp('date',e.date,'date'))+'</div>'+'<div class="frm-row">'+fld('Loại chi phí',sel('category',EXPCATS.map(c=>({v:c,t:c})),e.category))+fld('Số tiền (VND)',inp('amount',e.amount,'number','min="0"'))+'</div>'+fld('Người chi',inp('by',e.by))+fld('Diễn giải',txa('note',e.note)),
+ openModal((id?'Sửa':'Thêm')+' chi phí','<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),e.projectId))+fld('Ngày',inp('date',e.date,'date'))+'</div>'+'<div class="frm-row">'+fld('Loại chi phí',sel('category',EXPCATS.map(c=>({v:c,t:c})),e.category))+fld('Số tiền (VND)',inp('amount',e.amount,'number','min="0"'))+'</div>'+fld('Người chi',inp('by',e.by))+fld('Diễn giải',txa('note',e.note)),
  '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveExpense(\''+(id||'')+'\')">Lưu</button>');
 }
 function saveExpense(id){const o={projectId:formVal('projectId'),date:formVal('date')||todayISO(),category:formVal('category'),amount:+formVal('amount')||0,by:formVal('by'),note:formVal('note')};
@@ -1175,7 +1175,7 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div></div>';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
-  +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.code+' • '+p.name})),SEL.projectId||''))
+  +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))
   +'<button class="btn btn-pri" onclick="reportCash()">Xem báo cáo</button></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ</h3><div class="sub">Phải trả & phải thu toàn công ty</div></div></div><div class="card-b"><button class="btn btn-pri" onclick="reportDebt()">Xem báo cáo</button></div></div></div>';
  h+='<div id="rpOut" style="margin-top:16px"></div>';
@@ -1184,7 +1184,7 @@ ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/das
 function reportCash(){
  const pid=formVal('rp'),p=DB.data.projects.find(x=>x.id===pid);
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid);
- $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền — '+esc(p.code+' • '+p.name)+'</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="card-b">'
+ $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền — '+esc(p.name)+'</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="card-b">'
  +'<dl class="kv"><dt>Ngân sách</dt><dd>'+fmtVND(p.budget)+'</dd><dt>Đã chi thực tế</dt><dd>'+fmtVND(s)+'</dd><dt>Công nợ phải trả</dt><dd style="color:var(--bad)">'+fmtVND(l.total)+'</dd><dt>Còn phải thu</dt><dd style="color:var(--info)">'+fmtVND(recv)+'</dd><dt>Ngân sách còn lại</dt><dd style="color:'+(p.budget-s<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(p.budget-s)+'</dd><dt>Tỷ lệ đã chi</dt><dd>'+(p.budget?Math.round(100*s/p.budget):0)+'%</dd></dl>'
  +'<h4 style="margin:18px 0 8px">Cơ cấu công nợ phải trả</h4>'+hbarChart([{label:'Nợ NCC',value:l.vendor},{label:'Nợ nhà thầu',value:l.contractor}],'#e8930c')
  +'</div></div>';
@@ -1192,7 +1192,7 @@ function reportCash(){
 function reportDebt(){
  let tp=0,tr=0,rows='';
  scoped(DB.data.projects).forEach(p=>{const l=projectLiab(p.id),r=projectRecv(p.id);tp+=l.total;tr+=r;
-  rows+='<tr><td>'+esc(p.code+' • '+p.name)+'</td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
+  rows+='<tr><td>'+esc(p.name)+'</td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
  $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
 }
 /* ================= QUICK ENTRY ================= */
@@ -1307,7 +1307,7 @@ function denghiForm(id){
  const projs=visibleProjects();
  const dm=[...new Set(DB.data.danhmuc.map(x=>x.ten))];
  openModal((id?'Sửa':'Tạo')+' đề nghị',
-  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
+  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
   '<div class="frm-row">'+fld('Loại đề nghị',sel('loai',Object.entries(LOAI_DN).map(e=>({v:e[0],t:e[1]})),d.loai))+fld('Hạng mục',inp('hangmuc',d.hangmuc,'text','list="dmList"')+'<datalist id="dmList">'+dm.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist>')+'</div>'+
   fld('Nội dung',txa('noidung',d.noidung))+
   '<div class="frm-row3">'+fld('Số lượng',inp('soluong',d.soluong,'number','min="0" step="any"'))+fld('Đơn giá (VND)',inp('dongia',d.dongia))+fld('Nhà cung cấp',inp('ncc',d.ncc))+'</div>',
@@ -1359,7 +1359,7 @@ ROUTES['#/dutru']=function(){if(!Auth.can('dutru_view')){location.hash='#/dashbo
  if(!DT_P)DT_P=SEL.projectId||projs[0].id;
  const list=DB.data.dutru.filter(d=>d.projectId===DT_P);
  const tong=list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.thanhtien,0);
- let h='<div class="page-head"><div><h1>Dự trù/Định mức</h1><p>Tổng dự trù: '+fmtVND(tong)+'</p></div><div class="page-actions"><select class="inp" onchange="DT_P=this.value;nav(false)">'+projs.map(p=>'<option value="'+p.id+'"'+(DT_P===p.id?' selected':'')+'>'+esc(p.code+' • '+p.name)+'</option>').join('')+'</select>'+(Auth.can('baocao_export')?'<button class="btn btn-sec" onclick="exportDuTru()">Xuất Excel</button>':'')+(Auth.can('dutru_create')?'<button class="btn btn-pri" onclick="dutruForm()">+ Thêm hạng mục</button>':'')+'</div></div>';
+ let h='<div class="page-head"><div><h1>Dự trù/Định mức</h1><p>Tổng dự trù: '+fmtVND(tong)+'</p></div><div class="page-actions"><select class="inp" onchange="DT_P=this.value;nav(false)">'+projs.map(p=>'<option value="'+p.id+'"'+(DT_P===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+(Auth.can('baocao_export')?'<button class="btn btn-sec" onclick="exportDuTru()">Xuất Excel</button>':'')+(Auth.can('dutru_create')?'<button class="btn btn-pri" onclick="dutruForm()">+ Thêm hạng mục</button>':'')+'</div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Diễn giải</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
  list.forEach(d=>{h+='<tr><td><b>'+esc(d.hangmuc)+'</b></td><td>'+esc(d.diengiai)+'</td><td class="num">'+fmtNum(d.soluong)+'</td><td class="num">'+fmtVND(d.dongia)+'</td><td class="num" style="font-weight:700">'+fmtVND(d.thanhtien)+'</td><td>'+ttBadge(d.trangthai)+'</td><td><div class="rowbtns">'+(d.trangthai==='cho_duyet'&&Auth.can('dutru_approve')?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',0)">Từ chối</button>':'')+(d.trangthai!=='da_duyet'?'<button class="iconbtn" onclick="dutruForm(\''+d.id+'\')">Sửa</button><button class="iconbtn" onclick="delTx(\'dutru\',\''+d.id+'\')">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
@@ -1394,7 +1394,7 @@ function phatsinhForm(id){
  const d=id?DB.data.phatsinh.find(x=>x.id===id):{projectId:SEL.projectId||'',date:todayISO(),noidung:'',sotien:''};
  const projs=visibleProjects();
  openModal((id?'Sửa':'Thêm')+' phát sinh',
-  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
+  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
   fld('Nội dung phát sinh',txa('noidung',d.noidung))+fld('Số tiền (VND)',inp('sotien',d.sotien)),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="savePhatSinh(\''+(id||'')+'\')">Lưu</button>');
 }
@@ -1800,7 +1800,7 @@ function xuatPhieuDNXls(id){
  h+='<table width="100%"><tr><td><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
  h+='<h2 align="center">PHIẾU ĐỀ NGHỊ</h2>';
  h+='<table><tr><td>Ngày:</td><td><b>'+fmtDate(d.date)+'</b></td><td>Người đề nghị:</td><td><b>'+esc(d.nguoitao||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc(p.code+' • '+p.name)+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc(p.name)+'</b></td></tr>'
   +'<tr><td>Loại đề nghị:</td><td><b>'+esc(LOAI_DN[d.loai]||'')+'</b></td><td>Hạng mục:</td><td><b>'+esc(d.hangmuc||'')+'</b></td></tr>'
   +'<tr><td>Nội dung:</td><td colspan="3"><b>'+esc(d.noidung||'')+'</b></td></tr>'
   +'<tr><td>Nhà cung cấp:</td><td><b>'+esc(d.ncc||'')+'</b></td><td>Số lượng/Đơn giá:</td><td><b>'+(d.soluong||'')+'/'+(d.dongia?fmtVND(d.dongia):'')+'</b></td></tr></table><br>';
@@ -1814,7 +1814,7 @@ function xuatPhieuDNXls(id){
 function tamungForm(){
  const projs=visibleProjects();
  openModal('Tạo tạm ứng',
-  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),SEL.projectId||''))+fld('Ngày',inp('date',todayISO(),'date'))+'</div>'+
+  '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))+fld('Ngày',inp('date',todayISO(),'date'))+'</div>'+
   '<div class="frm-row">'+fld('Người nhận',inp('nguoingan',Auth.user.name))+fld('Số tiền (VND)',inp('sotien',''))+'</div>'+
   fld('Lý do',txa('lydo','')),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTamUng()">Lưu</button>');
@@ -1899,7 +1899,7 @@ function exportDuTru(){
  const list=DB.data.dutru.filter(d=>d.projectId===DT_P);
  const p=DB.data.projects.find(x=>x.id===DT_P)||{};
  const rows=list.map(d=>[d.hangmuc,d.diengiai,d.soluong,d.dongia,d.thanhtien,(TT_DN[d.trangthai]||[''])[0]]);
- dlXlsxTable('Dự trù — '+p.code+' • '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
+ dlXlsxTable('Dự trù — '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
   '<b>Tổng dự trù:</b> '+fmtVND(list.reduce((s,d)=>s+d.thanhtien,0)),fname('dutru_'+(p.code||'all')));
  toast('Đã xuất Excel');
 }
