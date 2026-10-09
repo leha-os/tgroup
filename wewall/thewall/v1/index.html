@@ -212,6 +212,19 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .frm-row,.frm-row3{grid-template-columns:1fr}
 }
 /* ===== PHIẾU DNTT (y bản cũ) ===== */
+.ptitle{text-align:center;font-size:20px;font-weight:800;text-decoration:underline;margin:10px 0 4px}
+.pdate{text-align:center;margin-bottom:10px}
+.ptbl{width:100%;border-collapse:collapse;margin:8px 0}
+.ptbl td,.ptbl th{border:1px solid #000;padding:6px 8px;vertical-align:top}
+.ptbl .ctr{text-align:center}
+.ptbl .ul{text-decoration:underline;font-weight:700}
+.ptbl .gray{background:#c0c0c0}
+.psec{margin:8px 0 2px;font-weight:600}
+.pdot{border-bottom:1px dotted #999;height:14px;margin:2px 0}
+.prow{display:flex;align-items:flex-end;gap:8px;margin:8px 0}
+.prow .lab{white-space:nowrap;font-weight:600}
+.prow .dot{flex:1;border-bottom:1px dotted #999;height:14px}
+.pfoot{margin-top:12px;border:1px solid #000;text-align:center;padding:8px;font-weight:700;font-size:12px}
 .phieu-wrap{max-width:820px;margin:24px auto;background:#fff;padding:32px 42px;border:1px solid #ddd;font-family:Arial,sans-serif;color:#000;font-size:13px;line-height:1.5}
 .phieu-head{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid #000;padding-bottom:10px;margin-bottom:6px}
 .phieu-head .logo{width:70px;height:70px;flex-shrink:0;object-fit:contain}
@@ -1221,13 +1234,13 @@ function xlsxMake(sheets){
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
   +'<font><sz val="12"/><name val="Calibri"/></font>'
   +'</fonts>'
-  +'<fills count="1"><fill><patternFill patternType="none"/></fill></fills>'
+  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFBBC04"/><bgColor indexed="64"/></patternFill></fill></fills>'
   +'<borders count="2">'
   +'<border><left/><right/><top/><bottom/><diagonal/></border>'
   +'<border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border>'
   +'</borders>'
   +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
-  +'<cellXfs count="10">'
+  +'<cellXfs count="11">'
   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
   +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
@@ -1238,6 +1251,7 @@ function xlsxMake(sheets){
   +'<xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
+  +'<xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'</cellXfs>'
   +'<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
   +'</styleSheet>';
@@ -1361,6 +1375,44 @@ function xlsxDownload(sheets,filename){
 }
 
 
+function inPhieuDNTT(id){
+ const c=dnttCalc(id);if(!c)return;
+ const t=c.t,dn=c.dn,p=c.p;
+ const ht=(t.hinhthuc||'').toLowerCase();
+ const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
+ const nguoide=esc(dn.nguoitao||Auth.user.name||'');
+ const htm='<div class="phieu-wrap" id="phieuPrintArea">'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
+  +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
+  +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
+  +'<table class="ptbl">'
+  +'<tr><td style="width:18%">Người đề nghị:</td><td style="width:32%"><b>'+nguoide+'</b></td><td style="width:15%">Bộ phận:</td><td></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="3"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
+  +'<tr><td>Hạng mục:</td><td colspan="3"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr class="ctr"><td class="ul">Người Đề Nghị</td><td class="ul">Trưởng Bộ Phận</td><td class="ul">Phụ trách DA</td><td class="ul">Trưởng phòng DA</td><td class="ul">Kế Toán</td><td class="ul">Giám Đốc</td></tr>'
+  +'<tr><td style="height:70px"></td><td></td><td></td><td></td><td></td><td></td></tr>'
+  +'<tr><td colspan="6" class="gray">Thông CK - Họ và tên:</td></tr>'
+  +'<tr><td colspan="3" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="3" class="gray">Số TK:</td></tr>'
+  +'<tr class="ctr"><td colspan="3" class="gray">CMND số</td><td colspan="3" class="gray">Nơi cấp</td></tr>'
+  +'<tr class="ctr"><td colspan="2">Số tiền thanh toán</td><td colspan="2">Thanh toán lũy kế</td><td>Tổng giá trị HĐ</td><td>Giá trị còn lại</td></tr>'
+  +'<tr class="ctr"><td colspan="2"><b>'+fmtVND(t.sotien)+'</b></td><td colspan="2">'+fmtVND(c.lk)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND(c.conlai)+'</td></tr>'
+  +'<tr><td>Bằng chữ:</td><td>Đồng</td><td colspan="4"><i>'+esc(docSoTien(t.sotien))+'</i></td></tr>'
+  +'</table>'
+  +'<div class="psec">A. Người nhận thanh toán</div><div class="pdot"></div>'
+  +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền Mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ TƯ &nbsp;&nbsp; '+ckTH+' Thu Hồi</div><div class="pdot"></div><div class="pdot"></div>'
+  +'<div class="psec">C. Chứng từ kèm theo</div>'
+  +'<div class="psec"><i>c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)</i></div><div class="pdot"></div>'
+  +'<div class="psec"><i>c2. Không chứng từ tài chính (ghi số tiền)</i></div><div class="pdot"></div>'
+  +'<div class="psec">D. Số tiền thực nhận thanh toán (c1+c2)</div><div class="pdot"></div>'
+  +'<div class="psec">E. Bằng chữ</div><div class="pdot"></div>'
+  +'<div class="prow"><div class="lab">F. Ký nhận</div><div class="dot"></div><div class="lab">Ngày nhận</div><div class="dot"></div></div>'
+  +'<div class="pfoot">XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN</div>'
+  +'</div>';
+ openModal('Phiếu đề nghị thanh toán','<div class="phieu-modal-body">'+htm+'</div>',
+  '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-sec" onclick="xuatPhieuDNTT_XLSX(\''+id+'\')">Tải Excel</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
+}
+
 /* ---------- PHIẾU ĐỀ NGHỊ ---------- */
 function inPhieuDeNghi(id){
  const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;
@@ -1453,16 +1505,15 @@ function xlsTable(title,headers,rows,foot){
 function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
- const R=[];const n=headers.length;const mid=Math.floor(n/2);
- const rc=new Array(n).fill(null);rc[mid]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:5};R.push(rc);
- const ra=new Array(n).fill(null);ra[mid]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
+ const R=[];const n=headers.length;
+ const rc=new Array(n).fill(null);rc[0]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:5};R.push(rc);
+ const ra=new Array(n).fill(null);ra[0]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[0]={v:title,s:2};R.push(rt);
- R.push(new Array(n).fill(null));
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:5};});R.push(rh);
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);rf[0]={v:String(foot).replace(/<[^>]*>/g,' '),s:2};R.push(rf);}
+ if(foot){const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const rf=new Array(n).fill(null);rf[0]={v:clean,s:2};R.push(rf);}
  const mg='A1:'+xlsxColL(n)+'1',mg2='A2:'+xlsxColL(n)+'2',mg3='A3:'+xlsxColL(n)+'3';
- xlsxDownload([{name:'BaoCao',widths:headers.map(()=>16),rows:R,merges:[mg,mg2,mg3]}],filename);
+ xlsxDownload([{name:'BaoCao',widths:headers.map(()=>18),rows:R,merges:[mg,mg2,mg3]}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 function exportDeNghi(){
@@ -1540,6 +1591,20 @@ async function pushAll(silent){
  renderSyncPill();if(!silent)toast('Đã đẩy '+n+' bảng lên server');
  DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên server');
 }
+async function diagSync(){
+ let msg='API URL: '+(CFG.apiUrl?'Đã có':'TRỐNG - chưa cấu hình!')+'\n';
+ if(!CFG.apiUrl){alert(msg+'\nVào Cài đặt nhập API URL giống trên máy tính.');return;}
+ try{
+   const d=await apiCall('pull',{});
+   const sheets=Object.keys(d).filter(k=>Array.isArray(d[k]));
+   msg+='Server trả về '+sheets.length+' bảng\n';
+   sheets.forEach(k=>{msg+=k+': '+(d[k]?d[k].length:0)+' dòng\n';});
+   const duan=d[SYNC_MAP.projects]||[];
+   msg+='\nDự án trên server: '+duan.length;
+   if(duan.length>0)msg+=' ('+duan.slice(0,3).map(x=>x.code||x.ma||'').join(', ')+')';
+ }catch(e){msg+='LỖI: '+e.message;}
+ alert(msg);
+}
 async function testApi(){
  syncCfgForm();
  try{const d=await apiCall('ping',{});SYNC.connected=true;renderSyncPill();toast('Kết nối OK — '+(d.time||'server phản hồi'));return true;}
@@ -1555,7 +1620,7 @@ ROUTES['#/caidat']=function(){
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Kéo/đẩy toàn bộ giữa máy và Google Sheet</div></div></div><div class="card-b">'
-  +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ server</button><button class="btn btn-warn" onclick="if(confirm(\'Ghi đè toàn bộ sheet server bằng dữ liệu máy?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên server</button></div>'
+  +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ server</button><button class="btn btn-sec" onclick="diagSync()">Chẩn đoán</button><button class="btn btn-warn" onclick="if(confirm(\'Ghi đè toàn bộ sheet server bằng dữ liệu máy?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên server</button></div>'
   +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
   +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
   +'</tbody></table></div></div></div></div>';
