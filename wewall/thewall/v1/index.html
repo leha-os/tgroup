@@ -303,7 +303,7 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
     <div class="main">
       <div class="topbar">
         <button class="burger" onclick="var s=document.getElementById('sidebar'),b=document.getElementById('sbBackdrop'),o=s.classList.toggle('open');b.classList.toggle('show',o)" aria-label="Menu">☰</button>
-        <h2>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</h2>
+        
         <div class="proj-pick noprint"><span style="font-size:12.5px;color:var(--mut);font-weight:600">Dự án:</span><select id="projPick" class="inp" onchange="setProject(this.value)"></select></div>
       </div>
       <div id="view"></div>
@@ -432,9 +432,9 @@ function showLogin(){$('#loginView').style.display='flex';$('#appView').style.di
 function enterApp(){
  $('#loginView').style.display='none';$('#appView').style.display='flex';
  buildSidebar();buildProjPick();
- if(!$('#syncPill')){const d=document.createElement('div');d.id='syncPill';d.style.marginLeft='10px';document.querySelector('.topbar h2').after(d);}
+ if(!$('#syncPill')){const d=document.createElement('div');d.id='syncPill';d.style.marginLeft='10px';document.querySelector('.topbar .burger').after(d);}
  renderSyncPill();
- if(location.hash==='#/dashboard')nav();else location.hash='#/dashboard';
+ if(location.hash&&location.hash.length>2)nav();else location.hash='#/dashboard';
 }
 function setProject(id){SEL.projectId=id||null;DB.save0=0;nav();}
 let SEL={projectId:null};
@@ -640,15 +640,15 @@ ROUTES['#/projects/:id']=null;
 function renderProjectLedger(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p){location.hash='#/projects';return;}
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid),bal=p.budget-s;
- let h='<div class="page-head" style="background:#1a1d29;color:#fff;padding:14px 16px;border-radius:12px;margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
-  +'<div><b style="color:#9aa">Mã dự án:</b> '+esc(p.code||'')+'</div>'
-  +'<div><b style="color:#9aa">Tên dự án:</b> '+esc(p.name||'')+'</div>'
-  +'<div><b style="color:#9aa">Địa chỉ:</b> '+esc(p.location||p.address||'')+'</div>'
-  +'<div><b style="color:#9aa">Chủ đầu tư:</b> '+esc(p.client||'')+'</div>'
-  +'<div><b style="color:#9aa">Ngày bắt đầu:</b> '+fmtDate(p.start)+'</div>'
-  +'<div><b style="color:#9aa">Ngày kết thúc:</b> '+fmtDate(p.end)+'</div>'
-  +'<div><b style="color:#9aa">Trạng thái:</b> '+statusBadge(p.status)+'</div>'
-  +'<div><b style="color:#9aa">Quản lý dự án:</b> '+esc(p.manager||'')+'</div>'
+ let h='<div class="page-head" style="background:#f8fafc;color:#1a1d29;padding:14px 16px;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:12px"><div><h1 style="color:#f0ad1f;font-size:17px;margin:0 0 8px">'+esc(p.code+' • '+p.name)+'</h1><div style="font-size:12.5px;line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
+  +'<div><b style="color:#64748b">Mã dự án:</b> '+esc(p.code||'')+'</div>'
+  +'<div><b style="color:#64748b">Tên dự án:</b> '+esc(p.name||'')+'</div>'
+  +'<div><b style="color:#64748b">Địa chỉ:</b> '+esc(p.location||p.address||'')+'</div>'
+  +'<div><b style="color:#64748b">Chủ đầu tư:</b> '+esc(p.client||'')+'</div>'
+  +'<div><b style="color:#64748b">Ngày bắt đầu:</b> '+fmtDate(p.start)+'</div>'
+  +'<div><b style="color:#64748b">Ngày kết thúc:</b> '+fmtDate(p.end)+'</div>'
+  +'<div><b style="color:#64748b">Trạng thái:</b> '+statusBadge(p.status)+'</div>'
+  +'<div><b style="color:#64748b">Quản lý dự án:</b> '+esc(p.manager||'')+'</div>'
   +'</div></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">← Danh sách</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  if(s>p.budget)h+='<div class="alert alert-red">Dự án đã <b>vượt ngân sách</b> '+(fmtVND(s-p.budget))+' ('+Math.round(100*s/p.budget)+'% ngân sách)</div>';
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
@@ -1467,8 +1467,7 @@ function xuatPhieuDNXls(id){
   +'<tr><td>'+d.sotien+'</td><td>'+esc(docSoTien(d.sotien))+'</td></tr></table>';
  h+='<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>';
  h+='</body></html>';
- dlXls(h,'phieu_denghi_'+fmtDate(d.date).replace(/\//g,'')+'.xls');
- toast('Đã tải Excel phiếu đề nghị');
+ toast('Dùng nút Tải Excel trong phiếu DNTT');
 }
 
 function tamungForm(){
