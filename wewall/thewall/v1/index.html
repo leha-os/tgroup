@@ -197,7 +197,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .qentry .qe .t{font-size:13px;font-weight:700}
 @media(max-width:1100px){.g7{grid-template-columns:repeat(4,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
-.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
+.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);width:min(280px,84vw);max-width:84vw}
 .sidebar.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
 #sbBackdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:49}
 #sbBackdrop.show{display:block}
@@ -465,7 +465,7 @@ function buildSidebar(){
   }
  });
  h+='</div>';
- h+='<div class="sb-user"><div class="row"><div class="avatar">'+esc(u.name.slice(0,2).toUpperCase())+'</div><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">⏻ Đăng xuất</button></div>';
+ h+='<div class="sb-user"><div class="row"><div class="avatar">'+esc(u.name.slice(0,2).toUpperCase())+'</div><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">Đăng xuất</button></div>';
  $('#sidebar').innerHTML=h;
  $$('#sidebar [data-h]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.h;$('#sidebar').classList.remove('open');});
 }
