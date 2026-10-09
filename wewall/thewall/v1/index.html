@@ -284,6 +284,9 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body{background:#fff}
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 <!-- ============ LOGIN ============ -->
@@ -414,7 +417,7 @@ const DBKEY='twpro_v1';
 const DB={
  data:null,
  load(){try{const raw=localStorage.getItem(DBKEY);this.data=raw?JSON.parse(raw):JSON.parse(JSON.stringify(SEED));}catch(e){this.data=JSON.parse(JSON.stringify(SEED));}},
- save(){localStorage.setItem(DBKEY,JSON.stringify(this.data));},
+ save(){localStorage.setItem(DBKEY,JSON.stringify(this.data));try{if(typeof FB!=='undefined')FB.scheduleSave();}catch(e){}},
  reset(){this.data=JSON.parse(JSON.stringify(SEED));this.save();},
  log(action,detail){this.data.auditLogs.unshift({id:uid('a'),ts:new Date().toLocaleString('vi-VN'),user:Auth.user?Auth.user.name:'?',action,detail});this.save();}
 };
@@ -1706,6 +1709,95 @@ function exportPhatSinh(){
 /* ================= API LAYER ================= */
 const CFG_KEY='twpro_cfg';
 let CFG={apiUrl:'',key:''};
+
+/* ============ FIREBASE (Firestore) — đồng bộ real-time ============ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBJipOi42KUbWmeetDK5geO7HtbufJiwvE",
+  authDomain: "the-wall-pms.firebaseapp.com",
+  projectId: "the-wall-pms",
+  storageBucket: "the-wall-pms.firebasestorage.app",
+  messagingSenderId: "30375505616",
+  appId: "1:30375505616:web:6c19f7f5e4ef8e5e3fb8d5"
+};
+const FB_KEY = 'twpro_fb_cfg';
+const FB = {
+  app: null, db: null, unsub: null, saveTimer: null, ready: false, _writing: false,
+  /* Đọc config đã lưu (ưu tiên localStorage, fallback placeholder) */
+  getCfg(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(FB_KEY) || 'null');
+      if(saved && saved.projectId && saved.projectId !== 'YOUR_PROJECT_ID') return saved;
+    }catch(e){}
+    return null;
+  },
+  isConfigured(){
+    const c = this.getCfg();
+    return !!(c && c.apiKey && c.projectId && typeof firebase !== 'undefined');
+  },
+  /* Khởi tạo Firebase. Trả về false nếu chưa có config */
+  init(){
+    if(this.ready) return true;
+    const cfg = this.getCfg();
+    if(!cfg){ return false; }
+    if(typeof firebase === 'undefined'){ console.warn('Firebase SDK chưa tải'); return false; }
+    try{
+      if(!firebase.apps.length) firebase.initializeApp(cfg);
+      this.app = firebase.app();
+      this.db = firebase.firestore();
+      this.ready = true;
+      return true;
+    }catch(e){ console.warn('FB.init lỗi:', e.message); return false; }
+  },
+  docRef(){
+    return this.db.collection('twall').doc('main');
+  },
+  /* Ghi toàn bộ DB.data lên Firestore (1 document) */
+  async saveAll(){
+    if(!this.init()) return false;
+    try{
+      this._writing = true;
+      await this.docRef().set({ data: JSON.stringify(DB.data), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), updatedBy: (Auth.user&&Auth.user.name)||'?' });
+      SYNC.connected = true; SYNC.msg = 'Firebase • ' + new Date().toLocaleTimeString('vi-VN');
+      renderSyncPill();
+      setTimeout(()=>{ this._writing = false; }, 1500);
+      return true;
+    }catch(e){ this._writing = false; console.warn('FB.saveAll lỗi:', e.message); toast('Lỗi Firebase: ' + e.message); return false; }
+  },
+  /* Đọc toàn bộ về */
+  async loadAll(){
+    if(!this.init()) return null;
+    try{
+      const snap = await this.docRef().get();
+      if(snap.exists && snap.data().data) return JSON.parse(snap.data().data);
+      return null;
+    }catch(e){ console.warn('FB.loadAll lỗi:', e.message); return null; }
+  },
+  /* Lắng nghe real-time: tự gọi cb(data) khi có thay đổi từ máy khác */
+  listen(cb){
+    if(!this.init()) return false;
+    if(this.unsub) this.unsub();
+    let first = true;
+    this.unsub = this.docRef().onSnapshot(snap => {
+      if(!snap.exists) return;
+      if(first){ first = false; return; } /* bỏ qua lần đầu (chính là data hiện tại) */
+      if(this._writing) return; /* bỏ qua echo từ chính mình ghi */
+      try{
+        const d = JSON.parse(snap.data().data);
+        if(d) cb(d);
+      }catch(e){}
+    }, err => console.warn('FB.listen lỗi:', err.message));
+    return true;
+  },
+  /* Tự động lưu sau mỗi thay đổi (debounce 2 giây) */
+  scheduleSave(){
+    if(!this.isConfigured()) return;
+    clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(()=>{ this.saveAll(); }, 2000);
+  },
+  stop(){ if(this.unsub){ this.unsub(); this.unsub = null; } clearTimeout(this.saveTimer); }
+};
+function saveFbCfg(cfg){ localStorage.setItem(FB_KEY, JSON.stringify(cfg)); FB.ready = false; FB.stop(); }
+
 function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
 function syncCfgForm(){
@@ -1737,6 +1829,11 @@ function renderSyncPill(){
  el.innerHTML='<span class="badge b-green">Đã đồng bộ</span>'+(SYNC.msg?' <span style="font-size:11px;color:var(--mut)">'+esc(SYNC.msg)+'</span>':'');
 }
 async function pullAll(silent){
+ if(typeof FB!=='undefined' && FB.isConfigured()){
+   const d = await FB.loadAll();
+   if(d){ DB.data = d; ensureArrays(); DB.save(); SYNC.dirty=false; SYNC.connected=true; SYNC.msg='Firebase • '+new Date().toLocaleTimeString('vi-VN'); renderSyncPill(); if(!silent)toast('Đã tải từ Firebase'); nav(false); return; }
+   if(!silent)toast('Firebase chưa có dữ liệu'); return;
+ }
  syncCfgForm();
  const d=await apiCall('pull',{});
  let n=0;
@@ -1747,6 +1844,11 @@ async function pullAll(silent){
  nav(false);
 }
 async function pushAll(silent){
+ if(typeof FB!=='undefined' && FB.isConfigured()){
+   const ok = await FB.saveAll();
+   if(ok){ SYNC.dirty=false; if(!silent)toast('Đã đẩy lên Firebase'); DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên Firebase'); }
+   return;
+ }
  syncCfgForm();
  let n=0;
  for(const k of Object.keys(SYNC_MAP)){await apiCall('push',{sheet:SYNC_MAP[k],rows:(DB.data[k]||[]).map(o=>toVI(k,o))});n++;}
@@ -1779,7 +1881,18 @@ ROUTES['#/caidat']=function(){
  const isAdmin=Auth.canAdmin();
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
  let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:13px">⚠️ <b>Khu vực nguy hiểm:</b> Chỉ Admin được phép thay đổi. Thao tác sai có thể mất dữ liệu hoặc ngắt kết nối toàn hệ thống.</div><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
- h+='<div class="grid g2" style="padding:12px"><details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">⚙️ Cài đặt nâng cao (API • Module • Dữ liệu mẫu)</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
+ h+='<div class="grid g2" style="padding:12px"><details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">⚙️ Cài đặt nâng cao (API • Module • Dữ liệu mẫu)</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0 0 12px;border:2px solid #f59e0b;box-shadow:none"><div class="card-h"><div><h3>🔥 Firebase (đồng bộ real-time)</h3><div class="sub">Tự động đồng bộ, không cần bấm nút</div></div><span id="fbDot"></span></div><div class="card-b">'
+  +'<div id="fbStatus" style="margin-bottom:10px;font-size:13px"></div>'
+  +fld('API Key', '<input class="inp" id="fbApiKey" placeholder="AIza...">')
+  +fld('Auth Domain', '<input class="inp" id="fbAuthDomain" placeholder="project.firebaseapp.com">')
+  +fld('Project ID', '<input class="inp" id="fbProjectId" placeholder="project-id">')
+  +fld('Storage Bucket', '<input class="inp" id="fbBucket" placeholder="project.appspot.com">')
+  +fld('Messaging Sender ID', '<input class="inp" id="fbSenderId" placeholder="123456789">')
+  +fld('App ID', '<input class="inp" id="fbAppId" placeholder="1:123:web:abc">')
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveFbForm()">Lưu Firebase</button><button class="btn btn-sec" onclick="testFb()">Kiểm tra kết nối</button><button class="btn btn-bad" onclick="clearFb()">Xóa config</button></div>'
+  +'</div></div>';
+ setTimeout(fillFbForm, 50);
+ h+='<div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
   +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
@@ -1795,6 +1908,43 @@ ROUTES['#/caidat']=function(){
       +'<div style="display:flex;gap:8px"><button class="btn btn-pri" onclick="CFG.apiUrl=formVal(\'apiUrl2\');CFG.key=formVal(\'apiKey2\');saveCfg();renderSyncPill();toast(\'Đã lưu\')">Lưu</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra</button></div>'
  $('#view').innerHTML=h;
 };
+function fillFbForm(){
+  try{
+    var fc = (typeof FB!=='undefined') ? FB.getCfg() : null;
+    if(fc){
+      document.getElementById('fbApiKey').value = fc.apiKey||'';
+      document.getElementById('fbAuthDomain').value = fc.authDomain||'';
+      document.getElementById('fbProjectId').value = fc.projectId||'';
+      document.getElementById('fbBucket').value = fc.storageBucket||'';
+      document.getElementById('fbSenderId').value = fc.messagingSenderId||'';
+      document.getElementById('fbAppId').value = fc.appId||'';
+    }
+    var st = document.getElementById('fbStatus');
+    if(st) st.innerHTML = (typeof FB!=='undefined' && FB.isConfigured())
+      ? '<span class="badge b-ok">Đã kết nối Firebase</span>'
+      : '<span class="badge b-gray">Chưa cấu hình — đang dùng Apps Script</span>';
+  }catch(e){}
+}
+function saveFbForm(){
+  const cfg={
+    apiKey: document.getElementById('fbApiKey').value.trim(),
+    authDomain: document.getElementById('fbAuthDomain').value.trim(),
+    projectId: document.getElementById('fbProjectId').value.trim(),
+    storageBucket: document.getElementById('fbBucket').value.trim(),
+    messagingSenderId: document.getElementById('fbSenderId').value.trim(),
+    appId: document.getElementById('fbAppId').value.trim()
+  };
+  if(!cfg.apiKey || !cfg.projectId){ toast('Nhập ít nhất API Key và Project ID'); return; }
+  saveFbCfg(cfg);
+  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); toast('Dữ liệu mới từ Firebase'); }); }
+  else toast('Đã lưu, nhưng kết nối thất bại — kiểm tra lại config');
+  nav(false);
+}
+function testFb(){
+  if(FB.init()){ FB.docRef().get().then(s=>toast(s.exists?'Firebase OK — đã có dữ liệu':'Firebase OK — chưa có dữ liệu')).catch(e=>toast('Lỗi: '+e.message)); }
+  else toast('Chưa cấu hình Firebase hoặc SDK chưa tải');
+}
+function clearFb(){ if(confirm('Xóa cấu hình Firebase?')){ localStorage.removeItem(FB_KEY); FB.ready=false; FB.stop(); toast('Đã xóa'); nav(false); } }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
 /* đảm bảo collection mới tồn tại khi mở bản cũ */
 function ensureArrays(){let ch=false;Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});if(ch){try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}}}
@@ -1809,6 +1959,18 @@ document.addEventListener('input',function(e){
 DB.load();
 ensureArrays();
 loadCfg();
+/* Firebase real-time: tự động đồng bộ khi có config */
+try{
+  if(typeof FB!=='undefined' && FB.isConfigured()){
+    FB.listen(function(remote){
+      DB.data = remote; ensureArrays();
+      try{ localStorage.setItem(DBKEY, JSON.stringify(DB.data)); }catch(e){} /* lưu local, không trigger save ngược */
+      SYNC.connected = true; SYNC.msg = 'Firebase • ' + new Date().toLocaleTimeString('vi-VN');
+      renderSyncPill(); nav(false);
+      toast('Dữ liệu mới từ Firebase');
+    });
+  }
+}catch(e){ console.warn('Firebase listen:', e.message); }
 $('#loginLogo').src=TW_LOGO;
 DB._sv=DB.save;DB.save=function(){DB._sv();if(CFG.apiUrl)markDirty();};
 const _doLogin=doLogin;
