@@ -232,8 +232,25 @@ body.printing-phieu .sidebar,body.printing-phieu .topbar,body.printing-phieu .m-
 body.printing-phieu .mback{position:static;padding:0;background:none}
 body.printing-phieu .modal{box-shadow:none;width:100%;max-width:100%}
 body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
+.phieu-title{text-align:center;font-size:20px;font-weight:800;margin:10px 0;letter-spacing:.5px}
+.phieu-ngay{text-align:right;margin:4px 0;font-size:14px}
+.phieu-tbl{width:100%;border-collapse:collapse;margin:6px 0;font-size:14px}
+.phieu-tbl td{padding:5px 6px;vertical-align:top}
+.phieu-sign6{display:grid;grid-template-columns:repeat(6,1fr);text-align:center;font-size:12.5px;margin:8px 0;min-height:64px}
+.phieu-sign6 div{padding:4px 2px}
+.phieu-sec{margin:8px 0 2px;font-size:14px}
+.phieu-line{font-size:13.5px;margin:2px 0}
+.phieu-blank{min-height:26px;border-bottom:1px dotted #999;margin:2px 0}
+.phieu-sign2{display:flex;justify-content:space-between;margin:10px 0;font-size:14px}
+.phieu-note{text-align:center;font-weight:800;font-size:13px;margin:12px 0 4px}
 @media print{
-.sidebar,.topbar,.page-actions,.toolbar,.mback,.toast,.noprint{display:none!important}
+.sidebar,.topbar,.page-actions,.toolbar,.toast,.noprint{display:none!important}
+.mback{display:none!important}
+body.printing-phieu #appView,body.printing-phieu #loginView{display:none!important}
+body.printing-phieu .mback{display:block!important;position:static!important;padding:0!important;background:none!important}
+body.printing-phieu .modal{box-shadow:none!important;width:100%!important;max-width:100%!important;margin:0!important;max-height:none!important}
+body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
+body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
 #view{padding:0;overflow:visible}
 .main{overflow:visible}
 .card{box-shadow:none;break-inside:avoid}
@@ -1101,28 +1118,266 @@ function docSoTien(n){
  if(ty)p.push(d3(ty)+' tỷ');if(tr)p.push(d3(tr)+' triệu');if(ng)p.push(d3(ng)+' nghìn');if(d||!p.length)p.push(d3(d));
  const s=p.join(' ');return s.charAt(0).toUpperCase()+s.slice(1)+' đồng';
 }
-function inPhieuDNTT(id){
- const t=DB.data.thanhtoan.find(x=>x.id===id);if(!t)return;
+function dnttCalc(id){
+ const t=DB.data.thanhtoan.find(x=>x.id===id);if(!t)return null;
  const dn=DB.data.denghi.find(x=>x.id===t.denghiId)||{};
- const p=DB.data.projects.find(x=>x.id===t.projectId)||{};
+ const pr=DB.data.projects.find(x=>x.id===t.projectId)||{};
  const lk=DB.data.thanhtoan.filter(x=>x.projectId===t.projectId&&x.trangthai==='da_chi'&&x.id!==id).reduce((s,x)=>s+x.sotien,0);
- const coName='CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG';
- const sign=['Người Đề Nghị','Trưởng Phòng','Giám Đốc','Kế Toán Group','Tổng Giám Đốc'].map(s=>'<div class="box">'+s+'</div>').join('');
+ return {t:t,dn:dn,p:pr,lk:lk,conlai:(pr.budget||0)-lk-t.sotien};
+}
+function inPhieuDNTT(id){
+ const c=dnttCalc(id);if(!c)return;
+ const t=c.t,dn=c.dn,p=c.p;
+ const ht=(t.hinhthuc||'').toLowerCase();
+ const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐';
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>'+coName+'</b><br>Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM<br>Website: tgroup.asia</div></div>'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM<br>Website: tgroup.asia</div></div>'
   +'<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
-  +'<div class="phieu-row"><div class="cell"><span class="lbl">Ngày:</span> <b>'+fmtDate(t.date)+'</b></div><div class="cell"><span class="lbl">Người đề nghị:</span> <b>'+esc(dn.nguoitao||Auth.user.name)+'</b></div><div class="cell"><span class="lbl">Dự án:</span> <b>'+esc(p.code||'')+'</b></div></div>'
-  +'<div class="phieu-row"><div class="cell"><span class="lbl">Mục đích thanh toán:</span> <b>'+esc(dn.noidung||t.ghichu||'')+'</b></div></div>'
-  +'<div class="phieu-row"><div class="cell"><span class="lbl">DỰ ÁN:</span> <b>'+esc(p.name||'')+'</b></div><div class="cell"><span class="lbl">Hình thức thanh toán:</span> <b>'+esc(t.hinhthuc)+'</b></div></div>'
-  +'<div class="phieu-sign">'+sign+'</div>'
-  +'<table class="phieu-money"><thead><tr><th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng ngân sách</th><th>Còn lại</th></tr></thead><tbody><tr><td><b>'+fmtVND(t.sotien)+'</b></td><td>'+fmtVND(lk)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND((p.budget||0)-lk-t.sotien)+'</td></tr></tbody></table>'
+  +'<div class="phieu-ngay">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
+  +'<table class="phieu-tbl">'
+  +'<tr><td style="width:50%"><span class="lbl">Người đề nghị:</span> <b>'+esc(dn.nguoitao||Auth.user.name||'')+'</b></td><td><span class="lbl">Bộ phận:</span></td></tr>'
+  +'<tr><td colspan="2"><span class="lbl">Mục đích thanh toán:</span> <b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
+  +'<tr><td colspan="2"><span class="lbl">Hạng mục:</span> <b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td colspan="2"><span class="lbl">Dự án:</span> <b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'</table>'
+  +'<div class="phieu-sign6"><div>Người Đề Nghị</div><div>Trưởng Bộ Phận</div><div>Phụ trách DA</div><div>Trưởng phòng DA</div><div>Kế Toán</div><div>Giám Đốc</div></div>'
+  +'<table class="phieu-tbl">'
+  +'<tr><td colspan="2"><span class="lbl">Thông CK - Họ và tên:</span></td></tr>'
+  +'<tr><td style="width:60%"><span class="lbl">Chuyển tiền đến ngân hàng</span></td><td><span class="lbl">Số TK:</span></td></tr>'
+  +'<tr><td><span class="lbl">CMND số</span></td><td><span class="lbl">Nơi cấp</span></td></tr>'
+  +'</table>'
+  +'<table class="phieu-money"><thead><tr><th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng giá trị HĐ</th><th>Giá trị còn lại</th></tr></thead>'
+  +'<tbody><tr><td><b>'+fmtVND(t.sotien)+'</b></td><td>'+fmtVND(c.lk)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND(c.conlai)+'</td></tr></tbody></table>'
   +'<div class="phieu-words"><b>Bằng chữ:</b> <i>'+esc(docSoTien(t.sotien))+'</i></div>'
-  +'<div class="phieu-foot"><div class="cell">Người nhận<br>Ký nhận<br><br><br>....................</div><div class="cell">Ngày nhận<br><br><br>....................</div></div>'
+  +'<div class="phieu-sec"><b>A. Người nhận thanh toán</b></div>'
+  +'<div class="phieu-sec">B. Hình thức thanh toán &nbsp;&nbsp; '+ckTM+' Tiền Mặt &nbsp;&nbsp;&nbsp;&nbsp; '+ckCK+' Chuyển khoản</div>'
+  +'<div class="phieu-sec"><b>C. Chứng từ kèm theo</b></div>'
+  +'<div class="phieu-line">c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)</div>'
+  +'<div class="phieu-blank"></div>'
+  +'<div class="phieu-line">c2. Không chứng từ tài chính (ghi số tiền)</div>'
+  +'<div class="phieu-blank"></div>'
+  +'<div class="phieu-sec"><b>D. Số tiền thực nhận thanh toán (c1+c2)</b></div>'
+  +'<div class="phieu-blank"></div>'
+  +'<div class="phieu-sec"><b>E. Bằng chữ</b></div>'
+  +'<div class="phieu-words"><i>'+esc(docSoTien(t.sotien))+'</i></div>'
+  +'<div class="phieu-sign2"><div><b>F. Ký nhận</b><br><br><br>....................</div><div style="text-align:right"><b>Ngày nhận</b><br><br><br>....................</div></div>'
+  +'<div class="phieu-note">XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN</div>'
   +'</div>';
  openModal('Phiếu đề nghị thanh toán','<div class="phieu-modal-body">'+htm+'</div>',
-  '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-sec" onclick="xuatPhieuXls(\''+id+'\')">Tải Excel</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
+  '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-sec" onclick="xuatPhieuDNTT_XLSX(\''+id+'\')">Tải Excel</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
 }
+
 function printPhieu(){const a=$('#phieuPrintArea');if(!a)return;document.body.classList.add('printing-phieu');window.print();setTimeout(()=>document.body.classList.remove('printing-phieu'),600);}
+function xuatPhieuDNTT_XLSX(id){
+ const c=dnttCalc(id);if(!c)return;
+ const t=c.t,dn=c.dn,p=c.p;
+ const ht=(t.hinhthuc||'').toLowerCase();
+ const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐';
+ const W=[11,10,17.57,13,10.29,8,11.29,19.29,10.86,13];
+ const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
+ const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
+ const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
+ let r=mk();
+ r=mk();C(r,0,'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',2);
+ r=mk();C(r,0,'Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM',3);
+ r=mk();C(r,0,'Website: tgroup.asia',3);
+ mk();mk();mk();
+ r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',1);
+ r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
+ r=mk();C(r,0,'Người đề nghị: '+(dn.nguoitao||(Auth.user&&Auth.user.name)||''),3);C(r,7,'Bộ phận:',3);
+ r=mk();C(r,0,'Mục đích thanh toán:',3);C(r,2,dn.noidung||t.ghichu||'',3);
+ r=mk();C(r,0,'Hạng mục:',3);C(r,2,dn.hangmuc||'',3);
+ r=mk();C(r,0,'Dự án:',3);C(r,2,(p.code?p.code+' • ':'')+(p.name||''),3);
+ r=mk();C(r,0,'Người Đề Nghị',5);C(r,2,'Trưởng Bộ Phận',5);C(r,3,'Phụ trách DA',5);C(r,4,'Trưởng phòng DA',5);C(r,7,'Kế Toán',5);C(r,8,'Giám Đốc',5);
+ mk();mk();mk();
+ r=mk();C(r,0,'Thông CK - Họ và tên:',3);
+ r=mk();C(r,0,'Chuyển tiền đến ngân hàng',3);C(r,6,'Số TK:',3);
+ r=mk();C(r,0,'CMND số',3);C(r,7,'Nơi cấp',3);
+ mk();
+ r=mk();C(r,0,'Số tiền thanh toán',4);C(r,3,'Thanh toán lũy kế',4);C(r,6,'Tổng giá trị HĐ',4);C(r,8,'Giá trị còn lại',4);
+ r=mk();C(r,1,t.sotien,7);C(r,3,c.lk,8);C(r,6,p.budget||0,8);C(r,8,c.conlai,8);
+ r=mk();C(r,0,'Bằng chữ:',2);C(r,1,docSoTien(t.sotien),3);
+ mk();
+ r=mk();C(r,0,'A. Người nhận thanh toán',3);
+ r=mk();C(r,0,'B. Hình thức thanh toán     '+ckTM+' Tiền Mặt               '+ckCK+' Chuyển khoản',3);
+ mk();mk();
+ r=mk();C(r,0,'C. Chứng từ kèm theo',3);
+ r=mk();C(r,0,'c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)',3);
+ mk();
+ r=mk();C(r,0,'c2. Không chứng từ tài chính (ghi số tiền)',3);
+ mk();
+ r=mk();C(r,0,'D. Số tiền thực nhận thanh toán (c1+c2)',3);
+ mk();
+ r=mk();C(r,0,'E. Bằng chữ',3);C(r,2,docSoTien(t.sotien),3);
+ r=mk();C(r,0,'F. Ký nhận',3);C(r,5,'Ngày nhận',3);
+ mk();mk();
+ r=mk();C(r,0,'XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN',5);
+ mk();
+ r=mk();C(r,0,'Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM',3);
+ const merges=['A2:J2','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
+ xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
+ toast('Đã tải phiếu DNTT (.xlsx)');
+}
+
+/* ===== XLSX thật ===== */
+/* Minimal real XLSX writer (store-only ZIP, no external deps) */
+function xlsxMake(sheets){
+  const enc=new TextEncoder();
+  const CT=new Int32Array(256);
+  for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);CT[n]=c;}
+  function crc(b){let c=-1;for(let i=0;i<b.length;i++)c=CT[(c^b[i])&255]^(c>>>8);return (c^-1)>>>0;}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
+
+  const STYLES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+  +'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+  +'<numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts>'
+  +'<fonts count="4">'
+  +'<font><sz val="11"/><name val="Calibri"/></font>'
+  +'<font><b/><sz val="16"/><name val="Calibri"/></font>'
+  +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
+  +'<font><sz val="12"/><name val="Calibri"/></font>'
+  +'</fonts>'
+  +'<fills count="1"><fill><patternFill patternType="none"/></fill></fills>'
+  +'<borders count="2">'
+  +'<border><left/><right/><top/><bottom/><diagonal/></border>'
+  +'<border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border>'
+  +'</borders>'
+  +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
+  +'<cellXfs count="10">'
+  +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
+  +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
+  +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
+  +'</cellXfs>'
+  +'<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
+  +'</styleSheet>';
+  /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
+     4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
+
+  function sheetXml(sh){
+    let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+      +'<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>'
+      +'<pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="1"/>'
+      +'<printOptions horizontalCentered="1"/>';
+    if(sh.widths&&sh.widths.length){
+      s+='<cols>';
+      sh.widths.forEach((w,i)=>{s+='<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';});
+      s+='</cols>';
+    }
+    s+='<sheetData>';
+    sh.rows.forEach((row,r)=>{
+      const rn=r+1;
+      const ht=(sh.heights&&sh.heights[rn])?(' ht="'+sh.heights[rn]+'" customHeight="1"'):'';
+      s+='<row r="'+rn+'"'+ht+'>';
+      row.forEach((cell,c)=>{
+        if(cell==null||cell.v==null||cell.v==='')return;
+        const ref=colName(c)+rn;
+        const st=(cell.s!=null)?(' s="'+cell.s+'"'):'';
+        if(typeof cell.v==='number'){
+          s+='<c r="'+ref+'"'+st+'><v>'+cell.v+'</v></c>';
+        }else{
+          s+='<c r="'+ref+'"'+st+' t="inlineStr"><is><t>'+esc(cell.v)+'</t></is></c>';
+        }
+      });
+      s+='</row>';
+    });
+    s+='</sheetData>';
+    if(sh.merges&&sh.merges.length){
+      s+='<mergeCells count="'+sh.merges.length+'">';
+      sh.merges.forEach(m=>{s+='<mergeCell ref="'+m+'"/>';});
+      s+='</mergeCells>';
+    }
+    s+='</worksheet>';
+    return s;
+  }
+
+  const parts=[];
+  parts.push(['[Content_Types].xml',
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+    +'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+    +'<Default Extension="xml" ContentType="application/xml"/>'
+    +'<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
+    +'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>'
+    +sheets.map((_,i)=>'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('')
+    +'</Types>']);
+  parts.push(['_rels/.rels',
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+    +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'
+    +'</Relationships>']);
+  parts.push(['xl/workbook.xml',
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+    +'<sheets>'+sheets.map((sh,i)=>'<sheet name="'+esc(sh.name)+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>').join('')+'</sheets>'
+    +'</workbook>']);
+  parts.push(['xl/_rels/workbook.xml.rels',
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+    +sheets.map((_,i)=>'<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>').join('')
+    +'<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+    +'</Relationships>']);
+  parts.push(['xl/styles.xml',STYLES]);
+  sheets.forEach((sh,i)=>parts.push(['xl/worksheets/sheet'+(i+1)+'.xml',sheetXml(sh)]));
+
+  // ZIP store-only
+  const encFiles=parts.map(([name,xml])=>({name,data:enc.encode(xml)}));
+  const chunks=[];const central=[];let off=0;
+  function w16(v){chunks.push(new Uint8Array([v&255,(v>>8)&255]));}
+  function w32(v){chunks.push(new Uint8Array([v&255,(v>>8)&255,(v>>16)&255,(v>>24)&255]));}
+  encFiles.forEach(f=>{
+    const nm=enc.encode(f.name);const c=crc(f.data);
+    const lh=new Uint8Array(30+nm.length);
+    const dv=new DataView(lh.buffer);
+    dv.setUint32(0,0x04034b50,true);dv.setUint16(4,20,true);dv.setUint16(6,0,true);
+    dv.setUint16(8,0,true);dv.setUint16(10,0,true);dv.setUint16(12,0,true);
+    dv.setUint32(14,c,true);dv.setUint32(18,f.data.length,true);dv.setUint32(22,f.data.length,true);
+    dv.setUint16(26,nm.length,true);dv.setUint16(28,0,true);
+    lh.set(nm,30);
+    chunks.push(lh);chunks.push(f.data);
+    central.push({nm,c,size:f.data.length,off});
+    off+=lh.length+f.data.length;
+  });
+  const cdStart=off;const cdChunks=[];
+  central.forEach(e=>{
+    const h=new Uint8Array(46+e.nm.length);
+    const dv=new DataView(h.buffer);
+    dv.setUint32(0,0x02014b50,true);dv.setUint16(4,20,true);dv.setUint16(6,20,true);
+    dv.setUint16(8,0,true);dv.setUint16(10,0,true);dv.setUint16(12,0,true);dv.setUint16(14,0,true);
+    dv.setUint32(16,e.c,true);dv.setUint32(20,e.size,true);dv.setUint32(24,e.size,true);
+    dv.setUint16(28,e.nm.length,true);
+    dv.setUint32(42,e.off,true);
+    h.set(e.nm,46);
+    cdChunks.push(h);
+  });
+  let cdLen=0;cdChunks.forEach(c=>cdLen+=c.length);
+  const end=new Uint8Array(22);const edv=new DataView(end.buffer);
+  edv.setUint32(0,0x06054b50,true);edv.setUint16(8,central.length,true);edv.setUint16(10,central.length,true);
+  edv.setUint32(12,cdLen,true);edv.setUint32(16,cdStart,true);
+  let total=off+cdLen+22;
+  const out=new Uint8Array(total);let p=0;
+  chunks.forEach(c=>{out.set(c,p);p+=c.length;});
+  cdChunks.forEach(c=>{out.set(c,p);p+=c.length;});
+  out.set(end,p);
+  return out;
+}
+function xlsxDownload(sheets,filename){
+  const data=xlsxMake(sheets);
+  const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
+  a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+}
+
+
 /* ---------- PHIẾU ĐỀ NGHỊ ---------- */
 function inPhieuDeNghi(id){
  const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;
@@ -1162,34 +1417,7 @@ function xuatPhieuDNXls(id){
  dlXls(h,'phieu_denghi_'+fmtDate(d.date).replace(/\//g,'')+'.xls');
  toast('Đã tải Excel phiếu đề nghị');
 }
-function xuatPhieuXls(id){
- const t=DB.data.thanhtoan.find(x=>x.id===id);if(!t)return;
- const p=DB.data.projects.find(x=>x.id===t.projectId)||{};
- const dn=DB.data.denghi.find(x=>x.id===t.denghiId)||{};
- const lk=DB.data.thanhtoan.filter(x=>x.projectId===t.projectId&&x.trangthai==='da_chi'&&x.date<=t.date).reduce((s,x)=>s+x.sotien,0);
- const tong=dn.sotien||t.sotien;
- let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
- h+='<table width="100%"><tr><td><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
- h+='<h2 align="center">PHIẾU ĐỀ NGHỊ THANH TOÁN</h2>';
- h+='<table><tr><td>Ngày:</td><td><b>'+fmtDate(t.date)+'</b></td><td>Người đề nghị:</td><td><b>'+esc(dn.nguoitao||'')+'</b></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="3"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td><b>'+esc(p.code+' • '+p.name)+'</b></td><td>Hình thức thanh toán:</td><td><b>'+esc(t.hinhthuc)+'</b></td></tr></table><br>';
- h+='<table border="1"><tr><th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng giá trị HĐ</th><th>Giá trị còn lại</th></tr>'
-  +'<tr><td>'+t.sotien+'</td><td>'+lk+'</td><td>'+tong+'</td><td>'+(tong-lk)+'</td></tr></table>';
- h+='<p><b>Bằng chữ:</b> <i>'+esc(docSoTien(t.sotien))+'</i></p>';
- h+='<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>';
- h+='</body></html>';
- dlXls(h,'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xls');
- toast('Đã tải Excel phiếu thanh toán');
-}
-/* ================= TẠM ỨNG ================= */
-ROUTES['#/tamung']=function(){
- const list=scoped(DB.data.tamung).slice().sort((a,b)=>a.date<b.date?-1:1);
- let h='<div class="page-head"><div><h1>Tạm ứng</h1><p>'+list.length+' khoản tạm ứng</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tamungForm()">+ Tạo tạm ứng</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Người nhận</th><th>Dự án</th><th>Lý do</th><th class="num">Số tiền</th><th>Trạng thái</th><th>Quyết toán</th><th></th></tr></thead><tbody>';
- list.forEach(t=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(t.date)+'</td><td><b>'+esc(t.nguoingan)+'</b></td><td>'+esc(projCode(t.projectId))+'</td><td>'+esc(t.lydo)+'</td><td class="num" style="font-weight:700">'+fmtVND(t.sotien)+'</td><td>'+ttBadge(t.trangthai,TT_TU)+'</td><td style="font-size:12.5px">'+(t.ngayqt?fmtDate(t.ngayqt):'—')+'</td><td><div class="rowbtns">'+(t.trangthai==='cho_duyet'&&Auth.canAdmin()?'<button class="btn btn-ok btn-sm" onclick="duyetTU(\''+t.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetTU(\''+t.id+'\',0)">Từ chối</button>':'')+(t.trangthai==='da_duyet'?'<button class="btn btn-sec btn-sm" onclick="quyetToanTU(\''+t.id+'\')">Quyết toán</button>':'')+'</div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-};
+
 function tamungForm(){
  const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
  openModal('Tạo tạm ứng',
@@ -1239,29 +1467,40 @@ function xlsTable(title,headers,rows,foot){
  rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+esc(c==null?'':c)+'</td>').join('')+'</tr>';});
  h+='</tbody></table>'+(foot?'<p>'+foot+'</p>':'')+'</body></html>';return h;
 }
-function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xls';}
+function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
+function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
+function dlXlsxTable(title,headers,rows,foot,filename){
+ const R=[];
+ const r0=new Array(headers.length).fill(null);r0[0]={v:title,s:2};R.push(r0);
+ const rh=new Array(headers.length).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:5};});R.push(rh);
+ rows.forEach(row=>{const r=new Array(headers.length).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
+ if(foot){const rf=new Array(headers.length).fill(null);rf[0]={v:String(foot).replace(/<[^>]*>/g,' '),s:2};R.push(rf);}
+ const mg='A1:'+xlsxColL(headers.length)+'1';
+ xlsxDownload([{name:'BaoCao',widths:headers.map(()=>16),rows:R,merges:[mg]}],filename);
+ toast('Đã xuất Excel (.xlsx)');
+}
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
  const rows=fl.map(d=>[fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien,d.ncc,(TT_DN[d.trangthai]||[''])[0],d.nguoitao]);
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
- dlXls(xlsTable('Báo cáo đề nghị — '+(SEL.projectId?projCode(SEL.projectId):'Tất cả dự án'),
+ dlXlsxTable('Báo cáo đề nghị — '+(SEL.projectId?projCode(SEL.projectId):'Tất cả dự án'),
   ['Ngày','Loại','Hạng mục','Nội dung','Số lượng','Đơn giá','Thành tiền','Nhà cung cấp','Trạng thái','Người tạo'],rows,
-  '<b>Tổng số đề nghị:</b> '+fl.length+' &nbsp; <b>Tổng tiền:</b> '+fmtVND(tong)),fname('baocao_denghi'));
+  '<b>Tổng số đề nghị:</b> '+fl.length+' &nbsp; <b>Tổng tiền:</b> '+fmtVND(tong),fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
  const list=DB.data.dutru.filter(d=>d.projectId===DT_P);
  const p=DB.data.projects.find(x=>x.id===DT_P)||{};
  const rows=list.map(d=>[d.hangmuc,d.diengiai,d.soluong,d.dongia,d.thanhtien,(TT_DN[d.trangthai]||[''])[0]]);
- dlXls(xlsTable('Dự trù — '+p.code+' • '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
-  '<b>Tổng dự trù:</b> '+fmtVND(list.reduce((s,d)=>s+d.thanhtien,0))),fname('dutru_'+(p.code||'all')));
+ dlXlsxTable('Dự trù — '+p.code+' • '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
+  '<b>Tổng dự trù:</b> '+fmtVND(list.reduce((s,d)=>s+d.thanhtien,0)),fname('dutru_'+(p.code||'all')));
  toast('Đã xuất Excel');
 }
 function exportPhatSinh(){
  const list=scoped(DB.data.phatsinh);
  const rows=list.map(d=>[fmtDate(d.date),projCode(d.projectId),d.noidung,d.sotien,(TT_DN[d.trangthai]||[''])[0],d.nguoitao]);
- dlXls(xlsTable('Báo cáo phát sinh',['Ngày','Dự án','Nội dung','Số tiền','Trạng thái','Người tạo'],rows,
-  '<b>Tổng:</b> '+fmtVND(list.reduce((s,d)=>s+d.sotien,0))),fname('baocao_phatsinh'));
+ dlXlsxTable('Báo cáo phát sinh',['Ngày','Dự án','Nội dung','Số tiền','Trạng thái','Người tạo'],rows,
+  '<b>Tổng:</b> '+fmtVND(list.reduce((s,d)=>s+d.sotien,0)),fname('baocao_phatsinh'));
  toast('Đã xuất Excel');
 }
 /* ================= API LAYER ================= */
@@ -1324,7 +1563,7 @@ async function testApi(){
 ROUTES['#/caidat']=function(){
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
- let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p></div></div>';
+ let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
  h+='<div class="grid g2" style="margin-bottom:16px"><div class="card"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
   +fld('API URL',inp('apiUrl',CFG.apiUrl,'text','placeholder="https://script.google.com/macros/s/.../exec"'))
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
