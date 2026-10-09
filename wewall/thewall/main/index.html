@@ -178,6 +178,14 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .pdrop-item:hover{background:#FFF8E7}
 .pdrop-item .tick{margin-left:auto;color:var(--gold);font-weight:700}
 .pdrop-item.selected{background:#FFF8E7}
+.role-pick{display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto;padding:2px}
+.role-card{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:10px;cursor:pointer;background:#fff}
+.role-card:has(input:checked){border-color:var(--gold);background:#FFF8E7;box-shadow:0 0 0 2px rgba(240,173,31,.25)}
+.role-card input{margin-top:4px;accent-color:var(--gold);flex-shrink:0}
+.role-card b{font-size:14px;display:block}
+.role-card .desc{font-size:12.5px;color:var(--muted);display:block;margin:2px 0 4px}
+.role-card ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--text)}
+.role-card ul li{margin:1px 0}
 
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:250;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .toast-msg{background:#0f172a;color:#fff;padding:11px 20px;border-radius:8px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw;animation:slideUp .25s}
@@ -712,8 +720,8 @@ var MENU = [
   ]},
   { group: 'Kinh doanh', items: [
     { key:'overview',  label:'Tổng quan',          icon:'◈' },
-    { key:'budget',    label:'Dự trù / Định mức', icon:'▦' },
-    { key:'cost',      label:'Mua hàng / Chi phí', icon:'₫' },
+    { key:'budget',    label:'Dự trù/Định mức', icon:'▦' },
+    { key:'cost',      label:'Mua hàng/Chi phí', icon:'₫' },
     { key:'variation', label:'Phát sinh',          icon:'✦' },
     { key:'danhmuc',   label:'Danh mục hạng mục',  icon:'☰' }
   ]},
@@ -738,8 +746,8 @@ var PAGE2TAB = {
   danhmuc:'danhmuc'
 };
 var PAGE_TITLES = {
-  dashboard:'Dashboard', projects:'Dự án', overview:'Tổng quan dự án', budget:'Dự trù / Định mức',
-  cost:'Mua hàng / Chi phí', variation:'Phát sinh',
+  dashboard:'Dashboard', projects:'Dự án', overview:'Tổng quan dự án', budget:'Dự trù/Định mức',
+  cost:'Mua hàng/Chi phí', variation:'Phát sinh',
   approval:'Phê duyệt', payment:'Thanh toán', cashadvance:'Tạm ứng', reports:'Báo cáo',
   history:'Lịch sử', users:'Người dùng', settings:'Cài đặt', danhmuc:'Danh mục hạng mục'
 };
@@ -940,7 +948,8 @@ function applyUser(u){
 function switchTestUser(){
   const cur = state.user ? state.user.username : '';
   openModal('Chuyển người dùng (test)',
-    '<div class="desc">Chọn vai trò để xem giao diện tương ứng:</div>' +
+    '<div class="desc" style="margin-bottom:10px">Đây là <b>tài khoản test</b> để xem thử giao diện từng vai trò (không cần mật khẩu). ' +
+    'Người dùng <b>thật</b> (đăng nhập bằng mật khẩu) do Admin tạo ở mục <b>Người dùng</b>.</div>' +
     TEST_USERS.map(function(u){
       return '<button class="btn ' + (u.username === cur ? 'btn-primary' : 'btn-ghost') + ' btn-block" data-tu="' + u.username + '" style="margin-bottom:8px;justify-content:flex-start;text-align:left">' +
         '<b>' + esc(u.ho_ten) + '</b><span class="desc" style="margin-left:8px">' + esc(ROLE_LABEL[u.vai_tro] || u.vai_tro) + '</span></button>';
@@ -1162,6 +1171,7 @@ function openProjectModal(){
     '<div class="f-group"><label>Mô tả</label><textarea id="npMoTa" rows="3"></textarea></div>' +
     '<div class="f-row"><div class="f-group"><label>Ngày bắt đầu</label><input id="npBd" type="date"></div>' +
     '<div class="f-group"><label>Ngày kết thúc</label><input id="npKt" type="date"></div></div>' +
+    '<div class="f-group"><label>Quản lý dự án</label><input id="npQl" placeholder="VD: Ms Lê Thị Phương Hà"></div>' +
     '<div class="f-group"><label>Giá trị hợp đồng (VND)</label><input id="npGt" type="text" inputmode="numeric" placeholder="VD: 5.000.000.000"></div>' +
     '<div class="f-group"><label>Link Google Sheet</label><input id="npSheet" placeholder="Dán link hoặc mã Sheet — sẽ đồng bộ dự trù ngay khi tạo"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
@@ -1179,7 +1189,7 @@ function openProjectModal(){
     const link = $('npSheet').value.trim();
     const params = { ma_du_an: ma, ten_du_an: ten,
       mo_ta: $('npMoTa').value.trim(), ngay_bat_dau: $('npBd').value, ngay_ket_thuc: $('npKt').value,
-      gia_tri_hop_dong: gt, sheet_url: link };
+      gia_tri_hop_dong: gt, sheet_url: link, quan_ly: $('npQl').value.trim() };
     closeModal();
     toast('Đang tạo dự án...', 'info');
     const d = await safeApi('createProject', params);
@@ -1262,7 +1272,7 @@ function openProject(ma){
 const TAB_LOADERS = { tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
   phatsinh: loadPhatSinh, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
   tamung: loadTamUng, baocao: loadBaoCao, lichsu: loadLichSu, danhmuc: loadDanhMuc };
-const TAB_TITLES = { tongquan:'Tổng quan dự án', dutru:'Dự trù / Định mức', muahang:'Mua hàng / Chi phí',
+const TAB_TITLES = { tongquan:'Tổng quan dự án', dutru:'Dự trù/Định mức', muahang:'Mua hàng/Chi phí',
   phatsinh:'Phát sinh', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
   tamung:'Tạm ứng', baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Người dùng', danhmuc:'Danh mục hạng mục' };
 
@@ -1523,7 +1533,7 @@ function hmSelectBind(id){ return hmDropBind(id); }
   if (active && active.items && active.items.length) {
     const tong = active.items.reduce((s, i) => s + Number(i.thanh_tien || 0), 0);
     html += '<div class="desc">Phiên bản ' + esc(String(active.phien_ban)) + ' — đã duyệt, <b>không được sửa trực tiếp</b>. Muốn thay đổi: tạo bản nháp mới → trình duyệt.</div>' +
-      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Vật tư / Công việc</th>' +
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Vật tư/Công việc</th>' +
       '<th class="num">Số lượng</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th></tr></thead><tbody>' +
       active.items.map(it => '<tr><td><b>' + esc(it.hang_muc) + '</b></td>' +
         '<td>' + esc(it.vat_tu || '') + '</td>' +
@@ -1579,7 +1589,7 @@ function hmSelectBind(id){ return hmDropBind(id); }
   const bx = $('btnXlsDuTru');
   if (bx && active && active.items) bx.onclick = () => xuatXlsChung('dutru',
     'Dự trù/Định mức — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an + ' (v' + active.phien_ban + ')',
-    ['Hạng mục', 'Vật tư / Công việc', 'Số lượng', 'Đơn giá', 'Thành tiền'],
+    ['Hạng mục', 'Vật tư/Công việc', 'Số lượng', 'Đơn giá', 'Thành tiền'],
     active.items.map(it => [it.hang_muc, it.vat_tu || '', it.so_luong, it.don_gia, it.thanh_tien]));
   el.querySelectorAll('button[data-act]').forEach(b => b.addEventListener('click', async () => {
     const v = b.dataset.v;
@@ -1603,11 +1613,11 @@ function openDraftModal(pre){
   const rows = pre && pre.length ? pre : [{ hang_muc:'', vat_tu:'', so_luong:'', don_gia:'' }];
   openModal('Tạo bản nháp dự trù mới',
     '<div class="desc">Mỗi dòng 1 vật tư. Thành tiền = SL × đơn giá (tự tính).</div>' +
-    '<div class="draft-head"><span>Hạng mục</span><span>Vật tư / CV</span><span>SL</span><span>Đơn giá</span><span>Thành tiền</span><span></span></div>' +
+    '<div class="draft-head"><span>Hạng mục</span><span>Vật tư/CV</span><span>SL</span><span>Đơn giá</span><span>Thành tiền</span><span></span></div>' +
     '<div id="draftRows"></div>' +
     '<button class="btn btn-ghost btn-sm" id="drAdd">+ Thêm dòng</button>' +
     '<div class="draft-total">Tổng: <b id="drTong">0</b> đ</div>' +
-    '<div class="f-group mt16"><label>Ghi chú / lý do tạo bản này</label><input id="drNote" placeholder="Lý do"></div>',
+    '<div class="f-group mt16"><label>Ghi chú/lý do tạo bản này</label><input id="drNote" placeholder="Lý do"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Lưu bản nháp</button>');
   $('mCancel').onclick = closeModal;
@@ -1628,7 +1638,7 @@ function openDraftModal(pre){
     div.className = 'draft-row';
     div.innerHTML =
       '<div>' + hmSelectHtml('drHm' + Date.now() + Math.floor(Math.random()*9999), it.hang_muc || '') + '</div>' +
-      '<div><input class="drVt" placeholder="Vật tư / công việc" value="' + esc(it.vat_tu || '') + '"></div>' +
+      '<div><input class="drVt" placeholder="Vật tư/công việc" value="' + esc(it.vat_tu || '') + '"></div>' +
       '<div><input class="drSl" type="text" inputmode="numeric" placeholder="SL" value="' + esc(it.so_luong == null ? '' : it.so_luong) + '"></div>' +
       '<div><input class="drDg" type="text" inputmode="numeric" placeholder="Đơn giá" value="' + esc(it.don_gia == null ? '' : it.don_gia) + '"></div>' +
       '<div class="drTt num">—</div>' +
@@ -1677,7 +1687,7 @@ async function loadMuaHang(){
   const canTaoTT = can('Admin','QuanLy','MuaHang','KeToan','Approver');
   const list = d.list || d || [];
   const hms = [...new Set(list.map(x => x.hang_muc).filter(Boolean))];
-  let html = '<div class="card"><div class="card-head"><h2>Đề nghị mua hàng / chi phí</h2>' +
+  let html = '<div class="card"><div class="card-head"><h2>Đề nghị mua hàng/chi phí</h2>' +
     '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' +
     '<select id="mhTt" class="f-inline-sel" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px">' +
     '<option value="">Tất cả trạng thái</option>' +
@@ -1774,7 +1784,7 @@ async function loadMuaHang(){
 }
 async function openDeNghiModal(){
   await ensureHangMucs();
-  openModal('Tạo đề nghị mua hàng / chi phí',
+  openModal('Tạo đề nghị mua hàng/chi phí',
     '<div class="f-row"><div class="f-group"><label>Loại đề nghị *</label><select id="dnLoai">' +
     Object.keys(LOAI_DN).map(k => '<option value="' + k + '">' + LOAI_DN[k] + '</option>').join('') +
     '</select></div>' +
@@ -1801,7 +1811,7 @@ async function openDeNghiModal(){
   formatMoneyInput('dnDg'); formatMoneyInput('dnSl');
   const capNhatTieuDe = () => {
     const t = document.querySelector('#modalRoot .modal-head h3');
-    if (t) t.textContent = $('dnLoai').value === 'thanh_toan' ? 'Tạo Phiếu đề nghị thanh toán' : 'Tạo đề nghị mua hàng / chi phí';
+    if (t) t.textContent = $('dnLoai').value === 'thanh_toan' ? 'Tạo Phiếu đề nghị thanh toán' : 'Tạo đề nghị mua hàng/chi phí';
   };
   $('dnLoai').onchange = capNhatTieuDe;
   capNhatTieuDe();
@@ -1928,7 +1938,7 @@ async function inPhieuDNTT(id){
     '<td>' + fmt(d.tong_hd) + '</td><td>' + fmt(d.con_lai) + '</td>' +
     '</tr></tbody></table>' +
     '<div class="phieu-words"><b>Bằng chữ:</b> <i>' + esc(docSoTien(d.so_tien)) + '</i></div>' +
-    '<div class="phieu-foot" style="justify-content:flex-end"><div class="cell">Người nhận<br>Ký nhận<br><br><br>....................</div>' +
+    '<div class="phieu-foot" style="display:flex;justify-content:flex-end;gap:32px"><div class="cell">Người nhận<br>Ký nhận<br><br><br>....................</div>' +
     '<div class="cell">Ngày nhận<br><br><br>....................</div></div>' +
     '</div>';
   // Modal popup giữa màn hình
@@ -2319,7 +2329,7 @@ async function loadBaoCao(){
   const el = $('tab-baocao');
   const hms = state.hangMucs;
   el.innerHTML =
-    '<div class="card"><div class="card-head"><h2>Báo cáo đề nghị mua hàng / chi phí</h2>' +
+    '<div class="card"><div class="card-head"><h2>Báo cáo đề nghị mua hàng/chi phí</h2>' +
     '<div style="display:flex;gap:8px">' +
     '<button class="btn btn-ghost btn-sm hidden" id="btnPdf">Xuất PDF</button>' +
     '<button class="btn btn-ghost btn-sm hidden" id="btnXls">Xuất Excel</button></div></div>' +
@@ -2748,6 +2758,9 @@ async function loadUsers(){
   const list = d.users || d || [];
   let html = '<div class="card"><div class="card-head"><h2>Quản lý người dùng</h2>' +
     '<button class="btn btn-primary btn-sm" id="btnNewUser">+ Tạo người dùng</button></div>' +
+    '<div class="desc" style="margin-bottom:10px">Đây là <b>người dùng thật</b> (lưu trong Sheet Admin, đăng nhập bằng mật khẩu). ' +
+    '6 tài khoản test nhanh (bấm nút <b>👤</b> góc trên) là tài khoản giả để thử vai trò, <b>không</b> nằm trong danh sách này.</div>' +
+    '<div class="desc" style="margin-bottom:10px">Mật khẩu: gõ chữ/số bình thường trên Sheet (VD: 123456) — lần đăng nhập đầu tiên app tự mã hóa và ghi lại Sheet.</div>' +
     '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Tên đăng nhập</th><th>Họ tên</th>' +
     '<th>Vai trò</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
   if (!list.length) html += '<tr><td colspan="5" class="empty">Chưa có người dùng.</td></tr>';
@@ -2769,21 +2782,39 @@ async function loadUsers(){
     };
   });
   $('btnNewUser').onclick = () => {
+    const ROLE_DESC = {
+      Admin: ['Toàn quyền hệ thống', 'Tạo/khóa người dùng', 'Tạo/sửa/xóa dự án', 'Duyệt mọi đề nghị/phát sinh/dự trù', 'Thanh toán, quyết toán'],
+      QuanLy: ['Điều hành dự án', 'Tạo/sửa dự án, đồng bộ Sheet', 'Duyệt đề nghị/phát sinh/dự trù', 'Tạo đề nghị/thanh toán/tạm ứng', 'Quản lý danh mục hạng mục'],
+      MuaHang: ['Tạo đề nghị mua sắm', 'Tạo đề nghị mua hàng/chi phí', 'Tạo phát sinh', 'Xem dự án được phân công'],
+      KeToan: ['Thanh toán và quyết toán', 'Tạo phiếu thanh toán', 'Xác nhận đã chi', 'Quyết toán tạm ứng', 'Xem báo cáo'],
+      Approver: ['Phê duyệt các đề nghị', 'Duyệt/từ chối đề nghị mua hàng', 'Duyệt/từ chối phát sinh', 'Duyệt dự trù'],
+      Viewer: ['Chỉ xem, không thao tác', 'Xem dashboard và báo cáo', 'Không tạo/sửa/duyệt gì']
+    };
+    const roleKeys = Object.keys(ROLE_DESC);
+    let roleHtml = '<div class="f-group"><label>Vai trò * — bấm chọn 1 vai trò, xem kỹ chức năng bên dưới</label><div class="role-pick">';
+    roleKeys.forEach(function(k, i){
+      const d = ROLE_DESC[k];
+      roleHtml += '<label class="role-card"><input type="radio" name="nuRole" value="' + k + '"' + (i === 1 ? ' checked' : '') + '>' +
+        '<div><b>' + esc(ROLE_LABEL[k] || k) + '</b><span class="desc">' + esc(d[0]) + '</span>' +
+        '<ul>' + d.slice(1).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('') + '</ul></div></label>';
+    });
+    roleHtml += '</div></div>';
     openModal('Tạo người dùng mới',
       '<div class="f-row"><div class="f-group"><label>Tên đăng nhập *</label><input id="nuUser" placeholder="VD: nguyen.vana"></div>' +
       '<div class="f-group"><label>Mật khẩu *</label><input id="nuPass" type="password" placeholder="Mật khẩu"></div></div>' +
       '<div class="f-row"><div class="f-group"><label>Họ tên *</label><input id="nuName" placeholder="Họ và tên"></div>' +
-      '<div class="f-group"><label>Vai trò *</label><select id="nuRole">' +
-      Object.keys(ROLE_LABEL).map(k => '<option value="' + k + '">' + ROLE_LABEL[k] + '</option>').join('') +
-      '</select></div></div>' +
-      '<div class="f-group"><label>Bộ phận</label><input id="nuBp" placeholder="VD: Phòng Kỹ thuật"></div>',
+      '<div class="f-group"><label>Bộ phận</label><input id="nuBp" placeholder="VD: Phòng Kỹ thuật"></div></div>' +
+      roleHtml +
+      '<div class="desc" style="margin-top:8px">Người dùng tạo từ đây tự lưu vào Sheet Admin (tab Users) và đăng nhập được ngay.</div>',
       '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
       '<button class="btn btn-primary" id="mSave">Tạo người dùng</button>');
     $('mCancel').onclick = closeModal;
     $('mSave').onclick = async () => {
       const un = $('nuUser').value.trim(), pw = $('nuPass').value, ht = $('nuName').value.trim();
+      const roleEl = document.querySelector('input[name="nuRole"]:checked');
       if (!un || !pw || !ht) { toast('Nhập đủ tên đăng nhập, mật khẩu, họ tên.', 'error'); return; }
-      const r = await safeApi('createUser', { username: un, password: pw, ho_ten: ht, vai_tro: $('nuRole').value, bo_phan: $('nuBp').value.trim() });
+      if (!roleEl) { toast('Chọn vai trò cho người dùng.', 'error'); return; }
+      const r = await safeApi('createUser', { username: un, password: pw, ho_ten: ht, vai_tro: roleEl.value, bo_phan: $('nuBp').value.trim() });
       if (r) { closeModal(); toast('Đã tạo người dùng.', 'success'); loadUsers(); }
     };
   };
@@ -2912,7 +2943,7 @@ async function loadTamUng(){
   else html += '<div class="stat-grid">' + bKeys.map(k =>
     '<div class="stat-item">' + esc(k) + '<b>' + fmt(balances[k]) + ' đ</b></div>').join('') + '</div>';
   html += '</div>';
-  html += '<div class="card"><div class="card-head"><h2>Danh sách tạm ứng / hoàn ứng</h2></div>';
+  html += '<div class="card"><div class="card-head"><h2>Danh sách tạm ứng/hoàn ứng</h2></div>';
   if (!list.length) html += '<div class="empty">Chưa có đề nghị tạm ứng nào.</div>';
   else {
     html += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + (maTU ? '' : '<th>Dự án</th>') + '<th>Ngày</th><th>Người tạm ứng</th>' +
@@ -2989,7 +3020,7 @@ async function loadDanhMuc(){
   const canQL = can('Admin','QuanLy');
   let html = '<div class="card"><div class="card-head"><h2>Danh mục hạng mục' + (maDM ? '' : ' — tất cả dự án') + '</h2>' +
     (canQL ? '<button class="btn btn-primary btn-sm" id="btnNewHM">+ Thêm hạng mục</button>' : '') + '</div>' +
-    '<div class="desc">Hạng mục dùng khi tạo đề nghị / phát sinh. Nguồn "Dự trù" lấy tự động từ bảng dự trù; nguồn "Danh mục" do quản lý thêm — thêm từ app hay từ sheet đều đồng bộ 2 chiều.</div>';
+    '<div class="desc">Hạng mục dùng khi tạo đề nghị/phát sinh. Nguồn "Dự trù" lấy tự động từ bảng dự trù; nguồn "Danh mục" do quản lý thêm — thêm từ app hay từ sheet đều đồng bộ 2 chiều.</div>';
   if (maDM && canQL) {
     html += '<div class="f-row" style="margin:4px 0 12px"><div class="f-group" style="flex:2;min-width:160px"><input id="hmTen" placeholder="Tên hạng mục mới *"></div>' +
       '<div class="f-group" style="flex:3;min-width:160px"><input id="hmMoTa" placeholder="Mô tả (không bắt buộc)"></div>' +
@@ -3165,7 +3196,7 @@ function diffDuTruHtml(va, vb, showSame){
   if (!rows) return '<div class="empty">Hai phiên bản giống nhau hoàn toàn.</div>';
   return '<div class="desc">So sánh <b>v' + esc(String(va.phien_ban)) + '</b> (mới) với <b>v' + esc(String(vb.phien_ban)) + '</b> (cũ): ' +
     nNew + ' dòng mới · ' + nDel + ' dòng đã xóa · ' + nChg + ' dòng thay đổi.</div>' +
-    '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Vật tư / Công việc</th>' +
+    '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Vật tư/Công việc</th>' +
     '<th class="num">Số lượng</th><th class="num">Đơn giá</th><th class="num">Thành tiền (bản mới)</th></tr></thead>' +
     '<tbody>' + rows + '</tbody></table></div>';
 }
@@ -3180,13 +3211,13 @@ function xuatPdfBaoCao(){
   const p = state.project || {};
   const now = new Date().toLocaleDateString('vi-VN');
   let h = '<div class="print-actions">' +
-    '<button class="btn btn-primary btn-sm" onclick="window.print()">In / Lưu PDF</button>' +
+    '<button class="btn btn-primary btn-sm" onclick="window.print()">In/Lưu PDF</button>' +
     '<button class="btn btn-ghost btn-sm" id="prDong">Đóng</button></div>' +
     '<div class="rp-wrap">' +
     '<div class="phieu-head"><img src="' + LOGO_BT + '" class="logo" alt="logo">' +
     '<div class="co"><b>' + esc(cfg.coName) + '</b><br>' +
     'Add: ' + esc(cfg.coAddr) + '<br>Tel: ' + esc(cfg.coTel) + '<br>Website: ' + esc(cfg.coWeb) + '</div></div>' +
-    '<div class="phieu-title">BÁO CÁO ĐỀ NGHỊ MUA HÀNG / CHI PHÍ</div>' +
+    '<div class="phieu-title">BÁO CÁO ĐỀ NGHỊ MUA HÀNG/CHI PHÍ</div>' +
     '<div class="phieu-line"><div class="cell">Dự án: <b>' + esc((p.ma_du_an || '') + ' — ' + (p.ten_du_an || '')) + '</b></div>' +
     '<div class="cell">Ngày xuất: <b>' + now + '</b></div></div>' +
     '<div class="phieu-line"><div class="cell">Số đề nghị: <b>' + (tong.so_luong_muc != null ? tong.so_luong_muc : items.length) + '</b></div>' +
