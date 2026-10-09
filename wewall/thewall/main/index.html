@@ -166,20 +166,16 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .pdrop-btn .pdrop-label.placeholder{color:var(--muted)}
 .pdrop-btn .pdrop-arrow{color:var(--gold);font-size:14px;flex-shrink:0}
 .pdrop-btn:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,173,31,.2)}
-.pdrop-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:9998;animation:fadeIn .18s}
-.pdrop-sheet{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#fff;border-radius:18px 18px 0 0;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -6px 30px rgba(0,0,0,.25);animation:sheetUp .22s}
-@keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.pdrop-sheet-head{padding:14px 18px 6px;display:flex;align-items:center;gap:10px}
-.pdrop-sheet-head b{font-size:15px;flex:1}
-.pdrop-sheet-head .modal-close{font-size:22px}
-.pdrop-search{margin:6px 18px 4px;display:flex;gap:8px}
-.pdrop-search input{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit}
-.pdrop-newrow{margin:4px 18px 8px;display:flex;gap:8px}
-.pdrop-newrow input{flex:1;padding:10px 12px;border:1px dashed var(--gold);border-radius:8px;font-size:14px;font-family:inherit}
-.pdrop-list{overflow-y:auto;padding:4px 8px 18px}
-.pdrop-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:13px 14px;border:none;background:none;border-bottom:1px solid #f1f1f1;font-size:14.5px;cursor:pointer;font-family:inherit;color:var(--text);border-radius:8px}
-.pdrop-item:active{background:#FFF8E7}
+.pdrop-wrap{position:relative}
+.pdrop-panel{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:1200;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 32px rgba(15,23,42,.18);display:flex;flex-direction:column;max-height:300px;overflow:hidden;animation:dropIn .15s}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.pdrop-search{margin:8px 8px 4px;display:flex;gap:8px}
+.pdrop-search input{flex:1;padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit}
+.pdrop-newrow{margin:4px 8px 8px;display:flex;gap:8px}
+.pdrop-newrow input{flex:1;padding:9px 11px;border:1px dashed var(--gold);border-radius:8px;font-size:13.5px;font-family:inherit}
+.pdrop-list{overflow-y:auto;padding:2px 4px 8px}
+.pdrop-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;border:none;background:none;border-bottom:1px solid #f5f5f5;font-size:14px;cursor:pointer;font-family:inherit;color:var(--text);border-radius:6px}
+.pdrop-item:hover{background:#FFF8E7}
 .pdrop-item .tick{margin-left:auto;color:var(--gold);font-weight:700}
 .pdrop-item.selected{background:#FFF8E7}
 
@@ -1448,7 +1444,7 @@ async function ensureHangMucs(){
   if (d) state.hangMucs = d.list || d || [];
   return state.hangMucs;
 }
-/* Pretty dropdown hạng mục: bottom-sheet + tìm kiếm; Admin/QuanLy được nhập mới */
+/* Dropdown hạng mục: hiện danh sách ngay tại nút + tìm kiếm; Admin/QuanLy được nhập mới */
 function hmDropHtml(id, selected){
   const lbl = selected || '-- Chọn hạng mục --';
   return '<div class="pdrop-wrap"><button type="button" class="pdrop-btn" data-pdrop="' + id + '">' +
@@ -1467,31 +1463,34 @@ function hmDropSet(id, val){
 }
 function hmDropBind(id){
   const btn = document.querySelector('[data-pdrop="' + id + '"]');
-  if (btn) btn.onclick = function(){ openHmDrop(id); };
+  if (btn) btn.onclick = function(e){ e.stopPropagation(); toggleHmDrop(id); };
 }
-function openHmDrop(id){
+function closeHmDrop(){
+  document.querySelectorAll('.pdrop-panel').forEach(function(p){ p.remove(); });
+  document.removeEventListener('click', closeHmDrop);
+}
+function toggleHmDrop(id){
+  const btn = document.querySelector('[data-pdrop="' + id + '"]');
+  if (!btn) return;
+  const wrap = btn.closest('.pdrop-wrap');
+  if (wrap.querySelector('.pdrop-panel')) { closeHmDrop(); return; }
   closeHmDrop();
   const items = state.hangMucs || [];
   const cur = hmDropVal(id);
   const canNew = can('Admin','QuanLy');
-  const bd = document.createElement('div');
-  bd.className = 'pdrop-backdrop'; bd.id = 'pdropBd';
-  bd.onclick = closeHmDrop;
-  const sheet = document.createElement('div');
-  sheet.className = 'pdrop-sheet'; sheet.id = 'pdropSheet';
-  sheet.innerHTML =
-    '<div class="pdrop-sheet-head"><b>Chọn hạng mục</b>' +
-    '<button class="modal-close" id="pdClose">×</button></div>' +
-    '<div class="pdrop-search"><input id="pdSearch" placeholder="Tìm hạng mục..."></div>' +
-    (canNew ? '<div class="pdrop-newrow"><input id="pdNew" placeholder="+ Nhập hạng mục mới...">' +
-      '<button class="btn btn-gold btn-sm" id="pdAdd">Thêm</button></div>' : '') +
-    '<div class="pdrop-list" id="pdList"></div>';
-  document.body.appendChild(bd); document.body.appendChild(sheet);
-  $('pdClose').onclick = closeHmDrop;
+  const panel = document.createElement('div');
+  panel.className = 'pdrop-panel';
+  panel.innerHTML =
+    '<div class="pdrop-search"><input id="pdSearch_' + id + '" placeholder="Tìm hạng mục..."></div>' +
+    (canNew ? '<div class="pdrop-newrow"><input id="pdNew_' + id + '" placeholder="+ Nhập hạng mục mới...">' +
+      '<button class="btn btn-gold btn-sm" id="pdAdd_' + id + '">Thêm</button></div>' : '') +
+    '<div class="pdrop-list" id="pdList_' + id + '"></div>';
+  panel.onclick = function(e){ e.stopPropagation(); };
+  wrap.appendChild(panel);
   const draw = function(q){
     const kw = (q || '').toLowerCase();
     const f = items.filter(function(x){ return !kw || String(x).toLowerCase().indexOf(kw) >= 0; });
-    const list = $('pdList');
+    const list = $('pdList_' + id);
     list.innerHTML = f.length ? f.map(function(x){
       return '<button class="pdrop-item' + (x === cur ? ' selected' : '') + '" data-v="' + esc(x) + '">' +
         esc(x) + (x === cur ? '<span class="tick">✓</span>' : '') + '</button>';
@@ -1501,19 +1500,16 @@ function openHmDrop(id){
     });
   };
   draw('');
-  $('pdSearch').addEventListener('input', function(){ draw(this.value); });
-  setTimeout(function(){ const si = $('pdSearch'); if (si) si.focus(); }, 250);
-  const addBtn = $('pdAdd');
+  $('pdSearch_' + id).addEventListener('input', function(){ draw(this.value); });
+  setTimeout(function(){ const si = $('pdSearch_' + id); if (si) si.focus(); }, 60);
+  const addBtn = $('pdAdd_' + id);
   if (addBtn) addBtn.onclick = function(){
-    const v = $('pdNew').value.trim();
+    const v = $('pdNew_' + id).value.trim();
     if (!v) { toast('Nhập tên hạng mục mới.', 'error'); return; }
     if (state.hangMucs.indexOf(v) < 0) state.hangMucs.push(v);
     hmDropSet(id, v); closeHmDrop();
   };
-}
-function closeHmDrop(){
-  const b = $('pdropBd'), s = $('pdropSheet');
-  if (b) b.remove(); if (s) s.remove();
+  setTimeout(function(){ document.addEventListener('click', closeHmDrop); }, 60);
 }
 // Giữ tên cũ để tương thích
 function hmSelectHtml(id, selected, cls){ return hmDropHtml(id, selected); }
@@ -1932,7 +1928,7 @@ async function inPhieuDNTT(id){
     '<td>' + fmt(d.tong_hd) + '</td><td>' + fmt(d.con_lai) + '</td>' +
     '</tr></tbody></table>' +
     '<div class="phieu-words"><b>Bằng chữ:</b> <i>' + esc(docSoTien(d.so_tien)) + '</i></div>' +
-    '<div class="phieu-foot"><div class="cell">Ký nhận<br><br><br>....................</div>' +
+    '<div class="phieu-foot" style="justify-content:flex-end"><div class="cell">Người nhận<br>Ký nhận<br><br><br>....................</div>' +
     '<div class="cell">Ngày nhận<br><br><br>....................</div></div>' +
     '</div>';
   // Modal popup giữa màn hình
@@ -1976,7 +1972,7 @@ function xuatPhieuXls(d){
     '<th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng giá trị HĐ</th><th>Giá trị còn lại</th></tr>' +
     '<tr><td><b>' + d.so_tien + '</b></td><td>' + d.luy_ke + '</td><td>' + d.tong_hd + '</td><td>' + d.con_lai + '</td></tr></table>' +
     '<p><b>Bằng chữ:</b> <i>' + esc(docSoTien(d.so_tien)) + '</i></p>' +
-    '<table><tr><td width="50%" align="center"><b>Ký nhận</b></td><td align="center"><b>Ngày nhận</b></td></tr></table>' +
+    '<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>' +
     '</body></html>';
   const blob = new Blob(['﻿' + h], { type: 'application/vnd.ms-excel;charset=utf-8' });
   const a = document.createElement('a');
@@ -2455,15 +2451,15 @@ function xlsxStyles(){
   '<numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts>' +
   '<fonts count="5">' +
   '<font><sz val="11"/><name val="Arial"/></font>' +
-  '<font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Arial"/></font>' +
-  '<font><b/><sz val="14"/><name val="Arial"/></font>' +
-  '<font><b/><sz val="13"/><color rgb="FFB45309"/><name val="Arial"/></font>' +
+  '<font><b/><sz val="11"/><color rgb="FF000000"/><name val="Arial"/></font>' +
+  '<font><b/><sz val="16"/><name val="Arial"/></font>' +
+  '<font><b/><sz val="13"/><color rgb="FF000000"/><name val="Arial"/></font>' +
   '<font><sz val="10"/><color rgb="FF808080"/><name val="Arial"/></font>' +
   '</fonts>' +
   '<fills count="4">' +
   '<fill><patternFill patternType="none"/></fill>' +
   '<fill><patternFill patternType="gray125"/></fill>' +
-  '<fill><patternFill patternType="solid"><fgColor rgb="FFB45309"/><bgColor indexed="64"/></patternFill></fill>' +
+  '<fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/><bgColor indexed="64"/></patternFill></fill>' +
   '<fill><patternFill patternType="solid"><fgColor rgb="FFFFF8E7"/><bgColor indexed="64"/></patternFill></fill>' +
   '</fills>' +
   '<borders count="2">' +
@@ -2499,9 +2495,9 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
     var data = rows || [];
     var info = 'Dự án: ' + (tongMode ? 'Tất cả dự án' : maDA + (tenDA ? ' — ' + tenDA : '')) +
       '  |  Ngày xuất: ' + new Date().toLocaleDateString('vi-VN');
-    function cell(r, c, v, st){
+    function cell(r, c, v, st, textOnly){
       var ref = xlsxCol(c) + r;
-      if (mc[c] && v !== '' && v != null) {
+      if (!textOnly && mc[c] && v !== '' && v != null) {
         var num = Number(String(v).replace(/[^\d.\-]/g, '')) || 0;
         return '<c r="' + ref + '" s="' + st + '"><v>' + num + '</v></c>';
       }
@@ -2511,8 +2507,8 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
     var sh = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
       '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
       'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-      '<dimension ref="A1:' + lastC + (6 + data.length) + '"/>' +
-      '<sheetViews><sheetView workbookViewId="0"><selection activeCell="A6" sqref="A6"/></sheetView></sheetViews>' +
+      '<dimension ref="A1:' + lastC + (7 + data.length) + '"/>' +
+      '<sheetViews><sheetView workbookViewId="0"><selection activeCell="A7" sqref="A7"/></sheetView></sheetViews>' +
       '<sheetFormat defaultRowHeight="15"/>';
     // Độ rộng cột
     sh += '<cols><col min="1" max="2" width="16" customWidth="1"/>';
@@ -2525,30 +2521,32 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
     // Dòng 1-2: tên + địa chỉ công ty (logo nằm ở A1:B2)
     sh += '<row r="1" ht="36" customHeight="1">';
     for (var c1 = 0; c1 < 2; c1++) sh += cell(1, c1, '', 0);
-    sh += cell(1, 2, cfg.coName, 7);
+    sh += cell(1, 2, cfg.coName, 7, true);
     for (var c2 = 3; c2 < nC; c2++) sh += cell(1, c2, '', 7);
     sh += '</row><row r="2" ht="22" customHeight="1">';
     for (var c3 = 0; c3 < 2; c3++) sh += cell(2, c3, '', 0);
-    sh += cell(2, 2, cfg.coAddr + ' | Tel: ' + cfg.coTel + ' | ' + cfg.coWeb, 8);
+    sh += cell(2, 2, 'Add: ' + cfg.coAddr + '  |  Tel: ' + cfg.coTel + '  |  Website: ' + cfg.coWeb, 8, true);
     for (var c4 = 3; c4 < nC; c4++) sh += cell(2, c4, '', 8);
     sh += '</row>';
     // Dòng 3: tiêu đề
-    sh += '<row r="3" ht="28" customHeight="1">' + cell(3, 0, tieuDe, 1);
+    sh += '<row r="3" ht="28" customHeight="1">' + cell(3, 0, tieuDe, 1, true);
     for (var c5 = 1; c5 < nC; c5++) sh += cell(3, c5, '', 1);
     sh += '</row>';
     // Dòng 4: thông tin
-    sh += '<row r="4" ht="18" customHeight="1">' + cell(4, 0, info, 9);
+    sh += '<row r="4" ht="18" customHeight="1">' + cell(4, 0, info, 9, true);
     for (var c6 = 1; c6 < nC; c6++) sh += cell(4, c6, '', 9);
     sh += '</row><row r="5" ht="8" customHeight="1">';
     for (var c7 = 0; c7 < nC; c7++) sh += cell(5, c7, '', 0);
+    sh += '</row><row r="6" ht="8" customHeight="1">';
+    for (var c8 = 0; c8 < nC; c8++) sh += cell(6, c8, '', 0);
     sh += '</row>';
-    // Dòng 6: header
-    sh += '<row r="6" ht="26" customHeight="1">';
-    headers.forEach(function(hd, i){ sh += cell(6, i, hd, 2); });
+    // Dòng 7: header
+    sh += '<row r="7" ht="26" customHeight="1">';
+    headers.forEach(function(hd, i){ sh += cell(7, i, hd, 2); });
     sh += '</row>';
     // Dữ liệu
     data.forEach(function(rw, ri){
-      var r = 7 + ri, zebra = (ri % 2 === 1);
+      var r = 8 + ri, zebra = (ri % 2 === 1);
       sh += '<row r="' + r + '">';
       for (var i = 0; i < nC; i++) {
         var st = mc[i] ? (zebra ? 6 : 5) : (zebra ? 4 : 3);
@@ -2565,15 +2563,15 @@ function xuatXlsChung(tenFile, tieuDe, headers, rows, moneyCols){
       '<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" ' +
       'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" ' +
       'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-      '<xdr:twoCellAnchor><xdr:from><xdr:col>0</xdr:col><xdr:colOff>0</xdr:colOff>' +
+      '<xdr:oneCellAnchor><xdr:from><xdr:col>0</xdr:col><xdr:colOff>0</xdr:colOff>' +
       '<xdr:row>0</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>' +
-      '<xdr:to><xdr:col>2</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>2</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to>' +
+      '<xdr:ext cx="1143000" cy="757800"/>' +
       '<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="1" name="logo"/>' +
       '<xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>' +
       '<xdr:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>' +
-      '<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1152000" cy="763800"/></a:xfrm>' +
+      '<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1143000" cy="757800"/></a:xfrm>' +
       '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic>' +
-      '<xdr:clientData/></xdr:twoCellAnchor></xdr:wsDr>';
+      '<xdr:clientData/></xdr:oneCellAnchor></xdr:wsDr>';
     var TE = function(x){ return new TextEncoder().encode(x); };
     function b64ToBytes(b64){
       var bin = atob(b64), out = new Uint8Array(bin.length);
@@ -2721,18 +2719,7 @@ async function loadSettings(){
     '<input id="sheetLink" placeholder="https://docs.google.com/spreadsheets/d/..."></div></div>' +
     '<div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" id="btnLinkSheet">Kết nối</button>' +
     (sh && sh.linked ? '<button class="btn btn-ghost btn-sm" id="btnUnlinkSheet">Về sheet mặc định</button>' : '') + '</div></div>';
-  if (can('Admin')) {
-    html += '<div class="card"><div class="card-head"><h2>Tiêu đề cột Google Sheet</h2></div>' +
-      '<div class="desc" style="margin-bottom:10px">Đổi dòng tiêu đề (dòng 1) tất cả các tab sang tiếng Việt có dấu (VD: <b>MÃ DỰ ÁN</b>, <b>CHI PHÍ</b>). App đọc dữ liệu theo vị trí cột nên đổi tên không ảnh hưởng hoạt động.</div>' +
-      '<button class="btn btn-gold btn-sm" id="btnVietHoa">Đổi sang tiếng Việt có dấu</button></div>';
-  }
   el.innerHTML = html;
-  const btnVH = $('btnVietHoa');
-  if (btnVH) btnVH.onclick = async () => {
-    if (!confirm('Đổi tiêu đề cột (dòng 1) của tất cả tab sang tiếng Việt có dấu?')) return;
-    const r = await safeApi('vietHoaHeaders', {});
-    if (r) toast('Đã đổi tiêu đề ' + (r.tabs || 0) + ' tab sang tiếng Việt.', 'success');
-  };
   $('btnSaveCfg').onclick = () => {
     const c = { apiUrl: $('cfgApiUrl').value.trim(), coName: $('cfgCoName').value.trim(), coAddr: $('cfgCoAddr').value.trim() };
     if (c.apiUrl && !/script\.google\.com\/macros\/s\//.test(c.apiUrl)) { toast('API URL không đúng định dạng.', 'error'); return; }
