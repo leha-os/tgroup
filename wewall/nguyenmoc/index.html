@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Nguyễn Mộc — Chấm Công Thợ</title>
+<style>
+:root{
+  --nau:#7A4E2D; --nau-dam:#4A2E18; --gold:#C9A227;
+  --nen:#FAF7F2; --chu:#2B2B2B; --muted:#8A7B6B;
+  --do:#B3261E; --xanh:#1B7A3D; --vang:#9A6B1A;
+  --vien:#E5DCCF; --trang:#FFFFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--nen);color:var(--chu);font-size:16px;line-height:1.5;
+  -webkit-tap-highlight-color:transparent}
+.topbar{background:var(--nau-dam);color:#fff;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
+.topbar svg{flex:0 0 34px}
+.topbar .ten{font-weight:700;font-size:14px;letter-spacing:.3px;line-height:1.35}
+.topbar .ten small{display:block;font-weight:400;color:var(--gold);font-size:11px;letter-spacing:1.5px}
+.wrap{max-width:560px;margin:0 auto;padding:16px 14px 90px}
+.wrap.rong{max-width:1100px}
+.screen{display:none}
+.screen.hien{display:block}
+.card{background:var(--trang);border:1px solid var(--vien);border-radius:14px;
+  padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(74,46,24,.06)}
+.card h3{font-size:15px;color:var(--nau-dam);margin-bottom:8px}
+.muted{color:var(--muted);font-size:13px}
+.row1{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.ngaylon{font-size:15px;font-weight:700;color:var(--nau-dam)}
+.hoso{font-size:15px}
+.hoso b{color:var(--nau-dam)}
+.btn{display:inline-block;border:none;border-radius:12px;padding:12px 18px;
+  font-size:16px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none}
+.btn.block{width:100%}
+.btn.chinh{background:var(--nau);color:#fff}
+.btn.chinh:active{transform:scale(.98)}
+.btn.vang{background:var(--gold);color:var(--nau-dam)}
+.btn.ok{background:var(--xanh);color:#fff;padding:9px 16px;font-size:14px}
+.btn.danger{background:var(--do);color:#fff;padding:9px 16px;font-size:14px}
+.btn.ghost{background:#EFE9DD;color:var(--chu);padding:9px 16px;font-size:14px}
+.btn.nho{padding:7px 12px;font-size:13px}
+.btn:disabled{background:#C9BFAE;color:#7A7166;cursor:default}
+.btn.armed{background:var(--do);color:#fff}
+.btncham{width:100%;padding:26px 18px;font-size:22px;font-weight:800;letter-spacing:.5px;
+  color:#fff;background:linear-gradient(160deg,var(--nau),var(--nau-dam));
+  border:3px solid var(--gold);border-radius:18px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(74,46,24,.25)}
+.btncham:active{transform:scale(.97)}
+.btncham:disabled{background:#C9BFAE;border-color:#B7AD9C;box-shadow:none}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.stat{background:var(--trang);border:1px solid var(--vien);border-radius:14px;
+  padding:12px 8px;text-align:center}
+.stat .so{font-size:26px;font-weight:800;color:var(--nau-dam)}
+.stat .nhan{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.35}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12.5px;font-weight:700}
+.b-cho{background:#FBEED3;color:var(--vang);border:1px solid #E8C87E}
+.b-duyet{background:#DFF2E3;color:var(--xanh);border:1px solid #9BD3A8}
+.b-tuchoi{background:#FADDD9;color:var(--do);border:1px solid #E89A92}
+.b-khoa{background:#E8E2D6;color:#7A7166;border:1px solid #C9BFAE}
+.lichsu-item{border-bottom:1px solid var(--vien);padding:10px 2px}
+.lichsu-item:last-child{border-bottom:none}
+.lydo{font-size:13.5px;color:var(--do);margin-top:4px}
+input,select,textarea{width:100%;padding:12px;border:1.5px solid var(--vien);
+  border-radius:10px;font-size:16px;background:#fff;color:var(--chu);margin-bottom:10px}
+textarea{min-height:70px;resize:vertical;font-family:inherit}
+label{font-size:13.5px;font-weight:600;color:var(--nau-dam);display:block;margin-bottom:4px}
+.btnrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{flex:1;padding:11px;border-radius:12px;border:1.5px solid var(--vien);
+  background:#fff;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;text-align:center}
+.tab.hien{background:var(--nau-dam);color:#fff;border-color:var(--nau-dam)}
+.hidden{display:none!important}
+#err{position:sticky;top:60px;z-index:60;background:#FDECEA;border:1.5px solid var(--do);
+  color:var(--do);border-radius:12px;padding:10px 12px;margin:10px 14px 0;
+  display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}
+#err .btn{padding:6px 12px;font-size:13px}
+#ok{position:sticky;top:60px;z-index:60;background:#E4F4E8;border:1.5px solid var(--xanh);
+  color:var(--xanh);border-radius:12px;padding:10px 12px;margin:10px 14px 0;font-size:14px;font-weight:600}
+#loading{position:fixed;inset:0;background:rgba(250,247,242,.75);z-index:100;
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--nau-dam)}
+.spin{width:34px;height:34px;border:4px solid var(--vien);border-top-color:var(--nau);
+  border-radius:50%;animation:quay 0.8s linear infinite;margin-right:10px}
+@keyframes quay{to{transform:rotate(360deg)}}
+table.bang{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+table.bang th,table.bang td{border:1px solid var(--vien);padding:8px 6px;text-align:left}
+table.bang th{background:var(--nau-dam);color:#fff;font-size:12.5px;white-space:nowrap}
+.cuontable{overflow-x:auto;border:1px solid var(--vien);border-radius:12px;margin-bottom:12px}
+table.grid td.cX{color:var(--xanh);font-weight:800;text-align:center}
+table.grid td.cC{color:var(--vang);font-weight:800;text-align:center}
+table.grid td.cT{color:var(--do);font-weight:800;text-align:center}
+table.grid td,table.grid th{text-align:center;min-width:34px;padding:6px 4px}
+table.grid th:first-child,table.grid td:first-child,
+table.grid th:nth-child(2),table.grid td:nth-child(2){text-align:left;min-width:70px}
+.chuthich{font-size:13px;color:var(--muted);margin-bottom:10px}
+.chuthich b{font-weight:800}
+.footerbar{position:fixed;bottom:0;left:0;right:0;background:var(--trang);
+  border-top:1px solid var(--vien);padding:10px 16px;display:flex;
+  justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);z-index:50}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--xanh);margin-right:5px}
+.link{color:var(--nau);font-weight:600;font-size:14px;text-decoration:underline;cursor:pointer;
+  background:none;border:none;padding:8px}
+.warn{background:#FBEED3;border:1.5px solid var(--vang);color:#7A5410;border-radius:12px;
+  padding:10px 12px;font-size:13.5px;margin-bottom:10px}
+.tuchoi{margin-top:8px}
+.empty{color:var(--muted);text-align:center;padding:18px 0;font-size:14px}
+.kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--vien);font-size:14px}
+.kv:last-child{border-bottom:none}
+.kv b{color:var(--nau-dam)}
+@media(min-width:700px){.topbar .ten{font-size:16px}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+    <circle cx="17" cy="17" r="15" stroke="#C9A227" stroke-width="2.5"/>
+    <path d="M11 17.5l4.2 4.2L23.5 13" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="ten">CÔNG TY TNHH SXTM NGUYỄN MỘC<small>CHẤM CÔNG THỢ</small></div>
+</header>
+
+<div id="err" class="hidden">
+  <span id="errMsg" style="flex:1"></span>
+  <button class="btn danger nho" id="errRetry">Thử lại</button>
+  <button class="btn ghost nho" id="errClose">Đóng</button>
+</div>
+<div id="ok" class="hidden"><span id="okMsg"></span></div>
+<div id="loading" class="hidden"><div class="spin"></div>Đang xử lý...</div>
+
+<!-- ============ CẤU HÌNH KẾT NỐI ============ -->
+<section id="scr-config" class="screen">
+  <div class="wrap">
+    <div class="card">
+      <h3>Cấu hình kết nối</h3>
+      <p class="muted" style="margin-bottom:10px">Nhập địa chỉ Web App (Apps Script) và API key. Chỉ cần làm một lần trên mỗi thiết bị.</p>
+      <label>API URL (Web App URL)</label>
+      <input id="cfgUrl" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off">
+      <label>API key</label>
+      <input id="cfgKey" placeholder="NM-..." autocomplete="off">
+      <button class="btn chinh block" id="btnLuuCauHinh">Lưu và tiếp tục</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ĐĂNG NHẬP ============ -->
+<section id="scr-login" class="screen">
+  <div class="wrap">
+    <div class="card">
+      <h3>Đăng nhập</h3>
+      <label>Email hoặc số điện thoại</label>
+      <input id="loginId" placeholder="vd: 0901234567" autocomplete="username">
+      <label>Mật khẩu</label>
+      <input id="loginPw" type="password" placeholder="Mật khẩu" autocomplete="current-password">
+      <button class="btn chinh block" id="btnDangNhap">ĐĂNG NHẬP</button>
+      <div style="text-align:center;margin-top:6px">
+        <button class="link" id="linkCauHinh">Cấu hình kết nối</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THỢ ============ -->
+<section id="scr-tho" class="screen">
+  <div class="wrap">
+    <div class="card">
+      <div class="ngaylon" id="thoDate">—</div>
+      <div class="hoso" style="margin-top:8px">
+        <div><b id="thoHoTen">—</b></div>
+        <div class="muted">Mã thợ: <span id="thoMa">—</span> · SĐT: <span id="thoSdt">—</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <button class="btncham" id="btnChamCong">CHẤM CÔNG HÔM NAY</button>
+      <div id="gpsInfo" class="muted" style="margin-top:8px;text-align:center;font-size:13px"></div>
+      <div id="chamTrangThai" class="muted" style="margin-top:10px;text-align:center"></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="so" id="stDenHomQua">0</div><div class="nhan">Công đã duyệt (đến hôm qua)</div></div>
+      <div class="stat"><div class="so" id="stChoHomNay">0</div><div class="nhan">Chờ duyệt hôm nay</div></div>
+      <div class="stat"><div class="so" id="stThang">0</div><div class="nhan">Tổng đã duyệt tháng này</div></div>
+    </div>
+    <div class="card">
+      <h3>Lịch sử chấm công tháng này</h3>
+      <div id="lichSu"><p class="empty">Đang tải...</p></div>
+    </div>
+  </div>
+  <div class="footerbar">
+    <span><span class="dot"></span><span id="syncInfo">Đồng bộ: --</span></span>
+    <button class="link" id="btnDangXuat">Đăng xuất</button>
+  </div>
+</section>
+
+<!-- ============ QUẢN LÝ ============ -->
+<section id="scr-quanly" class="screen">
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab hien" id="qlTabCho">Chờ duyệt</div>
+      <div class="tab" id="qlTabHomNay">Hôm nay</div>
+    </div>
+    <div id="qlCho">
+      <div id="qlChoList"><p class="empty">Đang tải...</p></div>
+    </div>
+    <div id="qlHomNay" class="hidden">
+      <div class="card">
+        <h3 id="hnNgay">—</h3>
+        <div class="kv"><span>Bản ghi chờ duyệt</span><b id="hnCho">0</b></div>
+        <div class="kv"><span>Bản ghi đã duyệt</span><b id="hnDuyet">0</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <a class="btn chinh block" id="btnMoSheet" href="#" target="_blank" rel="noopener">Mở Google Sheets</a>
+      <p class="muted" style="margin-top:8px;font-size:13px">Trên Sheet: chỉ sửa cột Trạng thái (chọn trong danh sách) và cột Lý do từ chối. Các cột khác được hệ thống bảo vệ tự động.</p>
+    </div>
+  </div>
+  <div class="footerbar">
+    <span><span class="dot"></span><span id="syncInfoQl">Đồng bộ: --</span></span>
+    <button class="link" id="btnDangXuatQl">Đăng xuất</button>
+  </div>
+</section>
+
+<!-- ============ KẾ TOÁN ============ -->
+<section id="scr-ketoan" class="screen">
+  <div class="wrap rong">
+    <div class="card">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:1;min-width:160px">
+          <label>Tháng</label>
+          <input type="month" id="ktThang">
+        </div>
+        <button class="btn chinh" id="btnXemBang">Xem bảng công</button>
+      </div>
+      <div class="btnrow">
+        <button class="btn vang nho" id="btnVietSheet">Viết bảng công lên Sheet</button>
+        <button class="btn danger nho" id="btnChot">Chốt công tháng</button>
+        <button class="btn chinh nho" id="btnXuatExcel">Xuất Excel</button>
+      </div>
+      <div id="chotWarn" class="warn hidden" style="margin-top:10px">
+        Sau khi chốt, số liệu tháng này bị khóa. Mọi điều chỉnh phải qua Admin và được ghi nhật ký.
+      </div>
+    </div>
+    <div class="card hidden" id="ktTongCard">
+      <h3>Tổng hợp tháng <span id="ktThangHien">—</span></h3>
+      <div id="ktTong"></div>
+    </div>
+    <div class="card hidden" id="ktBangCard">
+      <h3>Bảng công chi tiết</h3>
+      <p class="chuthich"><b class="b-duyet badge">X</b> Đã duyệt · <b class="b-cho badge">C</b> Chờ duyệt · <b class="b-tuchoi badge">T</b> Từ chối</p>
+      <div class="cuontable" id="ktBang"></div>
+    </div>
+    <div class="card hidden" id="ktChiTietCard">
+      <h3>Chi tiết bản ghi (đối chiếu)</h3>
+      <div class="cuontable" id="ktChiTiet"></div>
+    </div>
+  </div>
+  <div class="footerbar">
+    <span><span class="dot"></span><span id="syncInfoKt">Đồng bộ: --</span></span>
+    <button class="link" id="btnDangXuatKt">Đăng xuất</button>
+  </div>
+</section>
+
+<!-- ============ ADMIN ============ -->
+<section id="scr-admin" class="screen">
+  <div class="wrap rong">
+    <div class="tabs">
+      <div class="tab hien" id="admTabTho">Thợ</div>
+      <div class="tab" id="admTabCauHinh">Cấu hình</div>
+      <div class="tab" id="admTabNhatKy">Nhật ký</div>
+      <div class="tab" id="admTabKetNoi">Kết nối</div>
+    </div>
+
+    <div id="admTho">
+      <div class="card">
+        <h3>Thêm thợ mới</h3>
+        <label>Họ tên</label><input id="fHoTen" placeholder="Nguyễn Văn A">
+        <label>Số điện thoại</label><input id="fSdt" placeholder="0901234567" inputmode="tel">
+        <label>Email (không bắt buộc)</label><input id="fEmail" placeholder="a@example.com" inputmode="email">
+        <label>Vai trò</label>
+        <select id="fVaiTro">
+          <option value="Tho">Thợ</option>
+          <option value="QuanLy">Quản lý ca</option>
+          <option value="KeToan">Nhân sự/Kế toán</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <label>Mật khẩu (bỏ trống = dùng SĐT)</label><input id="fMatKhau" type="password" placeholder="Tối thiểu 6 ký tự">
+        <button class="btn chinh block" id="btnThemTho">Thêm</button>
+      </div>
+      <div class="card">
+        <h3>Danh sách tài khoản</h3>
+        <div class="cuontable"><table class="bang" id="thoTable"></table></div>
+      </div>
+    </div>
+
+    <div id="admCauHinh" class="hidden">
+      <div class="card">
+        <h3>Cấu hình hệ thống</h3>
+        <div id="cauHinhList"><p class="empty">Đang tải...</p></div>
+      </div>
+      <div class="card">
+        <h3>Đổi file Google Sheets dữ liệu</h3>
+        <label>Sheet ID hoặc URL mới</label>
+        <input id="doiSheetId" placeholder="ID hoặc URL Google Sheets">
+        <button class="btn vang block" id="btnDoiSheet">Đổi Sheet và khởi tạo</button>
+      </div>
+      <div class="card">
+        <h3>API key</h3>
+        <p class="muted" style="margin-bottom:8px">Sau khi đổi, phải nhập key mới vào phần Cấu hình kết nối trên mọi thiết bị.</p>
+        <button class="btn danger block" id="btnDoiApiKey">Tạo API key mới</button>
+        <div id="apiKeyMoi" class="hidden" style="margin-top:10px">
+          <label>API key mới (copy ngay)</label>
+          <input id="apiKeyMoiVal" readonly>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Điều chỉnh sau chốt</h3>
+        <p class="muted" style="margin-bottom:8px">Dùng khi tháng đã chốt mà vẫn cần sửa trạng thái bản ghi. Bắt buộc nhập lý do; mọi thao tác được ghi nhật ký.</p>
+        <label>Mã bản ghi (vd: CC-20261010-T001)</label>
+        <input id="dcMa" placeholder="CC-yyyyMMdd-MaTho" autocomplete="off">
+        <label>Trạng thái mới</label>
+        <select id="dcTrangThai">
+          <option>Chờ duyệt</option>
+          <option>Đã duyệt</option>
+          <option>Từ chối</option>
+        </select>
+        <label>Lý do (bắt buộc)</label>
+        <textarea id="dcLyDo" placeholder="Lý do điều chỉnh"></textarea>
+        <button class="btn danger block" id="btnDieuChinh">Thực hiện điều chỉnh</button>
+      </div>
+    </div>
+
+    <div id="admNhatKy" class="hidden">
+      <div class="card">
+        <h3>Nhật ký thao tác (200 dòng mới nhất)</h3>
+        <div class="cuontable"><table class="bang" id="nhatKyTable"></table></div>
+      </div>
+    </div>
+
+    <div id="admKetNoi" class="hidden">
+      <div class="card">
+        <h3>Trạng thái kết nối</h3>
+        <div id="ketNoiInfo"><p class="empty">Đang tải...</p></div>
+        <div class="btnrow">
+          <button class="btn chinh nho" id="btnPing">Kiểm tra ping</button>
+          <a class="btn ghost nho" id="btnMoSheetAdm" href="#" target="_blank" rel="noopener">Mở Google Sheets</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footerbar">
+    <span><span class="dot"></span><span id="syncInfoAdm">Đồng bộ: --</span></span>
+    <button class="link" id="btnDangXuatAdm">Đăng xuất</button>
+  </div>
+</section>
+
+<script>
+'use strict';
+/* ================= TIỆN ÍCH ================= */
+var CFG_KEY='nm_cfg', SES_KEY='nm_sess', SYNC_KEY='nm_sync';
+var cfg=null, sess=null, APP=null, KT_THANG='';
+var retryFn=null, okTimer=null, chotArmed=false, chotTimer=null;
+
+function loadLS(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
+function saveLS(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function $(id){ return document.getElementById(id); }
+function pad(n){ return (n<10?'0':'')+n; }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtNum(n){ return Number(n||0).toLocaleString('vi-VN'); }
+function fmtNgayVN(y){ var p=String(y||'').split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:String(y||''); }
+function thangHienTaiJS(){ var d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1); }
+var THU=['Chủ nhật','Thứ hai','Thứ ba','Thứ tư','Thứ năm','Thứ sáu','Thứ bảy'];
+function homNayText(){ var d=new Date(); return THU[d.getDay()]+', '+pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear(); }
+function badge(tt){
+  var cls=tt==='Đã duyệt'?'b-duyet':(tt==='Từ chối'?'b-tuchoi':'b-cho');
+  return '<span class="badge '+cls+'">'+esc(tt)+'</span>';
+}
+/** Link Google Maps từ tọa độ; không có GPS thì '—' */
+function linkMaps(lat,lng){
+  if(lat==null||lat===''||lng==null||lng==='') return '—';
+  return '<a href="https://www.google.com/maps?q='+encodeURIComponent(lat+','+lng)+'" target="_blank" rel="noopener">Xem bản đồ</a>';
+}
+
+function showScreen(id){
+  var ss=document.querySelectorAll('.screen');
+  for(var i=0;i<ss.length;i++) ss[i].classList.remove('hien');
+  $(id).classList.add('hien');
+  window.scrollTo(0,0);
+}
+function showErr(msg,retry){
+  $('errMsg').textContent=msg;
+  retryFn=retry||null;
+  $('errRetry').style.display=retry?'':'none';
+  $('err').classList.remove('hidden');
+}
+function hideErr(){ $('err').classList.add('hidden'); retryFn=null; }
+function showOk(msg){
+  $('okMsg').textContent=msg;
+  $('ok').classList.remove('hidden');
+  if(okTimer) clearTimeout(okTimer);
+  okTimer=setTimeout(function(){ $('ok').classList.add('hidden'); },6000);
+}
+function setLoading(on){ $('loading').classList.toggle('hidden',!on); }
+
+/* ================= GỌI API ================= */
+function api(action,data,silent){
+  data=data||{};
+  if(!silent) hideErr();
+  setLoading(true);
+  var payload={key:cfg.apiKey,action:action,token:(sess&&sess.token)||''};
+  for(var k in data) payload[k]=data[k];
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var timer=setTimeout(function(){ if(ctrl) ctrl.abort(); },25000);
+  var p=fetch(cfg.apiUrl,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(payload),
+    signal:ctrl?ctrl.signal:undefined
+  }).then(function(r){ return r.text(); }).then(function(t){
+    var j;
+    try{ j=JSON.parse(t); }catch(e){ throw new Error('Máy chủ trả về dữ liệu không hợp lệ.'); }
+    if(!j.ok){ var e2=new Error(j.error||'Lỗi không xác định.'); e2.auth=!!j.auth; throw e2; }
+    return j;
+  });
+  return p.then(function(j){
+    clearTimeout(timer); setLoading(false); setSync(); return j;
+  },function(err){
+    clearTimeout(timer); setLoading(false);
+    if(silent) throw err;
+    if(err&&err.auth){ dangXuat(); showErr(err.message||'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'); }
+    else showErr((err&&err.message)||'Lỗi kết nối. Kiểm tra mạng và thử lại.',
+      function(){ api(action,data).then(function(){}).catch(function(){}); });
+    throw err;
+  });
+}
+
+function setSync(){
+  var d=new Date();
+  var s=pad(d.getHours())+':'+pad(d.getMinutes())+' '+pad(d.getDate())+'/'+pad(d.getMonth()+1);
+  try{ localStorage.setItem(SYNC_KEY,s); }catch(e){}
+  ['syncInfo','syncInfoQl','syncInfoKt','syncInfoAdm'].forEach(function(id){
+    var el=$(id); if(el) el.textContent='Đồng bộ: '+s;
+  });
+}
+function getSync(){ try{ return localStorage.getItem(SYNC_KEY)||'--'; }catch(e){ return '--'; } }
+
+/* ================= XÁC THỰC ================= */
+function dangXuat(){
+  sess=null; APP=null;
+  try{ localStorage.removeItem(SES_KEY); }catch(e){}
+  showScreen('scr-login');
+}
+function route(){
+  var vt=sess&&sess.user?sess.user.vaiTro:'';
+  if(vt==='Tho'){ showScreen('scr-tho'); taiTho(); }
+  else if(vt==='QuanLy'){ showScreen('scr-quanly'); taiQuanLy(); }
+  else if(vt==='KeToan'){ showScreen('scr-ketoan'); taiKeToan(); }
+  else if(vt==='Admin'){ showScreen('scr-admin'); taiAdmin(); }
+  else showScreen('scr-login');
+}
+function sauDangNhap(){
+  api('me',{},true).then(function(j){ APP=j; route(); }).catch(function(){ route(); });
+}
+
+/* ================= GPS (nấc 1: bằng chứng, không chặn) ================= */
+function layViTri(){
+  return new Promise(function(resolve){
+    if(!('geolocation' in navigator)){ resolve(null); return; }
+    var xong=false;
+    var timer=setTimeout(function(){ if(!xong){ xong=true; resolve(null); } },11000);
+    try{
+      navigator.geolocation.getCurrentPosition(
+        function(pos){
+          if(!xong){ xong=true; clearTimeout(timer);
+            resolve({lat:pos.coords.latitude,lng:pos.coords.longitude,acc:pos.coords.accuracy}); }
+        },
+        function(){ if(!xong){ xong=true; clearTimeout(timer); resolve(null); } },
+        {timeout:10000,maximumAge:60000,enableHighAccuracy:true}
+      );
+    }catch(e){ if(!xong){ xong=true; clearTimeout(timer); resolve(null); } }
+  });
+}
+
+/* ================= MÀN HÌNH THỢ ================= */
+function taiTho(){
+  $('thoDate').textContent=homNayText();
+  var u=sess.user;
+  $('thoHoTen').textContent=u.hoTen;
+  $('thoMa').textContent=u.maTho;
+  $('thoSdt').textContent=u.sdt||'—';
+  $('syncInfo').textContent='Đồng bộ: '+getSync();
+  $('gpsInfo').textContent='';
+  api('me',{},true).then(function(j){ capNhatNutCham(j.homNay); }).catch(function(){});
+  api('summary',{},true).then(function(j){
+    $('stDenHomQua').textContent=fmtNum(j.daDuyetDenHomQua);
+    $('stChoHomNay').textContent=fmtNum(j.choDuyetHomNay);
+    $('stThang').textContent=fmtNum(j.daDuyetThang);
+  }).catch(function(){});
+  taiLichSu();
+}
+function taiLichSu(){
+  api('history',{},true).then(function(j){
+    var box=$('lichSu');
+    if(!j.lichSu.length){ box.innerHTML='<p class="empty">Chưa có bản ghi nào trong tháng.</p>'; return; }
+    box.innerHTML=j.lichSu.map(function(b){
+      var h='<div class="lichsu-item"><div class="row1"><b>'+fmtNgayVN(b.ngayCong)+'</b>'+badge(b.trangThai)+'</div>';
+      h+='<div class="muted">Gửi lúc '+esc(String(b.thoiDiemGui).slice(11))+'</div>';
+      if(b.trangThai==='Từ chối'&&b.lyDoTuChoi) h+='<div class="lydo">Lý do: '+esc(b.lyDoTuChoi)+'</div>';
+      h+='</div>';
+      return h;
+    }).join('');
+  }).catch(function(){});
+}
+function capNhatNutCham(hn){
+  var btn=$('btnChamCong'), tt=$('chamTrangThai');
+  if(hn&&hn.daCham){
+    btn.disabled=true; btn.textContent='ĐÃ CHẤM CÔNG HÔM NAY';
+    var ct=hn.chiTiet||{};
+    tt.innerHTML='Đã ghi nhận lúc <b>'+esc(ct.gioGui||'')+'</b> — '+badge(ct.trangThai||'Chờ duyệt');
+  }else{
+    btn.disabled=false; btn.textContent='CHẤM CÔNG HÔM NAY';
+    tt.textContent='Bạn chưa chấm công hôm nay.';
+  }
+}
+
+/* ================= SỰ KIỆN CHUNG ================= */
+$('btnLuuCauHinh').addEventListener('click',function(){
+  var url=$('cfgUrl').value.trim(), key=$('cfgKey').value.trim();
+  if(!url||!key){ showErr('Vui lòng nhập đầy đủ API URL và API key.'); return; }
+  cfg={apiUrl:url,apiKey:key}; saveLS(CFG_KEY,cfg);
+  api('ping',{}).then(function(){ showOk('Kết nối thành công.'); showScreen('scr-login'); }).catch(function(){});
+});
+$('linkCauHinh').addEventListener('click',function(){
+  if(cfg){ $('cfgUrl').value=cfg.apiUrl||''; $('cfgKey').value=cfg.apiKey||''; }
+  showScreen('scr-config');
+});
+$('btnDangNhap').addEventListener('click',function(){
+  var loginId=$('loginId').value.trim(), pw=$('loginPw').value;
+  if(!loginId||!pw){ showErr('Vui lòng nhập tài khoản và mật khẩu.'); return; }
+  api('login',{loginId:loginId,password:pw}).then(function(j){
+    sess={token:j.token,user:j.user}; saveLS(SES_KEY,sess);
+    $('loginPw').value='';
+    sauDangNhap();
+  }).catch(function(){});
+});
+['btnDangXuat','btnDangXuatQl','btnDangXuatKt','btnDangXuatAdm'].forEach(function(id){
+  $(id).addEventListener('click',function(){ dangXuat(); });
+});
+$('errRetry').addEventListener('click',function(){ hideErr(); if(retryFn) retryFn(); });
+$('errClose').addEventListener('click',hideErr);
+
+/* Nút chấm công: lấy GPS trước (không chặn nếu lỗi), rồi gửi */
+$('btnChamCong').addEventListener('click',function(){
+  var btn=$('btnChamCong'); btn.disabled=true;
+  $('gpsInfo').textContent='Đang lấy vị trí...';
+  layViTri().then(function(gps){
+    var data={};
+    if(gps&&isFinite(gps.lat)&&isFinite(gps.lng)){ data.lat=gps.lat; data.lng=gps.lng; data.acc=gps.acc; }
+    $('gpsInfo').textContent=gps?'Vị trí: đã ghi nhận':'Vị trí: không có';
+    api('checkin',data).then(function(j){
+      var b=j.banGhi||{};
+      capNhatNutCham({daCham:true,chiTiet:{gioGui:String(b.thoiDiemGui||'').slice(11),trangThai:b.trangThai||'Chờ duyệt'}});
+      showOk(j.trung
+        ? 'Hôm nay bạn đã chấm công lúc '+String(b.thoiDiemGui||'').slice(11)+'.'
+        : 'Chấm công thành công. Trạng thái: Chờ duyệt.');
+      taiLichSu();
+      api('summary',{},true).then(function(s){
+        $('stDenHomQua').textContent=fmtNum(s.daDuyetDenHomQua);
+        $('stChoHomNay').textContent=fmtNum(s.choDuyetHomNay);
+        $('stThang').textContent=fmtNum(s.daDuyetThang);
+      }).catch(function(){});
+    }).catch(function(){ btn.disabled=false; });
+  });
+});
+
+/* ================= MÀN HÌNH QUẢN LÝ ================= */
+function taiQuanLy(){
+  if(APP&&APP.sheetUrl) $('btnMoSheet').href=APP.sheetUrl;
+  $('syncInfoQl').textContent='Đồng bộ: '+getSync();
+  qlTab('cho');
+}
+function qlTab(t){
+  $('qlTabCho').classList.toggle('hien',t==='cho');
+  $('qlTabHomNay').classList.toggle('hien',t==='homnay');
+  $('qlCho').classList.toggle('hidden',t!=='cho');
+  $('qlHomNay').classList.toggle('hidden',t!=='homnay');
+  if(t==='cho') taiChoDuyet(); else taiHomNay();
+}
+$('qlTabCho').addEventListener('click',function(){ qlTab('cho'); });
+$('qlTabHomNay').addEventListener('click',function(){ qlTab('homnay'); });
+
+function taiChoDuyet(){
+  api('dsChoDuyet',{},true).then(function(j){
+    var box=$('qlChoList');
+    if(!j.danhSach.length){ box.innerHTML='<p class="empty">Không có bản ghi chờ duyệt.</p>'; return; }
+    box.innerHTML=j.danhSach.map(function(b){
+      var id=String(b.maBanGhi).replace(/[^a-zA-Z0-9]/g,'');
+      var h='<div class="card">';
+      h+='<div class="row1"><b>'+esc(b.hoTen)+'</b><span class="muted">'+esc(b.maTho)+'</span></div>';
+      h+='<div class="muted">Ngày công: '+fmtNgayVN(b.ngayCong)+' · Gửi lúc '+esc(String(b.thoiDiemGui).slice(11))+'</div>';
+      h+='<div class="muted">Vị trí: '+linkMaps(b.viDo,b.kinhDo)+'</div>';
+      h+='<div class="btnrow"><button class="btn ok" data-duyet="'+esc(b.maBanGhi)+'">Duyệt</button>'
+        +'<button class="btn danger" data-tuchoi="'+esc(b.maBanGhi)+'">Từ chối</button></div>';
+      h+='<div class="tuchoi hidden" id="tc-'+id+'">'
+        +'<textarea id="lydo-'+id+'" placeholder="Nhập lý do từ chối (bắt buộc)"></textarea>'
+        +'<div class="btnrow"><button class="btn danger" data-xntuchoi="'+esc(b.maBanGhi)+'">Xác nhận từ chối</button>'
+        +'<button class="btn ghost" data-huy="'+id+'">Hủy</button></div></div>';
+      h+='</div>';
+      return h;
+    }).join('');
+    box.querySelectorAll('[data-duyet]').forEach(function(el){
+      el.addEventListener('click',function(){ duyetBG(el.getAttribute('data-duyet'),true); });
+    });
+    box.querySelectorAll('[data-tuchoi]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var id=el.getAttribute('data-tuchoi').replace(/[^a-zA-Z0-9]/g,'');
+        $('tc-'+id).classList.remove('hidden');
+      });
+    });
+    box.querySelectorAll('[data-xntuchoi]').forEach(function(el){
+      el.addEventListener('click',function(){ duyetBG(el.getAttribute('data-xntuchoi'),false); });
+    });
+    box.querySelectorAll('[data-huy]').forEach(function(el){
+      el.addEventListener('click',function(){ $('tc-'+el.getAttribute('data-huy')).classList.add('hidden'); });
+    });
+  }).catch(function(){});
+}
+function duyetBG(maBanGhi,dongY){
+  var lyDo='';
+  if(!dongY){
+    var id=maBanGhi.replace(/[^a-zA-Z0-9]/g,'');
+    var ta=$('lydo-'+id);
+    lyDo=ta?ta.value.trim():'';
+    if(!lyDo){ showErr('Vui lòng nhập lý do từ chối.'); return; }
+  }
+  api('duyet',{maBanGhi:maBanGhi,dongY:dongY,lyDo:lyDo}).then(function(){
+    showOk(dongY?'Đã duyệt.':'Đã từ chối.');
+    taiChoDuyet();
+  }).catch(function(){});
+}
+function taiHomNay(){
+  $('hnNgay').textContent=homNayText();
+  api('bangCong',{thang:thangHienTaiJS()},true).then(function(j){
+    var today=new Date().getDate(), cho=0, duyet=0;
+    for(var mt in j.grid){ var v=j.grid[mt][today]; if(v==='C')cho++; else if(v==='X')duyet++; }
+    $('hnCho').textContent=fmtNum(cho);
+    $('hnDuyet').textContent=fmtNum(duyet);
+  }).catch(function(){});
+}
+
+/* ================= MÀN HÌNH KẾ TOÁN ================= */
+function taiKeToan(){
+  var mi=$('ktThang');
+  if(!mi.value) mi.value=thangHienTaiJS();
+  $('syncInfoKt').textContent='Đồng bộ: '+getSync();
+  KT_THANG='';
+}
+$('btnXemBang').addEventListener('click',function(){
+  var thang=$('ktThang').value;
+  if(!thang){ showErr('Vui lòng chọn tháng.'); return; }
+  KT_THANG=thang;
+  api('bangCong',{thang:thang}).then(function(j){ renderBangCong(j); taiChiTiet(thang); }).catch(function(){});
+});
+function renderBangCong(j){
+  var p=j.thang.split('-');
+  $('ktThangHien').textContent=p[1]+'/'+p[0];
+  var html='<table class="bang grid"><thead><tr><th>Mã thợ</th><th>Họ tên</th>';
+  for(var d=1;d<=j.soNgay;d++) html+='<th>'+d+'</th>';
+  html+='<th>Đã duyệt</th><th>Chờ</th><th>Từ chối</th></tr></thead><tbody>';
+  var tD=0,tC=0,tT=0;
+  j.tho.forEach(function(t){
+    var g=j.grid[t.maTho]||{}, dd=0,cc=0,tt=0;
+    html+='<tr><td>'+esc(t.maTho)+'</td><td>'+esc(t.hoTen)+'</td>';
+    for(var d=1;d<=j.soNgay;d++){
+      var v=g[d]||'';
+      if(v==='X')dd++; else if(v==='C')cc++; else if(v==='T')tt++;
+      html+='<td class="c'+v+'">'+v+'</td>';
+    }
+    html+='<td><b>'+dd+'</b></td><td>'+cc+'</td><td>'+tt+'</td></tr>';
+    tD+=dd; tC+=cc; tT+=tt;
+  });
+  html+='</tbody></table>';
+  $('ktBang').innerHTML=html;
+  $('ktBangCard').classList.remove('hidden');
+  $('ktTong').innerHTML='<div class="kv"><span>Số thợ</span><b>'+fmtNum(j.tho.length)+'</b></div>'
+    +'<div class="kv"><span>Tổng công đã duyệt</span><b>'+fmtNum(tD)+'</b></div>'
+    +'<div class="kv"><span>Chờ duyệt</span><b>'+fmtNum(tC)+'</b></div>'
+    +'<div class="kv"><span>Từ chối</span><b>'+fmtNum(tT)+'</b></div>';
+  $('ktTongCard').classList.remove('hidden');
+}
+function taiChiTiet(thang){
+  api('chiTietThang',{thang:thang},true).then(function(j){
+    var html='<table class="bang"><thead><tr><th>Ngày công</th><th>Mã thợ</th><th>Họ tên</th><th>Giờ gửi</th><th>Trạng thái</th><th>Vị trí</th></tr></thead><tbody>';
+    if(!j.danhSach.length) html+='<tr><td colspan="6" class="empty">Chưa có bản ghi.</td></tr>';
+    j.danhSach.forEach(function(b){
+      html+='<tr><td>'+fmtNgayVN(b.ngayCong)+'</td><td>'+esc(b.maTho)+'</td><td>'+esc(b.hoTen)+'</td>'
+        +'<td>'+esc(String(b.thoiDiemGui).slice(11))+'</td><td>'+badge(b.trangThai)+'</td>'
+        +'<td>'+linkMaps(b.viDo,b.kinhDo)+'</td></tr>';
+    });
+    html+='</tbody></table>';
+    $('ktChiTiet').innerHTML=html;
+    $('ktChiTietCard').classList.remove('hidden');
+  }).catch(function(){});
+}
+function resetChot(){
+  chotArmed=false;
+  var btn=$('btnChot'); btn.textContent='Chốt công tháng'; btn.classList.remove('armed');
+  $('chotWarn').classList.add('hidden');
+}
+$('btnChot').addEventListener('click',function(){
+  var thang=$('ktThang').value;
+  if(!thang){ showErr('Vui lòng chọn tháng.'); return; }
+  var btn=$('btnChot');
+  if(!chotArmed){
+    chotArmed=true;
+    btn.textContent='NHẤN LẦN NỮA ĐỂ XÁC NHẬN CHỐT '+thang;
+    btn.classList.add('armed');
+    $('chotWarn').classList.remove('hidden');
+    if(chotTimer) clearTimeout(chotTimer);
+    chotTimer=setTimeout(resetChot,10000);
+    return;
+  }
+  resetChot();
+  api('chotCong',{thang:thang}).then(function(j){
+    showOk('Đã chốt công tháng '+j.thang+': '+fmtNum(j.tongSoTho)+' thợ, '+fmtNum(j.tongDaDuyet)+' công đã duyệt.');
+  }).catch(function(){});
+});
+$('btnVietSheet').addEventListener('click',function(){
+  var thang=$('ktThang').value||thangHienTaiJS();
+  api('vietBangCong',{thang:thang}).then(function(j){
+    showOk('Đã ghi bảng công tháng '+j.thang+' ('+fmtNum(j.soTho)+' thợ) lên sheet BANG_CONG_THANG.');
+  }).catch(function(){});
+});
+$('btnXuatExcel').addEventListener('click',function(){
+  var thang=$('ktThang').value||thangHienTaiJS();
+  api('xuatExcel',{thang:thang}).then(function(j){
+    window.open(j.url,'_blank');
+    showOk('Đã tạo file '+j.tenFile+'.');
+  }).catch(function(){});
+});
+
+/* ================= MÀN HÌNH ADMIN ================= */
+var ADM_TABS={tho:['admTabTho','admTho'],cauhinh:['admTabCauHinh','admCauHinh'],nhatky:['admTabNhatKy','admNhatKy'],ketnoi:['admTabKetNoi','admKetNoi']};
+function taiAdmin(){
+  $('syncInfoAdm').textContent='Đồng bộ: '+getSync();
+  if(APP&&APP.sheetUrl) $('btnMoSheetAdm').href=APP.sheetUrl;
+  admTab('tho');
+}
+function admTab(t){
+  for(var k in ADM_TABS){
+    $(ADM_TABS[k][0]).classList.toggle('hien',k===t);
+    $(ADM_TABS[k][1]).classList.toggle('hidden',k!==t);
+  }
+  if(t==='tho') taiDsTho();
+  else if(t==='cauhinh') taiCauHinh();
+  else if(t==='nhatky') taiNhatKy();
+  else if(t==='ketnoi') taiKetNoi();
+}
+$('admTabTho').addEventListener('click',function(){ admTab('tho'); });
+$('admTabCauHinh').addEventListener('click',function(){ admTab('cauhinh'); });
+$('admTabNhatKy').addEventListener('click',function(){ admTab('nhatky'); });
+$('admTabKetNoi').addEventListener('click',function(){ admTab('ketnoi'); });
+
+function taiDsTho(){
+  api('dsTho',{},true).then(function(j){
+    var html='<thead><tr><th>Mã</th><th>Họ tên</th><th>SĐT</th><th>Vai trò</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>';
+    j.danhSach.forEach(function(t){
+      var id=String(t.maTho).replace(/[^a-zA-Z0-9]/g,'');
+      html+='<tr><td>'+esc(t.maTho)+'</td><td>'+esc(t.hoTen)+'</td><td>'+esc(t.sdt)+'</td><td>'+esc(t.vaiTro)+'</td>';
+      html+='<td>'+(t.trangThai==='HoatDong'?'<span class="badge b-duyet">Hoạt động</span>':'<span class="badge b-khoa">Đã khóa</span>')+'</td>';
+      html+='<td style="white-space:nowrap">'
+        +'<button class="btn ghost nho" data-khoa="'+esc(t.maTho)+'" data-tt="'+t.trangThai+'">'+(t.trangThai==='HoatDong'?'Khóa':'Mở')+'</button> '
+        +'<button class="btn ghost nho" data-mk="'+esc(t.maTho)+'">Đặt MK</button></td></tr>';
+      html+='<tr class="hidden" id="mkrow-'+id+'"><td colspan="6">'
+        +'<div style="display:flex;gap:8px"><input id="mkinp-'+id+'" type="password" placeholder="Mật khẩu mới (tối thiểu 6 ký tự)" style="margin:0">'
+        +'<button class="btn chinh nho" data-luumk="'+esc(t.maTho)+'">Lưu</button></div></td></tr>';
+    });
+    html+='</tbody>';
+    var tbl=$('thoTable'); tbl.innerHTML=html;
+    tbl.querySelectorAll('[data-khoa]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var ma=el.getAttribute('data-khoa');
+        var khoa=el.getAttribute('data-tt')==='HoatDong';
+        api('khoaTho',{maTho:ma,khoa:khoa}).then(function(){
+          showOk(khoa?'Đã khóa tài khoản.':'Đã mở khóa tài khoản.'); taiDsTho();
+        }).catch(function(){});
+      });
+    });
+    tbl.querySelectorAll('[data-mk]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var id=el.getAttribute('data-mk').replace(/[^a-zA-Z0-9]/g,'');
+        $('mkrow-'+id).classList.toggle('hidden');
+      });
+    });
+    tbl.querySelectorAll('[data-luumk]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var ma=el.getAttribute('data-luumk');
+        var id=ma.replace(/[^a-zA-Z0-9]/g,'');
+        var mk=$('mkinp-'+id).value;
+        if(!mk||mk.length<6){ showErr('Mật khẩu phải từ 6 ký tự.'); return; }
+        api('datLaiMatKhau',{maTho:ma,matKhauMoi:mk}).then(function(){
+          showOk('Đã đặt lại mật khẩu.'); taiDsTho();
+        }).catch(function(){});
+      });
+    });
+  }).catch(function(){});
+}
+$('btnThemTho').addEventListener('click',function(){
+  var d={hoTen:$('fHoTen').value.trim(),sdt:$('fSdt').value.trim(),email:$('fEmail').value.trim(),
+    vaiTro:$('fVaiTro').value,matKhau:$('fMatKhau').value};
+  if(!d.hoTen||!d.sdt){ showErr('Vui lòng nhập họ tên và số điện thoại.'); return; }
+  api('themTho',d).then(function(j){
+    showOk('Đã thêm '+d.hoTen+' — mã thợ '+j.maTho+', mật khẩu: '+j.matKhauMacDinh+'.');
+    $('fHoTen').value=''; $('fSdt').value=''; $('fEmail').value=''; $('fMatKhau').value='';
+    taiDsTho();
+  }).catch(function(){});
+});
+function taiCauHinh(){
+  api('docCauHinh',{},true).then(function(j){
+    $('cauHinhList').innerHTML=j.cauHinh.map(function(c){
+      var id='cfg_'+String(c.khoa).replace(/[^a-zA-Z0-9]/g,'');
+      return '<div style="margin-bottom:10px"><label>'+esc(c.khoa)+'</label>'
+        +'<div style="display:flex;gap:8px"><input id="'+id+'" value="'+esc(c.giaTri)+'" style="margin:0">'
+        +'<button class="btn chinh nho" data-luucfg="'+esc(c.khoa)+'">Lưu</button></div>'
+        +(c.moTa?'<div class="muted" style="font-size:12.5px">'+esc(c.moTa)+'</div>':'')+'</div>';
+    }).join('');
+    $('cauHinhList').querySelectorAll('[data-luucfg]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var khoa=el.getAttribute('data-luucfg');
+        var id='cfg_'+khoa.replace(/[^a-zA-Z0-9]/g,'');
+        api('luuCauHinh',{khoa:khoa,giaTri:$(id).value}).then(function(){
+          showOk('Đã lưu '+khoa+'.');
+        }).catch(function(){});
+      });
+    });
+  }).catch(function(){});
+}
+$('btnDoiSheet').addEventListener('click',function(){
+  var sid=$('doiSheetId').value.trim();
+  if(!sid){ showErr('Vui lòng nhập Sheet ID hoặc URL.'); return; }
+  api('doiSheet',{sheetId:sid}).then(function(j){
+    showOk('Đã chuyển sang file: '+j.tenFile+'. Cấu trúc đã được khởi tạo.');
+  }).catch(function(){});
+});
+$('btnDoiApiKey').addEventListener('click',function(){
+  api('doiApiKey',{}).then(function(j){
+    $('apiKeyMoiVal').value=j.apiKey;
+    $('apiKeyMoi').classList.remove('hidden');
+    showOk('Đã tạo API key mới. Copy và cập nhật vào Cấu hình kết nối trên mọi thiết bị.');
+  }).catch(function(){});
+});
+$('btnDieuChinh').addEventListener('click',function(){
+  var ma=$('dcMa').value.trim(), tt=$('dcTrangThai').value, lyDo=$('dcLyDo').value.trim();
+  if(!ma){ showErr('Vui lòng nhập mã bản ghi.'); return; }
+  if(!lyDo){ showErr('Điều chỉnh sau chốt bắt buộc nhập lý do.'); return; }
+  if(!confirm('Xác nhận điều chỉnh '+ma+' → '+tt+'? Thao tác được ghi nhật ký.')) return;
+  api('dieuChinhSauChot',{maBanGhi:ma,trangThaiMoi:tt,lyDo:lyDo}).then(function(j){
+    showOk('Đã điều chỉnh '+j.maBanGhi+' → '+j.trangThai+'.');
+    $('dcMa').value=''; $('dcLyDo').value='';
+  }).catch(function(){});
+});
+function taiNhatKy(){
+  api('nhatKy',{limit:200},true).then(function(j){
+    var html='<thead><tr><th>Thời điểm</th><th>Người thực hiện</th><th>Hành động</th><th>Mã bản ghi</th><th>Chi tiết</th></tr></thead><tbody>';
+    j.danhSach.forEach(function(n){
+      html+='<tr><td style="white-space:nowrap">'+esc(n.thoiDiem)+'</td><td>'+esc(n.nguoiThucHien)+'</td><td>'+esc(n.hanhDong)+'</td><td>'+esc(n.maBanGhi)+'</td><td>'+esc(n.chiTiet)+'</td></tr>';
+    });
+    html+='</tbody>';
+    $('nhatKyTable').innerHTML=html;
+  }).catch(function(){});
+}
+function taiKetNoi(){
+  api('trangThaiKetNoi',{},true).then(function(j){
+    if(APP) APP.sheetUrl=j.sheetUrl;
+    $('btnMoSheetAdm').href=j.sheetUrl;
+    $('ketNoiInfo').innerHTML='<div class="kv"><span>File dữ liệu</span><b><a href="'+esc(j.sheetUrl)+'" target="_blank" rel="noopener">Mở Sheet</a></b></div>'
+      +'<div class="kv"><span>Số tài khoản</span><b>'+fmtNum(j.soTho)+'</b></div>'
+      +'<div class="kv"><span>Số bản ghi chấm công</span><b>'+fmtNum(j.soBanGhi)+'</b></div>'
+      +'<div class="kv"><span>Tính lại tổng công gần nhất</span><b>'+esc(j.lanTinhLaiGanNhat||'—')+'</b></div>'
+      +'<div class="kv"><span>Kiểm soát sửa trên Sheet</span><b>'+(j.trigger?'Đang bật':'TẮT — chạy lại setup()')+'</b></div>'
+      +'<div class="kv"><span>Ping backend</span><b id="pingKq">—</b></div>';
+  }).catch(function(){});
+}
+$('btnPing').addEventListener('click',function(){
+  api('ping',{}).then(function(j){
+    var el=$('pingKq'); if(el) el.textContent=j.time+' · v'+j.version;
+    showOk('Kết nối OK — '+j.time+'.');
+  }).catch(function(){});
+});
+
+/* ================= KHỞI ĐỘNG ================= */
+function boot(){
+  cfg=loadLS(CFG_KEY); sess=loadLS(SES_KEY);
+  if(cfg&&cfg.apiUrl){ $('cfgUrl').value=cfg.apiUrl; $('cfgKey').value=cfg.apiKey||''; }
+  if(!cfg||!cfg.apiUrl||!cfg.apiKey){ showScreen('scr-config'); return; }
+  if(sess&&sess.token){
+    api('me',{},true).then(function(j){ APP=j; route(); }).catch(function(){
+      sess=null; try{ localStorage.removeItem(SES_KEY); }catch(e){}
+      showScreen('scr-login');
+    });
+  }else showScreen('scr-login');
+}
+document.addEventListener('DOMContentLoaded',boot);
+</script>
+</body>
+</html>
