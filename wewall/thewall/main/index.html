@@ -554,6 +554,20 @@ function formatMoneyInput(id){
   });
 }
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Format ngày hiển thị: ISO "2026-10-08T17:00:00.000Z" hoặc Date -> "09/10/2026" (đúng giờ VN) */
+function fmtNgay(v){
+  if (v == null) return '';
+  var s = String(v).trim();
+  if (!s) return '';
+  var m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return m[1].padStart(2,'0') + '/' + m[2].padStart(2,'0') + '/' + m[3];
+  var d = new Date(s);
+  if (!isNaN(d.getTime()))
+    return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+  m = s.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (m) return m[3].padStart(2,'0') + '/' + m[2].padStart(2,'0') + '/' + m[1];
+  return s;
+}
 function badge(val, map){ const m = map[val] || [val, 'b-gray']; return '<span class="badge ' + m[1] + '">' + esc(m[0]) + '</span>'; }
 function toast(msg, type){
   const t = document.createElement('div');
@@ -765,7 +779,7 @@ function goPageInner(page, params){
     c.innerHTML = '<div class="card" style="margin-bottom:16px"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
       '<button class="back-link" id="btnBack2">&larr;</button>' +
       '<div><b style="font-size:16px">'+esc(p.ma_du_an)+' — '+esc(p.ten_du_an||'')+'</b>' +
-      '<div class="desc">'+esc(p.ngay_bat_dau||'')+' → '+esc(p.ngay_ket_thuc||'')+'</div></div>' +
+      '<div class="desc">'+fmtNgay(p.ngay_bat_dau)+' → '+fmtNgay(p.ngay_ket_thuc)+'</div></div>' +
       '<div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:420px">' +
       '<input id="projSheetUrl" placeholder="Dán link hoặc mã Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px;flex:1">' +
       '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
@@ -1048,7 +1062,7 @@ async function loadProjectsInto(wrapId){
   }
   tb.innerHTML = state.projects.map(p =>
     '<tr><td><b>' + esc(p.ma_du_an) + '</b></td><td>' + esc(p.ten_du_an) + '</td>' +
-    '<td>' + esc(p.ngay_bat_dau || '') + '</td><td>' + esc(p.ngay_ket_thuc || '') + '</td>' +
+    '<td>' + fmtNgay(p.ngay_bat_dau) + '</td><td>' + fmtNgay(p.ngay_ket_thuc) + '</td>' +
     '<td>' + badge(p.trang_thai || 'dang_lam', TT_DA) + '</td>' +
     '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>'
   ).join('');
@@ -1270,7 +1284,7 @@ function hmSelectBind(id){
       act = '<button class="btn btn-success btn-sm" data-act="approve" data-v="' + esc(String(v.phien_ban)) + '">Duyệt & khóa</button>';
     html += '<tr><td><b>v' + esc(String(v.phien_ban)) + '</b></td><td>' + badge(v.trang_thai, TT_DT) + '</td>' +
       '<td>' + esc(v.nguoi_tao || '') + '</td><td>' + esc(v.nguoi_duyet || '') + '</td>' +
-      '<td>' + esc(v.ngay_tao || '') + '</td><td class="actions">' + act + '</td></tr>';
+      '<td>' + fmtNgay(v.ngay_tao) + '</td><td class="actions">' + act + '</td></tr>';
   });
   html += '</tbody></table></div><div class="desc mt8">Quy trình: Nháp → Trình duyệt → Duyệt & khóa. Bản đang áp dụng cũ tự chuyển sang lưu trữ.</div>';
   // A4: So sánh phiên bản dự trù
@@ -1424,7 +1438,7 @@ async function loadMuaHang(){
         act += ' <button class="btn btn-ghost btn-sm" data-a="taott" data-id="' + x.id + '">Tạo phiếu TT</button>';
       const vuotTag = x.vuot_dinh_muc ? ' <span class="badge b-red">Vượt định mức</span>' : '';
       return '<tr' + (x.vuot_dinh_muc ? ' class="row-alert"' : '') + '>' +
-        '<td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+        '<td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
         '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
@@ -1478,7 +1492,7 @@ async function loadMuaHang(){
   $('btnXlsMH').onclick = () => xuatXlsChung('muahang_chiphi',
     'Mua hàng/Chi phí — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
     ['Ngày', 'Loại', 'Hạng mục', 'Nội dung', 'Số lượng', 'Đơn giá', 'Thành tiền', 'NCC', 'Hình thức', 'Người nhận', 'Ngân hàng', 'STK', 'Trạng thái', 'Người tạo'],
-    (state.mhHienThi || []).map(x => [x.ngay_de_nghi || '', LOAI_DN[x.loai] || x.loai || '', x.hang_muc || '',
+    (state.mhHienThi || []).map(x => [fmtNgay(x.ngay_de_nghi), LOAI_DN[x.loai] || x.loai || '', x.hang_muc || '',
       x.noi_dung || x.mo_ta || '', x.so_luong, x.don_gia, x.so_tien, x.nha_cung_cap || '',
       x.hinh_thuc === 'tien_mat' ? 'Tiền mặt' : (x.hinh_thuc ? 'Chuyển khoản' : ''),
       x.ten_nguoi_nhan || '', x.ngan_hang || '', x.so_tai_khoan || '',
@@ -1623,7 +1637,7 @@ async function inPhieuDNTT(id){
     'Tel: ' + esc(getConfig().coTel) + '<br>Website: ' + esc(getConfig().coWeb) + '</div></div>' +
     '<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>' +
     '<div class="phieu-row">' +
-    '<div class="cell"><span class="lbl">Ngày:</span> <b>' + esc(d.ngay || '') + '</b></div>' +
+    '<div class="cell"><span class="lbl">Ngày:</span> <b>' + fmtNgay(d.ngay) + '</b></div>' +
     '<div class="cell"><span class="lbl">Người đề nghị:</span> <b>' + esc(d.nguoi_de_nghi || '') + '</b></div>' +
     '<div class="cell"><span class="lbl">Bộ phận:</span> <b>' + esc(d.bo_phan || '') + '</b></div></div>' +
     '<div class="phieu-row"><div class="cell"><span class="lbl">Mục đích thanh toán:</span> <b>' + esc(d.muc_dich || '') + '</b></div></div>' +
@@ -1669,7 +1683,7 @@ function xuatPhieuXls(d){
     'Tel: ' + esc(getConfig().coTel) + '<br>Website: ' + esc(getConfig().coWeb) + '</td></tr></table>' +
     '<h2 align="center">PHIẾU ĐỀ NGHỊ THANH TOÁN</h2>' +
     '<table border="1" cellpadding="6">' +
-    '<tr><td>Ngày: <b>' + esc(d.ngay || '') + '</b></td><td>Người đề nghị: <b>' + esc(d.nguoi_de_nghi || '') + '</b></td><td>Bộ phận: <b>' + esc(d.bo_phan || '') + '</b></td></tr>' +
+    '<tr><td>Ngày: <b>' + fmtNgay(d.ngay) + '</b></td><td>Người đề nghị: <b>' + esc(d.nguoi_de_nghi || '') + '</b></td><td>Bộ phận: <b>' + esc(d.bo_phan || '') + '</b></td></tr>' +
     '<tr><td colspan="3">Mục đích thanh toán: <b>' + esc(d.muc_dich || '') + '</b></td></tr>' +
     '<tr><td colspan="2">DỰ ÁN: <b>' + esc(d.ten_du_an || d.ma_du_an || '') + '</b></td><td>Hình thức thanh toán: <b>' + esc(d.hinh_thuc || '') + '</b></td></tr>' +
     '</table><br>' +
@@ -1840,7 +1854,7 @@ async function loadPhatSinh(filter){
       if (x.trang_thai === 'cho_duyet' && can('Admin','Approver'))
         act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + x.id + '">Duyệt</button> ' +
               '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
-      html += '<tr><td>' + esc(x.ngay_tao || '') + '</td>' +
+      html += '<tr><td>' + fmtNgay(x.ngay_tao) + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
         '<td>' + esc(x.ly_do || '') + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
@@ -1858,8 +1872,8 @@ async function loadPhatSinh(filter){
   $('btnXlsPS').onclick = () => xuatXlsChung('phatsinh',
     'Phát sinh — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
     ['Ngày tạo', 'Hạng mục', 'Lý do', 'Số tiền', 'Trạng thái', 'Người đề xuất', 'Người duyệt', 'Ngày duyệt'],
-    rows.map(x => [x.ngay_tao || '', x.hang_muc || '', x.ly_do || '', x.so_tien,
-      (TT_PS[x.trang_thai] || [x.trang_thai])[0], x.nguoi_de_xuat || '', x.nguoi_duyet || '', x.ngay_duyet || '']));
+    rows.map(x => [fmtNgay(x.ngay_tao), x.hang_muc || '', x.ly_do || '', x.so_tien,
+      (TT_PS[x.trang_thai] || [x.trang_thai])[0], x.nguoi_de_xuat || '', x.nguoi_duyet || '', fmtNgay(x.ngay_duyet)]));
   const nb = $('btnNewPS');
   if (nb) nb.onclick = () => openPhatSinhModal();
   el.querySelectorAll('button[data-a]').forEach(b => b.addEventListener('click', async () => {
@@ -1916,7 +1930,7 @@ async function loadPheDuyet(){
     dts.forEach(x => {
       html += '<tr><td><b>' + esc(x.ma_du_an) + '</b></td><td>v' + esc(String(x.phien_ban)) + '</td>' +
         '<td class="num"><b>' + fmt(x.tong) + '</b></td>' +
-        '<td>' + esc(x.nguoi_tao || '') + '</td><td>' + esc(x.ngay_tao || '') + '</td>' +
+        '<td>' + esc(x.nguoi_tao || '') + '</td><td>' + fmtNgay(x.ngay_tao) + '</td>' +
         '<td class="actions">' + (canDT ?
           '<button class="btn btn-success btn-sm" data-k="dt" data-a="ok" data-v="' + esc(String(x.phien_ban)) + '" data-ma="' + esc(x.ma_du_an) + '">Duyệt & khóa</button>' : '') +
         '</td></tr>';
@@ -2057,7 +2071,7 @@ function renderBaoCao(d){
       '<th>Hạng mục</th><th>Nội dung</th><th class="num">SL</th><th class="num">Đơn giá</th>' +
       '<th class="num">Thành tiền</th><th>NCC</th><th>Trạng thái</th><th>Người tạo</th></tr></thead><tbody>';
     items.forEach(x => {
-      html += '<tr><td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+      html += '<tr><td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
         '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
@@ -2174,7 +2188,7 @@ function exportXls(d){
     ['Ngày','Loại','Hạng mục','Nội dung','Số lượng','Đơn giá','Thành tiền','Nhà cung cấp','Trạng thái','Người tạo']
       .map(c => '<th>' + c + '</th>').join('') + '</tr></thead><tbody>';
   items.forEach(x => {
-    h += '<tr><td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+    h += '<tr><td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
       '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
       '<td>' + esc(x.hang_muc || '') + '</td>' +
       '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
@@ -2457,7 +2471,7 @@ async function loadTamUng(){
         act = '<button class="btn btn-success btn-sm" data-a="ok" data-id="' + esc(String(x.id)) + '">Duyệt</button>';
       else if (x.trang_thai === 'da_duyet' && canQT)
         act = '<button class="btn btn-primary btn-sm" data-a="settle" data-id="' + esc(String(x.id)) + '" data-tien="' + esc(String(x.so_tien)) + '">Quyết toán</button>';
-      html += '<tr><td style="white-space:nowrap">' + esc(x.ngay_tam_ung || '') + '</td>' +
+      html += '<tr><td style="white-space:nowrap">' + fmtNgay(x.ngay_tam_ung) + '</td>' +
         '<td><b>' + esc(x.nguoi_tam_ung || '') + '</b></td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
         '<td>' + esc(x.ly_do || '') + '</td>' +
@@ -2675,7 +2689,7 @@ function xuatPdfBaoCao(){
     ['STT', 'Ngày', 'Loại', 'Hạng mục', 'Nội dung', 'SL', 'Đơn giá', 'Thành tiền', 'Trạng thái'].map(c => '<th>' + c + '</th>').join('') +
     '</tr></thead><tbody>';
   items.forEach((x, i) => {
-    h += '<tr><td>' + (i + 1) + '</td><td>' + esc(x.ngay_de_nghi || '') + '</td>' +
+    h += '<tr><td>' + (i + 1) + '</td><td>' + fmtNgay(x.ngay_de_nghi) + '</td>' +
       '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
       '<td>' + esc(x.hang_muc || '') + '</td>' +
       '<td style="text-align:left">' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
