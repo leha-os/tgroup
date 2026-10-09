@@ -33,13 +33,9 @@ button{font-family:inherit}
 .sidebar{width:230px;background:var(--sidebar);color:#cbd5e1;flex-shrink:0;padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sidebar .logo{padding:0 18px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
 .sidebar .logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
-.sidebar .logo b{color:#fff;font-size:15px;display:block;line-height:1.2}
+.sidebar .logo b{color:var(--gold);font-size:15px;display:block;line-height:1.2}
 .sidebar .logo small{font-size:11px;color:#94a3b8}
-/* Desktop: chỉ hiện 1 dòng THE WALL ARCHITECTURE, ẩn chữ THE WALL thừa */
-@media(min-width:901px){
-  .sidebar .logo .logo-main{display:none}
-  .sidebar .logo .logo-sub{font-size:13px;color:#fff;font-weight:700}
-}
+/* Sidebar: chỉ hiện 1 dòng THE WALL ARCHITECTURE màu cam */
 /* Mobile: hiện đủ 2 dòng */
 @media(max-width:900px){
   .sidebar .logo .logo-sub{font-size:11px;color:#94a3b8}
@@ -505,14 +501,14 @@ function getConfig(){
     const c = JSON.parse(localStorage.getItem(LS_CFG) || '{}');
     return {
       apiUrl: c.apiUrl || API_URL,
-      coName: c.coName || 'CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG',
-      coAddr: c.coAddr || '15 Đường số 14, KDC Nam Long, P.Tân Thuận, TP HCM',
+      coName: c.coName || 'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',
+      coAddr: c.coAddr || '15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',
       coTel: c.coTel || '+848 5410 4013 - 0903 865 240',
       coWeb: c.coWeb || 'www.thewall.com.vn'
     };
   } catch(e) {
-    return { apiUrl: API_URL, coName:'CÔNG TY TNHH TV-TKKT-XD BỨC TƯỜNG',
-      coAddr:'15 Đường số 14, KDC Nam Long, P.Tân Thuận, TP HCM',
+    return { apiUrl: API_URL, coName:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',
+      coAddr:'15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',
       coTel:'+848 5410 4013 - 0903 865 240', coWeb:'www.thewall.com.vn' };
   }
 }
@@ -537,8 +533,6 @@ const TT_DN = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt (
 const TT_DT = { nhap:['Nháp','b-gray'], cho_duyet:['Chờ duyệt','b-amber'],
   da_duyet:['Đã duyệt (đã khóa)','b-green'], khoa_luu:['Lưu trữ','b-gray'] };
 const TT_PS = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'], tu_choi:['Từ chối','b-red'] };
-const TT_TD = { chua_bat_dau:['Chưa bắt đầu','b-gray'], dang_lam:['Đang làm','b-blue'],
-  hoan_thanh:['Hoàn thành','b-green'] };
 const TT_TT = { cho_duyet:['Chờ duyệt','b-amber'], da_duyet:['Đã duyệt','b-green'],
   tu_choi:['Từ chối','b-red'], da_chi:['Đã chi','b-blue'] };
 const TT_DA = { dang_lam:['Đang làm','b-blue'], tam_dung:['Tạm dừng','b-amber'],
@@ -680,7 +674,6 @@ var MENU = [
     { key:'variation', label:'Phát sinh',          icon:'✦' }
   ]},
   { group: 'Thực thi', items: [
-    { key:'progress',  label:'Tiến độ',     icon:'◔' },
     { key:'approval',  label:'Phê duyệt',   icon:'✓' },
     { key:'payment',   label:'Thanh toán',  icon:'⎙' },
     { key:'cashadvance', label:'Tạm ứng',   icon:'₫' }
@@ -696,12 +689,12 @@ var MENU = [
 ];
 // Map page DeepSeek -> tab của em
 var PAGE2TAB = {
-  overview:'tongquan', budget:'dutru', cost:'muahang', variation:'phatsinh', progress:'tiendo',
+  overview:'tongquan', budget:'dutru', cost:'muahang', variation:'phatsinh',
   approval:'pheduyet', payment:'thanhtoan', cashadvance:'tamung', reports:'baocao', history:'lichsu'
 };
 var PAGE_TITLES = {
   dashboard:'Dashboard', projects:'Dự án', overview:'Tổng quan dự án', budget:'Dự trù / Định mức',
-  cost:'Mua hàng / Chi phí', variation:'Phát sinh', progress:'Tiến độ',
+  cost:'Mua hàng / Chi phí', variation:'Phát sinh',
   approval:'Phê duyệt', payment:'Thanh toán', cashadvance:'Tạm ứng', reports:'Báo cáo',
   history:'Lịch sử', users:'Người dùng', settings:'Cài đặt'
 };
@@ -808,7 +801,7 @@ function goPageInner(page, params){
 // Tương thích: switchTab cũ -> goPage
 function switchTab(name){
   var pageMap = { tongquan:'overview', dutru:'budget', muahang:'cost', phatsinh:'variation',
-    tiendo:'progress', pheduyet:'approval', thanhtoan:'payment', tamung:'cashadvance', baocao:'reports',
+    pheduyet:'approval', thanhtoan:'payment', tamung:'cashadvance', baocao:'reports',
     lichsu:'history', admin:'users' };
   goPage(pageMap[name] || 'dashboard');
 }
@@ -941,7 +934,6 @@ function renderTongQuanChung(d){
   const pct = v => dm > 0 ? Math.round(v / dm * 100) + '%' : '—';
   const soVuot = list.filter(p => Number(p.tong_vuot) > 0).length;
   const vuotList = list.filter(p => Number(p.tong_vuot) > 0);
-  const treList = list.filter(p => Number(p.so_viec_tre) > 0);
   const choList = list.filter(p => Number(p.cho_duyet) > 0);
 
   let html = '<div class="card"><div class="card-head"><h2>Dashboard tổng — toàn bộ dự án</h2></div>';
@@ -970,12 +962,6 @@ function renderTongQuanChung(d){
   });
   if (vuotList.length) html += '<div class="a-total"><span>Tổng vượt</span><span class="text-red">' + fmt(T('tong_vuot')) + '</span></div>';
   html += '</div></div>';
-  html += '<div class="alert-card a-amber" data-goto="progress"><div class="a-head">Việc trễ hạn (' + treList.length + ' dự án)</div><div class="a-body">';
-  if (!treList.length) html += '<div class="a-empty">Không có việc trễ.</div>';
-  treList.forEach(p => {
-    html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b class="text-red">' + Number(p.so_viec_tre) + ' việc</b></div>';
-  });
-  html += '</div></div>';
   html += '<div class="alert-card a-blue" data-goto="approval"><div class="a-head">Chờ phê duyệt (' + choList.length + ' dự án)</div><div class="a-body">';
   if (!choList.length) html += '<div class="a-empty">Không có hồ sơ chờ.</div>';
   choList.forEach(p => {
@@ -988,9 +974,9 @@ function renderTongQuanChung(d){
   html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th>' +
     '<th class="num">Định mức</th><th class="num">Cam kết</th><th class="num">Đã chi</th>' +
     '<th class="num">Còn lại</th><th class="num">Vượt</th><th style="min-width:150px">Sử dụng ngân sách</th>' +
-    '<th class="num">Tiến độ</th><th class="num">Việc trễ</th><th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
+    '<th class="num">Chờ duyệt</th><th></th></tr></thead><tbody>';
   list.forEach(p => {
-    const alert = Number(p.tong_vuot) > 0 || Number(p.so_viec_tre) > 0;
+    const alert = Number(p.tong_vuot) > 0;
     const dmP = Number(p.tong_dinh_muc) || 0;
     const pctP = dmP > 0 ? Math.min(100, Math.round(Number(p.tong_da_chi) / dmP * 100)) : 0;
     const over = dmP > 0 && Number(p.tong_da_chi) > dmP;
@@ -1002,8 +988,6 @@ function renderTongQuanChung(d){
       '<td class="num">' + fmt(p.tong_con_lai) + '</td>' +
       '<td class="num' + (Number(p.tong_vuot) > 0 ? ' text-red' : '') + '">' + fmt(p.tong_vuot) + '</td>' +
       '<td><div class="prog-cell"><div class="progress' + (over ? ' red' : '') + '"><div style="width:' + pctP + '%"></div></div><span class="pct">' + pctP + '%</span></div></td>' +
-      '<td class="num">' + (p.tien_do == null ? '—' : Number(p.tien_do).toFixed(0) + '%') + '</td>' +
-      '<td class="num' + (Number(p.so_viec_tre) > 0 ? ' text-red' : '') + '">' + Number(p.so_viec_tre || 0) + '</td>' +
       '<td class="num">' + Number(p.cho_duyet || 0) + '</td>' +
       '<td class="actions"><button class="btn btn-primary btn-sm" data-ma="' + esc(p.ma_du_an) + '">Mở</button></td></tr>';
   });
@@ -1111,10 +1095,10 @@ function openProject(ma){
   goPage('overview');
 }
 const TAB_LOADERS = { tongquan: loadTongQuan, dutru: loadDuTru, muahang: loadMuaHang,
-  phatsinh: loadPhatSinh, tiendo: loadTienDo, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
+  phatsinh: loadPhatSinh, pheduyet: loadPheDuyet, thanhtoan: loadThanhToan,
   tamung: loadTamUng, baocao: loadBaoCao, lichsu: loadLichSu };
 const TAB_TITLES = { tongquan:'Tổng quan dự án', dutru:'Dự trù / Định mức', muahang:'Mua hàng / Chi phí',
-  phatsinh:'Phát sinh', tiendo:'Tiến độ', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
+  phatsinh:'Phát sinh', pheduyet:'Phê duyệt', thanhtoan:'Thanh toán',
   tamung:'Tạm ứng', baocao:'Báo cáo', lichsu:'Lịch sử', admin:'Người dùng' };
 
 /* ---------- Modal ---------- */
@@ -1150,28 +1134,22 @@ async function loadTongQuan(){
   if (!d) return;
   const items = d.items || [];
   const cd = d.cho_duyet || {};
-  const treList = d.hang_muc_tre || [];
   let html = '<div class="kpis">' +
     kpi('Tổng định mức', fmt(d.tong_dinh_muc), 'k-blue', ' đ') +
     kpi('Đã cam kết', fmt(d.tong_cam_ket), '', ' đ') +
     kpi('Đã chi thực tế', fmt(d.tong_da_chi), '', ' đ') +
     kpi('Còn lại', fmt(d.tong_con_lai), 'k-green', ' đ') +
     kpi('Vượt ngân sách', fmt(d.tong_vuot), 'k-red', ' đ') +
-    kpi('Tổng tiến độ', (d.tong_tien_do == null ? '—' : Number(d.tong_tien_do).toFixed(0)), 'k-blue', '%') +
     '</div>';
 
   // Card cảnh báo (chỉ hiện khi có vấn đề cần xử lý)
   const tongCho = (cd.de_nghi || 0) + (cd.phat_sinh != null ? cd.phat_sinh : (d.phat_sinh_cho_duyet || 0)) + (cd.du_tru || 0);
   const vuotHm = items.filter(it => Number(it.vuot) > 0);
-  if (vuotHm.length || treList.length || tongCho > 0) {
+  if (vuotHm.length || tongCho > 0) {
     html += '<div class="alert-cards">';
     if (vuotHm.length) {
       html += '<div class="alert-card a-red" data-goto="reports"><div class="a-head">Vượt ngân sách (' + vuotHm.length + ' hạng mục)</div><div class="a-body">' +
         vuotHm.map(it => '<div class="a-row"><span>' + esc(it.hang_muc) + '</span><b class="text-red">' + fmt(it.vuot) + '</b></div>').join('') + '</div></div>';
-    }
-    if (treList.length) {
-      html += '<div class="alert-card a-amber"><div class="a-head">Công việc trễ (' + treList.length + ')</div><div class="a-body">' +
-        treList.map(t => '<div class="a-row"><span>' + esc(typeof t === 'string' ? t : (t.hang_muc || t.cong_viec || '')) + '</span></div>').join('') + '</div></div>';
     }
     if (tongCho > 0) {
       html += '<div class="alert-card a-blue" data-goto="approval"><div class="a-head">Chờ phê duyệt (' + tongCho + ')</div><div class="a-body">' +
@@ -1187,12 +1165,7 @@ async function loadTongQuan(){
   html += '<div class="stat-item">Đề nghị chờ duyệt<b>' + (cd.de_nghi || 0) + '</b></div>';
   html += '<div class="stat-item">Phát sinh chờ duyệt<b>' + (cd.phat_sinh != null ? cd.phat_sinh : (d.phat_sinh_cho_duyet || 0)) + '</b></div>';
   html += '<div class="stat-item">Dự trù chờ duyệt<b>' + (cd.du_tru || 0) + '</b></div>';
-  html += '<div class="stat-item">Hạng mục/công việc trễ<b class="' + (treList.length ? 'text-red' : 'text-green') + '">' + treList.length + '</b></div>';
   html += '</div>';
-  if (treList.length) {
-    html += '<div class="mt16"><b class="text-red">Đang trễ:</b> ' +
-      treList.map(t => '<span class="badge b-red">' + esc(typeof t === 'string' ? t : (t.hang_muc || t.cong_viec || '')) + '</span>').join(' ') + '</div>';
-  }
   html += '</div>';
 
   // Bảng theo hạng mục (+ progress bar sử dụng ngân sách)
@@ -1569,6 +1542,7 @@ async function openDeNghiModal(){
       loai: loai, hang_muc: hmSelectVal('dnHm'),
       noi_dung: $('dnNd').value.trim(),
       so_luong: parseMoney($('dnSl').value), don_gia: parseMoney($('dnDg').value),
+      so_tien: calc(),
       nha_cung_cap: $('dnNcc').value.trim(),
       hinh_thuc: $('dnHt').value,
       ten_nguoi_nhan: $('dnNn').value.trim(),
@@ -1920,125 +1894,6 @@ async function openPhatSinhModal(){
     const r = await safeApi('createPhatSinh', { ma_du_an: state.project.ma_du_an,
       hang_muc: hm, ly_do: ly, so_tien: tien });
     if (r) loadPhatSinh();
-  };
-}
-
-/* ================= TAB: TIẾN ĐỘ ================= */
-async function loadTienDo(){
-  const el = $('tab-tiendo');
-  el.innerHTML = skelCard(4);
-  const fd = await ensureFullData();
-  const d = (fd && fd.tiendo) || await safeApi('getTienDo', { ma_du_an: state.project.ma_du_an }, { force: true });
-  if (!d) return;
-  const list = d.list || d || [];
-  let html = '<div class="card"><div class="card-head"><h2>Tiến độ dự án</h2>' +
-    '<div style="display:flex;gap:8px">' +
-    (list.length ? '<button class="btn btn-ghost btn-sm" id="btnXlsTD">Xuất Excel</button>' : '') +
-    (can('Admin','QuanLy') ? '<button class="btn btn-primary btn-sm" id="btnTdEdit">Cập nhật tiến độ</button>' : '') +
-    '</div></div>';
-  if (!list.length) html += '<div class="empty">Chưa có dữ liệu tiến độ.</div>';
-  else {
-    html += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Công việc</th>' +
-      '<th>Người phụ trách</th><th>Bắt đầu</th><th>Kết thúc</th>' +
-      '<th style="min-width:150px">Hoàn thành</th><th>Trạng thái</th><th>Người cập nhật</th></tr></thead>' +
-      '<tbody id="tdBody"></tbody></table></div><div id="tdPager"></div>';
-  }
-  html += '</div>';
-  el.innerHTML = html;
-  if (list.length) {
-    const tdRowHtml = t => {
-      const pc = Math.max(0, Math.min(100, Number(t.phan_tram) || 0));
-      const tre = t.tre_han;
-      return '<tr' + (tre ? ' class="row-alert"' : '') + '>' +
-        '<td><b>' + esc(t.hang_muc || '') + '</b></td>' +
-        '<td>' + esc(t.cong_viec || '') + '</td>' +
-        '<td>' + esc(t.nguoi_phu_trach || '') + '</td>' +
-        '<td>' + esc(t.ngay_bat_dau || '') + '</td>' +
-        '<td>' + esc(t.ngay_ket_thuc || '') + '</td>' +
-        '<td><div style="display:flex;align-items:center;gap:8px"><div class="progress' + (tre ? ' red' : '') + '" style="flex:1"><div style="width:' + pc + '%"></div></div><b>' + pc + '%</b></div></td>' +
-        '<td>' + badge(t.trang_thai, TT_TD) + (tre ? ' <span class="badge b-red">Trễ hạn</span>' : '') + '</td>' +
-        '<td class="text-muted">' + esc(t.nguoi_cap_nhat || '') + '</td></tr>';
-    };
-    const drawTd = pg => {
-      const p = paginateRender(list, pg, 25);
-      $('tdBody').innerHTML = p.rows.map(tdRowHtml).join('');
-      $('tdPager').innerHTML = p.bar;
-    };
-    drawTd(state.pg_tiendo || 1);
-    $('tdPager').addEventListener('click', e => {
-      const b = e.target.closest ? e.target.closest('[data-pg]') : null;
-      if (b && !b.disabled) { state.pg_tiendo = Number(b.dataset.pg); drawTd(state.pg_tiendo); }
-    });
-  }
-  const bx2 = $('btnXlsTD');
-  if (bx2) bx2.onclick = () => xuatXlsChung('tiendo',
-    'Tiến độ — ' + state.project.ma_du_an + ' — ' + state.project.ten_du_an,
-    ['Hạng mục', 'Công việc', 'Người phụ trách', 'Ngày bắt đầu', 'Ngày kết thúc', '% hoàn thành', 'Trạng thái', 'Trễ hạn', 'Người cập nhật', 'Ngày cập nhật'],
-    list.map(t => [t.hang_muc || '', t.cong_viec || '', t.nguoi_phu_trach || '', t.ngay_bat_dau || '',
-      t.ngay_ket_thuc || '', t.phan_tram, (TT_TD[t.trang_thai] || [t.trang_thai])[0],
-      t.tre_han ? 'CÓ' : '', t.nguoi_cap_nhat || '', t.ngay_cap_nhat || '']));
-  const b = $('btnTdEdit');
-  if (b) b.onclick = () => openTienDoModal(list);
-}
-async function openTienDoModal(list){
-  await ensureHangMucs();
-  const pre = list && list.length ? list : [{ hang_muc:'', cong_viec:'', nguoi_phu_trach:'', ngay_bat_dau:'', ngay_ket_thuc:'', phan_tram:0, trang_thai:'chua_bat_dau' }];
-  openModal('Cập nhật tiến độ',
-    '<div class="desc">Lưu sẽ ghi đè toàn bộ tiến độ hiện tại của dự án (có ghi lịch sử).</div><div id="tdRows"></div>' +
-    '<button class="btn btn-ghost btn-sm" id="tdAdd">+ Thêm công việc</button>',
-    '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
-    '<button class="btn btn-primary" id="mSave">Lưu tiến độ</button>');
-  $('mCancel').onclick = closeModal;
-  const addRow = t => {
-    t = t || {};
-    const div = document.createElement('div');
-    div.className = 'dyn-row';
-    const hmOpts = (state.hangMucs || []).map(h => '<option value="' + esc(h) + '"' + (h === (t.hang_muc || '') ? ' selected' : '') + '>' + esc(h) + '</option>').join('');
-    const canNewHm = can('Admin','QuanLy');
-    div.innerHTML =
-      '<div class="f-group" style="flex:1;min-width:110px"><select class="tdHm">' +
-      '<option value="">-- Hạng mục --</option>' + hmOpts +
-      (canNewHm ? '<option value="__new__">+ Mới...</option>' : '') + '</select>' +
-      (canNewHm ? '<input class="tdHmNew hidden" placeholder="Tên HM mới" style="margin-top:4px;width:100%">' : '') + '</div>' +
-      '<div class="f-group" style="flex:2;min-width:140px"><input class="tdCv" placeholder="Công việc" value="' + esc(t.cong_viec || '') + '"></div>' +
-      '<div class="f-group" style="flex:1;min-width:110px"><input class="tdPt" placeholder="Người phụ trách" value="' + esc(t.nguoi_phu_trach || '') + '"></div>' +
-      '<div class="f-group" style="min-width:120px"><input class="tdBd" type="date" value="' + esc(t.ngay_bat_dau || '') + '"></div>' +
-      '<div class="f-group" style="min-width:120px"><input class="tdKt" type="date" value="' + esc(t.ngay_ket_thuc || '') + '"></div>' +
-      '<div class="f-group" style="width:75px"><input class="tdPc" type="number" min="0" max="100" placeholder="%" value="' + esc(t.phan_tram == null ? '' : t.phan_tram) + '"></div>' +
-      '<div class="f-group" style="min-width:125px"><select class="tdTt">' +
-      Object.keys(TT_TD).map(k => '<option value="' + k + '"' + (t.trang_thai === k ? ' selected' : '') + '>' + TT_TD[k][0] + '</option>').join('') +
-      '</select></div>' +
-      '<button class="btn btn-ghost btn-sm tdDel">Xóa</button>';
-    div.querySelector('.tdDel').onclick = () => div.remove();
-    const selHm = div.querySelector('.tdHm');
-    if (selHm) selHm.addEventListener('change', () => {
-      const ni = div.querySelector('.tdHmNew');
-      if (ni) ni.classList.toggle('hidden', selHm.value !== '__new__');
-    });
-    $('tdRows').appendChild(div);
-  };
-  pre.forEach(addRow);
-  $('tdAdd').onclick = () => addRow({});
-  $('mSave').onclick = async () => {
-    const items = [];
-    document.querySelectorAll('#tdRows .dyn-row').forEach(r => {
-      const cv = r.querySelector('.tdCv').value.trim();
-      if (!cv) return;
-      const _hmSel = r.querySelector('.tdHm');
-      const _hmNew = r.querySelector('.tdHmNew');
-      const _hm = _hmSel.value === '__new__' ? (_hmNew ? _hmNew.value.trim() : '') : _hmSel.value;
-      items.push({ hang_muc: _hm, cong_viec: cv,
-        nguoi_phu_trach: r.querySelector('.tdPt').value.trim(),
-        ngay_bat_dau: r.querySelector('.tdBd').value,
-        ngay_ket_thuc: r.querySelector('.tdKt').value,
-        phan_tram: Math.max(0, Math.min(100, Number(r.querySelector('.tdPc').value) || 0)),
-        trang_thai: r.querySelector('.tdTt').value });
-    });
-    if (!items.length) { toast('Nhập ít nhất một công việc.', 'error'); return; }
-    closeModal(); // B3: đóng modal + toast ngay, gọi API nền
-    toast('Đã lưu tiến độ.', 'success');
-    const r = await safeApi('saveTienDo', { ma_du_an: state.project.ma_du_an, items: items });
-    if (r) loadTienDo();
   };
 }
 
@@ -2856,11 +2711,7 @@ function soNgayTu(d){
 async function fillWidgetCanXuLy(list){
   const box = $('widgetCanXuLy');
   if (!box) return;
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  // (1) Việc quá deadline — đỏ (từ getTongQuan)
-  const tre = (list || []).filter(p => Number(p.so_viec_tre) > 0)
-    .map(p => ({ ma: p.ma_du_an, ten: p.ten_du_an, n: Number(p.so_viec_tre) }));
-  // (2) Hồ sơ chờ duyệt quá 2 ngày — vàng (từ getApprovalInbox)
+  // Hồ sơ chờ duyệt quá 2 ngày — vàng (từ getApprovalInbox)
   let inbox = null;
   if (can('Admin', 'QuanLy', 'Approver')) inbox = await safeApi('getApprovalInbox');
   const cu = [];
@@ -2874,59 +2725,15 @@ async function fillWidgetCanXuLy(list){
     push(inbox.phat_sinh, 'Phát sinh', x => x.ngay_tao, x => (x.ly_do || '') + ' — ' + fmt(x.so_tien) + ' đ');
     push(inbox.thanh_toan, 'Thanh toán', x => x.ngay_tao, x => (x.noi_dung || '') + ' — ' + fmt(x.so_tien) + ' đ');
   }
-  const totalTre = tre.reduce((s, x) => s + x.n, 0);
-  const render = sapDens => {
-    if (!$('widgetCanXuLy')) return;
-    const total = totalTre + cu.length + sapDens.length;
-    document.title = total > 0 ? '(' + total + ') Quản lý Dự án' : 'Quản lý Dự án';
-    const grp = (cls, label, n, rows, more) =>
-      '<div class="alert-card ' + cls + '" style="margin-bottom:12px"><div class="a-head">' + label + ' (' + n + ')</div>' +
-      '<div class="a-body">' + (rows || '<div class="a-empty">Không có.</div>') +
-      (more ? '<a class="w-more" data-go="' + more + '">Xem thêm &rarr;</a>' : '') + '</div></div>';
-    const rowTre = tre.slice(0, 5).map(x =>
-      '<div class="w-row" data-open="' + esc(x.ma) + '"><span><b>' + esc(x.ma) + '</b> — ' + esc(x.ten || '') + '</span><b class="text-red">' + x.n + ' việc</b></div>').join('');
-    const rowCu = cu.slice(0, 5).map(x =>
-      '<div class="w-row"><span><b>' + esc(x.loai) + '</b> ' + esc(x.ma || '') + ' — ' + esc(x.moTa) + '</span><span class="text-muted">' + x.age + ' ngày</span></div>').join('');
-    const rowSap = sapDens.slice(0, 5).map(x =>
-      '<div class="w-row" data-open="' + esc(x.ma) + '"><span><b>' + esc(x.ma) + '</b> — ' + esc(x.ten) + '</span><span>' + esc(x.ngay) + '</span></div>').join('');
-    box.innerHTML =
-      grp('a-red', 'Quá deadline', totalTre, rowTre, tre.length > 5 ? 'projects' : '') +
-      grp('a-amber', 'Chờ duyệt quá 2 ngày', cu.length, rowCu, cu.length > 5 ? 'approval' : '') +
-      grp('a-blue', 'Deadline trong 3 ngày tới', sapDens.length, rowSap, sapDens.length > 5 ? 'progress' : '');
-    const openMa = async ma => {
-      if (!state.projects.length) {
-        const d = await safeApi('listProjects');
-        if (d) state.projects = d.projects || d || [];
-      }
-      openProject(ma);
-    };
-    box.querySelectorAll('[data-open]').forEach(r => r.addEventListener('click', () => openMa(r.dataset.open)));
-    box.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', async () => {
-      const go = a.dataset.go;
-      if (go === 'projects') { goPage('projects'); return; }
-      const first = go === 'approval' ? (cu[0] && cu[0].ma) : (sapDens[0] && sapDens[0].ma);
-      if (first) await openMa(first);
-      goPage(go);
-    }));
-  };
-  render([]);
-  // (3) Deadline trong 3 ngày tới — xanh (tải nền từng dự án, đã cache)
-  try {
-    const res = await Promise.all((list || []).map(p =>
-      safeApi('getTienDo', { ma_du_an: p.ma_du_an }).catch(() => null)));
-    const sap = [];
-    res.forEach((r, i) => {
-      const td = (r && (r.list || r)) || [];
-      td.forEach(t => {
-        if (t.trang_thai === 'hoan_thanh' || t.tre_han) return;
-        const d = parseVnDate(t.ngay_ket_thuc);
-        if (!d) return;
-        const diff = Math.round((d - today) / 86400000);
-        if (diff >= 0 && diff <= 3) sap.push({ ma: list[i].ma_du_an, ten: t.cong_viec || t.hang_muc || '', ngay: t.ngay_ket_thuc });
-      });
-    });
-    render(sap);
-  } catch (e) {}
+  document.title = cu.length > 0 ? '(' + cu.length + ') Quản lý Dự án' : 'Quản lý Dự án';
+  const grp = (cls, label, n, rows, more) =>
+    '<div class="alert-card ' + cls + '" style="margin-bottom:12px"><div class="a-head">' + label + ' (' + n + ')</div>' +
+    '<div class="a-body">' + (rows || '<div class="a-empty">Không có.</div>') +
+    (more ? '<a class="w-more" data-go="' + more + '">Xem thêm &rarr;</a>' : '') + '</div></div>';
+  const rowCu = cu.slice(0, 5).map(x =>
+    '<div class="w-row"><span><b>' + esc(x.loai) + '</b> ' + esc(x.ma || '') + ' — ' + esc(x.moTa) + '</span><span class="text-muted">' + x.age + ' ngày</span></div>').join('');
+  box.innerHTML = grp('a-amber', 'Chờ duyệt quá 2 ngày', cu.length, rowCu, cu.length > 5 ? 'approval' : '');
+  box.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', () => goPage('approval')));
 }
 
 /* ================= C1 — PWA ================= */
