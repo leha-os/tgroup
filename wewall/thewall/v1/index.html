@@ -283,6 +283,211 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   .card{box-shadow:none;break-inside:avoid}
   body{background:#fff}
 }
+
+/* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
+select.inp{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  background-color:#ffffff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  background-size:16px;
+  padding:10px 38px 10px 12px !important;
+  border:1.5px solid #e8ddd0 !important;
+  border-radius:10px !important;
+  font-weight:500;
+  color:#2b241e;
+  box-shadow:0 1px 2px rgba(26,20,16,.04), 0 0 0 1px rgba(255,255,255,.8) inset;
+  transition:border-color .18s ease, box-shadow .18s ease, background-color .18s ease, transform .12s ease;
+  line-height:1.4;
+}
+select.inp:hover{
+  border-color:#f0ad1f !important;
+  background-color:#fffdf6;
+  box-shadow:0 2px 10px rgba(240,173,31,.12), 0 0 0 1px rgba(255,255,255,.9) inset;
+}
+select.inp:focus{
+  outline:none !important;
+  border-color:#f0ad1f !important;
+  background-color:#ffffff;
+  box-shadow:0 0 0 3.5px rgba(240,173,31,.18), 0 4px 16px rgba(240,173,31,.14);
+}
+select.inp:active{transform:scale(.99)}
+/* option – native vẫn đẹp hơn */
+select.inp option{padding:10px 12px;font-weight:500;color:#1a1410;background:#fff}
+select.inp option:checked{background:linear-gradient(90deg,#fef3c7,#fde68a);color:#78350f}
+
+/* proj pick – gọn tinh tế */
+.proj-pick select{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  padding-right:34px !important;
+  border:1.5px solid #e8ddd0 !important;
+  background-color:#fffaf2;
+  border-radius:9px !important;
+  font-weight:600;
+  transition:.18s;
+}
+.proj-pick select:hover{border-color:#f0ad1f !important;background:#fffdf6}
+
+/* toolbar filter dropdowns – mini pill */
+.toolbar select.inp{
+  padding:7px 32px 7px 12px !important;
+  font-size:13px !important;
+  border-radius:20px !important;
+  background-color:#fffaf2;
+  border-color:#ece5d8 !important;
+}
+
+/* Modal / popup – từ to thô -> gọn sang */
+.mback{
+  background:rgba(15,23,42,.38) !important;
+  backdrop-filter:blur(10px) saturate(1.15);
+  -webkit-backdrop-filter:blur(10px) saturate(1.15);
+  padding:20px 16px !important;
+}
+.mback.open{animation:fadeIn .22s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal{
+  border-radius:18px !important;
+  border:1px solid rgba(236,229,216,.9) !important;
+  box-shadow:0 24px 60px -12px rgba(26,20,16,.22), 0 8px 24px -8px rgba(26,20,16,.12), 0 0 0 1px rgba(255,255,255,.6) inset !important;
+  overflow:hidden;
+  animation:popUp .28s cubic-bezier(.16,1,.3,1);
+}
+@keyframes popUp{from{transform:translateY(12px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal.lg{border-radius:18px !important}
+
+.m-head{
+  padding:18px 20px 16px !important;
+  background:linear-gradient(180deg,#fffdf6 0%,#ffffff 100%);
+  border-bottom:1px solid #f2eadc !important;
+}
+.m-head h3{font-size:15.5px !important;font-weight:800 !important;letter-spacing:-.2px}
+.m-x{
+  width:32px;height:32px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f8f2e7;color:#8a7f70;
+  border:1px solid #ece5d8;
+  transition:.15s;font-size:18px !important;
+}
+.m-x:hover{background:#fef2f2;border-color:#fecaca;color:#b91c1c;transform:rotate(90deg)}
+.m-body{padding:20px !important;background:#fff}
+.m-foot{
+  padding:14px 20px !important;
+  background:#faf7f2 !important;
+  border-top:1px solid #ece5d8 !important;
+  gap:10px !important;
+}
+
+/* input chung cho đồng bộ với dropdown */
+.inp:not(select){border:1.5px solid #e8ddd0 !important;border-radius:10px !important;transition:.18s}
+.inp:not(select):hover{border-color:#e0d3bf !important}
+.inp:not(select):focus{border-color:#f0ad1f !important;box-shadow:0 0 0 3.5px rgba(240,173,31,.16) !important}
+
+/* scrollbar tinh tế cho modal */
+.m-body::-webkit-scrollbar{width:6px;height:6px}
+.m-body::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:10px}
+.m-body::-webkit-scrollbar-thumb:hover{background:#c8b8a0}
+
+/* responsive: popup không còn chiếm full màn xấu */
+@media(max-width:640px){
+  .mback{padding:12px !important;align-items:flex-end !important}
+  .modal{border-radius:18px 18px 0 0 !important;max-height:92vh !important;margin:0 !important;width:100% !important}
+  select.inp{font-size:16px !important} /* tránh zoom iOS */
+}
+
+
+/* ===== TRANSPARENT + MOTION NHẸ - BẢN NÂNG CẤP ===== */
+/* dropdown trong suốt nhẹ + động */
+select.inp{
+  background-color:rgba(255,255,255,.86) !important;
+  backdrop-filter:blur(8px) saturate(1.08);
+  -webkit-backdrop-filter:blur(8px) saturate(1.08);
+  will-change:transform, box-shadow;
+}
+select.inp:hover{
+  background-color:rgba(255,253,246,.92) !important;
+  transform:translateY(-1px);
+}
+select.inp:focus{
+  background-color:rgba(255,255,255,.96) !important;
+  transform:translateY(-1px) scale(1.005);
+}
+
+/* tạo cảm giác dropdown nổi lên nhẹ khi hover – dùng filter */
+.toolbar select.inp:hover, .proj-pick select:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(240,173,31,.14) !important;
+}
+
+/* popup/modal trong suốt mờ – glass nhẹ */
+.mback{
+  background:rgba(15,23,42,.28) !important;
+  backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
+}
+.modal{
+  background:rgba(255,255,255,.90) !important;
+  backdrop-filter:blur(18px) saturate(1.18) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.18) !important;
+  border:1px solid rgba(255,255,255,.7) !important;
+  box-shadow:
+    0 20px 60px -18px rgba(26,20,16,.28),
+    0 8px 20px -10px rgba(26,20,16,.14),
+    0 0 0 1px rgba(255,255,255,.5) inset !important;
+  will-change:transform, opacity;
+}
+.m-head{
+  background:linear-gradient(180deg, rgba(255,253,246,.92) 0%, rgba(255,255,255,.78) 100%) !important;
+  backdrop-filter:blur(10px);
+}
+.m-body{
+  background:rgba(255,255,255,.72) !important;
+}
+.m-foot{
+  background:rgba(250,247,242,.82) !important;
+  backdrop-filter:blur(10px);
+}
+
+/* động nhẹ: modal trôi lên + mờ dần – rất nhẹ, 0.3s */
+@keyframes floatIn{
+  0%{transform:translateY(10px) scale(.985);opacity:0;filter:blur(4px)}
+  100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}
+}
+.modal{animation:floatIn .34s cubic-bezier(.16,1,.3,1) !important}
+
+/* nút X xoay nhẹ trong suốt */
+.m-x{
+  background:rgba(248,242,231,.85) !important;
+  backdrop-filter:blur(6px);
+  transition:transform .25s cubic-bezier(.16,1,.3,1), background .18s, color .18s !important;
+}
+.m-x:hover{transform:rotate(90deg) scale(1.06)}
+
+/* input đi kèm cũng glass nhẹ cho đồng bộ, không đụng kỹ thuật */
+.inp:not(select){
+  background:rgba(255,255,255,.86) !important;
+  backdrop-filter:blur(6px);
+  transition:border-color .18s, box-shadow .18s, transform .18s, background .18s !important;
+}
+.inp:not(select):hover{transform:translateY(-0.5px)}
+.inp:not(select):focus{
+  background:rgba(255,255,255,.96) !important;
+  transform:translateY(-1px);
+}
+
+/* hiệu ứng sáng nhẹ chạy viền khi focus dropdown – không chói */
+select.inp:focus{
+  box-shadow:
+    0 0 0 3.5px rgba(240,173,31,.14),
+    0 6px 20px rgba(240,173,31,.16),
+    0 0 18px rgba(240,173,31,.08) inset !important;
+}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
