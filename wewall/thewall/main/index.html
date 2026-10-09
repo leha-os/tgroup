@@ -52,9 +52,13 @@ button{font-family:inherit}
 .nav-item.active{background:var(--gold);color:#1b1b1b;font-weight:700}
 .nav-item.active .ic{opacity:1}
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{background:var(--head-bg);border-bottom:2px solid var(--head-accent);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:40;color:#fff}
-.topbar h1{color:#fff}
-.topbar .crumb{color:#d4c4a8}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:40;color:var(--text)}
+.topbar h1{color:var(--text);font-size:17px;font-weight:800;letter-spacing:.3px}
+.topbar .crumb{color:var(--muted);font-size:12px}
+.topbar .logo-img{height:38px;width:auto}
+/* Nút hamburger kiểu mới */
+.menu-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;border:none;background:none;color:var(--text);font-size:22px;cursor:pointer;flex-shrink:0}
+@media(max-width:900px){.menu-toggle{display:flex}}
 /* Brand trong topbar: chỉ hiện trên mobile */
 .topbar-brand{display:none}
 @media(max-width:900px){
@@ -89,7 +93,7 @@ button{font-family:inherit}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
 /* Khung cảnh báo dashboard */
 .alert-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
-.alert-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.alert-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s}.alert-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
 .alert-card .a-head{padding:10px 16px;color:#fff;font-weight:800;font-size:14px}
 .alert-card.a-red .a-head{background:linear-gradient(120deg,#c0392b,#e05252)}
 .alert-card.a-amber .a-head{background:linear-gradient(120deg,#c47b12,#f0ad1f)}
@@ -268,8 +272,8 @@ html,body{height:100%}
   .content{padding:12px}
   .card{padding:14px}
 }
-.menu-toggle{display:none}
-@media(min-width:901px){.sidebar-backdrop{display:none !important}}
+.menu-toggle{display:flex !important;align-items:center;justify-content:center;width:40px;height:40px;border:none;background:none;color:var(--text);font-size:22px;cursor:pointer;flex-shrink:0}
+@media(min-width:901px){.menu-toggle{display:none!important}.sidebar-backdrop{display:none !important}}
 
 /* ========== NÂNG CẤP 2026-10-08: CSS hiện đại + redesign (C3/C5) ========== */
 :root{color-scheme:light dark}
@@ -397,10 +401,9 @@ html,body{height:100%}
 /* --- :has() cho trạng thái (C3) --- */
 .kpi:has(.k-value.text-red){border-color:var(--red)}
 .a-row:has(.text-red){font-weight:600}
-/* --- Mobile: bottom tab bar thay hamburger (C5) --- */
+/* --- Mobile: sidebar trượt, hamburger luôn hiện --- */
 @media(max-width:900px){
-  .menu-toggle{display:none!important}
-  .sidebar{display:none!important}
+  .menu-toggle{display:flex!important}
   .content{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:205;background:var(--head-bg);
     border-top:2px solid var(--head-accent);padding:6px 4px calc(8px + env(safe-area-inset-bottom,0px));
@@ -436,12 +439,12 @@ html,body{height:100%}
     <div class="sidebar-backdrop" id="sideBackdrop" onclick="toggleSidebar(false)"></div>
 <div class="topbar">
   <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-      <div class="topbar-brand"><b>THE WALL ARCHITECTURE</b></div>
-      <div>
-        <h1 id="pageTitle">Dashboard</h1>
-        <div class="crumb" id="pageCrumb">Tổng quan toàn hệ thống</div>
+      <img class="logo-img" id="topLogoImg" alt="TW">
+      <div style="border-left:1px solid var(--border);padding-left:12px;margin-left:2px">
+        <h1 id="pageTitle">QUẢN LÝ DỰ ÁN</h1>
+        <div class="crumb" id="pageCrumb">Hệ thống Quản lý Dự án Nội bộ v1.0</div>
       </div>
-      <div class="userbox">
+      <div class="userbox" style="margin-left:auto">
         <input id="globalSearch" placeholder="🔍 Tìm dự án..." style="padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">
         <div>
           <div id="userName" style="font-weight:700">Admin</div>
@@ -460,7 +463,7 @@ html,body{height:100%}
 <div id="offlineBanner" class="hidden">Đang offline — hiển thị dữ liệu cũ
   <button id="btnRetryNet">Thử lại</button>
 </div>
-<nav class="tabbar" id="tabbar" aria-label="Điều hướng chính"></nav>
+
 <div class="sheet-overlay" id="sheetOverlay"></div>
 <div class="sheet" id="sheet"></div>
 
@@ -751,7 +754,7 @@ function goPageInner(page, params){
       '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
       '<a class="btn btn-sm btn-primary'+(p.sheet_url?'':' hidden')+'" id="btnOpenSheet" target="_blank" href="'+esc(p.sheet_url||'')+'" style="text-decoration:none">Mở Sheet</a>' +
       '<button class="btn btn-sm btn-gold'+(p.sheet_url?'':' hidden')+'" id="btnSyncSheet" title="Đọc Sheet và nạp dự trù vào app">Đồng bộ</button>' +
-      '<div class="desc" style="width:100%;text-align:right">Dán link hoặc mã Sheet (ký tự giữa /d/ và /edit)</div>' +
+      
       '</div></div></div><div id="tab-'+tab+'"></div>';
     var bb = $('btnBack2');
     if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
@@ -790,6 +793,7 @@ function debounce(fn, ms){ let t = null; return function(){ const a = arguments,
 async function init(){
   // Logo
   if (typeof LOGO_BT !== 'undefined' && $('logoImg')) $('logoImg').src = LOGO_BT;
+  if (typeof LOGO_BT !== 'undefined' && $('topLogoImg')) $('topLogoImg').src = LOGO_BT;
   // Tìm kiếm toàn cục (debounce 300ms — B4)
   var gs = $('globalSearch');
   if (gs) gs.addEventListener('input', debounce(function(){
@@ -867,20 +871,20 @@ function renderTongQuanChung(d){
 
   // 3 alert cards header màu (MISA style)
   html += '<div class="alert-cards">';
-  html += '<div class="alert-card a-red"><div class="a-head">Vượt ngân sách (' + vuotList.length + ')</div><div class="a-body">';
+  html += '<div class="alert-card a-red" data-goto="reports"><div class="a-head">Vượt ngân sách (' + vuotList.length + ')</div><div class="a-body">';
   if (!vuotList.length) html += '<div class="a-empty">Không có dự án vượt.</div>';
   vuotList.forEach(p => {
     html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b class="text-red">' + fmt(p.tong_vuot) + '</b></div>';
   });
   if (vuotList.length) html += '<div class="a-total"><span>Tổng vượt</span><span class="text-red">' + fmt(T('tong_vuot')) + '</span></div>';
   html += '</div></div>';
-  html += '<div class="alert-card a-amber"><div class="a-head">Việc trễ hạn (' + treList.length + ' dự án)</div><div class="a-body">';
+  html += '<div class="alert-card a-amber" data-goto="progress"><div class="a-head">Việc trễ hạn (' + treList.length + ' dự án)</div><div class="a-body">';
   if (!treList.length) html += '<div class="a-empty">Không có việc trễ.</div>';
   treList.forEach(p => {
     html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b class="text-red">' + Number(p.so_viec_tre) + ' việc</b></div>';
   });
   html += '</div></div>';
-  html += '<div class="alert-card a-blue"><div class="a-head">Chờ phê duyệt (' + choList.length + ' dự án)</div><div class="a-body">';
+  html += '<div class="alert-card a-blue" data-goto="approval"><div class="a-head">Chờ phê duyệt (' + choList.length + ' dự án)</div><div class="a-body">';
   if (!choList.length) html += '<div class="a-empty">Không có hồ sơ chờ.</div>';
   choList.forEach(p => {
     html += '<div class="a-row"><span>' + esc(p.ma_du_an) + ' — ' + esc(p.ten_du_an || '') + '</span><b>' + Number(p.cho_duyet) + ' hồ sơ</b></div>';
@@ -898,7 +902,7 @@ function renderTongQuanChung(d){
     const dmP = Number(p.tong_dinh_muc) || 0;
     const pctP = dmP > 0 ? Math.min(100, Math.round(Number(p.tong_da_chi) / dmP * 100)) : 0;
     const over = dmP > 0 && Number(p.tong_da_chi) > dmP;
-    html += '<tr' + (alert ? ' class="row-alert"' : '') + '>' +
+    html += '<tr data-ma="' + esc(p.ma_du_an) + '"' + (alert ? ' class="row-alert"' : '') + '>' +
       '<td><b>' + esc(p.ma_du_an) + '</b><br><span class="desc">' + esc(p.ten_du_an || '') + '</span></td>' +
       '<td class="num">' + fmt(p.tong_dinh_muc) + '</td>' +
       '<td class="num">' + fmt(p.tong_cam_ket) + '</td>' +
@@ -914,6 +918,31 @@ function renderTongQuanChung(d){
   html += '</tbody></table></div></div>';
   html += '<div class="dash-time">Số liệu tính đến: ' + nowStr + '</div>';
   box.innerHTML = html;
+  box.querySelectorAll('.kpi[data-kpi]').forEach(function(kpi){
+    kpi.addEventListener('click', function(){
+      var label = kpi.querySelector('.k-label').textContent;
+      var map = {'Tổng định mức':'reports','Đã cam kết':'cost','Đã chi':'payment','Còn lại':'reports','Vượt':'reports'};
+      var g = map[label] || 'reports';
+      if (state.project) goPage(g, {project: state.project});
+      else toast('Chọn một dự án trước.', 'info');
+    });
+  });
+  box.querySelectorAll('.alert-card[data-goto]').forEach(function(card){
+    card.addEventListener('click', function(){
+      var g = card.dataset.goto;
+      if (state.project) goPage(g, {project: state.project});
+      else if (g === 'approval') goPage('approval');
+      else toast('Chọn một dự án trước.', 'info');
+    });
+  });
+  // Bấm vào dòng bảng dự án thì mở dự án
+  box.querySelectorAll('tr[data-ma]').forEach(function(tr){
+    tr.style.cursor = 'pointer';
+    tr.addEventListener('click', function(e){
+      if (e.target.closest('button')) return;
+      openProject(tr.dataset.ma);
+    });
+  });
   box.querySelectorAll('button[data-ma]').forEach(b =>
     b.addEventListener('click', () => openProject(b.dataset.ma)));
   drawPieCoCau('chPieAll', dm, ck, chi, cl);
@@ -1012,7 +1041,7 @@ function closeModal(){ $('modalRoot').innerHTML = ''; }
 
 /* ================= TAB: TỔNG QUAN ================= */
 function kpi(label, val, cls, suffix){
-  return '<div class="kpi ' + (cls || '') + '"><div class="k-label">' + esc(label) +
+  return '<div class="kpi ' + (cls || '') + '" data-kpi="1" style="cursor:pointer"><div class="k-label">' + esc(label) +
     '</div><div class="k-value">' + val + (suffix || '') + '</div></div>';
 }
 function kpiSub(label, val, cls, suffix, sub){
@@ -1045,7 +1074,7 @@ async function loadTongQuan(){
   if (vuotHm.length || treList.length || tongCho > 0) {
     html += '<div class="alert-cards">';
     if (vuotHm.length) {
-      html += '<div class="alert-card a-red"><div class="a-head">Vượt ngân sách (' + vuotHm.length + ' hạng mục)</div><div class="a-body">' +
+      html += '<div class="alert-card a-red" data-goto="reports"><div class="a-head">Vượt ngân sách (' + vuotHm.length + ' hạng mục)</div><div class="a-body">' +
         vuotHm.map(it => '<div class="a-row"><span>' + esc(it.hang_muc) + '</span><b class="text-red">' + fmt(it.vuot) + '</b></div>').join('') + '</div></div>';
     }
     if (treList.length) {
@@ -1053,7 +1082,7 @@ async function loadTongQuan(){
         treList.map(t => '<div class="a-row"><span>' + esc(typeof t === 'string' ? t : (t.hang_muc || t.cong_viec || '')) + '</span></div>').join('') + '</div></div>';
     }
     if (tongCho > 0) {
-      html += '<div class="alert-card a-blue"><div class="a-head">Chờ phê duyệt (' + tongCho + ')</div><div class="a-body">' +
+      html += '<div class="alert-card a-blue" data-goto="approval"><div class="a-head">Chờ phê duyệt (' + tongCho + ')</div><div class="a-body">' +
         '<div class="a-row"><span>Đề nghị mua/chi</span><b>' + (cd.de_nghi || 0) + '</b></div>' +
         '<div class="a-row"><span>Phát sinh</span><b>' + (cd.phat_sinh != null ? cd.phat_sinh : (d.phat_sinh_cho_duyet || 0)) + '</b></div>' +
         '<div class="a-row"><span>Dự trù</span><b>' + (cd.du_tru || 0) + '</b></div></div></div>';
