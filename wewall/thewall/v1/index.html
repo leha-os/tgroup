@@ -204,6 +204,7 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
 /* ===== RESPONSIVE FIX ===== */
 @media(max-width:1100px){.g7{grid-template-columns:repeat(4,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
+  .grid.g2,.grid.g3{grid-template-columns:1fr!important}
   .proj-pick .inp{max-width:130px!important;font-size:12px!important;padding:6px 8px!important}
   .proj-pick span{display:none!important}
   .sidebar{position:fixed!important;left:0;top:0;bottom:0;z-index:60;width:min(280px,84vw)!important;max-width:84vw;transform:translateX(-106%);transition:transform .22s ease;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;border-radius:0 20px 20px 0}
@@ -339,8 +340,11 @@ function toast(m){const t=document.createElement('div');t.className='t';t.textCo
 const SEED={
 users:[
  {id:'u1',name:'Lê Hà',username:'admin',pass:'admin123',role:'Giám đốc',projectIds:[]},
- {id:'u2',name:'Kế toán Mai',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
- {id:'u3',name:'Anh Ba Chỉ huy',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1']}],
+ {id:'u2',name:'Kế toán (test)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
+ {id:'u3',name:'Anh Ba Chỉ huy',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1']},
+ {id:'u4',name:'Quản lý Dự án (test)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:[]},
+ {id:'u5',name:'Thủ Quỹ (test)',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:[]},
+ {id:'u6',name:'NV Mua hàng (test)',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:[]}],
 projects:[
  {id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
  {id:'p2',code:'BT-2026-02',name:'Biệt thự Nam Long',client:'Ông Trần Văn Đức',location:'KDC Nam Long, Q.7',start:'2026-05-15',end:'2026-11-30',budget:3200000000,status:'Đang thi công',note:'Biệt thự 3 tầng, 450m² sàn'},
@@ -422,6 +426,47 @@ const Auth={
  canSuper(){return this.user&&this.user.role==='Giám đốc';}
 };
 const ROLE_VN={'Super Admin':'Giám đốc','Admin':'Kế toán','Site Manager':'Chỉ huy công trình'};
+/* ================= PHÂN QUYỀN CHI TIẾT ================= */
+const PERMS=[
+ {grp:'Dự án',items:[{k:'projects_view',t:'Xem dự án'},{k:'projects_create',t:'Tạo dự án'},{k:'projects_edit',t:'Sửa dự án'},{k:'projects_delete',t:'Xóa dự án'}]},
+ {grp:'Dự trù',items:[{k:'dutru_view',t:'Xem dự trù'},{k:'dutru_create',t:'Tạo dự trù'},{k:'dutru_approve',t:'Duyệt dự trù'}]},
+ {grp:'Phát sinh',items:[{k:'phatsinh_view',t:'Xem phát sinh'},{k:'phatsinh_create',t:'Tạo phát sinh'},{k:'phatsinh_approve',t:'Duyệt phát sinh'}]},
+ {grp:'Đề nghị',items:[{k:'denghi_view',t:'Xem đề nghị'},{k:'denghi_create',t:'Tạo đề nghị'},{k:'denghi_approve',t:'Duyệt đề nghị'}]},
+ {grp:'Phê duyệt',items:[{k:'pheduyet_view',t:'Xem phê duyệt'},{k:'pheduyet_approve',t:'Duyệt'}]},
+ {grp:'Thu chi',items:[{k:'thuchi_view',t:'Xem thu chi'},{k:'thuchi_create',t:'Tạo thu chi'},{k:'thuchi_edit',t:'Sửa thu chi'},{k:'thuchi_delete',t:'Xóa thu chi'}]},
+ {grp:'Quỹ',items:[{k:'quy_view',t:'Xem quỹ'},{k:'quy_create',t:'Tạo giao dịch quỹ'}]},
+ {grp:'Công nợ',items:[{k:'conno_view',t:'Xem công nợ'}]},
+ {grp:'Báo cáo',items:[{k:'baocao_view',t:'Xem báo cáo'},{k:'baocao_export',t:'Xuất Excel'}]},
+ {grp:'Hệ thống',items:[{k:'users_manage',t:'Quản lý người dùng'},{k:'caidat_view',t:'Xem cài đặt'},{k:'caidat_sync',t:'Đồng bộ dữ liệu'}]}
+];
+const ROLE_PERMS={
+ 'Giám đốc':'*',
+ 'Quản Lý Dự Án':['projects_view','projects_create','projects_edit','dutru_view','dutru_create','dutru_approve','phatsinh_view','phatsinh_create','phatsinh_approve','denghi_view','denghi_create','denghi_approve','pheduyet_view','pheduyet_approve','thuchi_view','quy_view','conno_view','baocao_view','baocao_export','caidat_view','caidat_sync'],
+ 'Kế toán':['thuchi_view','thuchi_create','thuchi_edit','denghi_view','denghi_approve','pheduyet_view','pheduyet_approve','quy_view','quy_create','conno_view','baocao_view','baocao_export','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
+ 'Thủ Quỹ':['quy_view','quy_create','thuchi_view','thuchi_create','denghi_view','caidat_view','caidat_sync'],
+ 'Nhân viên mua hàng':['denghi_view','denghi_create','projects_view','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
+ 'Nhân viên Dự án':['denghi_view','denghi_create','projects_view','baocao_export'],
+ 'Chỉ huy công trình':['projects_view','denghi_view','denghi_create','dutru_view','phatsinh_view','caidat_view','caidat_sync']
+};
+Auth.can=function(perm){
+ if(!this.user)return false;
+ const u=DB.data.users.find(x=>x.id===this.user.id);
+ if(u&&u.role==='Giám đốc')return true;
+ if(u&&u.perms&&perm in u.perms)return !!u.perms[perm];
+ const rp=ROLE_PERMS[u?u.role:''];
+ if(rp==='*')return true;
+ return Array.isArray(rp)&&rp.includes(perm);
+};
+Auth.assignedProjects=function(){ // null = tất cả dự án, [] = không có dự án nào
+ if(!this.user)return [];
+ const u=DB.data.users.find(x=>x.id===this.user.id);
+ if(!u)return null;
+ if(u.role==='Giám đốc')return null;
+ const ids=u.projectIds||[];
+ if(!ids.length||ids.includes('*'))return null;
+ return ids.filter(id=>DB.data.projects.some(p=>p.id===id));
+};
+function visibleProjects(){const ap=Auth.assignedProjects();return ap?DB.data.projects.filter(p=>ap.includes(p.id)):DB.data.projects;}
 function doLogin(){
  const u=$('#lgUser').value.trim(),p=$('#lgPass').value;
  const usr=DB.data.users.find(x=>x.username===u);
@@ -438,10 +483,13 @@ function enterApp(){
 }
 function setProject(id){SEL.projectId=id||null;DB.save0=0;nav();}
 let SEL={projectId:null};
-function scoped(arr,key){ // lọc theo vai trò + dự án đang chọn
+function scoped(arr,key){ // lọc theo dự án được phân công + dự án đang chọn
  key=key||'projectId';
- if(Auth.isSM()){const pid=Auth.user.projectIds[0];return arr.filter(x=>x[key]===pid);}
- if(SEL.projectId)return arr.filter(x=>x[key]===SEL.projectId);
+ const isProjArr=arr.length&&arr[0]&&'code' in arr[0]&&'budget' in arr[0];
+ const idKey=isProjArr?'id':key;
+ const ap=Auth.assignedProjects();
+ if(ap)return arr.filter(x=>ap.includes(x[idKey]));
+ if(SEL.projectId)return arr.filter(x=>x[idKey]===SEL.projectId);
  return arr;
 }
 /* ================= MODAL ================= */
@@ -463,41 +511,42 @@ const NAV=[
  {sec:'TỔNG QUAN'},
  {label:'Tổng quan',icon:'',hash:'#/dashboard'},
  {sec:'DỰ ÁN'},
- {label:'Dự án',icon:'',hash:'#/projects'},
- {label:'Dự trù/Định mức',icon:'',hash:'#/dutru'},
- {label:'Phát sinh',icon:'',hash:'#/phatsinh'},
+ {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
+ {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
+ {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
- {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi'},
- {label:'Phê duyệt',icon:'',hash:'#/pheduyet'},
- {label:'Tạm ứng',icon:'',hash:'#/tamung'},
+ {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
+ {label:'Phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
+ {label:'Tạm ứng',icon:'',hash:'#/tamung',perm:'denghi_view'},
  {sec:'TÀI CHÍNH'},
- {label:'Thu & Chi tiền mặt',icon:'',hash:'#/cash'},
- {label:'Chi phí',icon:'',hash:'#/expenses'},
- {label:'Công nợ phải trả',icon:'',hash:'#/liabilities'},
- {label:'Công nợ phải thu',icon:'',hash:'#/receivables'},
- {label:'Ngân hàng & Quỹ',icon:'',hash:'#/bank',min:'Admin'},
+ {label:'Thu & Chi tiền mặt',icon:'',hash:'#/cash',perm:'thuchi_view'},
+ {label:'Chi phí',icon:'',hash:'#/expenses',perm:'thuchi_view'},
+ {label:'Công nợ phải trả',icon:'',hash:'#/liabilities',perm:'conno_view'},
+ {label:'Công nợ phải thu',icon:'',hash:'#/receivables',perm:'conno_view'},
+ {label:'Ngân hàng & Quỹ',icon:'',hash:'#/bank',perm:'quy_view'},
  {sec:'VẬT TƯ & NHÂN SỰ'},
  {label:'Nhà cung cấp',icon:'',hash:'#/vendors'},
  {label:'Nhà thầu',icon:'',hash:'#/contractors'},
  {sec:'HỆ THỐNG'},
- {label:'Chủ đầu tư',icon:'',hash:'#/clients',min:'Admin'},
+ {label:'Chủ đầu tư',icon:'',hash:'#/clients',perm:'conno_view'},
  {label:'Danh mục hạng mục',icon:'',hash:'#/danhmuc'},
- {label:'Báo cáo',icon:'',hash:'#/reports'},
- {label:'Lịch sử',icon:'',hash:'#/audit'},
- {label:'Người dùng',icon:'',hash:'#/users',min:'Admin'},
- {label:'Cài đặt',icon:'',hash:'#/caidat',min:'Admin'},
+ {label:'Báo cáo',icon:'',hash:'#/reports',perm:'baocao_view'},
+ {label:'Lịch sử',icon:'',hash:'#/audit',perm:'users_manage'},
+ {label:'Người dùng',icon:'',hash:'#/users',perm:'users_manage'},
+ {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
 let navExpanded={};
 function buildSidebar(){
  const u=Auth.user;
  let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
- if(Auth.isSM())h+='<div class="sb-proj" style="display:block">'+esc(projName(Auth.user.projectIds[0]))+'</div>';
+ {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
  h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>';
  NAV.forEach(it=>{
   if(it.sec){h+='<div class="sb-sec">'+it.sec+'</div>';return;}
   if(it.min==='Admin'&&!Auth.canAdmin())return;
   if(it.min==='Super Admin'&&!Auth.canSuper())return;
+  if(it.perm&&!Auth.can(it.perm))return;
   if(it.children){
    const open=navExpanded[it.label]!==false;
    const act=it.children.some(c=>location.hash===c.hash);
@@ -516,9 +565,11 @@ function buildSidebar(){
  $$('#sidebar [data-h]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.h;$('#sidebar').classList.remove('open');});
 }
 function buildProjPick(){
- const ps=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const ps=visibleProjects();
  $('#projPick').innerHTML='<option value="">-- Tất cả dự án --</option>'+ps.map(p=>'<option value="'+p.id+'">'+esc(p.code+' • '+p.name)+'</option>').join('');
- if(Auth.isSM()){$('#projPick').value=Auth.user.projectIds[0];SEL.projectId=Auth.user.projectIds[0];$('#projPick').disabled=true;}
+ const ap=Auth.assignedProjects();
+ if(ap&&ap.length===1){$('#projPick').value=ap[0];SEL.projectId=ap[0];$('#projPick').disabled=true;}
+ else{$('#projPick').disabled=false;if(SEL.projectId&&!ps.some(p=>p.id===SEL.projectId)){SEL.projectId=null;}}
 }
 function projName(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.name:'';}
 function projCode(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.code:'';}
@@ -606,14 +657,14 @@ function statusBadge(s){
  return '<span class="badge '+(m[s]||'b-gray')+'">'+esc(s)+'</span>';
 }
 /* ================= PROJECTS ================= */
-ROUTES['#/projects']=function(){
+ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
- let h='<div class="page-head"><div><h1>Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.canAdmin()?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
+ let h='<div class="page-head"><div><h1>Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="delObj(\'projects\',\''+p.id+'\',\'Xóa dự án '+esc(p.code)+'?\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -715,7 +766,7 @@ function partnerListPage(cfg){
 function partnerForm(coll,id){
  const cfg=Object.values(PCFG).find(c=>c.coll===coll);
  const o=id?DB.data[coll].find(x=>x.id===id):{name:'',phone:'',address:'',note:'',projectId:SEL.projectId||''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  openModal((id?'Sửa':'Thêm')+' '+cfg.t.toLowerCase(),
   fld('Tên',inp('name',o.name))+
   '<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Địa chỉ',inp('address',o.address))+'</div>'+
@@ -763,7 +814,7 @@ function renderPartnerLedger(cfg,id){
 }
 function delTx(txColl,id){if(!confirm('Xóa giao dịch này?'))return;DB.data[txColl]=DB.data[txColl].filter(x=>x.id!==id);DB.log('Xóa giao dịch',txColl);DB.save();nav(false);toast('Đã xóa');}
 ROUTES['#/vendors']=()=>partnerListPage(PCFG.vendors);
-ROUTES['#/clients']=()=>{if(!Auth.canAdmin()){location.hash='#/dashboard';return;}partnerListPage(PCFG.clients);};
+ROUTES['#/clients']=()=>{if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}partnerListPage(PCFG.clients);};
 /* ================= CONTRACTORS ================= */
 ROUTES['#/contractors']=function(){
  const list=scoped(DB.data.contractors);
@@ -776,7 +827,7 @@ ROUTES['#/contractors']=function(){
 };
 function contractorForm(id){
  const o=id?DB.data.contractors.find(x=>x.id===id):{name:'',phone:'',note:'',projectId:SEL.projectId||''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  openModal((id?'Sửa':'Thêm')+' nhà thầu',fld('Tên đội/tổ',inp('name',o.name))+'<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId))+'</div>'+fld('Ghi chú',txa('note',o.note)),
  '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveContractor(\''+(id||'')+'\')">Lưu</button>');
 }
@@ -806,7 +857,7 @@ function renderContractorLedger(id){
 }
 /* ================= EMPLOYEES ================= */
 /* ================= BANK ================= */
-ROUTES['#/bank']=function(){
+ROUTES['#/bank']=function(){if(!Auth.can('quy_view')){location.hash='#/dashboard';return;}
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Ngân hàng & Quỹ</h1><p>'+DB.data.bankAccounts.length+' tài khoản • thu/chi từng quỹ</p></div><div class="page-actions"><button class="btn btn-pri" onclick="bankForm()">+ Thêm tài khoản</button></div></div>';
  h+='<div class="grid g3" style="margin-bottom:16px">';
@@ -849,7 +900,7 @@ function renderBankLedger(id){
 }
 /* ================= CASH & EXPENSES ================= */
 const EXPCATS=['Nhân công','Vật tư','Vận chuyển','Điện nước','An toàn','Thiết kế','Thuê máy','Văn phòng','Khác'];
-ROUTES['#/cash']=function(){
+ROUTES['#/cash']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashboard';return;}
  const txs=scoped(DB.data.bankTx).slice().sort((a,b)=>a.date<b.date?-1:1).slice(-80).reverse();
  let h='<div class="page-head"><div><h1>Thu & Chi tiền mặt</h1><p>Dòng tiền qua các quỹ • 80 giao dịch gần nhất</p></div><div class="page-actions"><button class="btn btn-ok" onclick="quickBankTx(\'inflow\')">Thu tiền</button><button class="btn btn-bad" onclick="quickBankTx(\'outflow\')">Chi tiền</button><button class="btn btn-pri" onclick="expenseForm()">Thêm chi phí</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Quỹ</th><th>Dự án</th><th>Diễn giải</th><th class="num">Thu</th><th class="num">Chi</th></tr></thead><tbody>';
@@ -861,7 +912,7 @@ function quickBankTx(type){
  const acc=DB.data.bankAccounts[0];if(!acc){toast('Chưa có tài khoản');return;}bankTxForm(acc.id,type);
 }
 /* ================= EXPENSES ================= */
-ROUTES['#/expenses']=function(){
+ROUTES['#/expenses']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.expenses).slice().sort((a,b)=>a.date<b.date?-1:1);
  const cats=[...new Set(list.map(e=>e.category))];
  let h='<div class="page-head"><div><h1>Chi phí</h1><p>'+list.length+' khoản • tổng '+fmtVND(list.reduce((s,e)=>s+e.amount,0))+'</p></div><div class="page-actions"><button class="btn btn-pri" onclick="expenseForm()">+ Thêm chi phí</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
@@ -875,7 +926,7 @@ ROUTES['#/expenses']=function(){
 };
 function expenseForm(id){
  const e=id?DB.data.expenses.find(x=>x.id===id):{projectId:SEL.projectId||'',date:todayISO(),category:'Nhân công',amount:'',note:'',by:Auth.user.name};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  openModal((id?'Sửa':'Thêm')+' chi phí','<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),e.projectId))+fld('Ngày',inp('date',e.date,'date'))+'</div>'+'<div class="frm-row">'+fld('Loại chi phí',sel('category',EXPCATS.map(c=>({v:c,t:c})),e.category))+fld('Số tiền (VND)',inp('amount',e.amount,'number','min="0"'))+'</div>'+fld('Người chi',inp('by',e.by))+fld('Diễn giải',txa('note',e.note)),
  '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveExpense(\''+(id||'')+'\')">Lưu</button>');
 }
@@ -884,7 +935,7 @@ function saveExpense(id){const o={projectId:formVal('projectId'),date:formVal('d
  if(id)Object.assign(DB.data.expenses.find(x=>x.id===id),o);else DB.data.expenses.push(Object.assign({id:uid('x')},o));
  DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);toast('Đã lưu');}
 /* ================= LIABILITIES ================= */
-ROUTES['#/liabilities']=function(){
+ROUTES['#/liabilities']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
  const rows=[];
  projs.forEach(p=>{const l=projectLiab(p.id);
@@ -900,7 +951,7 @@ ROUTES['#/liabilities']=function(){
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 /* ================= RECEIVABLES ================= */
-ROUTES['#/receivables']=function(){
+ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const rows=[];
 
  DB.data.clientTx.length&&scoped(DB.data.projects).forEach(p=>{const due=dueOf(DB.data.clientTx.filter(t=>t.projectId===p.id),'billed','received');if(due>0)rows.push({who:'Chủ đầu tư ('+p.client+')',sub:'Dự án '+p.code,amt:due,link:'#/clients'});});
@@ -912,7 +963,7 @@ ROUTES['#/receivables']=function(){
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 /* ================= REPORTS ================= */
-ROUTES['#/reports']=function(){
+ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div></div>';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
   +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.code+' • '+p.name})),SEL.projectId||''))
@@ -950,26 +1001,55 @@ ROUTES['#/quick']=function(){
 };
 function firstId(coll){const l=scoped(DB.data[coll]);return l.length?l[0].id:'';}
 /* ================= USERS ================= */
+function projBadges(u){const ids=u.projectIds||[];if(!ids.length||ids.includes('*'))return '<span class="badge b-gray">Tất cả</span>';return ids.map(pid=>{const pr=DB.data.projects.find(x=>x.id===pid);return pr?'<span class="badge b-green">'+esc(pr.code)+'</span>':'';}).join(' ');}
 ROUTES['#/users']=function(){
- if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Phân quyền: Giám đốc/Kế toán/Chỉ huy công trình • Thêm trực tiếp trên Sheet (tab Users) cũng được, rồi bấm Tải từ server trong Cài đặt</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Thêm người dùng</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th></th></tr></thead><tbody>';
- DB.data.users.forEach(u=>{h+='<tr><td><b>'+esc(u.name)+'</b></td><td>'+esc(u.username)+'</td><td>'+(u.role==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':u.role==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':'<span class="badge b-amber">Chỉ huy công trình</span>')+'</td><td style="font-size:12.5px">'+(u.projectIds||[]).map(projCode).join(', ')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')"></button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="delObj(\'users\',\''+u.id+'\',\'Xóa user '+esc(u.username)+'?\')" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+ if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
+ const roleBadge=r=>r==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':r==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':r==='Quản Lý Dự Án'?'<span class="badge b-green">Quản Lý Dự Án</span>':r==='Thủ Quỹ'?'<span class="badge b-purple">Thủ Quỹ</span>':r==='Nhân viên mua hàng'?'<span class="badge b-amber">NV mua hàng</span>':'<span class="badge b-gray">'+esc(r)+'</span>';
+ let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Bấm vào tên để phân quyền chi tiết từng người • Giám đốc có toàn quyền</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Tạo user</button></div></div>';
+ h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th>Số quyền</th><th></th></tr></thead><tbody>';
+ DB.data.users.forEach(u=>{const np=u.perms?Object.keys(u.perms).filter(k=>u.perms[k]).length:(ROLE_PERMS[u.role]==='*'? 'all' : (ROLE_PERMS[u.role]||[]).length);
+ h+='<tr><td><a class="linklike" href="javascript:permForm(\''+u.id+'\')"><b>'+esc(u.name)+'</b></a></td><td>'+esc(u.username)+'</td><td>'+roleBadge(u.role)+'</td><td>'+projBadges(u)+'</td><td>'+(np==='all'?'Tất cả':np+' quyền')+(u.perms?' <span class="badge b-blue">tùy chỉnh</span>':'')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="permForm(\''+u.id+'\')" title="Phân quyền">Quyền</button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="if(confirm(\'Xóa user '+esc(u.username)+'?\'))delObj(\'users\',\''+u.id+'\')" style="color:#dc2626" title="Xóa">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
+const ROLES=[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Quản Lý Dự Án',t:'Quản Lý Dự Án'},{v:'Kế toán',t:'Kế toán'},{v:'Thủ Quỹ',t:'Thủ Quỹ'},{v:'Nhân viên mua hàng',t:'Nhân viên mua hàng'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'}];
 function userForm(id){
- const u=id?DB.data.users.find(x=>x.id===id):{name:'',username:'',pass:'',role:'Chỉ huy công trình',projectIds:[]};
- openModal((id?'Sửa':'Thêm')+' người dùng',fld('Họ tên',inp('name',u.name))+'<div class="frm-row">'+fld('Tên đăng nhập',inp('username',u.username))+fld('Mật khẩu',inp('pass',u.pass))+'</div>'+fld('Vai trò',sel('role',[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Kế toán',t:'Kế toán (Admin)'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'}],u.role))+fld('Dự án phụ trách (cho Chỉ huy)',sel('projectIds',DB.data.projects.map(p=>({v:p.id,t:p.code+' • '+p.name})),(u.projectIds||[])[0]||'')),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveUser(\''+(id||'')+'\')">Lưu</button>');
+ const u=id?DB.data.users.find(x=>x.id===id):{name:'',username:'',pass:'',role:'Nhân viên mua hàng',projectIds:[]};
+ const projChk='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:170px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px">'+DB.data.projects.map(p=>'<label style="display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer"><input type="checkbox" data-proj="'+p.id+'"'+((u.projectIds||[]).includes(p.id)?' checked':'')+' style="width:16px;height:16px">'+esc(p.code)+'</label>').join('')+'</div>';
+ openModal((id?'Sửa':'Tạo')+' người dùng',fld('Họ tên',inp('name',u.name))+'<div class="frm-row">'+fld('Tên đăng nhập',inp('username',u.username))+fld('Mật khẩu',inp('pass',u.pass))+'</div>'+fld('Vai trò',sel('role',ROLES,u.role))+fld('Dự án phụ trách <span style="color:var(--mut);font-weight:400">(để trống = tất cả dự án)</span>',projChk),
+ '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveUser(\''+(id||'')+'\')">Lưu</button>'+(id?'<button class="btn btn-sec" onclick="permForm(\''+id+'\')">Phân quyền</button>':''));
 }
-function saveUser(id){const o={name:formVal('name'),username:formVal('username'),pass:formVal('pass'),role:formVal('role'),projectIds:formVal('projectIds')?[formVal('projectIds')]:[]};
+function saveUser(id){const pids=[];document.querySelectorAll('#mBody [data-proj]:checked').forEach(c=>pids.push(c.dataset.proj));const o={name:formVal('name'),username:formVal('username'),pass:formVal('pass'),role:formVal('role'),projectIds:pids};
  if(!o.name||!o.username||!o.pass){toast('Nhập đủ họ tên, tên đăng nhập, mật khẩu');return;}
  if(DB.data.users.some(x=>x.username===o.username&&x.id!==id)){toast('Tên đăng nhập đã tồn tại');return;}
  if(id)Object.assign(DB.data.users.find(x=>x.id===id),o);else DB.data.users.push(Object.assign({id:uid('u')},o));
- DB.log(id?'Sửa người dùng':'Thêm người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);toast('Đã lưu');}
+ DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);toast('Đã lưu');}
+/* checklist phân quyền chi tiết */
+function userPerms(u){
+ if(u.role==='Giám đốc')return null; // full
+ const base={};PERMS.forEach(g=>g.items.forEach(it=>base[it.k]=false));
+ const rp=ROLE_PERMS[u.role];
+ if(rp==='*')Object.keys(base).forEach(k=>base[k]=true);
+ else if(Array.isArray(rp))rp.forEach(k=>{if(k in base)base[k]=true;});
+ if(u.perms)Object.keys(u.perms).forEach(k=>{if(k in base)base[k]=!!u.perms[k];});
+ return base;
+}
+function permForm(id){
+ const u=DB.data.users.find(x=>x.id===id);if(!u)return;
+ if(u.role==='Giám đốc'){toast('Giám đốc có toàn quyền');return;}
+ const cur=userPerms(u);
+ let body='<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Tick chọn từng quyền cho <b>'+esc(u.name)+'</b> ('+esc(u.role)+'). Bỏ tick = thu hồi.</p>';
+ body+='<div style="margin-bottom:10px"><button class="btn btn-sec btn-sm" onclick="permAll(true)">Chọn hết</button> <button class="btn btn-sec btn-sm" onclick="permAll(false)">Bỏ hết</button> <button class="btn btn-sec btn-sm" onclick="permDefault(\''+id+'\')">Về mặc định vai trò</button></div>';
+ PERMS.forEach(g=>{body+='<div style="font-weight:700;margin:10px 0 6px;font-size:13px;color:var(--pri)">'+g.grp+'</div><div class="grid g2" style="gap:6px">';
+ g.items.forEach(it=>{body+='<label style="display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer"><input type="checkbox" data-perm="'+it.k+'"'+(cur[it.k]?' checked':'')+' style="width:16px;height:16px">'+it.t+'</label>';});
+ body+='</div>';});
+ openModal('Phân quyền: '+esc(u.name),body,'<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="savePerms(\''+id+'\')">Lưu quyền</button>',true);
+}
+function permAll(v){document.querySelectorAll('#mBody [data-perm]').forEach(c=>c.checked=v);}
+function permDefault(id){const u=DB.data.users.find(x=>x.id===id);const d=userPerms(Object.assign({},u,{perms:null}));document.querySelectorAll('#mBody [data-perm]').forEach(c=>c.checked=!!d[c.dataset.perm]);}
+function savePerms(id){const u=DB.data.users.find(x=>x.id===id);const p={};document.querySelectorAll('#mBody [data-perm]').forEach(c=>p[c.dataset.perm]=c.checked);u.perms=p;DB.log('Phân quyền',u.name+': '+Object.keys(p).filter(k=>p[k]).length+' quyền');DB.save();closeModal();nav(false);toast('Đã lưu quyền');}
 /* ================= AUDIT LOGS ================= */
 ROUTES['#/audit']=function(){
- if(!Auth.canSuper()){location.hash='#/dashboard';return;}
+ if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi • mọi thao tác thêm/sửa/xóa</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Chi tiết</th></tr></thead><tbody>';
  DB.data.auditLogs.slice(0,300).forEach(a=>{h+='<tr><td style="white-space:nowrap;font-size:12.5px">'+esc(a.ts)+'</td><td><b>'+esc(a.user)+'</b></td><td><span class="badge b-purple">'+esc(a.action)+'</span></td><td>'+esc(a.detail)+'</td></tr>';});
@@ -995,11 +1075,11 @@ function toVI(k,o){const f=CODE_FIELDS[k];if(!f)return o;const c=Object.assign({
 function ttBadge(st,map){const m=(map||TT_DN)[st]||[st,'b-gray'];return '<span class="badge '+m[1]+'">'+m[0]+'</span>';}
 let DN_F={loai:'',tt:''},DT_P='';
 /* ---------- ĐỀ NGHỊ ---------- */
-ROUTES['#/denghi']=function(){
+ROUTES['#/denghi']=function(){if(!Auth.can('denghi_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.denghi).slice().sort((a,b)=>a.date<b.date?-1:1);
  const fl=list.filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
  const tong=fl.reduce((s,d)=>s+(d.trangthai!=='tu_choi'?d.sotien:0),0);
- let h='<div class="page-head"><div><h1>Đề nghị</h1><p>'+fl.length+' đề nghị • tổng '+fmtVND(tong)+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="exportDeNghi()">Xuất Excel</button><button class="btn btn-pri" onclick="denghiForm()">+ Tạo đề nghị</button></div></div>';
+ let h='<div class="page-head"><div><h1>Đề nghị</h1><p>'+fl.length+' đề nghị • tổng '+fmtVND(tong)+'</p></div><div class="page-actions">'+(Auth.can('baocao_export')?'<button class="btn btn-sec" onclick="exportDeNghi()">Xuất Excel</button>':'')+(Auth.can('denghi_create')?'<button class="btn btn-pri" onclick="denghiForm()">+ Tạo đề nghị</button>':'')+'</div></div>';
  h+='<div class="toolbar"><select class="inp" onchange="DN_F.loai=this.value;nav(false)"><option value="">-- Tất cả loại --</option>'+Object.entries(LOAI_DN).map(e=>'<option value="'+e[0]+'"'+(DN_F.loai===e[0]?' selected':'')+'>'+e[1]+'</option>').join('')+'</select><select class="inp" onchange="DN_F.tt=this.value;nav(false)"><option value="">-- Tất cả trạng thái --</option>'+Object.entries(TT_DN).map(e=>'<option value="'+e[0]+'"'+(DN_F.tt===e[0]?' selected':'')+'>'+e[1][0]+'</option>').join('')+'</select></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Loại</th><th>Hạng mục</th><th>Nội dung</th><th class="num">Số tiền</th><th>NCC</th><th>Trạng thái</th><th>Người tạo</th><th></th></tr></thead><tbody>';
  if(!fl.length)h+='<tr><td colspan="9"><div class="empty">Chưa có đề nghị</div></td></tr>';
@@ -1008,14 +1088,14 @@ ROUTES['#/denghi']=function(){
 };
 function dnActions(d){
  let b='<button class="iconbtn" onclick="inPhieuDeNghi(\''+d.id+'\')" title="In phiếu">In phiếu</button>';
- if(d.trangthai==='cho_duyet'&&Auth.canAdmin())b+='<button class="btn btn-ok btn-sm" onclick="duyetDN(\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetDN(\''+d.id+'\',0)">Từ chối</button>';
- if(d.trangthai==='da_duyet'&&Auth.canAdmin())b+='<button class="btn btn-sec btn-sm" onclick="markPaidDN(\''+d.id+'\')">Đánh dấu đã chi</button>';
+ if(d.trangthai==='cho_duyet'&&Auth.can('denghi_approve'))b+='<button class="btn btn-ok btn-sm" onclick="duyetDN(\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetDN(\''+d.id+'\',0)">Từ chối</button>';
+ if(d.trangthai==='da_duyet'&&Auth.can('denghi_approve'))b+='<button class="btn btn-sec btn-sm" onclick="markPaidDN(\''+d.id+'\')">Đánh dấu đã chi</button>';
  if(d.trangthai==='cho_duyet')b+='<button class="iconbtn" onclick="denghiForm(\''+d.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="delTx(\'denghi\',\''+d.id+'\')" title="Xóa">Xóa</button>';
  return b;
 }
 function denghiForm(id){
  const d=id?DB.data.denghi.find(x=>x.id===id):{projectId:SEL.projectId||'',date:todayISO(),loai:'mua_hang',hangmuc:'',noidung:'',soluong:'1',dongia:'',ncc:''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  const dm=[...new Set(DB.data.danhmuc.map(x=>x.ten))];
  openModal((id?'Sửa':'Tạo')+' đề nghị',
   '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
@@ -1042,17 +1122,17 @@ function duyetDN(id,ok){
 }
 function markPaidDN(id){const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;d.trangthai='da_chi';DB.log('Đánh dấu đã chi',fmtVND(d.sotien)+' — '+d.noidung);DB.save();nav(false);toast('Đã đánh dấu đã chi');}
 /* ---------- PHÊ DUYỆT (inbox) ---------- */
-ROUTES['#/pheduyet']=function(){
+ROUTES['#/pheduyet']=function(){if(!Auth.can('pheduyet_view')){location.hash='#/dashboard';return;}
  const items=[];
  scoped(DB.data.denghi).filter(d=>d.trangthai==='cho_duyet').forEach(d=>items.push({kind:'denghi',id:d.id,date:d.date,label:'Đề nghị ['+LOAI_DN[d.loai]+']',desc:d.noidung,amt:d.sotien,by:d.nguoitao}));
  scoped(DB.data.phatsinh).filter(d=>d.trangthai==='cho_duyet').forEach(d=>items.push({kind:'phatsinh',id:d.id,date:d.date,label:'Phát sinh',desc:d.noidung,amt:d.sotien,by:d.nguoitao}));
  scoped(DB.data.dutru).filter(d=>d.trangthai==='cho_duyet').forEach(d=>items.push({kind:'dutru',id:d.id,date:'',label:'Dự trù',desc:d.hangmuc+' — '+d.diengiai,amt:d.thanhtien,by:d.nguoitao}));
  items.sort((a,b)=>a.date<b.date?-1:1);
  let h='<div class="page-head"><div><h1>Phê duyệt</h1><p>'+items.length+' mục chờ duyệt</p></div></div>';
- if(!Auth.canAdmin())h+='<div class="alert alert-amber">Bạn không có quyền duyệt. Chỉ xem danh sách chờ.</div>';
+ if(!Auth.can('pheduyet_approve'))h+='<div class="alert alert-amber">Bạn không có quyền duyệt. Chỉ xem danh sách chờ.</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Loại</th><th>Nội dung</th><th class="num">Số tiền</th><th>Người tạo</th><th></th></tr></thead><tbody>';
  if(!items.length)h+='<tr><td colspan="6"><div class="empty">Không có mục chờ duyệt</div></td></tr>';
- items.forEach(it=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(it.date)+'</td><td><span class="badge b-amber">'+it.label+'</span></td><td>'+esc(it.desc)+'</td><td class="num" style="font-weight:700">'+fmtVND(it.amt)+'</td><td>'+esc(it.by)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\''+it.kind+'\',\''+it.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\''+it.kind+'\',\''+it.id+'\',0)">Từ chối</button>':'')+'</div></td></tr>';});
+ items.forEach(it=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(it.date)+'</td><td><span class="badge b-amber">'+it.label+'</span></td><td>'+esc(it.desc)+'</td><td class="num" style="font-weight:700">'+fmtVND(it.amt)+'</td><td>'+esc(it.by)+'</td><td><div class="rowbtns">'+(Auth.can('pheduyet_approve')?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\''+it.kind+'\',\''+it.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\''+it.kind+'\',\''+it.id+'\',0)">Từ chối</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 function duyetItem(kind,id,ok){
@@ -1065,14 +1145,14 @@ function duyetItem(kind,id,ok){
  DB.save();nav(false);toast(ok?'Đã duyệt':'Đã từ chối');
 }
 /* ---------- DỰ TRÙ ---------- */
-ROUTES['#/dutru']=function(){
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ROUTES['#/dutru']=function(){if(!Auth.can('dutru_view')){location.hash='#/dashboard';return;}
+ const projs=visibleProjects();
  if(!DT_P)DT_P=SEL.projectId||projs[0].id;
  const list=DB.data.dutru.filter(d=>d.projectId===DT_P);
  const tong=list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.thanhtien,0);
- let h='<div class="page-head"><div><h1>Dự trù/Định mức</h1><p>Tổng dự trù: '+fmtVND(tong)+'</p></div><div class="page-actions"><select class="inp" onchange="DT_P=this.value;nav(false)">'+projs.map(p=>'<option value="'+p.id+'"'+(DT_P===p.id?' selected':'')+'>'+esc(p.code+' • '+p.name)+'</option>').join('')+'</select><button class="btn btn-sec" onclick="exportDuTru()">Xuất Excel</button><button class="btn btn-pri" onclick="dutruForm()">+ Thêm hạng mục</button></div></div>';
+ let h='<div class="page-head"><div><h1>Dự trù/Định mức</h1><p>Tổng dự trù: '+fmtVND(tong)+'</p></div><div class="page-actions"><select class="inp" onchange="DT_P=this.value;nav(false)">'+projs.map(p=>'<option value="'+p.id+'"'+(DT_P===p.id?' selected':'')+'>'+esc(p.code+' • '+p.name)+'</option>').join('')+'</select>'+(Auth.can('baocao_export')?'<button class="btn btn-sec" onclick="exportDuTru()">Xuất Excel</button>':'')+(Auth.can('dutru_create')?'<button class="btn btn-pri" onclick="dutruForm()">+ Thêm hạng mục</button>':'')+'</div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Diễn giải</th><th class="num">SL</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
- list.forEach(d=>{h+='<tr><td><b>'+esc(d.hangmuc)+'</b></td><td>'+esc(d.diengiai)+'</td><td class="num">'+fmtNum(d.soluong)+'</td><td class="num">'+fmtVND(d.dongia)+'</td><td class="num" style="font-weight:700">'+fmtVND(d.thanhtien)+'</td><td>'+ttBadge(d.trangthai)+'</td><td><div class="rowbtns">'+(d.trangthai==='cho_duyet'&&Auth.canAdmin()?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',0)">Từ chối</button>':'')+(d.trangthai!=='da_duyet'?'<button class="iconbtn" onclick="dutruForm(\''+d.id+'\')">Sửa</button><button class="iconbtn" onclick="delTx(\'dutru\',\''+d.id+'\')">Xóa</button>':'')+'</div></td></tr>';});
+ list.forEach(d=>{h+='<tr><td><b>'+esc(d.hangmuc)+'</b></td><td>'+esc(d.diengiai)+'</td><td class="num">'+fmtNum(d.soluong)+'</td><td class="num">'+fmtVND(d.dongia)+'</td><td class="num" style="font-weight:700">'+fmtVND(d.thanhtien)+'</td><td>'+ttBadge(d.trangthai)+'</td><td><div class="rowbtns">'+(d.trangthai==='cho_duyet'&&Auth.can('dutru_approve')?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\'dutru\',\''+d.id+'\',0)">Từ chối</button>':'')+(d.trangthai!=='da_duyet'?'<button class="iconbtn" onclick="dutruForm(\''+d.id+'\')">Sửa</button><button class="iconbtn" onclick="delTx(\'dutru\',\''+d.id+'\')">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 function dutruForm(id){
@@ -1093,17 +1173,17 @@ function saveDuTru(id){
  DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);toast('Đã lưu');
 }
 /* ---------- PHÁT SINH ---------- */
-ROUTES['#/phatsinh']=function(){
+ROUTES['#/phatsinh']=function(){if(!Auth.can('phatsinh_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.phatsinh).slice().sort((a,b)=>a.date<b.date?-1:1);
  const tong=list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
- let h='<div class="page-head"><div><h1>Phát sinh</h1><p>'+list.length+' phát sinh • tổng '+fmtVND(tong)+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="exportPhatSinh()">Xuất Excel</button><button class="btn btn-pri" onclick="phatsinhForm()">+ Thêm phát sinh</button></div></div>';
+ let h='<div class="page-head"><div><h1>Phát sinh</h1><p>'+list.length+' phát sinh • tổng '+fmtVND(tong)+'</p></div><div class="page-actions">'+(Auth.can('baocao_export')?'<button class="btn btn-sec" onclick="exportPhatSinh()">Xuất Excel</button>':'')+(Auth.can('phatsinh_create')?'<button class="btn btn-pri" onclick="phatsinhForm()">+ Thêm phát sinh</button>':'')+'</div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Dự án</th><th>Nội dung</th><th class="num">Số tiền</th><th>Trạng thái</th><th>Người tạo</th><th></th></tr></thead><tbody>';
- list.forEach(d=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(d.date)+'</td><td>'+esc(projCode(d.projectId))+'</td><td>'+esc(d.noidung)+'</td><td class="num" style="font-weight:700">'+fmtVND(d.sotien)+'</td><td>'+ttBadge(d.trangthai)+'</td><td>'+esc(d.nguoitao||'')+'</td><td><div class="rowbtns">'+(d.trangthai==='cho_duyet'&&Auth.canAdmin()?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\'phatsinh\',\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\'phatsinh\',\''+d.id+'\',0)">Từ chối</button>':'')+(d.trangthai==='cho_duyet'?'<button class="iconbtn" onclick="phatsinhForm(\''+d.id+'\')">Sửa</button><button class="iconbtn" onclick="delTx(\'phatsinh\',\''+d.id+'\')">Xóa</button>':'')+'</div></td></tr>';});
+ list.forEach(d=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(d.date)+'</td><td>'+esc(projCode(d.projectId))+'</td><td>'+esc(d.noidung)+'</td><td class="num" style="font-weight:700">'+fmtVND(d.sotien)+'</td><td>'+ttBadge(d.trangthai)+'</td><td>'+esc(d.nguoitao||'')+'</td><td><div class="rowbtns">'+(d.trangthai==='cho_duyet'&&Auth.can('phatsinh_approve')?'<button class="btn btn-ok btn-sm" onclick="duyetItem(\'phatsinh\',\''+d.id+'\',1)">Duyệt</button><button class="btn btn-bad btn-sm" onclick="duyetItem(\'phatsinh\',\''+d.id+'\',0)">Từ chối</button>':'')+(d.trangthai==='cho_duyet'?'<button class="iconbtn" onclick="phatsinhForm(\''+d.id+'\')">Sửa</button><button class="iconbtn" onclick="delTx(\'phatsinh\',\''+d.id+'\')">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 function phatsinhForm(id){
  const d=id?DB.data.phatsinh.find(x=>x.id===id):{projectId:SEL.projectId||'',date:todayISO(),noidung:'',sotien:''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  openModal((id?'Sửa':'Thêm')+' phát sinh',
   '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),d.projectId))+fld('Ngày',inp('date',d.date,'date'))+'</div>'+
   fld('Nội dung phát sinh',txa('noidung',d.noidung))+fld('Số tiền (VND)',inp('sotien',d.sotien)),
@@ -1523,7 +1603,7 @@ function xuatPhieuDNXls(id){
 }
 
 function tamungForm(){
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
+ const projs=visibleProjects();
  openModal('Tạo tạm ứng',
   '<div class="frm-row">'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),SEL.projectId||''))+fld('Ngày',inp('date',todayISO(),'date'))+'</div>'+
   '<div class="frm-row">'+fld('Người nhận',inp('nguoingan',Auth.user.name))+fld('Số tiền (VND)',inp('sotien',''))+'</div>'+
@@ -1542,7 +1622,7 @@ function quyetToanTU(id){const t=DB.data.tamung.find(x=>x.id===id);if(!t)return;
  if(!confirm('Quyết toán khoản tạm ứng '+fmtVND(t.sotien)+' của '+t.nguoingan+'?'))return;
  t.trangthai='da_quyet_toan';t.ngayqt=todayISO();DB.log('Quyết toán tạm ứng',fmtVND(t.sotien)+' — '+t.nguoingan);DB.save();nav(false);toast('Đã quyết toán');}
 /* ================= DANH MỤC ================= */
-ROUTES['#/danhmuc']=function(){
+ROUTES['#/danhmuc']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const list=DB.data.danhmuc;
  let h='<div class="page-head"><div><h1>Danh mục hạng mục</h1><p>'+list.length+' hạng mục dùng cho Dự trù/Đề nghị</p></div><div class="page-actions"><button class="btn btn-pri" onclick="danhmucForm()">+ Thêm</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Nhóm</th><th>Tên hạng mục</th><th></th></tr></thead><tbody>';
@@ -1693,11 +1773,11 @@ async function testApi(){
 }
 /* ================= CÀI ĐẶT ================= */
 ROUTES['#/caidat']=function(){
- if(!Auth.user){location.hash='#/login';return;}
+ if(!Auth.can('caidat_view')){location.hash='#/dashboard';return;}
  const isAdmin=Auth.canAdmin();
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
  let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:13px">⚠️ <b>Khu vực nguy hiểm:</b> Chỉ Admin được phép thay đổi. Thao tác sai có thể mất dữ liệu hoặc ngắt kết nối toàn hệ thống.</div><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
- h+='<div class="grid g2" style="padding:12px"><details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">⚙️ Cấu hình API (nâng cao)</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
+ h+='<div class="grid g2" style="padding:12px"><details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">⚙️ Cài đặt nâng cao (API • Module • Dữ liệu mẫu)</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
   +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
@@ -1711,7 +1791,6 @@ ROUTES['#/caidat']=function(){
       +'</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
   +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
   +'</tbody></table></div></div></div></div>';
- h+='<details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">📦 Dữ liệu mẫu</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Dữ liệu mẫu</h3><div class="sub">Khôi phục demo ban đầu</div></div></div><div class="card-b"><button class="btn btn-bad" onclick="if(confirm(\'Xóa hết dữ liệu hiện tại, về demo?\')){DB.reset();ensureArrays();nav(false);}">Khôi phục demo</button></div></div></div></details>';
  $('#view').innerHTML=h;
 };
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
