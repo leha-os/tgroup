@@ -1590,7 +1590,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const rf=new Array(n).fill(null);rf[0]={v:clean,s:2};R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){rf[0]={v:'TỔNG CỘNG',s:2};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();rf[0]={v:clean,s:2};}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
@@ -1603,7 +1603,7 @@ function exportDeNghi(){
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
  dlXlsxTable('Danh sách đề nghị',
   ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN'],rows,
-  'Tổng số: '+fl.length+' | Tổng tiền: '+fmtVND(tong),fname('baocao_denghi'));
+  {total:tong},fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -1711,7 +1711,7 @@ ROUTES['#/caidat']=function(){
       +'</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
   +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
   +'</tbody></table></div></div></div></div>';
- h+='<div class="card"><div class="card-h"><div><h3>Dữ liệu mẫu</h3><div class="sub">Khôi phục demo ban đầu</div></div></div><div class="card-b"><button class="btn btn-bad" onclick="if(confirm(\'Xóa hết dữ liệu hiện tại, về demo?\')){DB.reset();ensureArrays();nav(false);}">Khôi phục demo</button></div></div>';
+ h+='<details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">📦 Dữ liệu mẫu</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Dữ liệu mẫu</h3><div class="sub">Khôi phục demo ban đầu</div></div></div><div class="card-b"><button class="btn btn-bad" onclick="if(confirm(\'Xóa hết dữ liệu hiện tại, về demo?\')){DB.reset();ensureArrays();nav(false);}">Khôi phục demo</button></div></div></div></details>';
  $('#view').innerHTML=h;
 };
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
