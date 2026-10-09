@@ -77,6 +77,7 @@ textarea.inp{resize:vertical;min-height:70px}
 /* ===== CARDS / STATS ===== */
 .grid{display:grid;gap:14px}
 .g7{grid-template-columns:repeat(7,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g2{grid-template-columns:repeat(2,1fr)}
@@ -198,7 +199,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
 .sidebar.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
 .burger{display:block}
-.g7,.g4,.g3{grid-template-columns:repeat(2,1fr)}
+.g7,.g5,.g4,.g3{grid-template-columns:repeat(2,1fr)}
 .g2{grid-template-columns:1fr}
 #view{padding:14px}
 .frm-row,.frm-row3{grid-template-columns:1fr}
@@ -304,15 +305,6 @@ vendorTx:[
  {id:'vt3',vendorId:'v2',projectId:'p1',date:'2026-08-10',type:'purchase',amount:512000000,note:'Sắt phi 16, 18 – 32 tấn'},
  {id:'vt4',vendorId:'v2',projectId:'p1',date:'2026-09-05',type:'payment',amount:300000000,note:'Thanh toán đợt 1'},
  {id:'vt5',vendorId:'v3',projectId:'p2',date:'2026-09-12',type:'purchase',amount:148000000,note:'Dây điện, ống nước, CB'}],
-customers:[
- {id:'c1',name:'CĐT An Phú Land',phone:'02838221122',address:'Q.1, TP.HCM',projectId:'p1'},
- {id:'c2',name:'Ông Trần Văn Đức',phone:'0905556677',address:'Q.7, TP.HCM',projectId:'p2'}],
-customerTx:[
- {id:'ct1',customerId:'c1',projectId:'p1',date:'2026-08-01',type:'sale',amount:2100000000,note:'Tạm ứng đợt 1 theo HĐ (30%)'},
- {id:'ct2',customerId:'c1',projectId:'p1',date:'2026-08-25',type:'payment',amount:1500000000,note:'Chủ đầu tư chuyển khoản VCB'},
- {id:'ct3',customerId:'c1',projectId:'p1',date:'2026-09-20',type:'sale',amount:1800000000,note:'Nghiệm thu đợt 2'},
- {id:'ct4',customerId:'c2',projectId:'p2',date:'2026-09-01',type:'sale',amount:960000000,note:'Tạm ứng đợt 1 (30%)'},
- {id:'ct5',customerId:'c2',projectId:'p2',date:'2026-09-18',type:'payment',amount:960000000,note:'Đã nhận đủ đợt 1'}],
 contractors:[
  {id:'k1',name:'Đội khoán Anh Ba (cốp pha)',phone:'0978111222',projectId:'p1',note:'Khoán cốp pha dầm sàn'},
  {id:'k2',name:'Tổ điện nước Hùng',phone:'0988222333',projectId:'p2',note:'Khoán điện nước biệt thự'}],
@@ -320,47 +312,6 @@ contractorTx:[
  {id:'kt1',contractorId:'k1',projectId:'p1',date:'2026-08-15',type:'entry',amount:420000000,note:'Khối lượng cốp pha tầng 5-8'},
  {id:'kt2',contractorId:'k1',projectId:'p1',date:'2026-09-02',type:'payment',amount:250000000,note:'Tạm ứng 60%'},
  {id:'kt3',contractorId:'k2',projectId:'p2',date:'2026-09-20',type:'entry',amount:185000000,note:'Điện nước tầng trệt + lầu 1'}],
-employees:[
- {id:'e1',name:'Nguyễn Văn An',phone:'0901112222',kind:'fixed',salary:12000000,projectId:'p1',note:'Kế toán công trình'},
- {id:'e2',name:'Trần Văn Bình',phone:'0903334444',kind:'daily',salary:450000,projectId:'p1',note:'Thợ hồ'},
- {id:'e3',name:'Lê Văn Cường',phone:'0905556666',kind:'daily',salary:450000,projectId:'p1',note:'Phụ hồ'},
- {id:'e4',name:'Phạm Thị Dung',phone:'0907778888',kind:'fixed',salary:9000000,projectId:'p2',note:'Thủ kho'}],
-employeeTx:[
- {id:'et1',employeeId:'e1',projectId:'p1',date:'2026-09-30',type:'accrual',amount:12000000,note:'Lương tháng 9'},
- {id:'et2',employeeId:'e1',projectId:'p1',date:'2026-10-05',type:'payment',amount:12000000,note:'Chuyển khoản lương T9'},
- {id:'et3',employeeId:'e2',projectId:'p1',date:'2026-09-30',type:'accrual',amount:11700000,note:'26 công x 450k'},
- {id:'et4',employeeId:'e2',projectId:'p1',date:'2026-09-15',type:'advance',amount:3000000,note:'Tạm ứng giữa tháng'},
- {id:'et5',employeeId:'e4',projectId:'p2',date:'2026-09-30',type:'accrual',amount:9000000,note:'Lương tháng 9'}],
-machines:[
- {id:'m1',name:'Máy xúc Komatsu PC200',code:'MX-01',own:'rent',rate:45000000,unit:'tháng',projectId:'p1'},
- {id:'m2',name:'Xe tải Howo 8 tấn',code:'XT-02',own:'own',rate:1800000,unit:'ngày',projectId:'p1'},
- {id:'m3',name:'Máy trộn bê tông 350L',code:'MT-03',own:'own',rate:0,unit:'',projectId:'p2'}],
-machineTx:[
- {id:'mt1',machineId:'m1',projectId:'p1',date:'2026-09-30',type:'usage',amount:45000000,qty:1,note:'Thuê tháng 9'},
- {id:'mt2',machineId:'m1',projectId:'p1',date:'2026-10-04',type:'payment',amount:45000000,note:'Thanh toán thuê T9'},
- {id:'mt3',machineId:'m2',projectId:'p1',date:'2026-09-28',type:'usage',amount:36000000,qty:20,note:'20 ngày x 1.8tr (dầu + lái xe)'}],
-consumables:[
- {id:'s1',name:'Xi măng PCB40',unit:'bao',projectId:'p1'},
- {id:'s2',name:'Sắt phi 16',unit:'cây',projectId:'p1'},
- {id:'s3',name:'Cát xây',unit:'m³',projectId:'p1'},
- {id:'s4',name:'Gạch ống 8x8x18',unit:'viên',projectId:'p2'}],
-consumableTx:[
- {id:'st1',itemId:'s1',projectId:'p1',date:'2026-08-02',type:'purchase',qty:1200,price:128000,note:'VLXD Hoàng Phát'},
- {id:'st2',itemId:'s1',projectId:'p1',date:'2026-09-10',type:'consume',qty:850,price:128000,note:'Đổ sàn tầng 9'},
- {id:'st3',itemId:'s2',projectId:'p1',date:'2026-08-10',type:'purchase',qty:2800,price:183000,note:'Sắt thép Miền Nam'},
- {id:'st4',itemId:'s2',projectId:'p1',date:'2026-09-12',type:'consume',qty:1950,price:183000,note:'Cột + dầm tầng 9-10'},
- {id:'st5',itemId:'s3',projectId:'p1',date:'2026-08-05',type:'purchase',qty:400,price:320000,note:'Cát Đồng Nai'},
- {id:'st6',itemId:'s3',projectId:'p1',date:'2026-09-15',type:'consume',qty:310,price:320000,note:'Xây tường bao'},
- {id:'st7',itemId:'s4',projectId:'p2',date:'2026-09-08',type:'purchase',qty:30000,price:1450,note:'Gạch Tuynel'}],
-nonconsumables:[
- {id:'n1',name:'Giàn giáo H 1.7m',category:'Giàn giáo',total:120,projectId:'p1'},
- {id:'n2',name:'Máy khoan Bosch 13mm',category:'Máy cầm tay',total:8,projectId:'p1'},
- {id:'n3',name:'Cốp pha phủ phim',category:'Cốp pha',total:400,projectId:'p1'}],
-nonconsumableTx:[
- {id:'nt1',itemId:'n1',projectId:'p1',date:'2026-08-01',type:'inuse',qty:80,note:'Lắp mặt ngoài tháp A'},
- {id:'nt2',itemId:'n1',projectId:'p1',date:'2026-09-20',type:'repair',qty:6,note:'Cong khung, gửi sửa'},
- {id:'nt3',itemId:'n2',projectId:'p1',date:'2026-09-02',type:'inuse',qty:5,note:'Giao tổ điện nước'},
- {id:'nt4',itemId:'n2',projectId:'p1',date:'2026-09-25',type:'lost',qty:1,note:'Mất tại tầng 7 – lập biên bản'}],
 bankAccounts:[
  {id:'b1',name:'Vietcombank',number:'0071001234567',note:'TK chính công ty'},
  {id:'b2',name:'Tiền mặt công trình',number:'TM-01',note:'Quỹ tiền mặt tại công trình'}],
@@ -476,13 +427,8 @@ const NAV=[
  {label:'Công nợ phải thu',icon:'',hash:'#/receivables'},
  {label:'Ngân hàng & Quỹ',icon:'',hash:'#/bank',min:'Admin'},
  {sec:'VẬT TƯ & NHÂN SỰ'},
- {label:'Kho vật tư',icon:'',hash:'#/inventory/consumable'},
- {label:'CCDC & Thiết bị',icon:'',hash:'#/inventory/nonconsumable'},
  {label:'Nhà cung cấp',icon:'',hash:'#/vendors'},
- {label:'Khách hàng',icon:'',hash:'#/customers'},
  {label:'Nhà thầu',icon:'',hash:'#/contractors'},
- {label:'Nhân viên',icon:'',hash:'#/employees'},
- {label:'Máy móc',icon:'',hash:'#/machinery'},
  {sec:'HỆ THỐNG'},
  {label:'Chủ đầu tư',icon:'',hash:'#/clients',min:'Admin'},
  {label:'Danh mục hạng mục',icon:'',hash:'#/danhmuc'},
@@ -510,7 +456,6 @@ function buildSidebar(){
   }else{
    let cnt='';
    if(it.hash==='#/vendors')cnt=scoped(DB.data.vendors).length;
-   if(it.hash==='#/employees')cnt=scoped(DB.data.employees).length;
    if(it.hash==='#/projects')cnt=scoped(DB.data.projects).length;
    h+='<button class="sb-link'+(location.hash===it.hash?' active':'')+'" data-h="'+it.hash+'"><span class="ic">'+it.icon+'</span>'+it.label+(cnt!==''?'<span class="cnt">'+cnt+'</span>':'')+'</button>';
   }
@@ -546,21 +491,19 @@ function projectSpent(pid){
  let s=0;
  DB.data.vendorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=t.amount);
  DB.data.contractorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=t.amount);
- DB.data.employeeTx.filter(t=>t.projectId===pid&&(t.type==='payment'||t.type==='advance')).forEach(t=>s+=t.amount);
- DB.data.machineTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=t.amount);
  DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>s+=t.amount);
  return s;
 }
 function projectLiab(pid){
  const vd=dueOf(DB.data.vendorTx.filter(t=>t.projectId===pid),'purchase','payment');
  const kd=dueOf(DB.data.contractorTx.filter(t=>t.projectId===pid),'entry','payment');
- const ed=dueOf(DB.data.employeeTx.filter(t=>t.projectId===pid),'accrual','payment')+DB.data.employeeTx.filter(t=>t.projectId===pid&&t.type==='advance').reduce((s,t)=>s+t.amount,0);
- const md=dueOf(DB.data.machineTx.filter(t=>t.projectId===pid),'usage','payment');
+ const ed=0;
+ const md=0;
  return {vendor:vd,contractor:kd,salary:ed,machine:md,total:vd+kd+ed+md};
 }
 function dueOf(rows,inT,outT){const i=rows.filter(r=>r.type===inT).reduce((s,r)=>s+r.amount,0);const o=rows.filter(r=>r.type===outT).reduce((s,r)=>s+r.amount,0);return Math.max(0,i-o);}
 function projectRecv(pid){ // phải thu = bán/NT - đã nhận
- return dueOf(DB.data.customerTx.filter(t=>t.projectId===pid),'sale','payment')+dueOf(DB.data.clientTx.filter(t=>t.projectId===pid),'billed','received');
+ return dueOf(DB.data.clientTx.filter(t=>t.projectId===pid),'billed','received');
 }
 /* ================= ROUTER ================= */
 const ROUTES={};
@@ -583,19 +526,17 @@ ROUTES['#/dashboard']=function(){
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
  let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
- h+='<div class="grid g7" style="margin-bottom:16px">'
+ h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
   +stat('Công nợ phải trả',fmtVND(liab.total),'','st-bad')
   +stat('Nợ NCC',fmtVND(liab.vendor),'','st-bad')
-  +stat('Nợ nhà thầu',fmtVND(liab.contractor),'','st-bad')
-  +stat('Nợ lương',fmtVND(liab.salary),'‍','st-warn')
-  +stat('Nợ máy móc',fmtVND(liab.machine),'','st-warn')+'</div>';
+  +stat('Nợ nhà thầu',fmtVND(liab.contractor),'','st-bad')+'</div>';
  h+='<div class="grid g3" style="margin-bottom:16px">';
  h+='<div class="card"><div class="card-h"><div><h3>Đã chi vs Ngân sách còn lại</h3><div class="sub">Từng dự án đang thi công</div></div></div><div class="card-b">'
   +hbarChart(actives.map(p=>({label:p.code+' • '+p.name,value:projectSpent(p.id)})),'#e8930c')+'</div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Cơ cấu công nợ</h3><div class="sub">Tổng hợp các dự án đang làm</div></div></div><div class="card-b">'
-  +(liab.total>0?donutChart([{label:'Nợ NCC',value:liab.vendor,color:'#dc2626'},{label:'Nợ nhà thầu',value:liab.contractor,color:'#e8930c'},{label:'Nợ lương',value:liab.salary,color:'#d97706'},{label:'Nợ máy',value:liab.machine,color:'#0891b2'}]):'<div class="empty"><div class="big"></div>Không còn công nợ tồn đọng</div>')+'</div></div>';
+  +(liab.total>0?donutChart([{label:'Nợ NCC',value:liab.vendor,color:'#dc2626'},{label:'Nợ nhà thầu',value:liab.contractor,color:'#e8930c'}]):'<div class="empty"><div class="big"></div>Không còn công nợ tồn đọng</div>')+'</div></div>';
  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
  h+='<div class="card"><div class="card-h"><div><h3>Chi phí theo loại</h3><div class="sub">Các dự án đang thi công</div></div></div><div class="card-b">'
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
@@ -605,7 +546,7 @@ ROUTES['#/dashboard']=function(){
  h+='</tbody></table></div></div>';
  h+='<div class="grid g4">'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/vendors\'"><div style="font-size:12px;color:var(--mut)">Nhà cung cấp</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.vendors).length+'</div></div>'
-  +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/employees\'"><div style="font-size:12px;color:var(--mut)">Nhân viên</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.employees).length+'</div></div>'
+  +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/contractors\'"><div style="font-size:12px;color:var(--mut)">Nhà thầu</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.contractors).length+'</div></div>'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/bank\'"><div style="font-size:12px;color:var(--mut)">Tài khoản</div><div style="font-size:24px;font-weight:800">'+DB.data.bankAccounts.length+'</div></div>'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/audit\'"><div style="font-size:12px;color:var(--mut)">Nhật ký</div><div style="font-size:24px;font-weight:800">Xem →</div></div></div>';
  $('#view').innerHTML=h;
@@ -653,14 +594,14 @@ function renderProjectLedger(pid){
  if(s>p.budget)h+='<div class="alert alert-red">Dự án đã <b>vượt ngân sách</b> '+(fmtVND(s-p.budget))+' ('+Math.round(100*s/p.budget)+'% ngân sách)</div>';
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
  h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Ngân sách',fmtVND(p.budget),'','st-info')+stat('Đã chi',fmtVND(s),'','st-warn')+stat('Công nợ phải trả',fmtVND(l.total),'','st-bad')+stat('Còn lại',fmtVND(bal),'',bal<0?'st-bad':'st-ok')+'</div>';
- h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Phải thu KH',fmtVND(recv),'','st-info')+stat('Nợ NCC',fmtVND(l.vendor),'','st-bad')+stat('Nợ nhà thầu',fmtVND(l.contractor),'','st-bad')+stat('Nợ lương + máy',fmtVND(l.salary+l.machine),'‍','st-warn')+'</div>';
+ h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Phải thu KH',fmtVND(recv),'','st-info')+stat('Nợ NCC',fmtVND(l.vendor),'','st-bad')+stat('Nợ nhà thầu',fmtVND(l.contractor),'','st-bad')+'</div>';
  // dòng tiền
  const rows=[];
  DB.data.vendorTx.filter(t=>t.projectId===pid).forEach(t=>{const v=DB.data.vendors.find(x=>x.id===t.vendorId);rows.push({date:t.date,desc:'NCC '+((v&&v.name)||'')+' — '+t.note,in:t.type==='purchase'?t.amount:0,out:t.type==='payment'?t.amount:0});});
  DB.data.contractorTx.filter(t=>t.projectId===pid).forEach(t=>{const k=DB.data.contractors.find(x=>x.id===t.contractorId);rows.push({date:t.date,desc:'Nhà thầu '+((k&&k.name)||'')+' — '+t.note,in:t.type==='entry'?t.amount:0,out:t.type==='payment'?t.amount:0});});
- DB.data.employeeTx.filter(t=>t.projectId===pid).forEach(t=>{const e=DB.data.employees.find(x=>x.id===t.employeeId);rows.push({date:t.date,desc:'NV '+((e&&e.name)||'')+' — '+t.note,in:t.type==='accrual'?t.amount:0,out:(t.type==='payment'||t.type==='advance')?t.amount:0});});
- DB.data.machineTx.filter(t=>t.projectId===pid).forEach(t=>{const m=DB.data.machines.find(x=>x.id===t.machineId);rows.push({date:t.date,desc:'Máy '+((m&&m.name)||'')+' — '+t.note,in:t.type==='usage'?t.amount:0,out:t.type==='payment'?t.amount:0});});
- DB.data.customerTx.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Khách hàng — '+t.note,in:t.type==='payment'?t.amount:0,out:0});});
+
+
+
  DB.data.clientTx.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chủ đầu tư — '+t.note,in:t.type==='received'?t.amount:0,out:0});});
  DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chi phí ['+t.category+'] — '+t.note,in:0,out:t.amount});});
  const led=runLedger(rows,'in','out');
@@ -684,14 +625,9 @@ function nav(rebuild){
   const id=parts.slice(2).join('/');
   if(parts[1]==='projects')fn=()=>renderProjectLedger(id);
   else if(parts[1]==='vendors')fn=()=>renderPartnerLedger(PCFG.vendors,id);
-  else if(parts[1]==='customers')fn=()=>renderPartnerLedger(PCFG.customers,id);
   else if(parts[1]==='contractors')fn=()=>renderContractorLedger(id);
-  else if(parts[1]==='employees')fn=()=>renderEmployeeLedger(id);
-  else if(parts[1]==='machinery')fn=()=>renderMachineLedger(id);
   else if(parts[1]==='bank')fn=()=>renderBankLedger(id);
   else if(parts[1]==='clients')fn=()=>renderPartnerLedger(PCFG.clients,id);
-  else if(parts[1]==='stock'&&parts[2]==='consumable')fn=()=>renderItemLedger(parts[3]);
-  else if(parts[1]==='stock'&&parts[2]==='nonconsumable')fn=()=>renderNCItemLedger(parts[3]);
  }
  if(!fn)fn=ROUTES['#/dashboard'];
  $('#view').innerHTML='';fn();window.scrollTo(0,0);
@@ -699,7 +635,6 @@ function nav(rebuild){
 /* ================= PARTNERS (generic) ================= */
 const PCFG={
  vendors:{coll:'vendors',tx:'vendorTx',fk:'vendorId',t:'Nhà cung cấp',icon:'',inT:'purchase',outT:'payment',inL:'Mua hàng / Nhập',outL:'Thanh toán',dueL:'Công nợ phải trả',back:'#/vendors'},
- customers:{coll:'customers',tx:'customerTx',fk:'customerId',t:'Khách hàng',icon:'‍',inT:'sale',outT:'payment',inL:'Bán / Nghiệm thu',outL:'Đã thu tiền',dueL:'Công nợ phải thu',back:'#/customers'},
  clients:{coll:'clients',tx:'clientTx',fk:'clientId',t:'Chủ đầu tư',icon:'',inT:'billed',outT:'received',inL:'Đã nghiệm thu',outL:'Đã nhận tiền',dueL:'Còn phải thu',back:'#/clients',noProj:true}
 };
 function partnerListPage(cfg){
@@ -769,7 +704,6 @@ function renderPartnerLedger(cfg,id){
 }
 function delTx(txColl,id){if(!confirm('Xóa giao dịch này?'))return;DB.data[txColl]=DB.data[txColl].filter(x=>x.id!==id);DB.log('Xóa giao dịch',txColl);DB.save();nav(false);toast('Đã xóa');}
 ROUTES['#/vendors']=()=>partnerListPage(PCFG.vendors);
-ROUTES['#/customers']=()=>partnerListPage(PCFG.customers);
 ROUTES['#/clients']=()=>{if(!Auth.canAdmin()){location.hash='#/dashboard';return;}partnerListPage(PCFG.clients);};
 /* ================= CONTRACTORS ================= */
 ROUTES['#/contractors']=function(){
@@ -812,185 +746,6 @@ function renderContractorLedger(id){
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
 /* ================= EMPLOYEES ================= */
-ROUTES['#/employees']=function(){
- const list=scoped(DB.data.employees);
- let h='<div class="page-head"><div><h1>‍Nhân viên</h1><p>'+list.length+' người • lương cố định / công nhật, tạm ứng, phiếu lương</p></div><div class="page-actions"><button class="btn btn-pri" onclick="employeeForm()">+ Thêm nhân viên</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Hình thức</th><th>Dự án</th><th class="num">Lương/Công</th><th class="num">Đã tạm ứng</th><th class="num">Nợ lương</th><th></th></tr></thead><tbody>';
- list.forEach(o=>{const txs=DB.data.employeeTx.filter(t=>t.employeeId===o.id);
-  const acc=txs.filter(t=>t.type==='accrual').reduce((s,t)=>s+t.amount,0),adv=txs.filter(t=>t.type==='advance').reduce((s,t)=>s+t.amount,0),paid=txs.filter(t=>t.type==='payment').reduce((s,t)=>s+t.amount,0);
-  const due=Math.max(0,acc-paid)+adv;
-  h+='<tr><td><a class="linklike" href="#/employees/'+o.id+'"><b>'+esc(o.name)+'</b></a><div style="font-size:11.5px;color:var(--mut)">'+esc(o.phone||'')+'</div></td><td>'+(o.kind==='fixed'?'<span class="badge b-blue">Cố định</span>':'<span class="badge b-amber">Công nhật</span>')+'</td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+fmtVND(o.salary)+(o.kind==='daily'?'/công':'/tháng')+'</td><td class="num">'+fmtVND(adv)+'</td><td class="num" style="font-weight:700;color:'+(due>0?'var(--bad)':'var(--ok)')+'">'+fmtVND(due)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="employeeTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="employeeForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'employees\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-};
-ROUTES['#/machinery-employees']=ROUTES['#/employees'];
-function employeeForm(id){
- const o=id?DB.data.employees.find(x=>x.id===id):{name:'',phone:'',kind:'daily',salary:'',projectId:SEL.projectId||'',note:''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
- openModal((id?'Sửa':'Thêm')+' nhân viên',fld('Họ tên',inp('name',o.name))+'<div class="frm-row">'+fld('Điện thoại',inp('phone',o.phone))+fld('Hình thức',sel('kind',[{v:'daily',t:'Công nhật'},{v:'fixed',t:'Lương cố định'}],o.kind))+'</div>'+'<div class="frm-row">'+fld('Mức lương/công (VND)',inp('salary',o.salary,'number','min="0"'))+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId))+'</div>'+fld('Ghi chú',txa('note',o.note)),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveEmployee(\''+(id||'')+'\')">Lưu</button>');
-}
-function saveEmployee(id){const o={name:formVal('name'),phone:formVal('phone'),kind:formVal('kind'),salary:+formVal('salary')||0,projectId:formVal('projectId'),note:formVal('note')};
- if(!o.name){toast('Nhập họ tên');return;}
- if(id)Object.assign(DB.data.employees.find(x=>x.id===id),o);else DB.data.employees.push(Object.assign({id:uid('e')},o));
- DB.log(id?'Sửa nhân viên':'Thêm nhân viên',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
-function employeeTxForm(oid){
- const o=DB.data.employees.find(x=>x.id===oid);
- openModal('Ghi giao dịch — '+esc(o.name),fld('Loại',sel('type',[{v:'accrual',t:'Chấm lương / công'},{v:'advance',t:'Tạm ứng'},{v:'payment',t:'Trả lương'}],'accrual'))+'<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số tiền (VND)',inp('amount','','number','min="0"'))+'</div>'+fld('Diễn giải',txa('note','')),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveEmployeeTx(\''+oid+'\')">Lưu</button>');
-}
-function saveEmployeeTx(oid){const o=DB.data.employees.find(x=>x.id===oid);
- const t={id:uid('et'),employeeId:oid,projectId:o.projectId||SEL.projectId||'',date:formVal('date')||todayISO(),type:formVal('type'),amount:+formVal('amount')||0,note:formVal('note')};
- if(!t.amount){toast('Nhập số tiền');return;}
- DB.data.employeeTx.push(t);DB.log('Giao dịch nhân viên',({accrual:'Chấm lương ',advance:'Tạm ứng ',payment:'Trả lương '}[t.type])+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
-function renderEmployeeLedger(id){
- const o=DB.data.employees.find(x=>x.id===id);if(!o){location.hash='#/employees';return;}
- const txs=DB.data.employeeTx.filter(t=>t.employeeId===id).map(t=>({date:t.date,desc:({accrual:'Chấm lương: ',advance:'Tạm ứng: ',payment:'Trả lương: '}[t.type])+t.note,in:t.type==='accrual'?t.amount:0,out:(t.type==='payment'||t.type==='advance')?t.amount:0,id:t.id}));
- const led=runLedger(txs,'in','out');const bal=led.length?led[led.length-1].balance:0;
- const advTotal=DB.data.employeeTx.filter(t=>t.employeeId===id&&t.type==='advance').reduce((s,t)=>s+t.amount,0);
- let h='<div class="page-head"><div><h1>‍Sổ lương: '+esc(o.name)+'</h1><p>'+(o.kind==='fixed'?'Lương cố định':'Công nhật')+' • '+fmtVND(o.salary)+(o.kind==='daily'?'/công':'/tháng')+' • '+esc(projCode(o.projectId))+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/employees\'">← Danh sách</button><button class="btn btn-warn" onclick="salarySlip(\''+id+'\')">Phiếu lương</button><button class="btn btn-pri" onclick="employeeTxForm(\''+id+'\')">Ghi giao dịch</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
- h+='<div class="grid g3" style="margin-bottom:16px"><div class="stat st-info"><div class="ic"></div><div><div class="lb">Lương đã chấm</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.in,0))+'</div></div></div><div class="stat st-ok"><div class="ic"></div><div><div class="lb">Đã trả + tạm ứng</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.out,0))+'</div></div></div><div class="stat '+(bal+advTotal>0?'st-bad':'st-ok')+'"><div class="ic"></div><div><div class="lb">Còn nợ (gồm tạm ứng)</div><div class="vl">'+fmtVND(Math.max(0,bal)+advTotal)+'</div></div></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Chấm lương</th><th class="num">Trả / Tạm ứng</th><th class="num">Số dư</th><th></th></tr></thead><tbody>';
- led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'employeeTx\',\''+r.id+'\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-}
-function salarySlip(id){
- const o=DB.data.employees.find(x=>x.id===id);
- const txs=DB.data.employeeTx.filter(t=>t.employeeId===id);
- const acc=txs.filter(t=>t.type==='accrual').reduce((s,t)=>s+t.amount,0),adv=txs.filter(t=>t.type==='advance').reduce((s,t)=>s+t.amount,0),paid=txs.filter(t=>t.type==='payment').reduce((s,t)=>s+t.amount,0);
- openModal('Phiếu lương — '+esc(o.name),
-  '<dl class="kv"><dt>Nhân viên</dt><dd>'+esc(o.name)+'</dd><dt>Hình thức</dt><dd>'+(o.kind==='fixed'?'Lương cố định':'Công nhật')+'</dd><dt>Mức</dt><dd>'+fmtVND(o.salary)+(o.kind==='daily'?'/công':'/tháng')+'</dd><dt>Tổng đã chấm</dt><dd>'+fmtVND(acc)+'</dd><dt>Đã tạm ứng</dt><dd>'+fmtVND(adv)+'</dd><dt>Đã trả lương</dt><dd>'+fmtVND(paid)+'</dd><dt>Còn phải trả</dt><dd style="color:var(--bad)">'+fmtVND(Math.max(0,acc-paid)+adv)+'</dd><dt>Ngày in</dt><dd>'+todayVN()+'</dd></dl>',
-  '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-pri" onclick="window.print()">In phiếu</button>',true);
-}
-/* ================= MACHINERY ================= */
-ROUTES['#/machinery']=function(){
- const list=scoped(DB.data.machines);
- let h='<div class="page-head"><div><h1>Máy móc & Thiết bị</h1><p>'+list.length+' máy • giờ công, thuê/mua, công nợ từng máy</p></div><div class="page-actions"><button class="btn btn-pri" onclick="machineForm()">+ Thêm máy</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Máy</th><th>Sở hữu</th><th>Dự án</th><th class="num">Đơn giá</th><th class="num">Chi phí phát sinh</th><th class="num">Đã trả</th><th class="num">Còn nợ</th><th></th></tr></thead><tbody>';
- list.forEach(o=>{const txs=DB.data.machineTx.filter(t=>t.machineId===o.id);
-  const use=txs.filter(t=>t.type==='usage').reduce((s,t)=>s+t.amount,0),paid=txs.filter(t=>t.type==='payment').reduce((s,t)=>s+t.amount,0),due=Math.max(0,use-paid);
-  h+='<tr><td><a class="linklike" href="#/machinery/'+o.id+'"><b>'+esc(o.code)+'</b> • '+esc(o.name)+'</a></td><td>'+(o.own==='rent'?'<span class="badge b-amber">Thuê</span>':'<span class="badge b-green">Của công ty</span>')+'</td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+(o.rate?fmtVND(o.rate)+'/'+esc(o.unit):'—')+'</td><td class="num">'+fmtVND(use)+'</td><td class="num">'+fmtVND(paid)+'</td><td class="num" style="font-weight:700;color:'+(due>0?'var(--bad)':'var(--ok)')+'">'+fmtVND(due)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="machineTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="machineForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'machines\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-};
-function machineForm(id){
- const o=id?DB.data.machines.find(x=>x.id===id):{name:'',code:'',own:'rent',rate:'',unit:'tháng',projectId:SEL.projectId||''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
- openModal((id?'Sửa':'Thêm')+' máy móc',fld('Tên máy',inp('name',o.name))+'<div class="frm-row">'+fld('Mã máy',inp('code',o.code))+fld('Sở hữu',sel('own',[{v:'rent',t:'Thuê ngoài'},{v:'own',t:'Của công ty'}],o.own))+'</div>'+'<div class="frm-row">'+fld('Đơn giá (VND)',inp('rate',o.rate,'number','min="0"'))+fld('Đơn vị tính',sel('unit',[{v:'giờ',t:'giờ'},{v:'ngày',t:'ngày'},{v:'tháng',t:'tháng'},{v:'ca',t:'ca'}],o.unit))+'</div>'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId)),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveMachine(\''+(id||'')+'\')">Lưu</button>');
-}
-function saveMachine(id){const o={name:formVal('name'),code:formVal('code'),own:formVal('own'),rate:+formVal('rate')||0,unit:formVal('unit'),projectId:formVal('projectId')};
- if(!o.name){toast('Nhập tên máy');return;}
- if(id)Object.assign(DB.data.machines.find(x=>x.id===id),o);else DB.data.machines.push(Object.assign({id:uid('m')},o));
- DB.log(id?'Sửa máy':'Thêm máy',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
-function machineTxForm(oid){
- const o=DB.data.machines.find(x=>x.id===oid);
- openModal('Ghi giao dịch — '+esc(o.name),fld('Loại',sel('type',[{v:'usage',t:'Phát sinh chi phí (giờ công/thuê)'},{v:'payment',t:'Thanh toán'}],'usage'))+'<div class="frm-row3">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số lượng',inp('qty','1','number','min="0" step="any"'))+fld('Số tiền (VND)',inp('amount',o.rate||'','number','min="0"'))+'</div>'+fld('Diễn giải',txa('note','')),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveMachineTx(\''+oid+'\')">Lưu</button>');
-}
-function saveMachineTx(oid){const o=DB.data.machines.find(x=>x.id===oid);
- const t={id:uid('mt'),machineId:oid,projectId:o.projectId||SEL.projectId||'',date:formVal('date')||todayISO(),type:formVal('type'),qty:+formVal('qty')||0,amount:+formVal('amount')||0,note:formVal('note')};
- if(!t.amount){toast('Nhập số tiền');return;}
- DB.data.machineTx.push(t);DB.log('Giao dịch máy',(t.type==='usage'?'Phát sinh ':'Thanh toán ')+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
-function renderMachineLedger(id){
- const o=DB.data.machines.find(x=>x.id===id);if(!o){location.hash='#/machinery';return;}
- const txs=DB.data.machineTx.filter(t=>t.machineId===id).map(t=>({date:t.date,desc:(t.type==='usage'?'Phát sinh'+(t.qty?' ('+t.qty+' '+o.unit+')':'')+': ':'Thanh toán: ')+t.note,in:t.type==='usage'?t.amount:0,out:t.type==='payment'?t.amount:0,id:t.id}));
- const led=runLedger(txs,'in','out');const due=led.length?led[led.length-1].balance:0;
- let h='<div class="page-head"><div><h1>Sổ máy: '+esc(o.code+' • '+o.name)+'</h1><p>'+(o.own==='rent'?'Thuê ngoài':'Của công ty')+(o.rate?' • '+fmtVND(o.rate)+'/'+o.unit:'')+' • '+esc(projCode(o.projectId))+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/machinery\'">← Danh sách</button><button class="btn btn-pri" onclick="machineTxForm(\''+id+'\')">Ghi giao dịch</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
- h+='<div class="grid g3" style="margin-bottom:16px"><div class="stat st-info"><div class="ic"></div><div><div class="lb">Chi phí phát sinh</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.in,0))+'</div></div></div><div class="stat st-ok"><div class="ic"></div><div><div class="lb">Đã thanh toán</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.out,0))+'</div></div></div><div class="stat '+(due>0?'st-bad':'st-ok')+'"><div class="ic"></div><div><div class="lb">Còn nợ</div><div class="vl">'+fmtVND(due)+'</div></div></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Phát sinh</th><th class="num">Đã trả</th><th class="num">Còn nợ</th><th></th></tr></thead><tbody>';
- led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'machineTx\',\''+r.id+'\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-}
-/* ================= INVENTORY: CONSUMABLE ================= */
-ROUTES['#/inventory']=()=>{location.hash='#/inventory/consumable';};
-ROUTES['#/inventory/consumable']=function(){
- const list=scoped(DB.data.consumables);
- let h='<div class="page-head"><div><h1>Kho vật tư tiêu hao</h1><p>'+list.length+' loại vật tư • nhập / xuất / tồn kho theo từng dự án</p></div><div class="page-actions"><button class="btn btn-pri" onclick="itemForm()">+ Thêm vật tư</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Vật tư</th><th>Dự án</th><th class="num">Đã nhập</th><th class="num">Đã xuất dùng</th><th class="num">Tồn kho</th><th class="num">Giá trị tồn</th><th></th></tr></thead><tbody>';
- list.forEach(o=>{const txs=DB.data.consumableTx.filter(t=>t.itemId===o.id);
-  const pur=txs.filter(t=>t.type==='purchase'),con=txs.filter(t=>t.type==='consume'),sale=txs.filter(t=>t.type==='sale');
-  const qIn=pur.reduce((s,t)=>s+t.qty,0),qOut=con.reduce((s,t)=>s+t.qty,0)+sale.reduce((s,t)=>s+t.qty,0);
-  const stock=qIn-qOut;const avg=pur.length?pur.reduce((s,t)=>s+t.qty*t.price,0)/Math.max(1,qIn):0;
-  h+='<tr><td><a class="linklike" href="#/stock/consumable/'+o.id+'"><b>'+esc(o.name)+'</b></a><div style="font-size:11.5px;color:var(--mut)">ĐVT: '+esc(o.unit)+'</div></td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+fmtNum(qIn)+' '+esc(o.unit)+'</td><td class="num">'+fmtNum(qOut)+' '+esc(o.unit)+'</td><td class="num" style="font-weight:700;color:'+(stock<0?'var(--bad)':'var(--ink)')+'">'+fmtNum(stock)+' '+esc(o.unit)+'</td><td class="num">'+fmtVND(stock*avg)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="stockTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="itemForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'consumables\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-};
-function itemForm(id){
- const o=id?DB.data.consumables.find(x=>x.id===id):{name:'',unit:'',projectId:SEL.projectId||''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
- openModal((id?'Sửa':'Thêm')+' vật tư',fld('Tên vật tư',inp('name',o.name))+'<div class="frm-row">'+fld('Đơn vị tính',inp('unit',o.unit,'text','placeholder="bao / cây / m³ ..."'))+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId))+'</div>',
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveItem(\''+(id||'')+'\')">Lưu</button>');
-}
-function saveItem(id){const o={name:formVal('name'),unit:formVal('unit'),projectId:formVal('projectId')};
- if(!o.name){toast('Nhập tên vật tư');return;}
- if(id)Object.assign(DB.data.consumables.find(x=>x.id===id),o);else DB.data.consumables.push(Object.assign({id:uid('s')},o));
- DB.log(id?'Sửa vật tư':'Thêm vật tư',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
-function stockTxForm(oid){
- const o=DB.data.consumables.find(x=>x.id===oid);
- openModal('Nhập/Xuất — '+esc(o.name)+' ('+esc(o.unit)+')',fld('Loại',sel('type',[{v:'purchase',t:'Nhập mua'},{v:'consume',t:'Xuất dùng'},{v:'sale',t:'Bán thanh lý'}],'purchase'))+'<div class="frm-row3">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số lượng',inp('qty','','number','min="0" step="any"'))+fld('Đơn giá (VND)',inp('price','','number','min="0"'))+'</div>'+fld('Diễn giải',txa('note','')),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveStockTx(\''+oid+'\')">Lưu</button>');
-}
-function saveStockTx(oid){const o=DB.data.consumables.find(x=>x.id===oid);
- const t={id:uid('st'),itemId:oid,projectId:o.projectId||SEL.projectId||'',date:formVal('date')||todayISO(),type:formVal('type'),qty:+formVal('qty')||0,price:+formVal('price')||0,note:formVal('note')};
- if(!t.qty){toast('Nhập số lượng');return;}
- if(t.type!=='purchase'){const txs=DB.data.consumableTx.filter(x=>x.itemId===oid);const qIn=txs.filter(x=>x.type==='purchase').reduce((s,x)=>s+x.qty,0);const qOut=txs.filter(x=>x.type!=='purchase').reduce((s,x)=>s+x.qty,0);
-  if(t.qty>(qIn-qOut)){if(!confirm('Xuất vượt tồn kho hiện tại ('+fmtNum(qIn-qOut)+' '+o.unit+'). Vẫn ghi?'))return;}}
- DB.data.consumableTx.push(t);DB.log('Kho vật tư',({purchase:'Nhập ',consume:'Xuất ',sale:'Bán '}[t.type])+fmtNum(t.qty)+' '+o.unit+' '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
-function renderItemLedger(id){
- const o=DB.data.consumables.find(x=>x.id===id);if(!o){location.hash='#/inventory/consumable';return;}
- const txs=DB.data.consumableTx.filter(t=>t.itemId===id);
- let bal=0;const rows=txs.slice().sort((a,b)=>a.date<b.date?-1:1).map(t=>{const q=t.type==='purchase'?t.qty:-t.qty;bal+=q;return{date:t.date,desc:({purchase:'Nhập mua: ',consume:'Xuất dùng: ',sale:'Bán: '}[t.type])+t.note+' ('+fmtNum(t.price)+' ₫/'+o.unit+')',q,bal};});
- let h='<div class="page-head"><div><h1>Thẻ kho: '+esc(o.name)+'</h1><p>ĐVT: '+esc(o.unit)+' • '+esc(projCode(o.projectId))+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/inventory/consumable\'">← Kho</button><button class="btn btn-pri" onclick="stockTxForm(\''+id+'\')">Nhập/Xuất</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Nhập</th><th class="num">Xuất</th><th class="num">Tồn</th></tr></thead><tbody>';
- rows.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.q>0?fmtNum(r.q):'—')+'</td><td class="num ledger-out">'+(r.q<0?fmtNum(-r.q):'—')+'</td><td class="num"><b>'+fmtNum(r.bal)+' '+esc(o.unit)+'</b></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-}
-/* ================= INVENTORY: NON-CONSUMABLE ================= */
-ROUTES['#/inventory/nonconsumable']=function(){
- const list=scoped(DB.data.nonconsumables);
- const stSum={store:0,inuse:0,repair:0,lost:0};
- list.forEach(o=>{const txs=DB.data.nonconsumableTx.filter(t=>t.itemId===o.id);
-  const mv={inuse:0,repair:0,lost:0,store:0};txs.forEach(t=>{mv[t.type]=(mv[t.type]||0)+t.qty;});
-  const store=o.total-mv.inuse-mv.repair-mv.lost;stSum.store+=store;stSum.inuse+=mv.inuse;stSum.repair+=mv.repair;stSum.lost+=mv.lost;});
- let h='<div class="page-head"><div><h1>CCDC & Thiết bị</h1><p>'+list.length+' loại • theo dõi kho / đang dùng / sửa chữa / mất mát</p></div><div class="page-actions"><button class="btn btn-pri" onclick="ncItemForm()">+ Thêm thiết bị</button></div></div>';
- h+='<div class="grid g4" style="margin-bottom:16px">'
-  +'<div class="stat st-ok"><div class="ic"></div><div><div class="lb">Trong kho</div><div class="vl">'+fmtNum(stSum.store)+'</div></div></div>'
-  +'<div class="stat st-info"><div class="ic"></div><div><div class="lb">Đang sử dụng</div><div class="vl">'+fmtNum(stSum.inuse)+'</div></div></div>'
-  +'<div class="stat st-warn"><div class="ic"></div><div><div class="lb">Đang sửa chữa</div><div class="vl">'+fmtNum(stSum.repair)+'</div></div></div>'
-  +'<div class="stat st-bad"><div class="ic"></div><div><div class="lb">Mất / Hỏng</div><div class="vl">'+fmtNum(stSum.lost)+'</div></div></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Thiết bị</th><th>Nhóm</th><th>Dự án</th><th class="num">Tổng</th><th class="num">Trong kho</th><th class="num">Đang dùng</th><th class="num">Sửa chữa</th><th class="num">Mất</th><th></th></tr></thead><tbody>';
- list.forEach(o=>{const txs=DB.data.nonconsumableTx.filter(t=>t.itemId===o.id);
-  const mv={inuse:0,repair:0,lost:0};txs.forEach(t=>{mv[t.type]=(mv[t.type]||0)+t.qty;});
-  const store=o.total-mv.inuse-mv.repair-mv.lost;
-  h+='<tr><td><a class="linklike" href="#/stock/nonconsumable/'+o.id+'"><b>'+esc(o.name)+'</b></a></td><td>'+esc(o.category||'')+'</td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+fmtNum(o.total)+'</td><td class="num" style="color:var(--ok);font-weight:700">'+fmtNum(store)+'</td><td class="num">'+fmtNum(mv.inuse)+'</td><td class="num" style="color:var(--warn)">'+fmtNum(mv.repair)+'</td><td class="num" style="color:var(--bad)">'+fmtNum(mv.lost)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="ncTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="ncItemForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'nonconsumables\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')"></button></div></td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-};
-function ncItemForm(id){
- const o=id?DB.data.nonconsumables.find(x=>x.id===id):{name:'',category:'',total:'',projectId:SEL.projectId||''};
- const projs=Auth.isSM()?DB.data.projects.filter(p=>Auth.user.projectIds.includes(p.id)):DB.data.projects;
- openModal((id?'Sửa':'Thêm')+' thiết bị',fld('Tên thiết bị',inp('name',o.name))+'<div class="frm-row">'+fld('Nhóm',inp('category',o.category,'text','placeholder="Giàn giáo / Máy cầm tay ..."'))+fld('Tổng số lượng',inp('total',o.total,'number','min="0"'))+'</div>'+fld('Dự án',sel('projectId',projs.map(p=>({v:p.id,t:p.code+' • '+p.name})),o.projectId)),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveNcItem(\''+(id||'')+'\')">Lưu</button>');
-}
-function saveNcItem(id){const o={name:formVal('name'),category:formVal('category'),total:+formVal('total')||0,projectId:formVal('projectId')};
- if(!o.name){toast('Nhập tên');return;}
- if(id)Object.assign(DB.data.nonconsumables.find(x=>x.id===id),o);else DB.data.nonconsumables.push(Object.assign({id:uid('n')},o));
- DB.log(id?'Sửa CCDC':'Thêm CCDC',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
-function ncTxForm(oid){
- const o=DB.data.nonconsumables.find(x=>x.id===oid);
- openModal('Điều chuyển — '+esc(o.name),fld('Trạng thái',sel('type',[{v:'inuse',t:'Xuất dùng'},{v:'store',t:'Nhập lại kho'},{v:'repair',t:'Gửi sửa chữa'},{v:'lost',t:'Báo mất / hỏng'}],'inuse'))+'<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số lượng',inp('qty','','number','min="0"'))+'</div>'+fld('Ghi chú',txa('note','')),
- '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveNcTx(\''+oid+'\')">Lưu</button>');
-}
-function saveNcTx(oid){const o=DB.data.nonconsumables.find(x=>x.id===oid);
- const t={id:uid('nt'),itemId:oid,projectId:o.projectId||SEL.projectId||'',date:formVal('date')||todayISO(),type:formVal('type'),qty:+formVal('qty')||0,note:formVal('note')};
- if(!t.qty){toast('Nhập số lượng');return;}
- DB.data.nonconsumableTx.push(t);DB.log('Điều chuyển CCDC',({inuse:'Xuất dùng ',store:'Nhập kho ',repair:'Sửa chữa ',lost:'Báo mất '}[t.type])+fmtNum(t.qty)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
-function renderNCItemLedger(id){
- const o=DB.data.nonconsumables.find(x=>x.id===id);if(!o){location.hash='#/inventory/nonconsumable';return;}
- const txs=DB.data.nonconsumableTx.filter(t=>t.itemId===id).slice().sort((a,b)=>a.date<b.date?-1:1);
- let h='<div class="page-head"><div><h1>Thẻ thiết bị: '+esc(o.name)+'</h1><p>Tổng: '+fmtNum(o.total)+' • '+esc(projCode(o.projectId))+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/inventory/nonconsumable\'">← Danh sách</button><button class="btn btn-pri" onclick="ncTxForm(\''+id+'\')">Điều chuyển</button></div></div>';
- h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Trạng thái</th><th class="num">Số lượng</th><th>Ghi chú</th></tr></thead><tbody>';
- const lbl={inuse:'Xuất dùng',store:'Nhập lại kho',repair:'Gửi sửa chữa',lost:'Báo mất / hỏng'};
- txs.forEach(t=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(t.date)+'</td><td>'+lbl[t.type]+'</td><td class="num">'+fmtNum(t.qty)+'</td><td>'+esc(t.note)+'</td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
-}
 /* ================= BANK ================= */
 ROUTES['#/bank']=function(){
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
@@ -1076,10 +831,9 @@ ROUTES['#/liabilities']=function(){
  projs.forEach(p=>{const l=projectLiab(p.id);
   if(l.vendor>0)rows.push({p:p,who:'Nhà cung cấp',amt:l.vendor,link:'#/vendors'});
   if(l.contractor>0)rows.push({p:p,who:'Nhà thầu',amt:l.contractor,link:'#/contractors'});
-  if(l.salary>0)rows.push({p:p,who:'Lương nhân viên',amt:l.salary,link:'#/employees'});
-  if(l.machine>0)rows.push({p:p,who:'Máy móc',amt:l.machine,link:'#/machinery'});});
+  });
  const total=rows.reduce((s,r)=>s+r.amt,0);
- let h='<div class="page-head"><div><h1>Công nợ phải trả</h1><p>Tổng hợp nợ NCC, nhà thầu, lương, máy móc • Tổng: <b style="color:var(--bad)">'+fmtVND(total)+'</b></p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
+ let h='<div class="page-head"><div><h1>Công nợ phải trả</h1><p>Tổng hợp nợ NCC, nhà thầu • Tổng: <b style="color:var(--bad)">'+fmtVND(total)+'</b></p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  if(total>0)h+='<div class="card" style="margin-bottom:16px"><div class="card-b">'+donutChart([...new Map(rows.map(r=>[r.who,{label:r.who,value:rows.filter(x=>x.who===r.who).reduce((s,x)=>s+x.amt,0)}])).values()].map((d,i)=>Object.assign(d,{color:['#dc2626','#e8930c','#d97706','#0891b2'][i%4]})))+'</div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Nhóm nợ</th><th class="num">Số tiền</th><th></th></tr></thead><tbody>';
  if(!rows.length)h+='<tr><td colspan="4"><div class="empty"><div class="big"></div>Không còn công nợ phải trả</div></td></tr>';
@@ -1089,7 +843,7 @@ ROUTES['#/liabilities']=function(){
 /* ================= RECEIVABLES ================= */
 ROUTES['#/receivables']=function(){
  const rows=[];
- scoped(DB.data.customers).forEach(c=>{const due=dueOf(DB.data.customerTx.filter(t=>t.customerId===c.id),'sale','payment');if(due>0)rows.push({who:c.name,sub:'Khách hàng • '+projCode(c.projectId),amt:due,link:'#/customers/'+c.id});});
+
  DB.data.clientTx.length&&scoped(DB.data.projects).forEach(p=>{const due=dueOf(DB.data.clientTx.filter(t=>t.projectId===p.id),'billed','received');if(due>0)rows.push({who:'Chủ đầu tư ('+p.client+')',sub:'Dự án '+p.code,amt:due,link:'#/clients'});});
  const total=rows.reduce((s,r)=>s+r.amt,0);
  let h='<div class="page-head"><div><h1>Công nợ phải thu</h1><p>Tiền khách hàng / chủ đầu tư còn nợ • Tổng: <b style="color:var(--info)">'+fmtVND(total)+'</b></p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
@@ -1113,7 +867,7 @@ function reportCash(){
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid);
  $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền — '+esc(p.code+' • '+p.name)+'</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="card-b">'
  +'<dl class="kv"><dt>Ngân sách</dt><dd>'+fmtVND(p.budget)+'</dd><dt>Đã chi thực tế</dt><dd>'+fmtVND(s)+'</dd><dt>Công nợ phải trả</dt><dd style="color:var(--bad)">'+fmtVND(l.total)+'</dd><dt>Còn phải thu</dt><dd style="color:var(--info)">'+fmtVND(recv)+'</dd><dt>Ngân sách còn lại</dt><dd style="color:'+(p.budget-s<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(p.budget-s)+'</dd><dt>Tỷ lệ đã chi</dt><dd>'+Math.round(100*s/(p.budget||1))+'%</dd></dl>'
- +'<h4 style="margin:18px 0 8px">Cơ cấu công nợ phải trả</h4>'+hbarChart([{label:'Nợ NCC',value:l.vendor},{label:'Nợ nhà thầu',value:l.contractor},{label:'Nợ lương',value:l.salary},{label:'Nợ máy',value:l.machine}],'#e8930c')
+ +'<h4 style="margin:18px 0 8px">Cơ cấu công nợ phải trả</h4>'+hbarChart([{label:'Nợ NCC',value:l.vendor},{label:'Nợ nhà thầu',value:l.contractor}],'#e8930c')
  +'</div></div>';
 }
 function reportDebt(){
@@ -1130,9 +884,6 @@ ROUTES['#/quick']=function(){
   ['','Chi phí',null,'expenseForm',''],
   ['','Mua hàng NCC',null,'partnerTxForm','vendors\','+firstId('vendors')],
   ['','Nghiệm thu NT',null,'contractorTxForm',firstId('contractors')],
-  ['‍','Chấm lương',null,'employeeTxForm',firstId('employees')],
-  ['','Nhập/Xuất kho',null,'stockTxForm',firstId('consumables')],
-  ['','Ghi máy',null,'machineTxForm',firstId('machines')],
  ];
  let h='<div class="page-head"><div><h1>Nhập nhanh</h1><p>Thao tác 1 chạm cho công trường</p></div></div><div class="qentry">';
  items.forEach(it=>{h+='<div class="qe" onclick="'+(it[3]==='bankTxForm'&&it[4]?it[3]+'(\''+it[4]+'\')':it[3]+'(\''+it[4]+'\')')+'"><div class="ic">'+it[0]+'</div><div class="t">'+it[1]+'</div></div>';});
@@ -1449,7 +1200,7 @@ const CFG_KEY='twpro_cfg';
 let CFG={apiUrl:'',key:''};
 function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
-const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTru',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',customers:'KhachHang',customerTx:'KH_GD',contractors:'NhaThau',contractorTx:'NT_GD',employees:'NhanVien',employeeTx:'NV_GD',machines:'MayMoc',machineTx:'May_GD',consumables:'VatTu',consumableTx:'Kho_GD',nonconsumables:'CCDC',nonconsumableTx:'CCDC_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
+const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTru',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
  if(!CFG.apiUrl)throw new Error('Chưa cấu hình API URL');
