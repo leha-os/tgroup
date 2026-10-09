@@ -107,7 +107,7 @@ textarea.inp{resize:vertical;min-height:70px}
 .tbl-wrap::-webkit-scrollbar{height:6px}
 .tbl-wrap::-webkit-scrollbar-thumb{background:#d4c9b3;border-radius:6px}
 table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border-collapse:collapse;font-size:13px;min-width:600px}
-.tbl th,.tbl td{padding:10px 12px}
+.tbl th,.tbl td{border:1px solid #cbd5e1;padding:10px 12px}
 .tbl th{background:linear-gradient(135deg,#1a1d29,#2d3142);color:#f0ad1f;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.5px;text-align:left;padding:10px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);background:#f8fafc;border-bottom:1px solid var(--line);white-space:nowrap}
 .tbl td{padding:11px 14px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
@@ -1252,13 +1252,13 @@ function xlsxMake(sheets){
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
   +'<font><sz val="12"/><name val="Calibri"/></font>'
   +'</fonts>'
-  +'<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill></fills>'
+  +'<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills>'
   +'<borders count="2">'
   +'<border><left/><right/><top/><bottom/><diagonal/></border>'
   +'<border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border>'
   +'</borders>'
   +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
-  +'<cellXfs count="11">'
+  +'<cellXfs count="12">'
   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
   +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
@@ -1270,6 +1270,7 @@ function xlsxMake(sheets){
   +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'</cellXfs>'
   +'<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
   +'</styleSheet>';
@@ -1545,23 +1546,35 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
- const rc=new Array(n).fill(null);rc[0]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:5};R.push(rc);
- const ra=new Array(n).fill(null);ra[0]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
- const rt=new Array(n).fill(null);rt[0]={v:title,s:2};R.push(rt);
+ // R1-4: thông tin công ty (cột B)
+ const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:2};R.push(rc);
+ const ra=new Array(n).fill(null);ra[1]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
+ const rt=new Array(n).fill(null);rt[1]={v:'Tel: (84) 8 5410 4013 - (84) 903 865 240',s:3};R.push(rt);
+ const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
+ // R5-7: trống 3 dòng
+ R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
+ // R8: tiêu đề
+ const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
+ // R9: ngày xuất
+ const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
+ // R10: header vàng
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
+ // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
  if(foot){const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const rf=new Array(n).fill(null);rf[0]={v:clean,s:2};R.push(rf);}
- const mg='A1:'+xlsxColL(n)+'1',mg2='A2:'+xlsxColL(n)+'2',mg3='A3:'+xlsxColL(n)+'3';
- xlsxDownload([{name:'BaoCao',widths:headers.map(()=>18),rows:R,merges:[mg,mg2,mg3]}],filename);
+ const colL=xlsxColL(n);
+ const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
+ xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
+
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
- const rows=fl.map(d=>[fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien,d.ncc,(TT_DN[d.trangthai]||[''])[0],d.nguoitao]);
+ const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien]);
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
- dlXlsxTable('Báo cáo đề nghị — '+(SEL.projectId?projCode(SEL.projectId):'Tất cả dự án'),
-  ['Ngày','Loại','Hạng mục','Nội dung','Số lượng','Đơn giá','Thành tiền','Nhà cung cấp','Trạng thái','Người tạo'],rows,
-  '<b>Tổng số đề nghị:</b> '+fl.length+' &nbsp; <b>Tổng tiền:</b> '+fmtVND(tong),fname('baocao_denghi'));
+ dlXlsxTable('Danh sách đề nghị',
+  ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN'],rows,
+  'Tổng số: '+fl.length+' | Tổng tiền: '+fmtVND(tong),fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -1655,12 +1668,12 @@ ROUTES['#/caidat']=function(){
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
  let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
  h+='<div class="grid g2" style="margin-bottom:16px"><div class="card"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
-  +fld('API URL',inp('apiUrl',CFG.apiUrl,'text','placeholder="https://script.google.com/macros/s/.../exec"'))
+  +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Kéo/đẩy toàn bộ giữa máy và Google Sheet</div></div></div><div class="card-b">'
   +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ server</button><button class="btn btn-sec" onclick="diagSync()">Chẩn đoán</button><button class="btn btn-warn" onclick="if(confirm(\'Ghi đè toàn bộ sheet server bằng dữ liệu máy?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên server</button></div>'
-  +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
+  +'<details style="margin-top:12px"><summary style="cursor:pointer;color:var(--mut);font-size:13px">Chi tiết Module/Sheet</summary><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
   +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
   +'</tbody></table></div></div></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Dữ liệu mẫu</h3><div class="sub">Khôi phục demo ban đầu</div></div></div><div class="card-b"><button class="btn btn-bad" onclick="if(confirm(\'Xóa hết dữ liệu hiện tại, về demo?\')){DB.reset();ensureArrays();nav(false);}">Khôi phục demo</button></div></div>';
