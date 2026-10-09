@@ -1324,7 +1324,7 @@ function savePerms(id){const u=DB.data.users.find(x=>x.id===id);const p={};docum
 /* ================= AUDIT LOGS ================= */
 ROUTES['#/audit']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi • mọi thao tác thêm/sửa/xóa</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
+ let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Chi tiết</th></tr></thead><tbody>';
  DB.data.auditLogs.slice(0,300).forEach(a=>{h+='<tr><td style="white-space:nowrap;font-size:12.5px">'+esc(a.ts)+'</td><td><b>'+esc(a.user)+'</b></td><td><span class="badge b-purple">'+esc(a.action)+'</span></td><td>'+esc(a.detail)+'</td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
@@ -1990,7 +1990,7 @@ const FIREBASE_CONFIG = {
 };
 const FB_KEY = 'twpro_fb_cfg';
 const FB = {
-  app: null, db: null, unsub: null, saveTimer: null, ready: false, _writing: false,
+  app: null, db: null, unsub: null, _firstLoad: true, saveTimer: null, ready: false, _writing: false,
   /* Đọc config đã lưu (ưu tiên localStorage, fallback placeholder) */
   getCfg(){
     try{
@@ -2206,7 +2206,7 @@ function saveFbForm(){
   };
   if(!cfg.apiKey || !cfg.projectId){ toast('Nhập ít nhất API Key và Project ID'); return; }
   saveFbCfg(cfg);
-  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); toast('Dữ liệu mới từ Firebase'); }); }
+  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); /* silent sync */; }); }
   else toast('Đã lưu, nhưng kết nối thất bại — kiểm tra lại config');
   nav(false);
 }
@@ -2237,7 +2237,7 @@ try{
       try{ localStorage.setItem(DBKEY, JSON.stringify(DB.data)); }catch(e){} /* lưu local, không trigger save ngược */
       SYNC.connected = true; SYNC.msg = 'Firebase • ' + new Date().toLocaleTimeString('vi-VN');
       renderSyncPill(); nav(false);
-      toast('Dữ liệu mới từ Firebase');
+      /* silent sync */;
     });
   }
 }catch(e){ console.warn('Firebase listen:', e.message); }
