@@ -387,7 +387,7 @@ function enterApp(){
  buildSidebar();buildProjPick();
  if(!$('#syncPill')){const d=document.createElement('div');d.id='syncPill';d.style.marginLeft='10px';document.querySelector('.topbar h2').after(d);}
  renderSyncPill();
- if(!location.hash||location.hash==='#/login')location.hash='#/dashboard';else nav();
+ if(location.hash==='#/dashboard')nav();else location.hash='#/dashboard';
 }
 function setProject(id){SEL.projectId=id||null;DB.save0=0;nav();}
 let SEL={projectId:null};
