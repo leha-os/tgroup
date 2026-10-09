@@ -35,6 +35,15 @@ button{font-family:inherit}
 .sidebar .logo img{width:40px;height:40px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}
 .sidebar .logo b{color:#fff;font-size:15px;display:block;line-height:1.2}
 .sidebar .logo small{font-size:11px;color:#94a3b8}
+/* Desktop: chỉ hiện 1 dòng THE WALL ARCHITECTURE, ẩn chữ THE WALL thừa */
+@media(min-width:901px){
+  .sidebar .logo .logo-main{display:none}
+  .sidebar .logo .logo-sub{font-size:13px;color:#fff;font-weight:700}
+}
+/* Mobile: hiện đủ 2 dòng */
+@media(max-width:900px){
+  .sidebar .logo .logo-sub{font-size:11px;color:#94a3b8}
+}
 .side-nav{display:flex;flex-direction:column;padding:0 10px}
 .nav-label{font-size:10px;letter-spacing:1.5px;color:#64748b;padding:14px 10px 6px;font-weight:700;text-transform:uppercase}
 .nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:8px;color:#cbd5e1;font-size:13.5px;cursor:pointer;border:none;background:none;text-align:left;width:100%;font-weight:500;transition:background .15s}
@@ -46,6 +55,13 @@ button{font-family:inherit}
 .topbar{background:var(--head-bg);border-bottom:2px solid var(--head-accent);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:40;color:#fff}
 .topbar h1{color:#fff}
 .topbar .crumb{color:#d4c4a8}
+/* Brand trong topbar: chỉ hiện trên mobile */
+.topbar-brand{display:none}
+@media(max-width:900px){
+  .topbar-brand{display:block;color:#fff;line-height:1.2;margin-right:auto}
+  .topbar-brand b{font-size:14px;display:block;letter-spacing:.5px;color:var(--gold)}
+  .topbar-brand small{font-size:10px;color:var(--gold);letter-spacing:1px}
+}
 .topbar h1{font-size:17px;font-weight:700}
 .topbar .crumb{font-size:12.5px;color:var(--muted)}
 .topbar .userbox{display:flex;align-items:center;gap:10px;font-size:13px}
@@ -192,7 +208,13 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
   .print-bar{display:none!important}
   .phieu-wrap{max-width:none;margin:0;border:none;padding:0;font-size:12px}
 }
-.footer{text-align:center;padding:16px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:24px}
+.footer{text-align:center;padding:16px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);background:var(--bg);z-index:30}
+/* Đảm bảo footer luôn dưới đáy */
+html,body{height:100%}
+.app{display:flex;min-height:100dvh}
+.main{display:flex;flex-direction:column;flex:1;min-height:100dvh}
+.content{flex:1 0 auto}
+.footer{flex-shrink:0;margin-top:auto;text-align:center;padding:16px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);background:var(--bg)}
 
 /* ========== MOBILE FIX (bổ sung) ========== */
 @media(max-width:900px){
@@ -311,10 +333,6 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
 .widget-urgent .w-row:last-child{border-bottom:none}
 .widget-urgent .w-row:hover{color:var(--gold-dark)}
 .widget-urgent .w-more{display:block;text-align:right;font-size:12.5px;margin-top:6px;color:var(--blue);cursor:pointer}
-/* --- File đính kèm (A1) --- */
-.file-link{font-size:12.5px;white-space:nowrap}
-.file-thumb{width:100%;max-width:220px;border-radius:8px;border:1px solid var(--border);margin:6px}
-.file-item{margin-bottom:10px}
 /* --- Biểu đồ --- */
 .chart-box{position:relative;height:260px;margin-top:6px}
 .chart-box.sm{height:220px}
@@ -409,7 +427,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
   <aside class="sidebar">
     <div class="logo">
       <img id="logoImg" alt="TW">
-      <div><b>THE WALL</b><small>THE WALL ARCHITECTURE</small></div>
+      <div><b class="logo-main">THE WALL ARCHITECTURE</b></div>
     </div>
     <nav class="side-nav" id="sideNav"></nav>
   </aside>
@@ -418,13 +436,13 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
     <div class="sidebar-backdrop" id="sideBackdrop" onclick="toggleSidebar(false)"></div>
 <div class="topbar">
   <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+      <div class="topbar-brand"><b>THE WALL ARCHITECTURE</b></div>
       <div>
         <h1 id="pageTitle">Dashboard</h1>
         <div class="crumb" id="pageCrumb">Tổng quan toàn hệ thống</div>
       </div>
       <div class="userbox">
         <input id="globalSearch" placeholder="🔍 Tìm dự án..." style="padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">
-        <div class="avatar" id="avatarBox">A</div>
         <div>
           <div id="userName" style="font-weight:700">Admin</div>
           <div id="userRole" style="font-size:11.5px;color:var(--muted)">Quản trị viên</div>
@@ -503,6 +521,18 @@ const TT_DA = { dang_lam:['Đang làm','b-blue'], tam_dung:['Tạm dừng','b-am
 /* ---------- Tiện ích ---------- */
 const $ = id => document.getElementById(id);
 const fmt = n => (Number(n) || 0).toLocaleString('vi-VN');
+/* Format tiền khi gõ: 5000000 -> 5.000.000 | parseMoney: "5.000.000" -> 5000000 */
+const parseMoney = v => Number(String(v == null ? '' : v).replace(/\D/g, '')) || 0;
+function formatMoneyInput(id){
+  const el = typeof id === 'string' ? $(id) : id;
+  if (!el || el._moneyFmt) return;
+  el._moneyFmt = true;
+  el.setAttribute('inputmode', 'numeric');
+  el.addEventListener('input', () => {
+    const num = el.value.replace(/\D/g, '').slice(0, 15);
+    el.value = num ? Number(num).toLocaleString('vi-VN') : '';
+  });
+}
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function badge(val, map){ const m = map[val] || [val, 'b-gray']; return '<span class="badge ' + m[1] + '">' + esc(m[0]) + '</span>'; }
 function toast(msg, type){
@@ -547,7 +577,7 @@ async function api(action, params){
 /* ---------- API cache 5 phút (B1) + offline-first (C4) ---------- */
 const apiCache = {};
 const READ_RE = /^(list|get|fetch)/i;
-const WRITE_RE = /^(create|approve|reject|settle|save|submit|delete|markPaid|changePassword|setUserStatus|setSheetLink|clearSheetLink|setProjectSheet|uploadFile)/i;
+const WRITE_RE = /^(create|approve|reject|settle|save|submit|delete|markPaid|changePassword|setUserStatus|setSheetLink|clearSheetLink|setProjectSheet)/i;
 const CACHE_TTL = 5 * 60 * 1000;
 function cacheKey(action, params){ return action + '|' + JSON.stringify(params || {}); }
 function clearApiCache(){ for (const k in apiCache) delete apiCache[k]; }
@@ -716,11 +746,12 @@ function goPageInner(page, params){
       '<button class="back-link" id="btnBack2">&larr;</button>' +
       '<div><b style="font-size:16px">'+esc(p.ma_du_an)+' — '+esc(p.ten_du_an||'')+'</b>' +
       '<div class="desc">'+esc(p.ngay_bat_dau||'')+' → '+esc(p.ngay_ket_thuc||'')+'</div></div>' +
-      '<div style="margin-left:auto;display:flex;gap:8px;align-items:center">' +
-      '<input id="projSheetUrl" placeholder="Dán link Google Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px">' +
+      '<div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:420px">' +
+      '<input id="projSheetUrl" placeholder="Dán link hoặc mã Sheet..." value="'+esc(p.sheet_url||'')+'" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:200px;flex:1">' +
       '<button class="btn btn-sm" id="btnSaveSheetUrl">Lưu</button>' +
       '<a class="btn btn-sm btn-primary'+(p.sheet_url?'':' hidden')+'" id="btnOpenSheet" target="_blank" href="'+esc(p.sheet_url||'')+'" style="text-decoration:none">Mở Sheet</a>' +
       '<button class="btn btn-sm btn-gold'+(p.sheet_url?'':' hidden')+'" id="btnSyncSheet" title="Đọc Sheet và nạp dự trù vào app">Đồng bộ</button>' +
+      '<div class="desc" style="width:100%;text-align:right">Dán link hoặc mã Sheet (ký tự giữa /d/ và /edit)</div>' +
       '</div></div></div><div id="tab-'+tab+'"></div>';
     var bb = $('btnBack2');
     if (bb) bb.addEventListener('click', function(){ goPage('projects'); });
@@ -774,11 +805,6 @@ async function init(){
   window.addEventListener('online', () => { hideOfflineBanner(); toast('Đã có mạng trở lại.', 'success'); });
   const br = $('btnRetryNet');
   if (br) br.addEventListener('click', () => { clearApiCache(); hideOfflineBanner(); goPageInner(state.page || 'dashboard', { project: state.project }); });
-  // Ủy quyền click link file đính kèm (A1)
-  document.addEventListener('click', e => {
-    const a = e.target.closest ? e.target.closest('.file-link') : null;
-    if (a && a.dataset.files) { e.preventDefault(); openFileViewer(a.dataset.files); }
-  });
   // Bottom tab bar mobile (C5)
   renderTabbar();
   const so = $('sheetOverlay');
@@ -1088,6 +1114,35 @@ async function loadDuTru(){
   if (!d) return;
   const active = d.active, versions = d.versions || [];
   state.hangMucs = active && active.items ? [...new Set(active.items.map(i => i.hang_muc))] : [];
+/* Dropdown hạng mục: nhân viên chỉ chọn từ danh sách, Admin/QuanLy được thêm mới */
+async function ensureHangMucs(){
+  if (state.hangMucs && state.hangMucs.length) return state.hangMucs;
+  if (!state.project) return [];
+  const d = await safeApi('listHangMuc', { ma_du_an: state.project.ma_du_an });
+  if (d) state.hangMucs = d.list || d || [];
+  return state.hangMucs;
+}
+function hmSelectHtml(id, selected, cls){
+  const opts = (state.hangMucs || []).map(h => '<option value="' + esc(h) + '"' + (h === selected ? ' selected' : '') + '>' + esc(h) + '</option>').join('');
+  const canNew = can('Admin','QuanLy');
+  return '<select id="' + id + '"' + (cls ? ' class="' + cls + '"' : '') + '>' +
+    '<option value="">-- Chọn hạng mục --</option>' + opts +
+    (canNew ? '<option value="__new__">+ Nhập hạng mục mới...</option>' : '') + '</select>' +
+    (canNew ? '<input id="' + id + '_new" class="hidden" placeholder="Nhập tên hạng mục mới" style="margin-top:6px;width:100%">' : '');
+}
+function hmSelectVal(id){
+  const sel = $(id);
+  if (!sel) return '';
+  if (sel.value === '__new__') { const inp = $(id + '_new'); return inp ? inp.value.trim() : ''; }
+  return sel.value;
+}
+function hmSelectBind(id){
+  const sel = $(id); if (!sel) return;
+  sel.addEventListener('change', () => {
+    const inp = $(id + '_new');
+    if (inp) inp.classList.toggle('hidden', sel.value !== '__new__');
+  });
+}
   let html = '<div class="card"><div class="card-head"><h2>Bảng dự trù đang áp dụng (đã khóa)</h2>' +
     '<div style="display:flex;gap:8px">' +
     (active && active.items && active.items.length ? '<button class="btn btn-ghost btn-sm" id="btnXlsDuTru">Xuất Excel</button>' : '') +
@@ -1189,10 +1244,12 @@ function openDraftModal(pre){
     div.innerHTML =
       '<div class="f-group" style="flex:1;min-width:120px"><input class="drHm" placeholder="Hạng mục" value="' + esc(it.hang_muc || '') + '"></div>' +
       '<div class="f-group" style="flex:2;min-width:140px"><input class="drVt" placeholder="Vật tư / công việc" value="' + esc(it.vat_tu || '') + '"></div>' +
-      '<div class="f-group" style="width:90px"><input class="drSl" type="number" min="0" placeholder="SL" value="' + esc(it.so_luong == null ? '' : it.so_luong) + '"></div>' +
-      '<div class="f-group" style="width:130px"><input class="drDg" type="number" min="0" placeholder="Đơn giá" value="' + esc(it.don_gia == null ? '' : it.don_gia) + '"></div>' +
+      '<div class="f-group" style="width:90px"><input class="drSl" type="text" inputmode="numeric" placeholder="SL" value="' + esc(it.so_luong == null ? '' : it.so_luong) + '"></div>' +
+      '<div class="f-group" style="width:130px"><input class="drDg" type="text" inputmode="numeric" placeholder="Đơn giá" value="' + esc(it.don_gia == null ? '' : it.don_gia) + '"></div>' +
       '<button class="btn btn-ghost btn-sm drDel">Xóa</button>';
     div.querySelector('.drDel').onclick = () => div.remove();
+    formatMoneyInput(div.querySelector('.drSl'));
+    formatMoneyInput(div.querySelector('.drDg'));
     $('draftRows').appendChild(div);
   };
   rows.forEach(addRow);
@@ -1203,8 +1260,8 @@ function openDraftModal(pre){
       const hm = r.querySelector('.drHm').value.trim();
       if (!hm) return;
       items.push({ hang_muc: hm, vat_tu: r.querySelector('.drVt').value.trim(),
-        so_luong: Number(r.querySelector('.drSl').value) || 0,
-        don_gia: Number(r.querySelector('.drDg').value) || 0 });
+        so_luong: parseMoney(r.querySelector('.drSl').value),
+        don_gia: parseMoney(r.querySelector('.drDg').value) });
     });
     if (!items.length) { toast('Nhập ít nhất một dòng có hạng mục.', 'error'); return; }
     closeModal(); // B3
@@ -1256,7 +1313,7 @@ async function loadMuaHang(){
         '<td>' + esc(x.ngay_de_nghi || '') + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
-        '<td>' + esc(x.noi_dung || x.mo_ta || '') + fileLinksHtml(x.file_dinh_kem) + '</td>' +
+        '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
         '<td class="num">' + fmt(x.so_luong) + '</td>' +
         '<td class="num">' + fmt(x.don_gia) + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
@@ -1315,16 +1372,16 @@ async function loadMuaHang(){
   const nb = $('btnNewDN');
   if (nb) nb.onclick = () => openDeNghiModal();
 }
-function openDeNghiModal(){
-  const dl = state.hangMucs.map(h => '<option value="' + esc(h) + '">').join('');
+async function openDeNghiModal(){
+  await ensureHangMucs();
   openModal('Tạo đề nghị mua hàng / chi phí',
     '<div class="f-row"><div class="f-group"><label>Loại đề nghị *</label><select id="dnLoai">' +
     Object.keys(LOAI_DN).map(k => '<option value="' + k + '">' + LOAI_DN[k] + '</option>').join('') +
     '</select></div>' +
-    '<div class="f-group"><label>Hạng mục *</label><input id="dnHm" list="dlHm" placeholder="Chọn hoặc nhập"><datalist id="dlHm">' + dl + '</datalist></div></div>' +
+    '<div class="f-group"><label>Hạng mục *</label>' + hmSelectHtml('dnHm', '') + '</div></div>' +
     '<div class="f-group"><label>Nội dung mua/chi *</label><input id="dnNd" placeholder="VD: Xi măng PCB40"></div>' +
-    '<div class="f-row"><div class="f-group"><label>Số lượng *</label><input id="dnSl" type="number" min="0" placeholder="VD: 100"></div>' +
-    '<div class="f-group"><label>Đơn giá *</label><input id="dnDg" type="number" min="0" placeholder="VD: 95000"></div>' +
+    '<div class="f-row"><div class="f-group"><label>Số lượng *</label><input id="dnSl" type="text" placeholder="VD: 100"></div>' +
+    '<div class="f-group"><label>Đơn giá *</label><input id="dnDg" type="text" placeholder="VD: 95.000"></div>' +
     '<div class="f-group"><label>Thành tiền</label><input id="dnTt" readonly placeholder="Tự tính = SL × đơn giá"></div></div>' +
     '<div class="f-group"><label>Nhà cung cấp</label><input id="dnNcc" placeholder="Tên NCC"></div>' +
     '<div class="f-row"><div class="f-group"><label>Hình thức thanh toán *</label><select id="dnHt">' +
@@ -1334,12 +1391,14 @@ function openDeNghiModal(){
     '<div class="f-group"><label>Số tài khoản</label><input id="dnStk" placeholder="Số tài khoản"></div></div>' +
     '<div class="f-group"><label>Mô tả thêm</label><textarea id="dnMoTa" rows="2"></textarea></div>' +
     '<div class="f-group"><label>Lý do (nếu vượt định mức cần ghi rõ)</label><input id="dnLyDo" placeholder="Lý do"></div>' +
-    '<div class="f-group"><label>File đính kèm (tối đa 10MB/file)</label><input id="dnFiles" type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip"></div>' +
     '<div id="dnCheck"></div>',
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-ghost" id="mCheck">Kiểm tra trước khi lưu</button>' +
     '<button class="btn btn-primary hidden" id="mSave">Xác nhận lưu đề nghị</button>');
   $('mCancel').onclick = closeModal;
+  hmSelectBind('dnHm');
+  // Format tiền: đơn giá tự cách số khi gõ
+  formatMoneyInput('dnDg'); formatMoneyInput('dnSl');
   const capNhatTieuDe = () => {
     const t = document.querySelector('#modalRoot .modal-head h3');
     if (t) t.textContent = $('dnLoai').value === 'thanh_toan' ? 'Tạo Phiếu đề nghị thanh toán' : 'Tạo đề nghị mua hàng / chi phí';
@@ -1347,13 +1406,13 @@ function openDeNghiModal(){
   $('dnLoai').onchange = capNhatTieuDe;
   capNhatTieuDe();
   const calc = () => {
-    const tt = (Number($('dnSl').value) || 0) * (Number($('dnDg').value) || 0);
+    const tt = parseMoney($('dnSl').value) * parseMoney($('dnDg').value);
     $('dnTt').value = tt ? fmt(tt) + ' đ' : '';
     return tt;
   };
   $('dnSl').oninput = calc; $('dnDg').oninput = calc;
   $('mCheck').onclick = async () => {
-    const hm = $('dnHm').value.trim();
+    const hm = hmSelectVal('dnHm');
     const tien = calc();
     if (!hm || !tien) { toast('Nhập hạng mục, số lượng và đơn giá.', 'error'); return; }
     $('mCheck').disabled = true;
@@ -1365,22 +1424,16 @@ function openDeNghiModal(){
   };
   $('mSave').onclick = async () => {
     const loai = $('dnLoai').value;
-    const btn = $('mSave');
-    btn.disabled = true;
-    const up = await uploadFiles($('dnFiles'), btn); // A1: upload file đính kèm lên Drive
-    btn.disabled = false;
-    if (up === null) return; // lỗi file (quá dung lượng / upload thất bại)
     const params = { ma_du_an: state.project.ma_du_an,
-      loai: loai, hang_muc: $('dnHm').value.trim(),
+      loai: loai, hang_muc: hmSelectVal('dnHm'),
       noi_dung: $('dnNd').value.trim(),
-      so_luong: Number($('dnSl').value) || 0, don_gia: Number($('dnDg').value) || 0,
+      so_luong: parseMoney($('dnSl').value), don_gia: parseMoney($('dnDg').value),
       nha_cung_cap: $('dnNcc').value.trim(),
       hinh_thuc: $('dnHt').value,
       ten_nguoi_nhan: $('dnNn').value.trim(),
       ngan_hang: $('dnNh').value.trim(),
       so_tai_khoan: $('dnStk').value.trim(),
-      mo_ta: $('dnMoTa').value.trim(), ly_do: $('dnLyDo').value.trim(),
-      file_dinh_kem: up };
+      mo_ta: $('dnMoTa').value.trim(), ly_do: $('dnLyDo').value.trim() };
     closeModal(); // B3: đóng modal + toast ngay, gọi API nền, reload sau
     toast('Đã tạo đề nghị.', 'success');
     const r = await safeApi('createDeNghi', params);
@@ -1453,7 +1506,7 @@ async function inPhieuDNTT(id){
     '<button class="btn btn-ghost btn-sm" id="prXls">Tải Excel</button>' +
     '<button class="btn btn-ghost btn-sm" id="prDong">Đóng</button></div>' +
     '<div class="phieu-wrap">' +
-    '<div class="phieu-head"><img src="' + LOGO_BT + '" alt="logo">' +
+    '<div class="phieu-head"><img class="logo" src="' + LOGO_BT + '" alt="logo">' +
     '<div class="co"><b>' + esc(getConfig().coName) + '</b><br>' +
     'Add: ' + esc(getConfig().coAddr) + '<br>' +
     'Tel: ' + esc(getConfig().coTel) + '<br>Website: ' + esc(getConfig().coWeb) + '</div></div>' +
@@ -1669,7 +1722,7 @@ async function loadPhatSinh(filter){
               '<button class="btn btn-danger btn-sm" data-a="no" data-id="' + x.id + '">Từ chối</button>';
       html += '<tr><td>' + esc(x.ngay_tao || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
-        '<td>' + esc(x.ly_do || '') + fileLinksHtml(x.file_dinh_kem) + '</td>' +
+        '<td>' + esc(x.ly_do || '') + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
         '<td>' + badge(x.trang_thai, TT_PS) + '</td>' +
         '<td>' + esc(x.nguoi_de_xuat || '') + '</td>' +
@@ -1703,28 +1756,23 @@ async function loadPhatSinh(filter){
     }
   }));
 }
-function openPhatSinhModal(){
-  const dl = state.hangMucs.map(h => '<option value="' + esc(h) + '">').join('');
+async function openPhatSinhModal(){
+  await ensureHangMucs();
   openModal('Tạo phát sinh',
-    '<div class="f-group"><label>Hạng mục liên quan *</label><input id="psHm" list="dlPsHm" placeholder="Chọn hoặc nhập"><datalist id="dlPsHm">' + dl + '</datalist></div>' +
+    '<div class="f-group"><label>Hạng mục liên quan *</label>' + hmSelectHtml('psHm', '') + '</div>' +
     '<div class="f-group"><label>Lý do phát sinh *</label><textarea id="psLyDo" rows="3" placeholder="Nêu rõ lý do phát sinh"></textarea></div>' +
-    '<div class="f-group"><label>Giá trị phát sinh (đ) *</label><input id="psTien" type="number" min="1" placeholder="VD: 5000000"></div>' +
-    '<div class="f-group"><label>File đính kèm (tối đa 10MB/file)</label><input id="psFiles" type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip"></div>',
+    '<div class="f-group"><label>Giá trị phát sinh (VND) *</label><input id="psTien" type="text" placeholder="VD: 5.000.000"></div>' +
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Tạo phát sinh</button>');
   $('mCancel').onclick = closeModal;
+  hmSelectBind('psHm'); formatMoneyInput('psTien');
   $('mSave').onclick = async () => {
-    const hm = $('psHm').value.trim(), ly = $('psLyDo').value.trim(), tien = Number($('psTien').value) || 0;
+    const hm = hmSelectVal('psHm'), ly = $('psLyDo').value.trim(), tien = parseMoney($('psTien').value);
     if (!hm || !ly || !tien) { toast('Nhập đủ hạng mục, lý do và số tiền.', 'error'); return; }
-    const btn = $('mSave');
-    btn.disabled = true;
-    const up = await uploadFiles($('psFiles'), btn); // A1
-    btn.disabled = false;
-    if (up === null) return;
     closeModal(); // B3: đóng modal + toast ngay, gọi API nền
     toast('Đã tạo phát sinh, chờ duyệt.', 'success');
     const r = await safeApi('createPhatSinh', { ma_du_an: state.project.ma_du_an,
-      hang_muc: hm, ly_do: ly, so_tien: tien, file_dinh_kem: up });
+      hang_muc: hm, ly_do: ly, so_tien: tien });
     if (r) loadPhatSinh();
   };
 }
@@ -1786,7 +1834,8 @@ async function loadTienDo(){
   const b = $('btnTdEdit');
   if (b) b.onclick = () => openTienDoModal(list);
 }
-function openTienDoModal(list){
+async function openTienDoModal(list){
+  await ensureHangMucs();
   const pre = list && list.length ? list : [{ hang_muc:'', cong_viec:'', nguoi_phu_trach:'', ngay_bat_dau:'', ngay_ket_thuc:'', phan_tram:0, trang_thai:'chua_bat_dau' }];
   openModal('Cập nhật tiến độ',
     '<div class="desc">Lưu sẽ ghi đè toàn bộ tiến độ hiện tại của dự án (có ghi lịch sử).</div><div id="tdRows"></div>' +
@@ -1798,8 +1847,13 @@ function openTienDoModal(list){
     t = t || {};
     const div = document.createElement('div');
     div.className = 'dyn-row';
+    const hmOpts = (state.hangMucs || []).map(h => '<option value="' + esc(h) + '"' + (h === (t.hang_muc || '') ? ' selected' : '') + '>' + esc(h) + '</option>').join('');
+    const canNewHm = can('Admin','QuanLy');
     div.innerHTML =
-      '<div class="f-group" style="flex:1;min-width:110px"><input class="tdHm" placeholder="Hạng mục" value="' + esc(t.hang_muc || '') + '"></div>' +
+      '<div class="f-group" style="flex:1;min-width:110px"><select class="tdHm">' +
+      '<option value="">-- Hạng mục --</option>' + hmOpts +
+      (canNewHm ? '<option value="__new__">+ Mới...</option>' : '') + '</select>' +
+      (canNewHm ? '<input class="tdHmNew hidden" placeholder="Tên HM mới" style="margin-top:4px;width:100%">' : '') + '</div>' +
       '<div class="f-group" style="flex:2;min-width:140px"><input class="tdCv" placeholder="Công việc" value="' + esc(t.cong_viec || '') + '"></div>' +
       '<div class="f-group" style="flex:1;min-width:110px"><input class="tdPt" placeholder="Người phụ trách" value="' + esc(t.nguoi_phu_trach || '') + '"></div>' +
       '<div class="f-group" style="min-width:120px"><input class="tdBd" type="date" value="' + esc(t.ngay_bat_dau || '') + '"></div>' +
@@ -1810,6 +1864,11 @@ function openTienDoModal(list){
       '</select></div>' +
       '<button class="btn btn-ghost btn-sm tdDel">Xóa</button>';
     div.querySelector('.tdDel').onclick = () => div.remove();
+    const selHm = div.querySelector('.tdHm');
+    if (selHm) selHm.addEventListener('change', () => {
+      const ni = div.querySelector('.tdHmNew');
+      if (ni) ni.classList.toggle('hidden', selHm.value !== '__new__');
+    });
     $('tdRows').appendChild(div);
   };
   pre.forEach(addRow);
@@ -1819,7 +1878,10 @@ function openTienDoModal(list){
     document.querySelectorAll('#tdRows .dyn-row').forEach(r => {
       const cv = r.querySelector('.tdCv').value.trim();
       if (!cv) return;
-      items.push({ hang_muc: r.querySelector('.tdHm').value.trim(), cong_viec: cv,
+      const _hmSel = r.querySelector('.tdHm');
+      const _hmNew = r.querySelector('.tdHmNew');
+      const _hm = _hmSel.value === '__new__' ? (_hmNew ? _hmNew.value.trim() : '') : _hmSel.value;
+      items.push({ hang_muc: _hm, cong_viec: cv,
         nguoi_phu_trach: r.querySelector('.tdPt').value.trim(),
         ngay_bat_dau: r.querySelector('.tdBd').value,
         ngay_ket_thuc: r.querySelector('.tdKt').value,
@@ -1997,7 +2059,7 @@ function renderBaoCao(d){
       html += '<tr><td>' + esc(x.ngay_de_nghi || '') + '</td>' +
         '<td>' + esc(LOAI_DN[x.loai] || x.loai || '') + '</td>' +
         '<td><b>' + esc(x.hang_muc || '') + '</b></td>' +
-        '<td>' + esc(x.noi_dung || x.mo_ta || '') + fileLinksHtml(x.file_dinh_kem) + '</td>' +
+        '<td>' + esc(x.noi_dung || x.mo_ta || '') + '</td>' +
         '<td class="num">' + fmt(x.so_luong) + '</td>' +
         '<td class="num">' + fmt(x.don_gia) + '</td>' +
         '<td class="num"><b>' + fmt(x.so_tien) + '</b></td>' +
@@ -2319,64 +2381,6 @@ function paginateRender(list, pg, perPage){
 }
 
 /* ================= A1 — ĐÍNH KÈM FILE ================= */
-const MAX_FILE_MB = 10;
-function readFileBase64(file){
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(',')[1] || '');
-    r.onerror = () => reject(new Error('Không đọc được file ' + file.name));
-    r.readAsDataURL(file);
-  });
-}
-async function uploadFiles(input, btn){
-  const files = (input && input.files) ? Array.from(input.files) : [];
-  if (!files.length) return '';
-  for (const f of files) {
-    if (f.size > MAX_FILE_MB * 1024 * 1024) { toast('File "' + f.name + '" vượt quá 10MB.', 'error'); return null; }
-  }
-  const urls = [];
-  const oldLabel = btn ? btn.textContent : '';
-  try {
-    for (let i = 0; i < files.length; i++) {
-      const f = files[i];
-      if (btn) { btn.disabled = true; btn.textContent = 'Đang tải file ' + (i + 1) + '/' + files.length + '...'; }
-      const data = await readFileBase64(f);
-      const r = await safeApi('uploadFile', { filename: f.name, mime: f.type || 'application/octet-stream', data: data });
-      if (!r || !r.url) throw new Error('Upload thất bại: ' + f.name);
-      urls.push(r.url);
-    }
-  } catch (e) {
-    toast((e && e.message) || 'Lỗi upload file.', 'error');
-    if (btn) { btn.disabled = false; btn.textContent = oldLabel; }
-    return null;
-  }
-  if (btn) { btn.disabled = false; btn.textContent = oldLabel; }
-  return urls.join('|');
-}
-function fileLinksHtml(fdk){
-  const urls = String(fdk || '').split('|').map(s => s.trim()).filter(Boolean);
-  if (!urls.length) return '';
-  return ' <a href="#" class="file-link" data-files="' + esc(urls.join('|')) + '">📎 ' + urls.length + ' file</a>';
-}
-function driveFileId(url){
-  const m = String(url).match(/\/d\/([^\/\?]+)/);
-  return m ? m[1] : '';
-}
-function openFileViewer(filesStr){
-  const urls = String(filesStr || '').split('|').map(s => s.trim()).filter(Boolean);
-  if (!urls.length) return;
-  const body = urls.map((u, i) => {
-    const fid = driveFileId(u);
-    const thumb = fid ? '<img class="file-thumb" loading="lazy" alt="File ' + (i + 1) + '" src="https://drive.google.com/thumbnail?id=' +
-      encodeURIComponent(fid) + '&sz=w400" onerror="this.style.display=\'none\'">' : '';
-    return '<div class="file-item">' + thumb +
-      '<div><a href="' + esc(u) + '" target="_blank" rel="noopener">Mở file ' + (i + 1) + ' trên Drive</a></div></div>';
-  }).join('');
-  openModal('File đính kèm (' + urls.length + ')', body,
-    '<button class="btn btn-ghost" id="mCancel">Đóng</button>');
-  $('mCancel').onclick = closeModal;
-}
-
 /* ================= A2 — TAB TẠM ỨNG ================= */
 async function loadTamUng(){
   const el = $('tab-tamung');
@@ -2449,13 +2453,10 @@ function openTamUngModal(){
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Gửi đề nghị</button>');
   $('mCancel').onclick = closeModal;
-  $('tuTien').addEventListener('input', function(){
-    const num = this.value.replace(/\D/g, '');
-    this.value = num ? Number(num).toLocaleString('vi-VN') : '';
-  });
+  formatMoneyInput('tuTien');
   $('mSave').onclick = async () => {
     const nguoi = $('tuNguoi').value.trim();
-    const tien = Number($('tuTien').value.replace(/\D/g, '')) || 0;
+    const tien = parseMoney($('tuTien').value);
     const ly = $('tuLyDo').value.trim();
     if (!nguoi || !tien || !ly) { toast('Nhập đủ người tạm ứng, số tiền và lý do.', 'error'); return; }
     closeModal(); // B3: đóng modal + toast ngay, gọi API nền
@@ -2473,12 +2474,9 @@ function openQuyetToanModal(id, soTien){
     '<button class="btn btn-ghost" id="mCancel">Hủy</button>' +
     '<button class="btn btn-primary" id="mSave">Xác nhận quyết toán</button>');
   $('mCancel').onclick = closeModal;
-  $('qtTien').addEventListener('input', function(){
-    const num = this.value.replace(/\D/g, '');
-    this.value = num ? Number(num).toLocaleString('vi-VN') : '';
-  });
+  formatMoneyInput('qtTien');
   $('mSave').onclick = async () => {
-    const tien = Number($('qtTien').value.replace(/\D/g, '')) || 0;
+    const tien = parseMoney($('qtTien').value);
     if (!tien) { toast('Nhập số tiền hoàn ứng.', 'error'); return; }
     const ct = $('qtCt').value.trim();
     closeModal(); // B3
