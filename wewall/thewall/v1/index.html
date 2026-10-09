@@ -264,10 +264,16 @@ body.printing-phieu .mback{display:block!important;position:static!important;pad
 body.printing-phieu .modal{box-shadow:none!important;width:100%!important;max-width:100%!important;margin:0!important;max-height:none!important}
 body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
 body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
-body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:12px 16px!important;font-size:11px!important;line-height:1.35!important}
+body.printing-phieu{font-family:Arial,sans-serif!important}
+body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:8px 12px!important;font-size:10.5px!important;line-height:1.3!important;font-family:Arial,sans-serif!important}
+body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important}
 body.printing-phieu .ptbl{font-size:11px!important}
-body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:4px 6px!important}
-body.printing-phieu .psig td{height:52px!important}
+body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:3px 5px!important}
+body.printing-phieu .psig td{height:44px!important}
+body.printing-phieu .ptitle{font-size:16px!important;margin:6px 0 2px!important}
+body.printing-phieu .psec{margin:5px 0 1px!important}
+body.printing-phieu .pdot{height:10px!important}
+body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
 @page{size:A4;margin:10mm}
 #view{padding:0;overflow:visible}
 .main{overflow:visible}
@@ -1127,7 +1133,7 @@ function inPhieuDNTT(id){
  const ht=(t.hinhthuc||'').toLowerCase();
  const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM<br>Website: tgroup.asia</div></div>'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
   +'<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="phieu-ngay">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="phieu-tbl">'
@@ -1175,8 +1181,9 @@ function xuatPhieuDNTT_XLSX(id){
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
  let r=mk();
  r=mk();C(r,0,'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',2);
- r=mk();C(r,0,'Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM',3);
- r=mk();C(r,0,'Website: tgroup.asia',3);
+ r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',3);
+ r=mk();C(r,0,'Tel: (84) 8 5410 4013 - (84) 903 865 240',3);
+ r=mk();C(r,0,'Website: www.thewall.com.vn',3);
  mk();mk();mk();
  r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',1);
  r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
@@ -1209,7 +1216,7 @@ function xuatPhieuDNTT_XLSX(id){
  mk();mk();
  r=mk();C(r,0,'XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN',5);
  mk();
- r=mk();C(r,0,'Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM',3);
+ r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',3);
  const merges=['A2:J2','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
  xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
@@ -1420,7 +1427,7 @@ function inPhieuDeNghi(id){
  const coName='CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG';
  const sign=['Người Đề Nghị','Trưởng Phòng','Giám Đốc','Kế Toán Group','Tổng Giám Đốc'].map(s=>'<div class="box">'+s+'</div>').join('');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>'+coName+'</b><br>Địa chỉ: 15 Đường số 14, KDC Nam Long, P. Tân Thuận, TP.HCM<br>Website: tgroup.asia</div></div>'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>'+coName+'</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
   +'<div class="phieu-title">PHIẾU ĐỀ NGHỊ</div>'
   +'<div class="phieu-row"><div class="cell"><span class="lbl">Ngày:</span> <b>'+fmtDate(d.date)+'</b></div><div class="cell"><span class="lbl">Người đề nghị:</span> <b>'+esc(d.nguoitao||'')+'</b></div><div class="cell"><span class="lbl">Dự án:</span> <b>'+esc(p.code||'')+'</b></div></div>'
   +'<div class="phieu-row"><div class="cell"><span class="lbl">Loại đề nghị:</span> <b>'+esc(LOAI_DN[d.loai]||'')+'</b></div><div class="cell"><span class="lbl">Hạng mục:</span> <b>'+esc(d.hangmuc||'')+'</b></div></div>'
