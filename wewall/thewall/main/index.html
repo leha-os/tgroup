@@ -1072,7 +1072,7 @@ function savePartnerTx(coll,oid){
  const t={id:uid('t'),date:formVal('date')||todayISO(),type:formVal('type'),amount:+formVal('amount')||0,note:formVal('note')};
  t[cfg.fk]=oid;t.projectId=cfg.noProj?formVal('projectId'):(o.projectId||SEL.projectId||'');
  if(!t.amount){toast('Nhập số tiền');return;}
- DB.data[cfg.tx].push(t);DB.log('Giao dịch '+cfg.t,(t.type===cfg.inT?cfg.inL:cfg.outL)+' '+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');
+ DB.data[cfg.tx].push(t);DB.log('Giao dịch '+cfg.t,(t.type===cfg.inT?cfg.inL:cfg.outL)+' '+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);/* log silent */;
 }
 function renderPartnerLedger(cfg,id){
  const o=DB.data[cfg.coll].find(x=>x.id===id);if(!o){location.hash=cfg.back;return;}
@@ -1118,7 +1118,7 @@ function saveContractorTx(oid){const o=DB.data.contractors.find(x=>x.id===oid);
  if(!t.amount){toast('Nhập số tiền');return;}
  if(t.type==='payment'){const inn=DB.data.contractorTx.filter(x=>x.contractorId===oid&&x.type==='entry').reduce((s,x)=>s+x.amount,0);const out=DB.data.contractorTx.filter(x=>x.contractorId===oid&&x.type==='payment').reduce((s,x)=>s+x.amount,0);
   if(t.amount>(inn-out)){if(!confirm('Số tiền vượt khối lượng đã nghiệm thu ('+fmtVND(inn-out)+'). Vẫn ghi?'))return;}}
- DB.data.contractorTx.push(t);DB.log('Giao dịch nhà thầu',(t.type==='entry'?'Nghiệm thu ':'Tạm ứng ')+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
+ DB.data.contractorTx.push(t);DB.log('Giao dịch nhà thầu',(t.type==='entry'?'Nghiệm thu ':'Tạm ứng ')+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);/* log silent */;}
 function renderContractorLedger(id){
  const o=DB.data.contractors.find(x=>x.id===id);if(!o){location.hash='#/contractors';return;}
  const txs=DB.data.contractorTx.filter(t=>t.contractorId===id).map(t=>({date:t.date,desc:(t.type==='entry'?'Nghiệm thu: ':'Tạm ứng: ')+t.note,in:t.type==='entry'?t.amount:0,out:t.type==='payment'?t.amount:0,id:t.id}));
@@ -1161,7 +1161,7 @@ function bankTxForm(aid,defType){
 function saveBankTx(aid){const a=DB.data.bankAccounts.find(x=>x.id===aid);
  const t={id:uid('bt'),accountId:aid,projectId:formVal('projectId'),date:formVal('date')||todayISO(),type:formVal('type'),amount:+formVal('amount')||0,note:formVal('note')};
  if(!t.amount){toast('Nhập số tiền');return;}
- DB.data.bankTx.push(t);DB.log(t.type==='inflow'?'Thu tiền':'Chi tiền',fmtVND(t.amount)+' — '+a.name+(t.note?' • '+t.note:''));DB.save();closeModal();nav(false);toast('Đã ghi');}
+ DB.data.bankTx.push(t);DB.log(t.type==='inflow'?'Thu tiền':'Chi tiền',fmtVND(t.amount)+' — '+a.name+(t.note?' • '+t.note:''));DB.save();closeModal();nav(false);/* log silent */;}
 function renderBankLedger(id){
  const a=DB.data.bankAccounts.find(x=>x.id===id);if(!a){location.hash='#/bank';return;}
  const txs=DB.data.bankTx.filter(t=>t.accountId===id).map(t=>({date:t.date,desc:t.note+(t.projectId?' <span class="badge b-gray">'+esc(projCode(t.projectId))+'</span>':''),in:t.type==='inflow'?t.amount:0,out:t.type==='outflow'?t.amount:0,id:t.id}));
@@ -1606,7 +1606,7 @@ function xlsxMake(sheets,logoB64){
   +'<font><sz val="11"/><name val="Calibri"/></font>'
   +'<font><b/><sz val="16"/><name val="Calibri"/></font>'
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
-  +'<font><sz val="12"/><name val="Calibri"/></font>'
+  +'<font><sz val="10"/><name val="Calibri"/></font>'
   +'</fonts>'
   +'<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills>'
   +'<borders count="2">'
@@ -1941,10 +1941,10 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  // R9: ngày xuất
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
  // R10: header vàng
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:2};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();rf[0]={v:clean,s:2};}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);for(let i=0;i<n;i++)rf[i]={v:'',s:4};if(typeof foot==='object'&&foot.total!=null){rf[n-2]={v:'Tổng cộng',s:2};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){rf[n-2]={v:parts[0].trim(),s:2};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[n-2]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
