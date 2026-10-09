@@ -95,8 +95,9 @@ textarea.inp{resize:vertical;min-height:70px}
 .search .inp{padding-left:12px;width:260px}
 .login-logo{display:block;margin:0 auto 8px;width:150px;height:auto;background:#fff;border-radius:14px;padding:8px}
 @media(max-width:900px){
-.topbar{flex-wrap:wrap;padding:10px 14px}
-.proj-pick{margin-left:0;width:100%;display:flex;align-items:center;gap:8px}.proj-pick>span{flex-shrink:0;white-space:nowrap}
+.topbar{flex-wrap:nowrap;padding:10px 14px}
+.proj-pick{margin-left:0;flex:1;min-width:0;display:flex;align-items:center;gap:8px}.proj-pick>span{flex-shrink:0;white-space:nowrap}
+.proj-pick select{flex:1;min-width:0}
 .proj-pick select{max-width:none;width:100%}
 .stat .vl{font-size:16px}
 .page-head h1{font-size:20px}
@@ -204,6 +205,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 @media(max-width:900px){.topbar{position:sticky;top:0;z-index:40;background:#fff}}
 .burger{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
 .g7,.g5,.g4,.g3{grid-template-columns:repeat(2,1fr)}
+.grid>*{min-width:0}
+.stat .vl{overflow-wrap:anywhere}
 .g2{grid-template-columns:1fr}
 #view{padding:14px}
 .frm-row,.frm-row3{grid-template-columns:1fr}
@@ -493,9 +496,9 @@ function runLedger(rows,inKey,outKey){ // rows:[{date,desc,in,out}] -> [{...,bal
 /* chi tiêu 1 dự án = mua vật tư + chi phí + lương/ứng + thuê máy + trả NCC/nhà thầu... (dòng tiền ra thực tế) */
 function projectSpent(pid){
  let s=0;
- DB.data.vendorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=t.amount);
- DB.data.contractorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=t.amount);
- DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>s+=t.amount);
+ DB.data.vendorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=(+t.amount||0));
+ DB.data.contractorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=(+t.amount||0));
+ DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>s+=(+t.amount||0));
  return s;
 }
 function projectLiab(pid){
@@ -505,7 +508,7 @@ function projectLiab(pid){
  const md=0;
  return {vendor:vd,contractor:kd,salary:ed,machine:md,total:vd+kd+ed+md};
 }
-function dueOf(rows,inT,outT){const i=rows.filter(r=>r.type===inT).reduce((s,r)=>s+r.amount,0);const o=rows.filter(r=>r.type===outT).reduce((s,r)=>s+r.amount,0);return Math.max(0,i-o);}
+function dueOf(rows,inT,outT){const i=rows.filter(r=>r.type===inT).reduce((s,r)=>s+(+r.amount||0),0);const o=rows.filter(r=>r.type===outT).reduce((s,r)=>s+(+r.amount||0),0);return Math.max(0,i-o);}
 function projectRecv(pid){ // phải thu = bán/NT - đã nhận
  return dueOf(DB.data.clientTx.filter(t=>t.projectId===pid),'billed','received');
 }
@@ -527,7 +530,7 @@ ROUTES['#/dashboard']=function(){
  let spent=0,liab={vendor:0,contractor:0,salary:0,machine:0,total:0};
  actives.forEach(p=>{spent+=projectSpent(p.id);const l=projectLiab(p.id);liab.vendor+=l.vendor;liab.contractor+=l.contractor;liab.salary+=l.salary;liab.machine+=l.machine;liab.total+=l.total;});
  const exps=scoped(DB.data.expenses);
- const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
+ const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
  let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
@@ -545,7 +548,7 @@ ROUTES['#/dashboard']=function(){
  h+='<div class="card"><div class="card-h"><div><h3>Chi phí theo loại</h3><div class="sub">Các dự án đang thi công</div></div></div><div class="card-b">'
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
  h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
- projs.forEach(p=>{const s=projectSpent(p.id),l=projectLiab(p.id).total,bal=p.budget-s;
+ projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
   h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.code+' • '+p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
  h+='<div class="grid g4">'
@@ -566,8 +569,8 @@ ROUTES['#/projects']=function(){
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
- projs.forEach(p=>{const s=projectSpent(p.id),pct=Math.min(100,Math.round(100*s/(p.budget||1))),bal=p.budget-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'"><b>'+esc(p.code)+'</b> • '+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.location||'')+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(p.budget)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>p.budget?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa"></button><button class="iconbtn" onclick="delObj(\'projects\',\''+p.id+'\',\'Xóa dự án '+esc(p.code)+'?\')" title="Xóa"></button>':'')+'</div></td></tr>';});
+ projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'"><b>'+esc(p.code)+'</b> • '+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.location||'')+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa"></button><button class="iconbtn" onclick="delObj(\'projects\',\''+p.id+'\',\'Xóa dự án '+esc(p.code)+'?\')" title="Xóa"></button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -870,7 +873,7 @@ function reportCash(){
  const pid=formVal('rp'),p=DB.data.projects.find(x=>x.id===pid);
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid);
  $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền — '+esc(p.code+' • '+p.name)+'</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="card-b">'
- +'<dl class="kv"><dt>Ngân sách</dt><dd>'+fmtVND(p.budget)+'</dd><dt>Đã chi thực tế</dt><dd>'+fmtVND(s)+'</dd><dt>Công nợ phải trả</dt><dd style="color:var(--bad)">'+fmtVND(l.total)+'</dd><dt>Còn phải thu</dt><dd style="color:var(--info)">'+fmtVND(recv)+'</dd><dt>Ngân sách còn lại</dt><dd style="color:'+(p.budget-s<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(p.budget-s)+'</dd><dt>Tỷ lệ đã chi</dt><dd>'+Math.round(100*s/(p.budget||1))+'%</dd></dl>'
+ +'<dl class="kv"><dt>Ngân sách</dt><dd>'+fmtVND(p.budget)+'</dd><dt>Đã chi thực tế</dt><dd>'+fmtVND(s)+'</dd><dt>Công nợ phải trả</dt><dd style="color:var(--bad)">'+fmtVND(l.total)+'</dd><dt>Còn phải thu</dt><dd style="color:var(--info)">'+fmtVND(recv)+'</dd><dt>Ngân sách còn lại</dt><dd style="color:'+(p.budget-s<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(p.budget-s)+'</dd><dt>Tỷ lệ đã chi</dt><dd>'+(p.budget?Math.round(100*s/p.budget):0)+'%</dd></dl>'
  +'<h4 style="margin:18px 0 8px">Cơ cấu công nợ phải trả</h4>'+hbarChart([{label:'Nợ NCC',value:l.vendor},{label:'Nợ nhà thầu',value:l.contractor}],'#e8930c')
  +'</div></div>';
 }
