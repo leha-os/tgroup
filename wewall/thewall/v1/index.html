@@ -613,7 +613,7 @@ ROUTES['#/projects']=function(){
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa"></button><button class="iconbtn" onclick="delObj(\'projects\',\''+p.id+'\',\'Xóa dự án '+esc(p.code)+'?\')" title="Xóa"></button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.canAdmin()?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="delObj(\'projects\',\''+p.id+'\',\'Xóa dự án '+esc(p.code)+'?\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -709,7 +709,7 @@ function partnerListPage(cfg){
   h+='<tr><td><a class="linklike" href="'+cfg.back+'/'+o.id+'"><b>'+esc(o.name)+'</b></a><div style="font-size:11.5px;color:var(--mut)">'+esc(o.address||'')+'</div></td><td>'+esc(o.phone||'')+'</td>'
   +(cfg.noProj?'':'<td style="font-size:12.5px">'+esc(projCode(o.projectId))+'</td>')
   +'<td class="num">'+fmtVND(inn)+'</td><td class="num">'+fmtVND(out)+'</td><td class="num" style="font-weight:700;color:'+(due>0?'var(--bad)':'var(--ok)')+'">'+fmtVND(due)+'</td>'
-  +'<td><div class="rowbtns"><button class="iconbtn" onclick="partnerTxForm(\''+cfg.coll+'\',\''+o.id+'\')" title="Ghi giao dịch"></button><button class="iconbtn" onclick="partnerForm(\''+cfg.coll+'\',\''+o.id+'\')" title="Sửa"></button><button class="iconbtn" onclick="delObj(\''+cfg.coll+'\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')" title="Xóa"></button></div></td></tr>';});
+  +'<td><div class="rowbtns"><button class="iconbtn" onclick="partnerTxForm(\''+cfg.coll+'\',\''+o.id+'\')" title="Ghi giao dịch">Ghi</button><button class="iconbtn" onclick="partnerForm(\''+cfg.coll+'\',\''+o.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="delObj(\''+cfg.coll+'\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')" title="Xóa" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
 function partnerForm(coll,id){
@@ -758,7 +758,7 @@ function renderPartnerLedger(cfg,id){
  h+='<div class="grid g3" style="margin-bottom:16px"><div class="stat st-info"><div class="ic"></div><div><div class="lb">'+cfg.inL+'</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.in,0))+'</div></div></div><div class="stat st-ok"><div class="ic"></div><div><div class="lb">'+cfg.outL+'</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.out,0))+'</div></div></div><div class="stat '+(due>0?'st-bad':'st-ok')+'"><div class="ic"></div><div><div class="lb">'+cfg.dueL+'</div><div class="vl">'+fmtVND(due)+'</div></div></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">'+cfg.inL+'</th><th class="num">'+cfg.outL+'</th><th class="num">Số dư</th><th></th></tr></thead><tbody>';
  if(!led.length)h+='<tr><td colspan="6"><div class="empty">Chưa có giao dịch</div></td></tr>';
- led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\''+cfg.tx+'\',\''+r.id+'\')"></button></div></td></tr>';});
+ led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\''+cfg.tx+'\',\''+r.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
 function delTx(txColl,id){if(!confirm('Xóa giao dịch này?'))return;DB.data[txColl]=DB.data[txColl].filter(x=>x.id!==id);DB.log('Xóa giao dịch',txColl);DB.save();nav(false);toast('Đã xóa');}
@@ -771,7 +771,7 @@ ROUTES['#/contractors']=function(){
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Đội/Tổ</th><th>Dự án</th><th class="num">Khối lượng NT</th><th class="num">Đã tạm ứng</th><th class="num">Còn phải trả</th><th></th></tr></thead><tbody>';
  list.forEach(o=>{const txs=DB.data.contractorTx.filter(t=>t.contractorId===o.id);
   const inn=txs.filter(t=>t.type==='entry').reduce((s,t)=>s+t.amount,0),out=txs.filter(t=>t.type==='payment').reduce((s,t)=>s+t.amount,0),due=Math.max(0,inn-out);
-  h+='<tr><td><a class="linklike" href="#/contractors/'+o.id+'"><b>'+esc(o.name)+'</b></a><div style="font-size:11.5px;color:var(--mut)">'+esc(o.phone||'')+'</div></td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+fmtVND(inn)+'</td><td class="num">'+fmtVND(out)+'</td><td class="num" style="font-weight:700;color:'+(due>0?'var(--bad)':'var(--ok)')+'">'+fmtVND(due)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="contractorTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="contractorForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'contractors\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')"></button></div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/contractors/'+o.id+'"><b>'+esc(o.name)+'</b></a><div style="font-size:11.5px;color:var(--mut)">'+esc(o.phone||'')+'</div></td><td>'+esc(projCode(o.projectId))+'</td><td class="num">'+fmtVND(inn)+'</td><td class="num">'+fmtVND(out)+'</td><td class="num" style="font-weight:700;color:'+(due>0?'var(--bad)':'var(--ok)')+'">'+fmtVND(due)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="contractorTxForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="contractorForm(\''+o.id+'\')"></button><button class="iconbtn" onclick="delObj(\'contractors\',\''+o.id+'\',\'Xóa '+esc(o.name)+'?\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 function contractorForm(id){
@@ -801,7 +801,7 @@ function renderContractorLedger(id){
  let h='<div class="page-head"><div><h1>Sổ cái: '+esc(o.name)+'</h1><p>'+esc(projCode(o.projectId))+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/contractors\'">← Danh sách</button><button class="btn btn-pri" onclick="contractorTxForm(\''+id+'\')">Ghi giao dịch</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="grid g3" style="margin-bottom:16px"><div class="stat st-info"><div class="ic"></div><div><div class="lb">Khối lượng nghiệm thu</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.in,0))+'</div></div></div><div class="stat st-ok"><div class="ic"></div><div><div class="lb">Đã tạm ứng</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.out,0))+'</div></div></div><div class="stat '+(due>0?'st-bad':'st-ok')+'"><div class="ic"></div><div><div class="lb">Còn phải trả</div><div class="vl">'+fmtVND(due)+'</div></div></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Nghiệm thu</th><th class="num">Tạm ứng</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
- led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'contractorTx\',\''+r.id+'\')"></button></div></td></tr>';});
+ led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'contractorTx\',\''+r.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
 /* ================= EMPLOYEES ================= */
@@ -844,7 +844,7 @@ function renderBankLedger(id){
  let h='<div class="page-head"><div><h1>Sổ quỹ: '+esc(a.name)+'</h1><p>'+esc(a.number||'')+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/bank\'">← Danh sách</button><button class="btn btn-ok" onclick="bankTxForm(\''+id+'\',\'inflow\')">Thu</button><button class="btn btn-bad" onclick="bankTxForm(\''+id+'\',\'outflow\')">Chi</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="grid g3" style="margin-bottom:16px"><div class="stat st-ok"><div class="ic"></div><div><div class="lb">Tổng thu</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.in,0))+'</div></div></div><div class="stat st-warn"><div class="ic"></div><div><div class="lb">Tổng chi</div><div class="vl">'+fmtVND(txs.reduce((s,t)=>s+t.out,0))+'</div></div></div><div class="stat '+(bal<0?'st-bad':'st-info')+'"><div class="ic"></div><div><div class="lb">Số dư</div><div class="vl">'+fmtVND(bal)+'</div></div></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Thu vào</th><th class="num">Chi ra</th><th class="num">Số dư</th><th></th></tr></thead><tbody>';
- led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+r.desc+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'bankTx\',\''+r.id+'\')"></button></div></td></tr>';});
+ led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+r.desc+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'bankTx\',\''+r.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
 /* ================= CASH & EXPENSES ================= */
@@ -869,7 +869,7 @@ ROUTES['#/expenses']=function(){
  const q=($('#exQ')&&$('#exQ').value||'').toLowerCase(),cf=$('#exCat')?$('#exCat').value:'';
  const fl=list.filter(e=>(!q||e.note.toLowerCase().includes(q))&&(!cf||e.category===cf));
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Dự án</th><th>Loại</th><th>Diễn giải</th><th>Người chi</th><th class="num">Số tiền</th><th></th></tr></thead><tbody>';
- fl.forEach(e=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(e.date)+'</td><td>'+esc(projCode(e.projectId))+'</td><td><span class="badge b-blue">'+esc(e.category)+'</span></td><td>'+esc(e.note)+'</td><td>'+esc(e.by||'')+'</td><td class="num ledger-out">'+fmtVND(e.amount)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="expenseForm(\''+e.id+'\')"></button><button class="iconbtn" onclick="delTx(\'expenses\',\''+e.id+'\')"></button></div></td></tr>';});
+ fl.forEach(e=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(e.date)+'</td><td>'+esc(projCode(e.projectId))+'</td><td><span class="badge b-blue">'+esc(e.category)+'</span></td><td>'+esc(e.note)+'</td><td>'+esc(e.by||'')+'</td><td class="num ledger-out">'+fmtVND(e.amount)+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="expenseForm(\''+e.id+'\')"></button><button class="iconbtn" onclick="delTx(\'expenses\',\''+e.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
  if($('#exQ')){$('#exQ').value=q;$('#exCat').value=cf;$('#exQ').focus();$('#exQ').setSelectionRange(q.length,q.length);}
 };
@@ -954,7 +954,7 @@ ROUTES['#/users']=function(){
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Phân quyền: Giám đốc/Kế toán/Chỉ huy công trình • Thêm trực tiếp trên Sheet (tab Users) cũng được, rồi bấm Tải từ server trong Cài đặt</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Thêm người dùng</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th></th></tr></thead><tbody>';
- DB.data.users.forEach(u=>{h+='<tr><td><b>'+esc(u.name)+'</b></td><td>'+esc(u.username)+'</td><td>'+(u.role==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':u.role==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':'<span class="badge b-amber">Chỉ huy công trình</span>')+'</td><td style="font-size:12.5px">'+(u.projectIds||[]).map(projCode).join(', ')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')"></button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="delObj(\'users\',\''+u.id+'\',\'Xóa user '+esc(u.username)+'?\')"></button>':'')+'</div></td></tr>';});
+ DB.data.users.forEach(u=>{h+='<tr><td><b>'+esc(u.name)+'</b></td><td>'+esc(u.username)+'</td><td>'+(u.role==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':u.role==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':'<span class="badge b-amber">Chỉ huy công trình</span>')+'</td><td style="font-size:12.5px">'+(u.projectIds||[]).map(projCode).join(', ')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')"></button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="delObj(\'users\',\''+u.id+'\',\'Xóa user '+esc(u.username)+'?\')" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 function userForm(id){
@@ -1235,12 +1235,14 @@ function xuatPhieuDNTT_XLSX(id){
 
 /* ===== XLSX thật ===== */
 /* Minimal real XLSX writer (store-only ZIP, no external deps) */
-function xlsxMake(sheets){
+function xlsxMake(sheets,logoB64){
   const enc=new TextEncoder();
   const CT=new Int32Array(256);
   for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);CT[n]=c;}
   function crc(b){let c=-1;for(let i=0;i<b.length;i++)c=CT[(c^b[i])&255]^(c>>>8);return (c^-1)>>>0;}
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function b64ToBytes(b64){try{const s=String(b64);const raw=s.indexOf(',')>=0?s.slice(s.indexOf(',')+1):s;const bin=atob(raw.replace(/\s/g,''));const b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b;}catch(e){return null;}}
+  const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
   const STYLES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
@@ -1277,9 +1279,9 @@ function xlsxMake(sheets){
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
-  function sheetXml(sh){
+  function sheetXml(sh,withDrawing){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-      +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+      +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
       +'<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>'
       +'<pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="1"/>'
       +'<printOptions horizontalCentered="1"/>';
@@ -1311,6 +1313,7 @@ function xlsxMake(sheets){
       sh.merges.forEach(m=>{s+='<mergeCell ref="'+m+'"/>';});
       s+='</mergeCells>';
     }
+    if(withDrawing)s+='<drawing r:id="rId1"/>';
     s+='</worksheet>';
     return s;
   }
@@ -1324,6 +1327,7 @@ function xlsxMake(sheets){
     +'<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
     +'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>'
     +sheets.map((_,i)=>'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('')
+    +(LOGO?'<Default Extension="png" ContentType="image/png"/><Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>':'')
     +'</Types>']);
   parts.push(['_rels/.rels',
     '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
@@ -1342,10 +1346,34 @@ function xlsxMake(sheets){
     +'<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
     +'</Relationships>']);
   parts.push(['xl/styles.xml',STYLES]);
-  sheets.forEach((sh,i)=>parts.push(['xl/worksheets/sheet'+(i+1)+'.xml',sheetXml(sh)]));
+  sheets.forEach((sh,i)=>parts.push(['xl/worksheets/sheet'+(i+1)+'.xml',sheetXml(sh,!!LOGO&&i===0)]));
+  if(LOGO){
+    const DRAW='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+      +'<xdr:oneCellAnchor>'
+      +'<xdr:from><xdr:col>0</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>0</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>'
+      +'<xdr:ext cx="1143000" cy="762000"/>'
+      +'<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="1" name="logo.png"/><xdr:cNvPicPr/></xdr:nvPicPr>'
+      +'<xdr:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>'
+      +'<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1143000" cy="762000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr>'
+      +'</xdr:pic><xdr:clientData/>'
+      +'</xdr:oneCellAnchor></xdr:wsDr>';
+    const DRAWRELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/logo.png"/>'
+      +'</Relationships>';
+    const SHEETRELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing1.xml"/>'
+      +'</Relationships>';
+    parts.push(['xl/media/logo.png',LOGO,true]);
+    parts.push(['xl/drawings/drawing1.xml',DRAW]);
+    parts.push(['xl/drawings/_rels/drawing1.xml.rels',DRAWRELS]);
+    parts.push(['xl/worksheets/_rels/sheet1.xml.rels',SHEETRELS]);
+  }
 
-  // ZIP store-only
-  const encFiles=parts.map(([name,xml])=>({name,data:enc.encode(xml)}));
+  // ZIP store-only (hỗ trợ binary cho ảnh)
+  const encFiles=parts.map(p=>({name:p[0],data:p[2]?p[1]:enc.encode(p[1])}));
   const chunks=[];const central=[];let off=0;
   function w16(v){chunks.push(new Uint8Array([v&255,(v>>8)&255]));}
   function w32(v){chunks.push(new Uint8Array([v&255,(v>>8)&255,(v>>16)&255,(v>>24)&255]));}
@@ -1386,7 +1414,8 @@ function xlsxMake(sheets){
   return out;
 }
 function xlsxDownload(sheets,filename){
-  const data=xlsxMake(sheets);
+  let _logo=null;try{if(typeof TW_LOGO==='string'&&TW_LOGO.indexOf('base64,')>0)_logo=TW_LOGO;}catch(e){}
+  const data=xlsxMake(sheets,_logo);
   const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
   a.style.display='none';document.body.appendChild(a);a.click();
@@ -1664,16 +1693,22 @@ async function testApi(){
 }
 /* ================= CÀI ĐẶT ================= */
 ROUTES['#/caidat']=function(){
- if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
+ if(!Auth.user){location.hash='#/login';return;}
+ const isAdmin=Auth.canAdmin();
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
- let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
- h+='<div class="grid g2" style="margin-bottom:16px"><div class="card"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
+ let h='<div class="page-head"><div><h1>Cài đặt</h1><p>Kết nối backend Google Apps Script • đồng bộ dữ liệu</p><div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:13px">⚠️ <b>Khu vực nguy hiểm:</b> Chỉ Admin được phép thay đổi. Thao tác sai có thể mất dữ liệu hoặc ngắt kết nối toàn hệ thống.</div><p style="color:#999;font-size:11px">Bản dựng: 2026-10-09 19:35</p></div></div>';
+ h+='<div class="grid g2" style="padding:12px"><details style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:10px"><summary style="cursor:pointer;font-weight:700;padding:12px">⚙️ Cấu hình API (nâng cao)</summary><div style="padding:0 12px 12px"><div class="card" style="margin:0;border:none;box-shadow:none"><div class="card-h"><div><h3>Kết nối API</h3><div class="sub">URL Web App đã Deploy (quyền Anyone)</div></div><span id="connDot"></span></div><div class="card-b">'
   +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div></div></div>';
- h+='<div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Kéo/đẩy toàn bộ giữa máy và Google Sheet</div></div></div><div class="card-b">'
+ h+='</div></details><div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Kéo/đẩy toàn bộ giữa máy và Google Sheet</div></div></div><div class="card-b">'
   +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ server</button><button class="btn btn-sec" onclick="diagSync()">Chẩn đoán</button><button class="btn btn-warn" onclick="if(confirm(\'Ghi đè toàn bộ sheet server bằng dữ liệu máy?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên server</button></div>'
-  +'<details style="margin-top:12px"><summary style="cursor:pointer;color:var(--mut);font-size:13px">Chi tiết Module/Sheet</summary><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
+  +'<div style="margin:12px 0;padding:12px;background:#f8fafc;border-radius:8px">'
+      +'<div style="font-weight:700;margin-bottom:8px">Kết nối API</div>'
+      +fld('API URL','<div style="display:flex;gap:8px"><input class="inp" id="apiUrl2" type="password" value="'+esc(CFG.apiUrl||'')+'" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1"><button class="btn btn-sec" type="button" onclick="var i=document.getElementById(\'apiUrl2\');i.type=i.type===\'password\'?\'text\':\'password\';this.textContent=i.type===\'password\'?\'Hiện\':\'Ẩn\'">Hiện</button></div>')
+      +fld('Access Key',inp('apiKey2',CFG.key))
+      +'<div style="display:flex;gap:8px"><button class="btn btn-pri" onclick="CFG.apiUrl=formVal(\'apiUrl2\');CFG.key=formVal(\'apiKey2\');saveCfg();renderSyncPill();toast(\'Đã lưu\')">Lưu</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra</button></div>'
+      +'</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet</th><th class="num">Số dòng (máy)</th></tr></thead><tbody>'
   +mods.map(m=>'<tr><td>'+m.k+'</td><td><span class="badge b-blue">'+m.sh+'</span></td><td class="num">'+m.n+'</td></tr>').join('')
   +'</tbody></table></div></div></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Dữ liệu mẫu</h3><div class="sub">Khôi phục demo ban đầu</div></div></div><div class="card-b"><button class="btn btn-bad" onclick="if(confirm(\'Xóa hết dữ liệu hiện tại, về demo?\')){DB.reset();ensureArrays();nav(false);}">Khôi phục demo</button></div></div>';
