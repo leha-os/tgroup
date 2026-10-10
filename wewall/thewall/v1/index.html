@@ -2551,7 +2551,7 @@ ROUTES['#/tiendo-calendar']=function(){
   const now=new Date();const y=now.getFullYear(), m=now.getMonth();
   const first=new Date(y,m,1);const last=new Date(y,m+1,0);const startDay=first.getDay(); // 0 CN
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Lịch tiến độ tháng ${m+1}/${y}</h1><p>Xem theo ngày - chuẩn quản lý thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Lịch tiến độ tháng ${m+1}/${y}</h1><p>Xem theo ngày</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-calendar');h+=tdToolbar();h+='<div id="tiendoScope"><div class="cal-grid">';
   ['CN','T2','T3','T4','T5','T6','T7'].forEach(d=>h+=`<div class="cal-head">${d}</div>`);
   for(let i=0;i<startDay;i++)h+=`<div class="cal-cell other"></div>`;
