@@ -2670,6 +2670,10 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
  function enhance(sel){
   if(sel.dataset.twEnhanced==='1'||!sel.parentNode||sel.multiple)return;
   sel.dataset.twEnhanced='1';
+  /* Hide the native control itself; only the custom trigger should remain visible. */
+  sel.classList.add('tw-native-select');
+  sel.setAttribute('aria-hidden','true');
+  sel.tabIndex=-1;
   const wrap=document.createElement('div');wrap.className='tw-select-wrap';
   sel.parentNode.insertBefore(wrap,sel);wrap.appendChild(sel);
   const btn=document.createElement('button');btn.type='button';btn.className='tw-select-trigger';btn.setAttribute('aria-haspopup','listbox');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label',sel.getAttribute('aria-label')||sel.name||'Select an option');
