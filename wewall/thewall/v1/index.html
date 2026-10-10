@@ -251,6 +251,7 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   .login-card{padding:28px 20px;width:100%;max-width:400px}
 }
 @media(max-width:480px){
+  .cal-cell{min-height:76px;padding:3px}.cal-cell .citem{font-size:9px;padding:2px 3px}.cal-proj-tag{font-size:8px;padding:0 2px}
   .topbar h2{display:none}
   .page-actions{width:100%}
   .page-actions .btn{flex:1;justify-content:center;min-width:0}
@@ -489,6 +490,7 @@ select.inp:focus{
 }
 
 
+.dropdown-premium,details.card{border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--sh)}details.card>summary,details.progress-details>summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;color:#3f3428}details.card>summary::-webkit-details-marker,details.progress-details>summary::-webkit-details-marker{display:none}.progress-details{min-width:90px}.progress-details>summary{font-size:11px;color:#8a5a14;background:#fff8e7;border:1px solid #f0dfb4;border-radius:7px;padding:4px 8px;white-space:nowrap}.progress-details[open]>summary{margin-bottom:6px}details.card>summary:after{content:'＋';float:right;color:#b7791f}details.card[open]>summary:after{content:'−'}
 /* ===== CUSTOM DROPDOWN BOTTOM-SHEET ===== */
 .csel{position:relative}
 .csel-btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
@@ -580,7 +582,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .cal-cell.other{background:#fbfaf8;color:#a8a29e}
 .cal-cell.today{background:#fffbeb;box-shadow:inset 0 0 0 2px #f0ad1f}
 .cal-cell .dnum{font-size:12px;font-weight:700;margin-bottom:6px}
-.cal-cell .citem{font-size:11px;padding:3px 6px;border-radius:6px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:600}
+.cal-cell .citem{font-size:11px;padding:3px 6px;border-radius:6px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:600}.cal-proj-tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.1px;padding:1px 4px;margin-right:2px;border-radius:4px;background:rgba(255,255,255,.72);border:1px solid currentColor;vertical-align:1px}
 .citem.c-blue{background:#dbeafe;color:#1e40af}
 .citem.c-amber{background:#fef3c7;color:#92400e}
 .citem.c-green{background:#dcfce7;color:#166534}
@@ -598,15 +600,17 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 /* PRINT CHUYEN NGHIỆP */
 .print-header{display:none}
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
   @page{size:A4 landscape;margin:12mm}
   body{background:#fff!important}
   .sidebar,#sbBackdrop,.topbar,.page-actions .btn-sec,.td-view-switch,.td-toolbar .noprint,.td-zoom,.footer{display:none!important}
-  .print-header{display:block!important;border:2px solid #1a1410;padding:12px 16px;margin-bottom:14px;border-radius:8px}
+  .print-header{display:block!important;border:2px solid #b88a35;padding:12px 16px;margin-bottom:14px;border-radius:8px;background:#fffaf0!important;color:#1a1410!important}
   .print-header h1{font-size:18px;font-weight:800;margin:0 0 6px}
   .print-header .meta{font-size:12px;color:#333;display:flex;gap:18px;flex-wrap:wrap}
   .print-header .meta b{color:#000}
   .print-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#666;border-top:1px solid #ccc;padding:6px}
   .gantt,.kanban,.cal-grid{box-shadow:none!important;border:1px solid #000!important}
+  .cal-cell.today,.cal-head,.kanban-col-header,.kanban-col,.badge,.k-status,.prog,.prog i,.gantt-bar,.gantt-bar i,.citem,.stat,.td-card{ -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important }
   .gantt{overflow:visible!important}
   .kanban{overflow:visible!important;flex-wrap:wrap}
   .kanban-col{break-inside:avoid;max-height:none!important}
@@ -991,16 +995,16 @@ const NAV=[
  {sec:'TỔNG QUAN'},
  {label:'Tổng quan',icon:'',hash:'#/dashboard'},
  {sec:'DỰ ÁN'},
- {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
+ {label:'Tất cả Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
-   {label:'Tổng quan Dashboard',hash:'#/tiendo'},
+   {label:'Dashboard',hash:'#/tiendo'},
    {label:'Danh sách chi tiết',hash:'#/tiendo-list'},
    {label:'Kanban Board',hash:'#/tiendo-kanban'},
    {label:'Timeline Gantt',hash:'#/tiendo-gantt'},
-   {label:'Lịch Calendar',hash:'#/tiendo-calendar'},
-   {label:'Split View (2 màn hình)',hash:'#/tiendo-split'}
+   {label:'Calendar',hash:'#/tiendo-calendar'},
+   {label:'Split View',hash:'#/tiendo-split'}
  ]},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
@@ -1139,15 +1143,20 @@ function statusBadge(s){
  const norm={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'}[s]||s;
  return '<span class="badge '+(m[norm]||'b-gray')+'">'+esc(norm)+'</span>';
 }
+/* Tiến độ thi công dạng gọn trong danh sách dự án; tránh lỗi render khi thiếu helper. */
+function tienDoCell(pid){
+ const pct=typeof tienDoProject==='function'?tienDoProject(pid):0;
+ return '<div style="min-width:88px"><div class="prog"><i style="width:'+Math.max(0,Math.min(100,pct))+'%"></i></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:11px;color:var(--mut)"><b>'+pct+'%</b><a href="#/tiendo/'+encodeURIComponent(pid)+'">Chi tiết</a></div></div>';
+}
 /* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
- let h='<div class="page-head"><div><h1>Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
+ let h='<div class="page-head"><div><h1>Tất cả Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td><details class="progress-details"><summary>Tiến độ</summary>'+tienDoCell(p.id)+'</details></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1224,6 +1233,23 @@ function nav(rebuild){
  if(!fn)fn=ROUTES['#/dashboard'];
  $('#view').innerHTML='';fn();window.scrollTo(0,0);
 }
+
+// In báo cáo: bổ sung tên trang, dự án đang chọn, ngày in và số trang trên mọi trang in.
+(function(){
+  let printMeta=null;
+  window.addEventListener('beforeprint',function(){
+    if(document.querySelector('body.printing-phieu'))return;
+    const view=document.getElementById('view');if(!view)return;
+    if(view.querySelector('.print-header'))return;
+    const title=(view.querySelector('.page-head h1')||view.querySelector('h1')||{}).textContent||document.title;
+    const pick=document.getElementById('projPick');const project=pick&&pick.selectedOptions&&pick.selectedOptions[0]?pick.selectedOptions[0].textContent:'Tất cả dự án';
+    printMeta=document.createElement('div');printMeta.className='print-header print-meta-auto';
+    printMeta.innerHTML='<h1>'+String(title).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</h1><div class="meta"><span><b>Dự án:</b> '+String(project).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</span><span><b>Ngày in:</b> '+new Date().toLocaleString('vi-VN')+'</span><span><b>Người in:</b> '+String((window.Auth&&Auth.user&&Auth.user.name)||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</span></div>';
+    view.insertBefore(printMeta,view.firstChild);
+  });
+  window.addEventListener('afterprint',function(){if(printMeta&&printMeta.parentNode)printMeta.parentNode.removeChild(printMeta);printMeta=null;});
+})();
+
 /* ================= PARTNERS (generic) ================= */
 const PCFG={
  vendors:{coll:'vendors',tx:'vendorTx',fk:'vendorId',t:'Nhà cung cấp',icon:'',inT:'purchase',outT:'payment',inL:'Mua hàng/Nhập',outL:'Thanh toán',dueL:'Công nợ phải trả',back:'#/vendors'},
@@ -1717,7 +1743,7 @@ function xuatPhieuDNTT_XLSX(id){
  r=mk();C(r,0,'Website: www.thewall.com.vn',2);
  mk();mk();mk();
  r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',1);
- r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
+ r=mk();C(r,5,'Ngày: '+fmtDate(t.date),3);
  r=mk();C(r,0,'Người đề nghị: '+(dn.nguoitao||(Auth.user&&Auth.user.name)||''),2);C(r,7,'Bộ phận:',2);
  r=mk();C(r,0,'Mục đích thanh toán:',2);C(r,2,dn.noidung||t.ghichu||'',2);
  r=mk();C(r,0,'Hạng mục:',2);C(r,2,dn.hangmuc||'',2);
@@ -1748,7 +1774,7 @@ function xuatPhieuDNTT_XLSX(id){
  r=mk();C(r,0,'XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN',5);
  mk();
  r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',2);
- const merges=['A2:J2','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
+ const merges=['A1:J1','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
  xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
@@ -1765,7 +1791,7 @@ function xlsxMake(sheets,logoB64){
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="12"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="9"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="16"/><color rgb="FF7A4E20"/><name val="Arial"/></font><font><b/><sz val="13"/><color rgb="FF000000"/><name val="Arial"/></font><font><i/><sz val="10"/><color rgb="FF808080"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FF000000"/><name val="Arial"/></font><font><b/><sz val="9"/><name val="Arial"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFF2CC"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFF8E7"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFE7C66B"/></left><right style="thin"><color rgb="FFE7C66B"/></right><top style="thin"><color rgb="FFE7C66B"/></top><bottom style="thin"><color rgb="FFE7C66B"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FFE7C66B"/></top><bottom style="thin"><color rgb="FFE7C66B"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
@@ -1904,12 +1930,10 @@ function xlsxMake(sheets,logoB64){
   return out;
 }
 function xlsxDownload(sheets,filename){
-  let _logo=null;try{if(typeof TW_LOGO==='string'&&TW_LOGO.indexOf('base64,')>0)_logo=TW_LOGO;}catch(e){}
-  const data=xlsxMake(sheets,_logo);
-  const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
-  a.style.display='none';document.body.appendChild(a);a.click();
-  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+  const finish=function(_logo){const data=xlsxMake(sheets,_logo);const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);};
+  let src='';try{if(typeof TW_LOGO==='string')src=TW_LOGO;}catch(e){}
+  if(src.startsWith('data:image/')){finish(src);return;}
+  if(src){const im=new Image();im.onload=function(){try{const cv=document.createElement('canvas');cv.width=im.naturalWidth||160;cv.height=im.naturalHeight||100;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);finish(cv.toDataURL('image/png'));}catch(e){finish(null);}};im.onerror=function(){finish(null);};im.src=src;}else finish(null);
 }
 
 
@@ -2080,7 +2104,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:15};rf[n-1]={v:foot.total,s:7};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:15};rf[n-1]={v:parts.slice(1).join(':').trim(),s:7};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
@@ -2345,7 +2369,7 @@ ROUTES['#/tiendo']=function(){
   const items=DB.data.tienDo||[];
   const totalPct=projs.length?Math.round(projs.reduce((s,p)=>s+tienDoProject(p.id),0)/projs.length):0;
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Tiến độ thi công - 14 dự án</h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Tiến độ thi công - 14 dự án</h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo');
   h+=tdToolbar();
   h+='<div id="tiendoScope">';
@@ -2358,7 +2382,9 @@ ROUTES['#/tiendo']=function(){
     const its=(DB.data.tienDo||[]).filter(t=>t.projectId===p.id);
     h+=`<div class="td-card"><div class="row"><b>${esc(p.code)} - ${esc(p.name)}</b><span style="font-weight:800;color:#d97706">${pct}%</span></div><div class="prog big"><i style="width:${pct}%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b;display:flex;justify-content:space-between"><span>${gd.gdl} • ${its.length} hạng mục</span><span><a href="#/tiendo/${p.id}">Chi tiết →</a> | <a href="#/tiendo-gantt">Gantt</a> | <a href="#/tiendo-kanban">Kanban</a></span></div></div>`;
   });
-  h+='</div></div>';
+  h+='</div>';
+  const donutRows=projs.map((p,i)=>({label:p.name,value:Math.max(0,tienDoProject(p.id)),color:['#d97706','#0f766e','#2563eb','#7c3aed','#dc2626','#0891b2'][i%6]})).filter(x=>x.value>0);
+  h+='<div class="card" style="margin-top:14px"><div class="card-h"><h3>Biểu đồ tròn — tỷ trọng tiến độ các dự án</h3></div><div class="card-b">'+(donutRows.length?donutChart(donutRows):'<div class="empty">Chưa có dữ liệu tiến độ để lập biểu đồ</div>')+'</div></div></div>';
   h+='<div class="print-footer" style="display:none">In lúc: '+new Date().toLocaleString('vi-VN')+' - The Wall PMS</div>';
   document.getElementById('view').innerHTML=h;
 };
@@ -2379,7 +2405,7 @@ ROUTES['#/tiendo-list']=function(){
     const p=DB.data.projects.find(x=>x.id===t.projectId);
     const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
     const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
-    h+=`<tr><td><b>${esc(p?p.code:'')}</b><div style="font-size:11px;color:#666">${esc(p?p.name:'')}</div></td><td><span class="badge b-gray">${esc(t.giaiDoan)}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
+    h+=`<tr><td><b>${esc(p?p.name:'Không xác định')}</b></td><td><span class="badge b-gray">${esc(({chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & Hạ tầng'})[t.giaiDoan]||t.giaiDoan||'Chưa xác định')}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
   });
   h+='</tbody></table></div></div></div>';
   document.getElementById('view').innerHTML=h;
@@ -2447,7 +2473,7 @@ ROUTES['#/tiendo-calendar']=function(){
   for(let d=1;d<=last.getDate();d++){
     const dt=new Date(y,m,d);const isToday=d===now.getDate();
     const dayItems=items.filter(t=>{const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cur=new Date(y,m,d);return cur>=new Date(s.getFullYear(),s.getMonth(),s.getDate()) && cur<=new Date(e.getFullYear(),e.getMonth(),e.getDate());});
-    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');return `<div class="citem ${c}" title="${esc(t.hangMuc)} - ${t.phanTram}%" onclick="tienDoForm('${t.projectId}','${t.id}')">${esc(t.hangMuc.slice(0,18))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
+    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');const pr=(DB.data.projects||[]).find(p=>p.id===t.projectId);const tag=pr?(pr.code||pr.name):'DA';return `<div class="citem ${c}" title="${esc((pr?pr.name+' • ':'')+t.hangMuc+' - '+t.phanTram+'%')}" onclick="tienDoForm('${t.projectId}','${t.id}')"><span class="cal-proj-tag">${esc(tag)}</span> ${esc(t.hangMuc.slice(0,13))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
   }
   h+='</div></div>';
   document.getElementById('view').innerHTML=h;
@@ -2505,7 +2531,7 @@ function tienDoForm(pid,id){
   const projs=DB.data.projects||[];
   openModal((id?'Sửa':'Thêm')+' tiến độ',
     '<label>Dự án</label><select class="inp" id="td_pid">'+projs.map(p=>'<option value="'+p.id+'"'+(t.projectId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+
-    '<label>Hạng mục</label><input class="inp" id="td_hm" value="'+esc(t.hangMuc||'')+'" placeholder="VD: Móng, Thô, Hoàn thiện">'+
+    '<label>Hạng mục</label><input class="inp" id="td_hm" list="tdHmOptions" value="'+esc(t.hangMuc||'')+'" placeholder="Chọn hoặc nhập hạng mục"><datalist id="tdHmOptions"><option value="Cọc & móng"><option value="Tầng hầm"><option value="Kết cấu tầng trệt"><option value="Kết cấu tầng điển hình"><option value="Mái"><option value="Xây tô"><option value="Chống thấm"><option value="Hoàn thiện"><option value="MEP"><option value="Cảnh quan & hạ tầng"></datalist>'+
     '<label>Tiến độ (%)</label><input class="inp" type="number" id="td_pct" min="0" max="100" value="'+(t.phanTram||0)+'">'+
     '<label>Ghi chú</label><input class="inp" id="td_note" value="'+esc(t.ghiChu||'')+'">',
     '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo(\''+(id||'')+'\')">Lưu</button>');
