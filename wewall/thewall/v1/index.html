@@ -985,6 +985,76 @@ body{font-size:14.5px;line-height:1.55}
 .phieu-head .co{font-size:13px!important;line-height:1.6!important}
 </style>
 
+
+<style id="tw-phieu-print-only-fix">
+@media print{
+  body.printing-phieu *{visibility:hidden!important}
+  body.printing-phieu #phieuPrintArea, body.printing-phieu #phieuPrintArea *{visibility:visible!important}
+  body.printing-phieu #phieuPrintArea{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important}
+  body.printing-phieu .phieu-wrap{width:195mm!important;max-width:195mm!important;min-width:0!important;margin:0 auto!important;padding:8mm 10mm!important;box-sizing:border-box!important;border:1.5px solid #000!important;box-shadow:none!important;overflow:visible!important;page-break-inside:avoid!important;break-inside:avoid!important;transform:none!important}
+  body.printing-phieu .phieu-wrap *{overflow-wrap:break-word!important;word-break:break-word!important}
+  @page{size:A4 portrait;margin:8mm}
+}
+</style>
+
+
+<style id="tw-popup-compact-fix">
+.mback{background:rgba(15,23,42,.25)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important}
+.modal{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;max-height:90vh!important;overflow-y:auto!important;border-radius:16px!important;box-shadow:0 20px 60px rgba(0,0,0,.25)!important}
+#mBody{max-height:70vh!important;overflow-y:auto!important}
+.compact-form .frm-row,.frm-row{grid-template-columns:1fr 1fr!important}
+@media(max-width:640px){.compact-form .frm-row,.frm-row,.frm-row3{grid-template-columns:1fr!important} .modal{width:94vw!important;max-width:94vw!important}}
+</style>
+
+
+<style id="tw-sidebar-deep-indent">
+.sb-sub:not(.sb-progress-sub){margin-left:24px!important;border-left:2px solid rgba(240,173,31,.25)!important;padding-left:14px!important}
+.sb-sub .sb-link{padding-left:12px!important;font-size:13px!important;position:relative}
+.sb-sub .sb-link::before{content:'—';position:absolute;left:-2px;color:rgba(255,255,255,.25);font-size:10px}
+.sb-nav .sb-link{padding:10px 12px!important}
+</style>
+
+
+<style id="tw-progress-print-color">
+@media print{
+  .prog{background:#f1e8d0!important;border:1px solid #d6b87a!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .prog i{background:#f59e0b!important;background:linear-gradient(90deg,#f59e0b,#d97706)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .prog.over i{background:#dc2626!important}
+}
+.prog{background:#f1e8d0;border-radius:6px;height:10px;overflow:hidden;position:relative}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:6px}
+</style>
+
+
+<style id="tw-print-no-break-fix">
+@media print{
+  html,body{height:auto!important;overflow:visible!important}
+  .card,.stat,.tbl-wrap{break-inside:avoid!important;page-break-inside:avoid!important}
+  table{break-inside:auto!important;page-break-inside:auto!important}
+  tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  #view{overflow:visible!important;height:auto!important}
+  #tiendoScope{overflow:visible!important;height:auto!important}
+  .grid,.project-overview-grid,.split-dual{display:block!important}
+}
+</style>
+
+
+<style id="tw-calendar-scroll-fix">
+.td-calendar-grid{max-height:70vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.cal-cell{min-height:80px}
+@media(max-width:700px){.td-calendar-grid{max-height:75vh}}
+#tiendoScope .kanban{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
+#tiendoScope .cal-wrap{overflow:auto!important;max-height:75vh}
+</style>
+
+
+<style id="tw-tiendo-form-compact">
+.td-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.td-form-grid .td-wide{grid-column:1/-1}
+.td-form-grid .fld{margin-bottom:0}
+@media(max-width:600px){.td-form-grid{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 <div id="loginView">
@@ -1389,7 +1459,7 @@ function toggleSidebarAll(open){
 function buildSidebar(){
  const u=Auth.user;
  let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div></div></div>';
- {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
+ {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]) /* keep */:ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
  h+='<div class="sb-nav-tools"><button type="button" onclick="toggleSidebarAll(!(Object.keys(navExpanded).length===0||Object.keys(navExpanded).every(k=>navExpanded[k]!==false)))" title="Mở rộng hoặc thu gọn tất cả">↕ Mở / thu gọn</button></div>'; 
  let secOpen=true;
@@ -1508,7 +1578,7 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike project-name" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><span class="project-code">'+esc(p.code)+'</span></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike project-name" href="#/projects/'+p.id+'" style="display:block;font-size:14.5px;font-weight:700;color:#1a1410">'+esc(p.name)+'</a><span class="project-code" style="display:block;font-size:11px;color:#9aa0a6;margin-top:2px">'+esc(p.code)+'</span></td>'<td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1790,14 +1860,17 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
- let h='';
- h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
-  +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))
-  +'<button class="btn btn-pri" onclick="reportCash()">Xem báo cáo</button></div></div>';
- h+='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ</h3><div class="sub">Phải trả & phải thu toàn công ty</div></div></div><div class="card-b"><button class="btn btn-pri" onclick="reportDebt()">Xem báo cáo</button></div></div></div>';
+ const projs=scoped(DB.data.projects);
+ let rowsDebt=''; let tp=0,tr=0;
+ projs.forEach(p=>{const l=projectLiab(p.id),r=projectRecv(p.id);tp+=l.total;tr+=r; rowsDebt+='<tr><td><div style="font-weight:700">'+esc(p.name)+'</div><div style="font-size:11px;color:#8a7f70">'+esc(p.code)+'</div></td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
+ let h='<div class="page-head"><div><h1>Báo cáo tổng hợp</h1><p>Báo cáo công nợ toàn công ty tự động hiển thị</p></div></div>';
+ h+='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ phải trả & phải thu toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rowsDebt+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
  h+='<div id="rpOut" style="margin-top:16px"></div>';
  $('#view').innerHTML=h;
+ // auto load cash default first project
+ if(projs.length){ window._autoRp=projs[0].id; }
 };
+
 function reportCash(){
  const pid=formVal('rp'),p=DB.data.projects.find(x=>x.id===pid);
  const s=projectSpent(pid),l=projectLiab(pid),recv=projectRecv(pid);
@@ -2510,6 +2583,76 @@ body{font-size:14.5px;line-height:1.55}
 .phieu-head .co{font-size:13px!important;line-height:1.6!important}
 </style>
 
+
+<style id="tw-phieu-print-only-fix">
+@media print{
+  body.printing-phieu *{visibility:hidden!important}
+  body.printing-phieu #phieuPrintArea, body.printing-phieu #phieuPrintArea *{visibility:visible!important}
+  body.printing-phieu #phieuPrintArea{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important}
+  body.printing-phieu .phieu-wrap{width:195mm!important;max-width:195mm!important;min-width:0!important;margin:0 auto!important;padding:8mm 10mm!important;box-sizing:border-box!important;border:1.5px solid #000!important;box-shadow:none!important;overflow:visible!important;page-break-inside:avoid!important;break-inside:avoid!important;transform:none!important}
+  body.printing-phieu .phieu-wrap *{overflow-wrap:break-word!important;word-break:break-word!important}
+  @page{size:A4 portrait;margin:8mm}
+}
+</style>
+
+
+<style id="tw-popup-compact-fix">
+.mback{background:rgba(15,23,42,.25)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important}
+.modal{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;max-height:90vh!important;overflow-y:auto!important;border-radius:16px!important;box-shadow:0 20px 60px rgba(0,0,0,.25)!important}
+#mBody{max-height:70vh!important;overflow-y:auto!important}
+.compact-form .frm-row,.frm-row{grid-template-columns:1fr 1fr!important}
+@media(max-width:640px){.compact-form .frm-row,.frm-row,.frm-row3{grid-template-columns:1fr!important} .modal{width:94vw!important;max-width:94vw!important}}
+</style>
+
+
+<style id="tw-sidebar-deep-indent">
+.sb-sub:not(.sb-progress-sub){margin-left:24px!important;border-left:2px solid rgba(240,173,31,.25)!important;padding-left:14px!important}
+.sb-sub .sb-link{padding-left:12px!important;font-size:13px!important;position:relative}
+.sb-sub .sb-link::before{content:'—';position:absolute;left:-2px;color:rgba(255,255,255,.25);font-size:10px}
+.sb-nav .sb-link{padding:10px 12px!important}
+</style>
+
+
+<style id="tw-progress-print-color">
+@media print{
+  .prog{background:#f1e8d0!important;border:1px solid #d6b87a!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .prog i{background:#f59e0b!important;background:linear-gradient(90deg,#f59e0b,#d97706)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .prog.over i{background:#dc2626!important}
+}
+.prog{background:#f1e8d0;border-radius:6px;height:10px;overflow:hidden;position:relative}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:6px}
+</style>
+
+
+<style id="tw-print-no-break-fix">
+@media print{
+  html,body{height:auto!important;overflow:visible!important}
+  .card,.stat,.tbl-wrap{break-inside:avoid!important;page-break-inside:avoid!important}
+  table{break-inside:auto!important;page-break-inside:auto!important}
+  tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  #view{overflow:visible!important;height:auto!important}
+  #tiendoScope{overflow:visible!important;height:auto!important}
+  .grid,.project-overview-grid,.split-dual{display:block!important}
+}
+</style>
+
+
+<style id="tw-calendar-scroll-fix">
+.td-calendar-grid{max-height:70vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.cal-cell{min-height:80px}
+@media(max-width:700px){.td-calendar-grid{max-height:75vh}}
+#tiendoScope .kanban{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
+#tiendoScope .cal-wrap{overflow:auto!important;max-height:75vh}
+</style>
+
+
+<style id="tw-tiendo-form-compact">
+.td-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.td-form-grid .td-wide{grid-column:1/-1}
+.td-form-grid .fld{margin-bottom:0}
+@media(max-width:600px){.td-form-grid{grid-template-columns:1fr}}
+</style>
+
 </head><body>';
  h+='<h3>'+esc(title)+'</h3><table border="1"><thead><tr>'+headers.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>';
  rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+esc(c==null?'':c)+'</td>').join('')+'</tr>';});
@@ -2770,8 +2913,38 @@ ROUTES['#/tiendo-split']=function(){
 };
 ROUTES['#/tiendo/:id']=function(pid){const p=tdProject(pid);if(!p.id){location.hash='#/tiendo';return;}const items=tdItems(pid).sort((a,b)=>(a.ngayBatDau||'').localeCompare(b.ngayBatDau||''));const pct=tienDoProject(pid);let h=tdPrintHeader('CHI TIẾT TIẾN ĐỘ',p)+`<div class="page-head"><div><div style="font-size:11px;font-weight:800;color:#a16207">${tdEsc(p.code||'')}</div><h1>${tdEsc(p.name)}</h1><p>${items.length} hạng mục · tiến độ tổng hợp ${pct}%</p></div><div class="page-actions noprint"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Tổng quan</button><button class="btn btn-pri" onclick="tienDoForm('${pid}')">+ Hạng mục</button></div></div><div class="prog big" style="margin-bottom:16px"><i style="width:${pct}%"></i></div>`+tdViewSwitcher('#/tiendo')+tdToolbar()+`<div id="tiendoScope"><div class="td-detail-list">`;items.forEach(t=>{const dep=(DB.data.tienDo||[]).find(x=>x.id===t.phuThuocId);h+=`<div class="td-card"><div class="row"><div><div style="font-size:10px;font-weight:800;color:#a16207">${tdEsc(tdPhaseLabel(t.giaiDoan))}</div><b>${tdEsc(t.hangMuc)}</b></div><strong>${tdPct(t)}%</strong></div><div class="prog"><i style="width:${tdPct(t)}%"></i></div><div class="td-meta"><span>${fmtDate(t.ngayBatDau)||'Chưa có ngày bắt đầu'} → ${fmtDate(t.ngayKetThuc)||'Chưa có hạn'}</span><span>${tdDays(t)} ngày · Trọng số ${tdWeight(t)}</span><span class="k-status ${tdStatus(t)}">${tdStatusLabel(t)}</span></div>${dep?`<div style="font-size:11px;color:#64748b;margin-top:6px">Phụ thuộc: ${tdEsc(dep.hangMuc)} (${tdPct(dep)}%)</div>`:''}<div style="font-size:12px;color:#64748b;margin-top:6px">Cập nhật: ${fmtDate(t.ngayCapNhat)||'—'}${t.ghiChu?' · '+tdEsc(t.ghiChu):''}</div><div class="noprint" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="range" class="td-range" min="0" max="100" value="${tdPct(t)}" oninput="this.nextElementSibling.textContent=this.value+'%'" onchange="tienDoQuick('${t.id}',this.value)"><span style="min-width:40px;font-weight:700">${tdPct(t)}%</span><button class="btn btn-sm btn-sec" onclick="tienDoForm('${pid}','${t.id}')">Sửa</button><button class="btn btn-sm btn-bad" onclick="if(confirm('Xóa hạng mục này?'))delObj('tienDo','${t.id}')">Xóa</button></div></div>`;});if(!items.length)h+='<div class="empty">Chưa có hạng mục. Hãy thêm hạng mục đầu tiên.</div>';h+='</div></div>';document.getElementById('view').innerHTML=h;};
 function tienDoQuick(id,val){const t=(DB.data.tienDo||[]).find(x=>x.id===id);if(t){t.phanTram=Math.max(0,Math.min(100,+val||0));t.ngayCapNhat=todayISO();DB.save();nav(false);}}
-function tienDoForm(pid,id){const old=id?(DB.data.tienDo||[]).find(x=>x.id===id):null;const t=old||{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:'',giaiDoan:'tho',ngayBatDau:todayISO(),ngayKetThuc:todayISO(),trongSo:'',phuThuocId:''};const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];const projectId=t.projectId||projs[0]?.id||'';const candidates=(DB.data.tienDo||[]).filter(x=>x.projectId===projectId&&x.id!==id);const allTasks=[...new Set((DB.data.tienDo||[]).map(x=>(x.hangMuc||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi'));
-openModal((id?'Sửa hạng mục':'Thêm hạng mục tiến độ'),`<div class="td-form-grid"><div class="fld"><label>Dự án</label><select class="inp" id="td_pid" onchange="tdRefreshDependencies(this.value,'${id||''}')">${projs.map(p=>`<option value="${p.id}" ${projectId===p.id?'selected':''}>${tdEsc(p.code||'')} · ${tdEsc(p.name)}</option>`).join('')}</select></div><div class="fld"><label>Giai đoạn</label><select class="inp" id="td_phase">${tdPhaseOptions(t.giaiDoan||'tho')}</select></div><div class="fld td-wide"><label>Tên hạng mục / công tác *</label><input class="inp" id="td_hm" list="td_task_presets" value="${tdEsc(t.hangMuc)}" placeholder="Chọn chip bên dưới hoặc nhập mới"><datalist id="td_task_presets">${allTasks.map(x=>`<option value="${tdEsc(x)}"></option>`).join('')}</datalist><div class="td-hm-chips">${allTasks.slice(0,14).map(x=>`<button type="button" class="td-hm-chip" onclick="tdPickTask('${tdEsc(x).replace(/'/g,"\\'")}')">${tdEsc(x)}</button>`).join('')}</div></div><div class="fld td-wide"><label>Tiến độ thực tế (%)</label><div class="td-pct-quick">${[0,10,20,30,40,50,60,70,80,90,100].map(v=>`<button type="button" class="td-pct-chip${tdPct(t)===v?' active':''}" data-v="${v}" onclick="tdPickPct(${v})">${v}%</button>`).join('')}<input type="number" class="inp" id="td_pct" min="0" max="100" step="1" value="${tdPct(t)}" oninput="tdSyncPctChips()"></div></div><div class="fld"><label>Ngày bắt đầu</label><input class="inp" type="date" id="td_start" value="${tdEsc(t.ngayBatDau||'')}"></div><div class="fld"><label>Ngày kết thúc kế hoạch</label><input class="inp" type="date" id="td_end" value="${tdEsc(t.ngayKetThuc||'')}"></div><div class="fld"><label>Trọng số (tùy chọn)</label><input class="inp" type="number" id="td_weight" min="0" step="0.5" value="${t.trongSo==null?'':tdEsc(t.trongSo)}" placeholder="Để trống = số ngày kế hoạch"></div><div class="fld"><label>Phụ thuộc sau hạng mục</label><select class="inp" id="td_dep"><option value="">Không phụ thuộc</option>${candidates.map(x=>`<option value="${x.id}" ${t.phuThuocId===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('')}</select></div><div class="fld td-wide"><label>Ghi chú / cập nhật hiện trường</label><textarea class="inp" id="td_note" rows="3" placeholder="Tình hình, vướng mắc, khối lượng còn lại…">${tdEsc(t.ghiChu||'')}</textarea></div></div><div id="td_form_error" style="display:none;color:#b91c1c;font-size:12px;margin-top:8px"></div>`,`<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo('${id||''}')">Lưu hạng mục</button>`);}
+function tienDoForm(pid,id){
+ const old=id?(DB.data.tienDo||[]).find(x=>x.id===id):null;
+ const t=old||{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:'',giaiDoan:'tho',ngayBatDau:todayISO(),ngayKetThuc:todayISO(),trongSo:'',phuThuocId:''};
+ const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];
+ const projectId=t.projectId||projs[0]?.id||'';
+ const candidates=(DB.data.tienDo||[]).filter(x=>x.projectId===projectId&&x.id!==id);
+ const dmList=[...new Set((DB.data.danhmuc||[]).map(x=>x.ten))].sort((a,b)=>a.localeCompare(b,'vi'));
+ const allTasks=dmList.length?dmList:[...new Set((DB.data.tienDo||[]).map(x=>(x.hangMuc||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi'));
+ openModal((id?'Sửa hạng mục':'Thêm hạng mục tiến độ'),`<div class="td-form-grid">
+ <div class="fld"><label>Dự án *</label><select class="inp" id="td_pid" onchange="tdRefreshDependencies(this.value,'${id||''}')">
+ ${projs.map(p=>`<option value="${p.id}" ${projectId===p.id?'selected':''}>${tdEsc(p.name)}</option>`).join('')}
+ </select><div style="font-size:11px;color:#8a7f70;margin-top:2px">Mã: ${tdEsc((projs.find(pp=>pp.id===projectId)||{}).code||'')}</div></div>
+ <div class="fld"><label>Giai đoạn</label><select class="inp" id="td_phase">${tdPhaseOptions(t.giaiDoan||'tho')}</select></div>
+ <div class="fld td-wide"><label>Tên hạng mục / công tác * (chọn từ Danh mục hạng mục)</label>
+ <div style="display:flex;gap:8px">
+ <select class="inp" id="td_hm_select" style="flex:1" onchange="if(this.value){document.getElementById('td_hm').value=this.value}">
+ <option value="">-- Chọn từ Danh mục --</option>
+ ${allTasks.map(x=>`<option value="${tdEsc(x)}" ${String(x)===String(t.hangMuc)?'selected':''}>${tdEsc(x)}</option>`).join('')}
+ </select>
+ <input class="inp" id="td_hm" list="td_task_presets" value="${tdEsc(t.hangMuc)}" placeholder="Hoặc nhập mới" style="flex:1">
+ </div>
+ <datalist id="td_task_presets">${allTasks.map(x=>`<option value="${tdEsc(x)}"></option>`).join('')}</datalist>
+ <div style="font-size:11px;color:#666;margin-top:4px">Nguồn: <b>Mục Danh mục hạng mục</b> - tạo/sửa ở #/danhmuc để dùng chung xuyên suốt dự án.</div>
+ </div>
+ <div class="fld td-wide"><label>Tiến độ thực tế (%)</label><div class="td-pct-quick">${[0,10,20,30,40,50,60,70,80,90,100].map(v=>`<button type="button" class="td-pct-chip${tdPct(t)===v?' active':''}" data-v="${v}" onclick="tdPickPct(${v})">${v}%</button>`).join('')}<input type="number" class="inp" id="td_pct" min="0" max="100" step="1" value="${tdPct(t)}" oninput="tdSyncPctChips()" style="margin-top:6px"></div></div>
+ <div class="fld"><label>Ngày bắt đầu</label><input class="inp" type="date" id="td_start" value="${tdEsc(t.ngayBatDau||'')}"></div>
+ <div class="fld"><label>Ngày kết thúc kế hoạch</label><input class="inp" type="date" id="td_end" value="${tdEsc(t.ngayKetThuc||'')}"></div>
+ <div class="fld"><label>Trọng số (tùy chọn)</label><input class="inp" type="number" id="td_weight" min="0" step="0.5" value="${t.trongSo==null?'':tdEsc(t.trongSo)}" placeholder="Để trống = số ngày"></div>
+ <div class="fld"><label>Phụ thuộc sau hạng mục</label><select class="inp" id="td_dep"><option value="">Không phụ thuộc</option>${candidates.map(x=>`<option value="${x.id}" ${t.phuThuocId===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('')}</select></div>
+ <div class="fld td-wide"><label>Ghi chú / cập nhật hiện trường</label><textarea class="inp" id="td_note" rows="2" placeholder="Tình hình, vướng mắc...">${tdEsc(t.ghiChu||'')}</textarea></div>
+ </div><div id="td_form_error" style="display:none;color:#b91c1c;font-size:12px;margin-top:8px"></div>`,`<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo('${id||''}')">Lưu hạng mục</button>`);
+}
 function tdRefreshDependencies(pid,id){const sel=document.getElementById('td_dep');if(!sel)return;const old=sel.value;const list=(DB.data.tienDo||[]).filter(x=>x.projectId===pid&&x.id!==id);sel.innerHTML='<option value="">Không phụ thuộc</option>'+list.map(x=>`<option value="${x.id}" ${old===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('');}
 function saveTienDo(id){const get=x=>document.getElementById(x);const pid=get('td_pid').value,hangMuc=get('td_hm').value.trim(),pct=Number(get('td_pct').value),start=get('td_start').value,end=get('td_end').value,weight=get('td_weight').value.trim(),dep=get('td_dep').value;if(!hangMuc){toast('Vui lòng nhập tên hạng mục');return;}if(!Number.isFinite(pct)||pct<0||pct>100){toast('Tiến độ phải từ 0 đến 100');return;}if(start&&end&&start>end){toast('Ngày kết thúc phải bằng hoặc sau ngày bắt đầu');return;}if(dep===id){toast('Hạng mục không thể phụ thuộc vào chính nó');return;}let walk=dep,seen=new Set();while(walk){if(walk===id){toast('Quan hệ phụ thuộc tạo thành vòng lặp; hãy chọn hạng mục khác');return;}if(seen.has(walk))break;seen.add(walk);const prev=(DB.data.tienDo||[]).find(x=>x.id===walk);walk=prev?prev.phuThuocId:'';}const d={projectId:pid,hangMuc,phanTram:pct,giaiDoan:get('td_phase').value,ngayBatDau:start,ngayKetThuc:end,trongSo:weight&&+weight>0?+weight:null,phuThuocId:dep||'',ghiChu:get('td_note').value.trim(),ngayCapNhat:todayISO()};if(id){const t=(DB.data.tienDo||[]).find(x=>x.id===id);if(t)Object.assign(t,d);}else{d.id='td'+Date.now();(DB.data.tienDo=DB.data.tienDo||[]).push(d);}DB.save();closeModal();nav(false);}
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
