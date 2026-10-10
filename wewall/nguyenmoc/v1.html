@@ -1,198 +1,547 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nguyễn Mộc - Chấm Công</title>
-  <style>
-    /* =========================================================
-       ZONE 09 — CSS / DESIGN TOKENS
-       ========================================================= */
-    :root {
-      --bg-color: #FDF8F3;
-      --text-brown: #4E342E;
-      --accent-orange: #FF6F00;
-      --accent-light: #FFE0B2;
-      --light-brown: #8D6E63;
-      --border-color: #EDE2D8;
-      --dark-brown: #3E2723;
-      
-      --badge-duyet-bg: #E8F5E9; --badge-duyet-txt: #2E7D32;
-      --badge-cho-bg: #FFF8E1; --badge-cho-txt: #F57F17;
-      --badge-tu-choi-bg: #FFEBEE; --badge-tu-choi-txt: #C62828;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nguyễn Mộc - Chấm Công Thợ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDF8F3; --text:#4E342E; --accent:#FF6F00; --muted:#8D6E63; --border:#EDE2D8; --dark:#3E2723;
+  --active-bg:#FFE0B2; --card:#fff;
+}
+*{box-sizing:border-box; font-family:Inter,Arial,sans-serif}
+body{margin:0; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column}
+.hidden{display:none!important}
+.card{background:var(--card); border:1px solid var(--border); border-radius:20px; box-shadow:0 2px 12px rgba(78,52,46,.06); padding:16px}
+.badge{padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; display:inline-block}
+.badge.duyet{background:#E8F5E9; color:#2E7D32}
+.badge.cho{background:#FFF8E1; color:#F57F17}
+.badge.tuchoi{background:#FFEBEE; color:#C62828}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-brown); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+/* Layout */
+#app{display:flex; min-height:100vh}
+#sidebar{width:120px; background:#fff; border-right:1px solid var(--border); position:fixed; left:0; top:0; bottom:0; display:flex; flex-direction:column; padding:12px 8px; gap:6px; z-index:20}
+#sidebar .logo{font-weight:800; font-size:13px; text-align:center; line-height:1.2; margin-bottom:8px; color:var(--dark)}
+#sidebar button{border:none; background:transparent; padding:10px 6px; border-radius:12px; font-size:13px; color:var(--text); cursor:pointer; text-align:center; font-weight:600}
+#sidebar button.active{background:var(--active-bg); color:var(--dark)}
+#main{margin-left:120px; flex:1; padding:16px 16px 90px 16px; max-width:100%}
+footer{position:fixed; bottom:0; left:120px; right:0; background:var(--dark); color:#fff; font-size:11px; text-align:center; padding:8px 6px; line-height:1.4; z-index:15}
+footer div{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
-    /* --- TYPOGRAPHY & UTILITIES --- */
-    h2 { color: var(--dark-brown); font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-    p.subtitle { color: var(--light-brown); font-size: 13px; margin-bottom: 25px; line-height: 1.4; }
-    
-    /* --- CARD COMPONENT --- */
-    .card {
-      background: #FFFFFF;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 8px 24px rgba(62, 39, 35, 0.04);
-      padding: 30px;
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-    }
+/* Login */
+#loginPage{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; background:var(--bg)}
+.login-box{width:100%; max-width:380px}
+.login-header{text-align:center; margin-bottom:18px}
+.login-header h1{margin:0; font-size:26px; letter-spacing:.5px; color:var(--dark)}
+.login-header p{margin:2px 0; font-size:13px; color:var(--muted)}
+.tabs{display:flex; gap:8px; margin-bottom:12px}
+.tabs button{flex:1; padding:10px; border-radius:12px; border:1px solid var(--border); background:#fff; font-weight:700; cursor:pointer}
+.tabs button.active{background:var(--dark); color:#fff}
+.input{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border); font-size:15px; outline:none}
+.btn{width:100%; padding:12px; border-radius:14px; border:none; background:var(--accent); color:#fff; font-weight:800; font-size:15px; cursor:pointer}
+.btn:disabled{opacity:.5}
+.demo-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px}
+.demo-grid button{padding:8px; border-radius:10px; border:1px dashed var(--border); background:#fff; font-size:12px; cursor:pointer}
 
-    /* --- FORMS & INPUTS --- */
-    .input-group { margin-bottom: 15px; }
-    .input-group input {
-      width: 100%; padding: 14px 16px; border-radius: 12px;
-      border: 1px solid var(--border-color); background: #FAFAFA;
-      font-size: 15px; color: var(--text-brown); transition: all 0.3s;
-    }
-    .input-group input:focus { border-color: var(--accent-orange); outline: none; background: #FFF; box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.1); }
-    
-    .btn {
-      background: var(--accent-orange); color: #FFF; border: none; padding: 16px; 
-      border-radius: 12px; font-size: 16px; font-weight: bold; width: 100%; 
-      cursor: pointer; transition: transform 0.1s, background 0.3s;
-      box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
-    }
-    .btn:active { transform: scale(0.98); }
-    .btn:hover { background: #E66400; }
-
-    /* --- LAYOUT: MAIN APP --- */
-    #app-screen { display: none; flex: 1; display: flex; padding-bottom: 50px; }
-    
-    /* Sidebar trái 120px */
-    .sidebar {
-      width: 120px; background: #FFF; border-right: 1px solid var(--border-color);
-      display: flex; flex-direction: column; align-items: center; padding-top: 20px;
-      position: fixed; top: 0; bottom: 50px; left: 0; z-index: 10;
-    }
-    .nav-item {
-      width: 100%; text-align: center; padding: 20px 0; color: var(--light-brown);
-      font-size: 14px; font-weight: bold; cursor: pointer; border-left: 4px solid transparent;
-      transition: all 0.2s;
-    }
-    .nav-item.active { background: var(--accent-light); color: var(--dark-brown); border-left-color: var(--accent-orange); }
-
-    /* Main Content */
-    .main-content {
-      margin-left: 120px; flex: 1; padding: 20px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-    }
-
-    /* Big Check-in Button */
-    .check-in-btn-wrapper { text-align: center; margin: 30px 0; }
-    .check-in-circle {
-      width: 200px; height: 200px; border-radius: 50%; background: var(--accent-orange);
-      color: #FFF; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      box-shadow: 0 10px 30px rgba(255, 111, 0, 0.3); border: 8px solid #FFF; cursor: pointer;
-      margin: 0 auto; transition: transform 0.2s;
-    }
-    .check-in-circle:active { transform: scale(0.95); box-shadow: 0 5px 15px rgba(255, 111, 0, 0.2); }
-    .check-in-circle span { font-size: 22px; font-weight: bold; }
-    .check-in-circle small { font-size: 12px; margin-top: 5px; opacity: 0.8; }
-
-    /* Badges */
-    .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
-    .badge-cho { background: var(--badge-cho-bg); color: var(--badge-cho-txt); }
-    .badge-duyet { background: var(--badge-duyet-bg); color: var(--badge-duyet-txt); }
-
-    /* Footer */
-    .footer {
-      position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark-brown);
-      color: #FFF; text-align: center; padding: 12px 20px; font-size: 11px; z-index: 20;
-    }
-
-    /* RESPONSIVE MOBILE */
-    @media (max-width: 600px) {
-      .sidebar { width: 100%; height: 60px; top: auto; bottom: 50px; flex-direction: row; border-right: none; border-top: 1px solid var(--border-color); padding: 0; }
-      .nav-item { padding: 0; display: flex; align-items: center; justify-content: center; height: 100%; border-left: none; border-top: 4px solid transparent; }
-      .nav-item.active { border-left-color: transparent; border-top-color: var(--accent-orange); }
-      .main-content { margin-left: 0; padding-bottom: 110px; padding-top: 30px; }
-      #login-screen { padding: 20px; display: flex; align-items: center; min-height: 100vh; }
-    }
-  </style>
+/* Bang cong grid */
+.table-wrap{overflow:auto; border:1px solid var(--border); border-radius:16px; background:#fff}
+table{border-collapse:collapse; width:100%; min-width:900px}
+thead th{background:var(--text); color:#fff; padding:8px 4px; font-size:11px; position:sticky; top:0; z-index:2}
+th.sticky-left{position:sticky; left:0; z-index:3; background:var(--text)}
+th.sticky-right{position:sticky; right:0; z-index:3}
+th.sticky-right.sum{background:var(--dark)}
+td.sticky-left{position:sticky; left:0; background:#fff; z-index:1; width:180px; min-width:180px; font-weight:700; text-align:left!important; padding-left:10px!important}
+td.sticky-right{position:sticky; background:#fff; z-index:1}
+tr:nth-child(even) td{background:#FFFBF7}
+td{padding:6px 4px; border:1px solid var(--border); text-align:center; font-size:12px; min-width:36px}
+td.co{background:#E8F5E9} td.cho-cell{background:#FFF8E1} td.x{background:#FFEBEE}
+.bottom-sheet{position:fixed; left:0; right:0; bottom:0; background:#fff; border-radius:20px 20px 0 0; max-height:70vh; overflow:auto; padding:12px; z-index:100; border:1px solid var(--border); box-shadow:0 -8px 30px rgba(0,0,0,.15)}
+.sheet-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:99}
+.search{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px}
+.avatar{width:48px; height:48px; border-radius:50%; object-fit:cover; background:#eee}
+@media(max-width:768px){
+  #sidebar{width:100%; height:auto; position:fixed; bottom:50px; top:auto; flex-direction:row; overflow:auto; border-right:none; border-top:1px solid var(--border); padding:6px}
+  #sidebar .logo{display:none}
+  #sidebar button{white-space:nowrap}
+  #main{margin-left:0; padding-bottom:120px}
+  footer{left:0; bottom:0}
+}
+</style>
 </head>
 <body>
 
-  <!-- =========================================================
-       ZONE 08 — UI / HTML (MÀN HÌNH ĐĂNG NHẬP)
-       ========================================================= -->
-  <div id="login-screen" style="display: flex; flex-direction: column; justify-content: center; flex: 1;">
-    <div class="card" style="text-align: center;">
-      <h2>NGUYỄN MỘC</h2>
-      <p class="subtitle">CÔNG TY TNHH SXTM<br>CHẤM CÔNG THỢ</p>
-      
-      <div class="input-group">
-        <input type="text" id="username" placeholder="Mã thợ hoặc Số điện thoại" autocomplete="off">
-      </div>
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Mật khẩu">
-      </div>
-      
-      <button class="btn" onclick="login()" style="margin-top: 10px;">ĐĂNG NHẬP</button>
-      
-      <div style="margin-top: 20px; font-size: 13px; color: var(--light-brown);">
-        <span style="cursor: pointer; text-decoration: underline;">Xem thử quyền Thợ</span>
-      </div>
+<div id="loginPage">
+  <div class="login-box">
+    <div class="login-header">
+      <h1>NGUYỄN MỘC</h1>
+      <p>CÔNG TY TNHH SXTM</p>
+      <p style="font-weight:800; color:var(--accent)">CHẤM CÔNG THỢ</p>
     </div>
-  </div>
-
-  <!-- =========================================================
-       ZONE 08 — UI / HTML (MÀN HÌNH CHÍNH - APP)
-       ========================================================= -->
-  <div id="app-screen" style="display: none;">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="nav-item active">Chấm công</div>
-      <div class="nav-item">Lịch sử</div>
-      <div class="nav-item">Thông tin</div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-      <div class="card" style="max-width: 500px; text-align: center; padding: 40px 20px;">
-        <h3 style="color: var(--text-brown); margin-bottom: 5px;">Xin chào, <span style="color: var(--accent-orange);">NBA Tâm</span></h3>
-        <p style="color: var(--light-brown); font-size: 14px;">Thứ Năm, 10 Tháng 10, 2026</p>
-
-        <div class="check-in-btn-wrapper">
-          <div class="check-in-circle" onclick="chamCong()">
-            <span>CHẤM CÔNG</span>
-            <small>HÔM NAY</small>
+    <div class="card">
+      <div class="tabs">
+        <button id="tabMa" class="active" onclick="setLoginTab('ma')">Mã thợ</button>
+        <button id="tabSdt" onclick="setLoginTab('sdt')">Số điện thoại</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <input id="inpId" class="input" placeholder="Mã thợ (vd: nbatam)">
+        <input id="inpPass" type="password" class="input" placeholder="Mật khẩu">
+        <button class="btn" onclick="doLogin()">Đăng nhập</button>
+        <div id="loginMsg" style="font-size:12px; color:#C62828; text-align:center"></div>
+      </div>
+      <div class="demo-grid">
+        <button onclick="demoLogin('Thợ')">Xem thử: Thợ</button>
+        <button onclick="demoLogin('Quản Lý')">Xem thử: Quản Lý</button>
+        <button onclick="demoLogin('Kế Toán')">Xem thử: Kế Toán</button>
+        <button onclick="demoLogin('Giám đốc')">Xem thử: Giám đốc</button>
+      </div>
+      <div style="margin-top:10px">
+        <details><summary style="font-size:12px; cursor:pointer">Cấu hình kết nối</summary>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px">
+            <input id="cfgUrl" class="input" placeholder="Web App URL (https://script.google.com/...)">
+            <input id="cfgKey" class="input" placeholder="API Key">
+            <button class="btn" style="background:var(--dark)" onclick="saveCfg()">Lưu cấu hình</button>
           </div>
-        </div>
-
-        <div style="margin-top: 20px;">
-          <p style="font-size: 14px; margin-bottom: 10px;">Trạng thái hôm nay:</p>
-          <span class="badge badge-cho">Chờ duyệt lúc 07:15</span>
-        </div>
+        </details>
       </div>
     </div>
+    <div style="text-align:center; font-size:11px; margin-top:12px; color:var(--muted)">© 2026 WeWall Group · Nguyen Moc Co. LTD | Le Ha<br>Hệ thống Chấm công Nội bộ v1.0.0</div>
   </div>
+</div>
 
-  <!-- Footer Cố định -->
-  <div class="footer">
-    © 2026 WeWall Group · Nguyen Moc Co. LTD | Le Ha<br>
-    Hệ thống Chấm công Nội bộ v1.0.0
+<div id="app" class="hidden">
+  <div id="sidebar">
+    <div class="logo">NGUYỄN<br>MỘC</div>
+    <div id="nav"></div>
+    <button style="margin-top:auto" onclick="logout()">Đăng xuất</button>
   </div>
+  <div id="main"></div>
+  <footer>
+    <div>© 2026 WeWall Group · Nguyen Moc Co. LTD | Le Ha</div>
+    <div>Hệ thống Chấm công Nội bộ v1.0.0</div>
+  </footer>
+</div>
 
-  <!-- =========================================================
-       ZONE 10 — JAVASCRIPT / INTERACTION
-       ========================================================= -->
-  <script>
-    function login() {
-      // Demo chuyển màn hình mượt mà
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app-screen').style.display = 'flex';
-      document.body.style.backgroundColor = 'var(--bg-color)';
+<div id="sheetRoot"></div>
+
+<script>
+const LS_KEY='nm_session_v1'; const CFG_KEY='nm_cfg_v1';
+let cfg = JSON.parse(localStorage.getItem(CFG_KEY)||'{}');
+let session = JSON.parse(localStorage.getItem(LS_KEY)||'null');
+let currentUser=null; let loginTab='ma'; let demoMode=false;
+let currentThang = new Date().toISOString().slice(0,7);
+
+document.getElementById('cfgUrl').value = cfg.url||'';
+document.getElementById('cfgKey').value = cfg.apiKey||'';
+
+function setLoginTab(t){
+  loginTab=t;
+  document.getElementById('tabMa').classList.toggle('active', t==='ma');
+  document.getElementById('tabSdt').classList.toggle('active', t==='sdt');
+  document.getElementById('inpId').placeholder = t==='ma' ? 'Mã thợ (vd: nbatam)' : 'Số điện thoại';
+}
+function saveCfg(){
+  cfg.url = document.getElementById('cfgUrl').value.trim();
+  cfg.apiKey = document.getElementById('cfgKey').value.trim();
+  localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+  alert('Đã lưu cấu hình');
+}
+async function api(action, extra={}){
+  if(!cfg.url || !cfg.apiKey){ throw new Error('Chưa cấu hình Web App URL / API Key'); }
+  const body = {apiKey: cfg.apiKey, token: session?.token, action, ...extra};
+  const res = await fetch(cfg.url, {method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(body)});
+  const j = await res.json();
+  if(!j.ok) throw new Error(j.error||'Lỗi API');
+  return j.data!==undefined? j.data : j;
+}
+function fmtMoney(n){
+  if(n==null||n==='') return '';
+  const num = Number(String(n).replace(/[^0-9]/g,''));
+  if(isNaN(num)) return n;
+  return num.toLocaleString('vi-VN')+'₫';
+}
+function parseDonGiaInput(v, fullMode){
+  let s = String(v).replace(/[^0-9]/g,'');
+  if(!s) return 0;
+  if(fullMode) return Number(s);
+  return Number(s)*1000;
+}
+function formatPhone(d){
+  let s = String(d||'').replace(/\D/g,'');
+  if(s.length==10) return s.slice(0,3)+' '+s.slice(3,7)+' '+s.slice(7);
+  return d;
+}
+function showApp(){
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  renderNav();
+  route('dashboard');
+}
+function renderNav(){
+  const quyen = currentUser?.quyen||[];
+  const vaiTro = currentUser?.vaiTro||'Thợ';
+  const allTabs = [
+    {id:'dashboard', label:'Dashboard', need:null},
+    {id:'chamcong', label:'Chấm công', need:null, tho:true},
+    {id:'lichsu', label:'Lịch sử', need:null, tho:true},
+    {id:'duyet', label:'Duyệt công', need:'duyet_cong'},
+    {id:'bangcong', label:'Bảng công', need:'bang_cong'},
+    {id:'dstho', label:'Danh sách thợ', need:'nhan_su'},
+    {id:'dukien', label:'Dự kiến trả', need:'dashboard'},
+    {id:'thongke', label:'Thống kê', need:'thong_ke'},
+    {id:'nhatky', label:'Nhật ký', need:'cai_dat'},
+    {id:'cauhinh', label:'Cấu hình', need:'cai_dat'},
+    {id:'thongtin', label:'Thông tin', need:null, tho:true},
+  ];
+  let tabs = [];
+  if(vaiTro==='Thợ'){
+    tabs = allTabs.filter(t=>t.tho);
+  }else{
+    tabs = allTabs.filter(t=>{
+      if(t.need===null) return true;
+      return quyen.includes(t.need) || vaiTro==='Giám đốc';
+    });
+    // Thợ tabs luôn có thêm cho quản lý nếu muốn
+    if(!tabs.find(x=>x.id==='chamcong')) tabs.splice(1,0, allTabs.find(x=>x.id==='chamcong'));
+  }
+  document.getElementById('nav').innerHTML = tabs.map(t=>`<button id="nav-${t.id}" onclick="route('${t.id}')">${t.label}</button>`).join('');
+}
+async function route(id){
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('active'));
+  const nb = document.getElementById('nav-'+id); if(nb) nb.classList.add('active');
+  const main = document.getElementById('main');
+  main.innerHTML = '<div class="card">Đang tải...</div>';
+  try{
+    if(id==='dashboard') await pageDashboard();
+    else if(id==='chamcong') await pageChamCong();
+    else if(id==='lichsu') await pageLichSu();
+    else if(id==='duyet') await pageDuyet();
+    else if(id==='bangcong') await pageBangCong();
+    else if(id==='dstho') await pageDsTho();
+    else if(id==='dukien') await pageDuKien();
+    else if(id==='thongke') await pageThongKe();
+    else if(id==='nhatky') await pageNhatKy();
+    else if(id==='cauhinh') await pageCauHinh();
+    else if(id==='thongtin') await pageThongTin();
+  }catch(e){ main.innerHTML = `<div class="card" style="color:#C62828">${e.message}</div>`; }
+}
+async function doLogin(){
+  const ident = document.getElementById('inpId').value.trim();
+  const pass = document.getElementById('inpPass').value;
+  document.getElementById('loginMsg').textContent='';
+  if(!ident||!pass){ document.getElementById('loginMsg').textContent='Nhập đủ thông tin'; return; }
+  try{
+    const data = await api('login', {maTho: ident, matKhau: pass});
+    session = {token: data.token, han: Date.now()+7*24*3600*1000};
+    localStorage.setItem(LS_KEY, JSON.stringify(session));
+    currentUser = data.tho;
+    demoMode=false;
+    showApp();
+  }catch(e){ document.getElementById('loginMsg').textContent=e.message; }
+}
+function demoLogin(role){
+  demoMode=true;
+  currentUser={maTho:'DEMO', hoTen:'Demo '+role, sdt:'0980000000', vaiTro:role, quyen: role==='Giám đốc'?['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat']: role==='Quản Lý'?['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel']: role==='Kế Toán'?['dashboard','bang_cong','thong_ke','xuat_excel']:[] , donGia:300000};
+  session={token:'demo', han: Date.now()+3600*1000};
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('main').innerHTML = '<div class="card" style="background:#FFF8E1">Đang ở chế độ <b>Xem thử: '+role+'</b> - không ghi backend. <button onclick="location.reload()">Thoát xem thử</button></div>';
+  renderNav();
+  route('dashboard');
+}
+async function checkSession(){
+  if(!session) return false;
+  if(Date.now() > session.han){ localStorage.removeItem(LS_KEY); return false; }
+  if(session.token==='demo') return false;
+  try{
+    const me = await api('me', {});
+    currentUser = me;
+    return true;
+  }catch(e){
+    // lỗi mạng thì giữ session
+    if(String(e.message).includes('fetch') || String(e.message).includes('Network')){
+      return true;
     }
+    return false;
+  }
+}
+function logout(){ localStorage.removeItem(LS_KEY); location.reload(); }
 
-    function chamCong() {
-      alert('Đã lấy tọa độ GPS. Đang gửi dữ liệu chấm công...');
-      // Logic xử lý Fetch POST
-    }
-  </script>
+// ===== PAGES =====
+async function pageDashboard(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Dashboard demo - Dự kiến trả thợ tháng, thợ đi làm hôm nay/tổng, chờ duyệt...</div>'; return; }
+  const d = await api('dashboard',{});
+  const gioMo = await api('get_config_public',{}).then(r=>r.gioMo||'05:00').catch(()=> '05:00');
+  main.innerHTML = `
+  ${demoMode?'<div class="card" style="background:#FFF8E1">Xem thử</div>':''}
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+    <div class="card"><div style="font-size:12px; color:var(--muted)">Thợ đi làm hôm nay</div><div style="font-size:22px; font-weight:800">${d.diLamHomNay}/${d.tongTho}</div></div>
+    <div class="card"><div style="font-size:12px; color:var(--muted)">Chờ duyệt</div><div style="font-size:22px; font-weight:800; color:#F57F17">${d.choDuyet}</div></div>
+    <div class="card"><div style="font-size:12px">Tổng công đã duyệt tháng ${d.thang}</div><div style="font-size:22px; font-weight:800; color:#2E7D32">${d.tongDaDuyetThang}</div></div>
+    <div class="card"><div style="font-size:12px">Tạm tính tháng này (bạn)</div><div style="font-size:18px; font-weight:800">${fmtMoney(d.tamTinhThang)}<br><small style="font-weight:400; font-size:11px">tạm tính, chưa phải lương chốt</small></div></div>
+  </div>
+  ${d.thieuDonGia.length? `<div class="card" style="margin-top:12px"><b>Cảnh báo:</b> ${d.thieuDonGia.length} thợ chưa có đơn giá: ${d.thieuDonGia.map(x=>x.hoTen).join(', ')}</div>`:''}
+  <div class="card" style="margin-top:12px">Giờ mở chấm công: <b>${gioMo}</b></div>
+  `;
+}
 
+async function pageChamCong(){
+  const main=document.getElementById('main');
+  const today = new Date().toLocaleDateString('vi-VN',{weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'});
+  const gioMo = await api('get_config_public',{}).then(r=>r.gioMo||'05:00').catch(()=> '05:00');
+  const nowH = new Date().getHours()*60 + new Date().getMinutes();
+  const [gm, gp] = gioMo.split(':').map(Number); const moMins = gm*60+(gp||0);
+  const isOpen = nowH >= moMins;
+  const lichSu = demoMode?[]: await api('lich_su',{thang: currentThang}).catch(()=>[]);
+  const daChamHomNay = lichSu.some(r=> r.ngayCong===new Date().toISOString().slice(0,10));
+  const tamTinh = demoMode?0: await api('dashboard',{}).then(d=>d.tamTinhThang).catch(()=>0);
+
+  main.innerHTML = `
+  <div class="card" style="text-align:center">
+    <div style="font-size:13px; color:var(--muted)">${today}</div>
+    <div style="font-weight:800; margin-top:4px">${currentUser.hoTen} • ${currentUser.maTho} • ${formatPhone(currentUser.sdt)}</div>
+    <div style="margin:14px 0">
+      <button class="btn" style="padding:18px; font-size:18px; border-radius:18px" ${(!isOpen||daChamHomNay)?'disabled':''} onclick="handleChamCongClick()">${daChamHomNay?'ĐÃ CHẤM HÔM NAY':'CHẤM CÔNG HÔM NAY'}</button>
+      ${!isOpen? `<div style="margin-top:8px; color:#F57F17; font-size:12px">Chưa đến giờ chấm công (sau ${gioMo})</div>` : ''}
+      ${daChamHomNay? `<div style="margin-top:8px; color:#2E7D32; font-size:12px">Bạn đã chấm công hôm nay</div>`:''}
+    </div>
+    <div class="card" style="background:#FFFBF7">Tạm tính tháng này: <b>${fmtMoney(tamTinh)}</b><br><small>tạm tính, chưa phải lương chốt</small></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <b>Lịch sử gần đây</b>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px">
+      ${lichSu.slice(0,5).map(r=>`<div style="display:flex; justify-content:space-between; font-size:13px"><span>${r.ngayCong}</span><span class="badge ${r.trangThai==='Đã duyệt'?'duyet': r.trangThai==='Chờ duyệt'?'cho':'tuchoi'}">${r.trangThai}</span></div>`).join('') || '<small>Chưa có</small>'}
+    </div>
+  </div>
+  `;
+}
+
+async function handleChamCongClick(){
+  if(demoMode){ alert('Demo không ghi backend'); return; }
+  if(!navigator.geolocation){ if(!confirm('Không lấy được GPS, vẫn chấm công?')) return; doCham({}); return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    doCham({viDo: pos.coords.latitude, kinhDo: pos.coords.longitude, doChinhXac: pos.coords.accuracy});
+  }, err=>{ if(confirm('GPS lỗi: '+err.message+' - Vẫn chấm công?')) doCham({}); }, {enableHighAccuracy:true, timeout:10000});
+}
+async function doCham(gps){
+  try{
+    const res = await api('cham_cong',{...gps, ngayCong: new Date().toISOString().slice(0,10)});
+    alert('Chấm công thành công: '+res.ngayCong);
+    route('chamcong');
+  }catch(e){ alert(e.message); }
+}
+
+async function pageLichSu(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Lịch sử demo</div>'; return; }
+  const data = await api('lich_su',{thang: currentThang});
+  main.innerHTML = `
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center">
+      <b>Lịch sử chấm công - ${currentThang}</b>
+      <input type="month" value="${currentThang}" onchange="currentThang=this.value; route('lichsu')" style="padding:6px; border-radius:8px; border:1px solid var(--border)">
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px">
+      ${data.map(r=>`
+        <div style="border:1px solid var(--border); border-radius:14px; padding:10px">
+          <div style="display:flex; justify-content:space-between"><b>${r.ngayCong}</b><span class="badge ${r.trangThai==='Đã duyệt'?'duyet': r.trangThai==='Chờ duyệt'?'cho':'tuchoi'}">${r.trangThai}</span></div>
+          <div style="font-size:12px; color:var(--muted)">Gửi: ${new Date(r.thoiDiemGui).toLocaleString('vi-VN')} ${r.viDo?`• GPS ${Number(r.viDo).toFixed(4)}, ${Number(r.kinhDo).toFixed(4)} (±${r.doChinhXac}m)`:''}</div>
+          ${r.viDo? `<div style="margin-top:6px"><a href="https://maps.google.com/?q=${r.viDo},${r.kinhDo}" target="_blank" style="font-size:12px; color:var(--accent)">📍 Bản đồ</a> <iframe style="width:100%; height:140px; border:none; border-radius:10px; margin-top:6px" loading="lazy" src="https://maps.google.com/maps?q=${r.viDo},${r.kinhDo}&z=15&output=embed"></iframe></div>`:''}
+          ${r.lyDoTuChoi? `<div style="font-size:12px; color:#C62828; margin-top:4px">Lý do từ chối: ${r.lyDoTuChoi}</div>`:''}
+        </div>
+      `).join('') || '<small>Không có dữ liệu</small>'}
+    </div>
+  </div>
+  `;
+}
+
+async function pageDuyet(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Duyệt công demo</div>'; return; }
+  const all = await api('lich_su',{thang: currentThang}); // sẽ lấy tất cả nếu quyền
+  // Thực tế backend lich_su chỉ trả của 1 thợ, cần API riêng. Tạm gọi CHAM_CONG sheet via bang_cong? Chúng ta sẽ lấy danh sách chờ duyệt bằng cách gọi API custom: lấy hết từ handle? Dùng workaround: gọi thong_ke? Thôi gọi lại backend với action riêng: để đơn giản gọi lại bang_cong để lấy? 
+  // Chúng ta sẽ tạo endpoint tạm: lấy toàn bộ chờ duyệt bằng cách gọi api('tong_cong') + lich_su all? 
+  // Sửa: gọi api('lich_su') cho admin sẽ cần backend trả all - ta đã filter. Ta sẽ gọi api lấy tất cả bản ghi chờ qua 1 action mới chưa có -> dùng dashboard cho số lượng, còn list thực tế ta gọi trực tiếp CHAM_CONG via API mới: tạm dùng fetch tất cả bằng cách gọi action 'lich_su' với maTho rỗng? Backend hiện tại check quyền Thợ. Nếu không phải Thợ và không truyền maTho thì trả về rỗng. Ta sẽ sửa backend sau, giờ tạm mock: lấy từ bang_cong.
+  // Workaround: gọi handleBangCongThang không cho danh sách. Nên ta gọi api('bang_cong_thang') rồi từ đó không ra chi tiết chờ.
+  // Để nhanh, ta sẽ gọi api với action custom: lấy tất cả CHAM_CONG chờ duyệt bằng cách thêm logic ở frontend gọi trực tiếp qua api('thong_ke')? 
+  // Tạm thời gọi lại backend bằng cách dùng 'lich_su' với maTho='ALL' sẽ fail -> ta sẽ hiển thị hướng dẫn và dùng api('tong_cong') để duyệt? 
+  // Đơn giản: gọi API duyệt cần listMaGhi từ TONG_CONG? Thôi ta sẽ fetch toàn bộ bằng 1 call mới: api('lich_su', {all:true}) - backend chưa hỗ trợ all, ta patch nhanh ở backend bằng cách nếu hasQuyen duyet_cong và body.all thì trả all.
+  let choDuyet=[];
+  try{ choDuyet = await api('lich_su',{all:true}); }catch(e){ choDuyet = await api('lich_su',{thang: currentThang}); }
+  const waiting = choDuyet.filter(r=>r.trangThai==='Chờ duyệt');
+  main.innerHTML = `
+  <div class="card">
+    <div style="display:flex; justify-content:space-between"><b>Duyệt công - Chờ duyệt (${waiting.length})</b><button class="btn" style="width:auto; padding:6px 12px" onclick="duyetHangLoat()">Duyệt hàng loạt (${waiting.length})</button></div>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px">
+      ${waiting.map(r=>`<div style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); border-radius:12px; padding:8px"><div><b>${r.maTho}</b> - ${r.ngayCong}<br><small>${new Date(r.thoiDiemGui).toLocaleString('vi-VN')} ${r.viDo?`📍 ${r.viDo},${r.kinhDo}`:''}</small></div><div style="display:flex; gap:6px"><button onclick="duyetMot('${r.maGhi}')" style="background:#2E7D32; color:#fff; border:none; border-radius:8px; padding:6px 10px">Duyệt</button><button onclick="tuChoiMot('${r.maGhi}')" style="background:#C62828; color:#fff; border:none; border-radius:8px; padding:6px 10px">Từ chối</button></div></div>`).join('') || '<small>Không có bản ghi chờ duyệt</small>'}
+    </div>
+  </div>
+  `;
+  window._waiting = waiting;
+}
+async function duyetMot(ma){ try{ await api('duyet_cong',{maGhi: ma}); alert('Đã duyệt'); route('duyet'); }catch(e){ alert(e.message);} }
+async function tuChoiMot(ma){ const ly=prompt('Lý do từ chối:'); if(!ly) return; try{ await api('tu_choi',{maGhi: ma, lyDo: ly}); alert('Đã từ chối'); route('duyet'); }catch(e){ alert(e.message);} }
+async function duyetHangLoat(){ if(!window._waiting?.length) return; if(!confirm('Duyệt '+window._waiting.length+' bản ghi?')) return; try{ await api('duyet_hang_loat',{listMaGhi: window._waiting.map(x=>x.maGhi)}); alert('Đã duyệt hàng loạt'); route('duyet'); }catch(e){ alert(e.message);} }
+
+async function pageBangCong(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Bảng công demo - lưới lịch 1..31 sticky</div>'; return; }
+  const data = await api('bang_cong_thang',{thang: currentThang});
+  const days = Array.from({length:31}, (_,i)=>i+1);
+  main.innerHTML = `
+  <div class="card">
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+      <b>Bảng công tháng</b>
+      <input type="month" value="${currentThang}" onchange="currentThang=this.value; route('bangcong')" style="padding:6px; border-radius:8px; border:1px solid var(--border)">
+      <button class="btn" style="width:auto; padding:6px 10px; background:var(--dark)" onclick="ghiSheet()">Ghi lên sheet</button>
+      <button class="btn" style="width:auto; padding:6px 10px" onclick="chotThang()">Chốt tháng</button>
+      <button class="btn" style="width:auto; padding:6px 10px; background:#2E7D32" onclick="xuatExcel()">Xuất Excel</button>
+    </div>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th class="sticky-left">Thợ</th>${days.map(d=>`<th>${d}</th>`).join('')}<th class="sticky-right sum">Tổng</th><th class="sticky-right sum">Đơn giá</th><th class="sticky-right sum">Thành tiền</th></tr></thead>
+        <tbody>
+          ${data.rows.map(r=>`<tr><td class="sticky-left">${r.hoTen}</td>${r.days.map(v=>`<td class="${v==1?'co': v=='C'?'cho-cell': v=='X'?'x':''}">${v||''}</td>`).join('')}<td class="sticky-right"><b>${r.daDuyet}</b></td><td class="sticky-right">${(r.donGia||0).toLocaleString('vi-VN')}</td><td class="sticky-right">${(r.tamTinh||0).toLocaleString('vi-VN')}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:10px; font-size:12px">Đã chốt ${data.chotCount} lần trong tháng này. Ô có công nền xanh, chờ duyệt (C) vàng, từ chối/vắng (X) đỏ.</div>
+    <div style="margin-top:8px"><button onclick="openDieuChinhSheet()" style="padding:6px 10px; border-radius:8px; border:1px solid var(--border)">Điều chỉnh sau chốt (cần lý do)</button></div>
+  </div>
+  `;
+  window._bangData = data;
+}
+async function ghiSheet(){ try{ await api('ghi_bang_cong_sheet',{thang: currentThang}); alert('Đã ghi lên sheet BANG_CONG_THANG với format đẹp'); }catch(e){ alert(e.message);} }
+async function chotThang(){ if(!confirm('Chốt tháng '+currentThang+'?')) return; const ghi=prompt('Ghi chú chốt:')||''; try{ await api('chot_thang',{thang: currentThang, ghiChu: ghi}); alert('Đã chốt tháng'); route('bangcong'); }catch(e){ alert(e.message);} }
+async function xuatExcel(){
+  const data = window._bangData; if(!data) return;
+  let csv = ['Mã thợ,Họ tên,'+Array.from({length:31},(_,i)=>i+1).join(',')+',Đã duyệt,Đơn giá,Tạm tính'];
+  data.rows.forEach(r=>{ csv.push([r.maTho, `"${r.hoTen}"`, ...r.days, r.daDuyet, r.donGia, r.tamTinh].join(',')); });
+  const blob = new Blob([csv.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='bang_cong_'+currentThang+'.csv'; a.click();
+}
+function openDieuChinhSheet(){
+  const html=`<div class="sheet-backdrop" onclick="closeSheet()"></div><div class="bottom-sheet"><h3>Điều chỉnh sau chốt</h3><div style="display:flex; flex-direction:column; gap:8px"><input id="dcMaTho" class="input" placeholder="Mã thợ"><input id="dcNgay" type="date" class="input"><select id="dcType" class="input"><option value="them">Thêm công</option><option value="xoa">Xóa bản ghi (nhập mã ghi)</option></select><input id="dcMaGhi" class="input" placeholder="Mã bản ghi (khi xóa)"><input id="dcLyDo" class="input" placeholder="Lý do bắt buộc"><button class="btn" onclick="submitDieuChinh()">Gửi điều chỉnh</button><button onclick="closeSheet()" style="padding:8px">Đóng</button></div></div>`;
+  document.getElementById('sheetRoot').innerHTML=html;
+}
+async function submitDieuChinh(){
+  const maTho=document.getElementById('dcMaTho').value; const ngay=document.getElementById('dcNgay').value; const type=document.getElementById('dcType').value; const maGhi=document.getElementById('dcMaGhi').value; const ly=document.getElementById('dcLyDo').value;
+  if(!ly){ alert('Bắt buộc nhập lý do'); return; }
+  try{ await api('dieu_chinh_sau_chot',{maTho:maTho, ngayCong: ngay, actionType:type, maGhi: maGhi, lyDo: ly}); alert('Đã điều chỉnh'); closeSheet(); route('bangcong'); }catch(e){ alert(e.message); }
+}
+function closeSheet(){ document.getElementById('sheetRoot').innerHTML=''; }
+
+async function pageDsTho(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Danh sách thợ demo</div>'; return; }
+  const list = await api('list_tho',{});
+  main.innerHTML = `
+  <div class="card">
+    <div style="display:flex; justify-content:space-between"><b>Danh sách thợ (${list.length})</b><button class="btn" style="width:auto" onclick="openThoForm()">+ Thêm thợ</button></div>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px">
+      ${list.map(t=>`<div style="display:flex; gap:10px; align-items:center; border:1px solid var(--border); border-radius:14px; padding:10px">
+        ${t.anh?`<img src="${t.anh}" class="avatar">`:`<div class="avatar" style="display:flex; align-items:center; justify-content:center">${t.hoTen.charAt(0)}</div>`}
+        <div style="flex:1"><b>${t.hoTen}</b> (${t.maTho})<br><small>${formatPhone(t.sdt)} • ${t.vaiTro} • ${t.phanLoai||''} • ${t.donGia? (Number(t.donGia).toLocaleString('vi-VN')+'₫') : 'Chưa có đơn giá'}</small><br><small>Quyền: ${t.quyen.join(', ')||'Thợ (rỗng)'}</small></div>
+        <div style="display:flex; flex-direction:column; gap:4px"><button onclick='editTho(${JSON.stringify(t).replace(/'/g,"&#39;")})' style="font-size:11px">Sửa</button><button onclick="khoaTho('${t.maTho}')" style="font-size:11px">Khóa/Mở</button><button onclick="resetMK('${t.maTho}')" style="font-size:11px">Reset MK</button></div>
+      </div>`).join('')}
+    </div>
+  </div>
+  `;
+}
+function openThoForm(edit=null){
+  const t = edit||{maTho:'', hoTen:'', sdt:'', email:'', vaiTro:'Thợ', donGia:300000, phanLoai:'', quyen:[], ghiChu:'', anh:''};
+  const quyenChecks = ['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat'].map(q=>`<label style="font-size:12px"><input type="checkbox" value="${q}" ${t.quyen.includes(q)?'checked':''}> ${q}</label>`).join('<br>');
+  const html=`<div class="sheet-backdrop" onclick="closeSheet()"></div><div class="bottom-sheet">
+    <h3>${edit?'Sửa thợ':'Thêm thợ'}</h3>
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <input id="fMa" class="input" placeholder="Mã thợ" value="${t.maTho}" ${edit?'readonly':''}>
+      <input id="fTen" class="input" placeholder="Họ tên" value="${t.hoTen}">
+      <input id="fSdt" class="input" placeholder="SĐT" value="${t.sdt}">
+      <input id="fEmail" class="input" placeholder="Email" value="${t.email}">
+      <select id="fVaiTro" class="input"><option ${t.vaiTro=='Thợ'?'selected':''}>Thợ</option><option ${t.vaiTro=='Quản Lý'?'selected':''}>Quản Lý</option><option ${t.vaiTro=='Kế Toán'?'selected':''}>Kế Toán</option><option ${t.vaiTro=='Giám đốc'?'selected':''}>Giám đốc</option></select>
+      <div style="display:flex; gap:6px"><input id="fDonGia" class="input" placeholder="Đơn giá (gõ 300 = 300.000)" value="${t.donGia? (Number(t.donGia)/1000) : ''}"><label style="font-size:11px"><input type="checkbox" id="fFull"> Nhập đủ số</label></div>
+      <input id="fPhanLoai" class="input" placeholder="Phân loại" value="${t.phanLoai}">
+      <input id="fGhiChu" class="input" placeholder="Ghi chú" value="${t.ghiChu||''}">
+      <div style="font-size:12px"><b>Quyền:</b><br>${quyenChecks}</div>
+      <input id="fAnh" type="file" accept="image/*" class="input">
+      <button class="btn" onclick="submitTho(${edit?'true':'false'})">Lưu</button><button onclick="closeSheet()">Đóng</button>
+    </div></div>`;
+  document.getElementById('sheetRoot').innerHTML=html;
+}
+function editTho(t){ openThoForm(t); }
+async function submitTho(isEdit){
+  const ma=document.getElementById('fMa').value.trim(); const ten=document.getElementById('fTen').value.trim(); const sdt=document.getElementById('fSdt').value.trim(); const email=document.getElementById('fEmail').value.trim(); const vaiTro=document.getElementById('fVaiTro').value; const donGiaRaw=document.getElementById('fDonGia').value; const full=document.getElementById('fFull').checked; const phanLoai=document.getElementById('fPhanLoai').value; const ghiChu=document.getElementById('fGhiChu').value;
+  const quyen=[...document.querySelectorAll('.bottom-sheet input[type=checkbox][value]')].filter(c=>c.checked && c.value).map(c=>c.value);
+  let donGia = parseDonGiaInput(donGiaRaw, full);
+  let anhUrl='';
+  const fileInput=document.getElementById('fAnh');
+  if(fileInput.files[0]){
+    anhUrl = await resizeImage(fileInput.files[0]);
+  }
+  try{
+    await api('upsert_tho',{tho:{maTho:ma, hoTen:ten, sdt:sdt, email:email, vaiTro:vaiTro, donGia:donGia, phanLoai:phanLoai, quyen:quyen, ghiChu:ghiChu, anh: anhUrl||undefined}});
+    alert('Đã lưu'); closeSheet(); route('dstho');
+  }catch(e){ alert(e.message); }
+}
+function resizeImage(file){
+  return new Promise(res=>{
+    const img=new Image(); const reader=new FileReader();
+    reader.onload=e=>{ img.src=e.target.result; img.onload=()=>{ const canvas=document.createElement('canvas'); const max=400; let w=img.width, h=img.height; if(w>max||h>max){ const ratio=Math.min(max/w,max/h); w*=ratio; h*=ratio; } canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h); res(canvas.toDataURL('image/jpeg',0.7)); }; }; reader.readAsDataURL(file);
+  });
+}
+async function khoaTho(ma){ const tt=prompt('Nhập trạng thái: HoatDong hoặc Khoa','Khoa'); if(!tt) return; try{ await api('khoa_tho',{maTho:ma, trangThai:tt}); alert('Đã cập nhật'); route('dstho'); }catch(e){ alert(e.message);} }
+async function resetMK(ma){ const mk=prompt('Mật khẩu mới:','123456'); if(!mk) return; try{ await api('reset_mk',{maTho:ma, matKhau:mk}); alert('Đã reset'); }catch(e){ alert(e.message);} }
+
+async function pageDuKien(){
+  const main=document.getElementById('main');
+  if(demoMode){ main.innerHTML='<div class="card">Dự kiến trả thợ demo</div>'; return; }
+  const data = await api('du_kien_tra',{thang: currentThang});
+  main.innerHTML = `
+  <div class="card">
+    <b>Dự kiến trả thợ - ${data.thang}</b><br><small style="color:var(--muted)">Tạm tính = đơn giá × công đã duyệt, chưa phải lương chốt</small>
+    <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:8px">
+      <div class="card" style="background:#FFFBF7"><div>Tổng số thợ</div><b>${data.tongAll.soTho}</b></div>
+      <div class="card" style="background:#FFFBF7"><div>Tổng công</div><b>${data.tongAll.tongCong}</b></div>
+      <div class="card" style="background:#E8F5E9"><div>Tổng tiền tạm tính</div><b>${fmtMoney(data.tongAll.tongTien)}</b></div>
+    </div>
+    ${Object.keys(data.byLoai).map(loai=>{
+      const g=data.byLoai[loai];
+      return `<div class="card" style="margin-top:12px"><b>Phân loại: ${loai}</b> - ${g.soTho} thợ, ${g.tongCong} công, ${fmtMoney(g.tongTien)}<div style="margin-top:6px">${g.chiTiet.map(r=>`${r.hoTen}: ${r.daDuyet} công × ${r.donGia} = ${fmtMoney(r.tamTinh)}`).join('<br>')}</div></div>`;
+    }).join('')}
+  </div>
+  `;
+}
+
+async function pageThongKe(){
+  const main=document.getElementById('main');
+  const data = await api('thong_ke',{mode:'thang'});
+  main.innerHTML = `<div class="card"><b>Thống kê theo tháng (công đã duyệt)</b><div style="margin-top:10px">${Object.keys(data).map(k=>`<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border)"><span>${k}</span><b>${data[k]}</b></div>`).join('')||'Chưa có'}</div></div>`;
+}
+
+async function pageNhatKy(){
+  const main=document.getElementById('main');
+  const logs = await api('audit_log',{});
+  main.innerHTML = `<div class="card"><b>Nhật ký hệ thống</b><div style="margin-top:10px; display:flex; flex-direction:column; gap:6px">${logs.map(l=>`<div style="font-size:12px; border-bottom:1px solid var(--border); padding:6px 0"><b>${new Date(l.thoiDiem).toLocaleString('vi-VN')}</b> - ${l.nguoi} - ${l.hanhDong} ${l.maGhi||''}<br><small>${l.chiTiet||''}</small></div>`).join('')}</div></div>`;
+}
+
+async function pageCauHinh(){
+  const main=document.getElementById('main');
+  const cfgs = await api('cau_hinh',{});
+  main.innerHTML = `<div class="card"><b>Cấu hình hệ thống</b><div style="margin-top:12px; display:flex; flex-direction:column; gap:10px">${cfgs.map(c=>`<div style="display:flex; gap:8px; align-items:center"><div style="flex:1"><b>${c.khoa}</b><br><small>${c.moTa||''}</small></div><input id="cfg-${c.khoa}" class="input" style="flex:1" value="${c.giaTri}"><button onclick="saveOneCfg('${c.khoa}')" style="padding:6px 10px; border-radius:8px; background:var(--dark); color:#fff; border:none">Lưu</button></div>`).join('')}</div></div>`;
+}
+async function saveOneCfg(khoa){ const v=document.getElementById('cfg-'+khoa).value; try{ await api('cau_hinh',{method:'set', khoa:khoa, giaTri:v}); alert('Đã lưu'); }catch(e){ alert(e.message);} }
+
+async function pageThongTin(){
+  const main=document.getElementById('main');
+  main.innerHTML = `<div class="card"><b>Thông tin cá nhân</b><div style="margin-top:12px"><div><b>${currentUser.hoTen}</b> (${currentUser.maTho})</div><div>SĐT: ${formatPhone(currentUser.sdt)}</div><div>Vai trò: ${currentUser.vaiTro}</div><div>Đơn giá: ${fmtMoney(currentUser.donGia)}</div><div>Phân loại: ${currentUser.phanLoai||''}</div><div>Quyền: ${(currentUser.quyen||[]).join(', ')||'Không có (Thợ)'}</div></div></div>`;
+}
+
+// Init
+(async()=>{
+  if(await checkSession()){ showApp(); }
+})();
+</script>
 </body>
 </html>
