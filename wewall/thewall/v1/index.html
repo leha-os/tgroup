@@ -2193,21 +2193,28 @@ ROUTES['#/tiendo']=function(){
   document.getElementById('view').innerHTML=h;
 };
 ROUTES['#/tiendo-kanban']=function(){
-  const projs=typeof visibleProjects==='function'?visibleProjects():DB.data.projects;
-  const cols=[['chuan_bi','Chuẩn bị','#f59e0b'],['dang_thi_cong','Đang thi công','#3b82f6'],['hoan_thanh','Hoàn thành','#22c55e']];
-  let h='<div class="page-head"><div><h1>Tiến độ Kanban</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button></div></div><div class="kanban">';
-  cols.forEach(([st,label,color])=>{
-    const list=projs.filter(p=>(p.status||'dang_thi_cong')===st);
-    h+='<div class="kanban-col"><h4><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+color+';margin-right:6px"></span>'+label+' ('+list.length+')</h4>';
-    list.forEach(p=>{
-      const pct=tienDoProject(p.id);
-      h+='<div class="kanban-item" onclick="location.hash=\'#/tiendo/'+p.id+'\'"><b style="font-size:13px">'+esc(p.name)+'</b><div class="prog" style="margin-top:8px"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:#64748b;margin-top:4px">'+pct+'%</div></div>';
+  const items=DB.data.tienDo||[];
+  const cols=[
+    {id:'chuanbi',label:'Chuẩn bị',color:'#94a3b8'},
+    {id:'danglam',label:'Đang thi công',color:'#f59e0b'},
+    {id:'xong',label:'Hoàn thành',color:'#22c55e'}
+  ];
+  const getCol=t=>t.phanTram>=100?'xong':t.phanTram>0?'danglam':'chuanbi';
+  let h='<div class="page-head"><div><h1>Kanban tiến độ</h1><p>'+items.length+' hạng mục</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-gantt\'">Timeline</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>';
+  h+='<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px">';
+  cols.forEach(c=>{
+    const list=items.filter(t=>getCol(t)===c.id);
+    h+='<div style="min-width:280px;flex:1;background:#f8fafc;border-radius:12px;padding:12px"><div style="font-weight:800;margin-bottom:10px;color:'+c.color+'">'+c.label+' ('+list.length+')</div>';
+    list.forEach(t=>{
+      const pr=(DB.data.projects||[]).find(p=>p.id===t.projectId);
+      h+='<div class="card" style="margin-bottom:8px;padding:10px"><div style="font-weight:700;font-size:13px">'+esc(t.hangMuc)+'</div><div style="font-size:11px;color:#64748b;margin:4px 0">'+esc(pr?pr.name:'')+'</div><div class="td-bar"><i style="width:'+t.phanTram+'%"></i></div><div style="font-size:11px;margin-top:4px">'+t.phanTram+'% • '+esc(t.ngayCapNhat||'')+'</div><div style="margin-top:6px;display:flex;gap:4px"><button class="btn btn-sec" style="padding:4px 8px;font-size:11px" onclick="tienDoForm(\''+t.projectId+'\',\''+t.id+'\')">Sửa</button><button class="btn btn-sec" style="padding:4px 8px;font-size:11px" onclick="tienDoQuick(\''+t.id+'\',100)">Xong</button></div></div>';
     });
+    if(!list.length)h+='<div style="color:#94a3b8;font-size:12px;text-align:center;padding:20px">Trống</div>';
     h+='</div>';
   });
   h+='</div>';
   document.getElementById('view').innerHTML=h;
-};
+};;
 ROUTES['#/tiendo-gantt']=function(){
   const items=(DB.data.tienDo||[]).filter(t=>t.ngayBatDau&&t.ngayKetThuc);
   if(!items.length){
