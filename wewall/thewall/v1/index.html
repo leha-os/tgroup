@@ -284,282 +284,224 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body{background:#fff}
 }
 
-
-/* ===== MODERN SMART GLASS 2026 – CHỈ CSS, KHÔNG ĐỤNG LOGIC ===== */
-/* Reset thoáng hơn cho toàn bộ */
-#view{padding:22px 22px;display:flex;flex-direction:column;gap:22px}
-.page-head{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
-.page-head h1{font-size:26px !important;font-weight:800 !important;letter-spacing:-.6px !important;line-height:1.15 !important;color:#1a1410}
-.page-head .sub, .page-head p{font-size:13.5px !important;color:#8a7f70 !important;line-height:1.6 !important;margin-top:2px !important;max-width:68ch}
-.grid{gap:16px !important}
-.card{
-  background:rgba(255,255,255,.82) !important;
-  backdrop-filter:blur(16px) saturate(1.18);
-  -webkit-backdrop-filter:blur(16px) saturate(1.18);
-  border:1px solid rgba(255,255,255,.68) !important;
-  border-radius:16px !important;
-  box-shadow:0 1px 2px rgba(26,20,16,.04), 0 8px 28px -10px rgba(26,20,16,.14), 0 0 0 1px rgba(255,255,255,.4) inset !important;
-  transition:transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease, border-color .22s ease !important;
-}
-.card:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,20,16,.06), 0 16px 36px -12px rgba(26,20,16,.18), 0 0 0 1px rgba(255,255,255,.5) inset !important}
-.card-h{padding:18px 20px 14px !important;gap:14px !important;border-bottom:1px solid rgba(236,229,216,.55) !important;background:linear-gradient(180deg, rgba(255,253,246,.7), rgba(255,255,255,.2)) !important}
-.card-h h3{font-size:14.5px !important;font-weight:750 !important;letter-spacing:-.2px !important;line-height:1.35 !important}
-.card-h .sub{font-size:12.5px !important;color:#9a8d7e !important;line-height:1.5 !important;margin-top:3px !important}
-.card-b{padding:20px !important;line-height:1.65 !important}
-
-/* Form – hết gom cục */
-.fld{margin-bottom:18px !important}
-.fld label{display:block;font-size:11px !important;font-weight:700 !important;letter-spacing:.5px !important;text-transform:uppercase !important;color:#6b5e4f !important;margin-bottom:8px !important;line-height:1.2 !important}
-.frm-row{gap:16px !important}
-.frm-row3{gap:16px !important}
-
-/* ===== DROPDOWN – SMART GLASS + MOTION ===== */
+/* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
 select.inp{
   appearance:none;-webkit-appearance:none;-moz-appearance:none;
-  background-color:rgba(255,255,255,.72) !important;
-  backdrop-filter:blur(14px) saturate(1.2);
-  -webkit-backdrop-filter:blur(14px) saturate(1.2);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239a8d7e' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-color:#ffffff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
-  background-position:right 13px center;
-  background-size:18px;
-  padding:11px 46px 11px 14px !important;
-  border:1px solid rgba(26,20,16,.08) !important;
-  border-radius:12px !important;
-  font-weight:580 !important;
-  font-size:13.6px !important;
-  letter-spacing:-.15px !important;
-  color:#2b241e !important;
-  line-height:1.45 !important;
-  box-shadow:0 1px 2px rgba(0,0,0,.03), 0 0 0 1px rgba(255,255,255,.7) inset, 0 1px 0 rgba(255,255,255,.9) inset !important;
-  transition:all .24s cubic-bezier(.16,1,.3,1) !important;
-  will-change:transform, box-shadow, border-color, background;
+  background-position:right 12px center;
+  background-size:16px;
+  padding:10px 38px 10px 12px !important;
+  border:1.5px solid #e8ddd0 !important;
+  border-radius:10px !important;
+  font-weight:500;
+  color:#2b241e;
+  box-shadow:0 1px 2px rgba(26,20,16,.04), 0 0 0 1px rgba(255,255,255,.8) inset;
+  transition:border-color .18s ease, box-shadow .18s ease, background-color .18s ease, transform .12s ease;
+  line-height:1.4;
 }
 select.inp:hover{
-  background-color:rgba(255,255,255,.92) !important;
-  border-color:rgba(240,173,31,.45) !important;
-  box-shadow:0 2px 8px rgba(240,173,31,.12), 0 6px 18px -6px rgba(240,173,31,.18), 0 0 0 1px rgba(255,255,255,.8) inset !important;
-  transform:translateY(-1px);
+  border-color:#f0ad1f !important;
+  background-color:#fffdf6;
+  box-shadow:0 2px 10px rgba(240,173,31,.12), 0 0 0 1px rgba(255,255,255,.9) inset;
 }
 select.inp:focus{
   outline:none !important;
-  background-color:rgba(255,255,255,.96) !important;
   border-color:#f0ad1f !important;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23c97a08' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
-  box-shadow:0 0 0 4px rgba(240,173,31,.15), 0 8px 24px -8px rgba(240,173,31,.28), 0 0 0 1px rgba(255,255,255,.9) inset !important;
-  transform:translateY(-1.5px) scale(1.01);
+  background-color:#ffffff;
+  box-shadow:0 0 0 3.5px rgba(240,173,31,.18), 0 4px 16px rgba(240,173,31,.14);
 }
-select.inp:active{transform:translateY(0) scale(.985) !important;transition-duration:.12s !important}
-select.inp option{padding:11px 14px !important;font-weight:500 !important;color:#1f1811 !important;background:#fff !important;border-radius:8px !important}
-select.inp option:checked{background:#fef3c7 !important;color:#78350f !important;font-weight:700 !important}
+select.inp:active{transform:scale(.99)}
+/* option – native vẫn đẹp hơn */
+select.inp option{padding:10px 12px;font-weight:500;color:#1a1410;background:#fff}
+select.inp option:checked{background:linear-gradient(90deg,#fef3c7,#fde68a);color:#78350f}
 
-/* Project pick – pill glass smart */
-.proj-pick{display:flex;align-items:center;gap:10px !important}
-.proj-pick>span{font-size:11px !important;letter-spacing:.5px !important;text-transform:uppercase !important;font-weight:700 !important;color:#8a7f70 !important}
+/* proj pick – gọn tinh tế */
 .proj-pick select{
   appearance:none;-webkit-appearance:none;
-  background-color:rgba(255,250,242,.85) !important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a8906e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 11px center;
-  padding:9px 36px 9px 14px !important;
-  border:1px solid rgba(232,221,208,.9) !important;
-  border-radius:999px !important;
-  font-weight:700 !important;font-size:13px !important;
-  box-shadow:0 1px 3px rgba(0,0,0,.04) !important;
-  transition:all .22s cubic-bezier(.16,1,.3,1) !important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  padding-right:34px !important;
+  border:1.5px solid #e8ddd0 !important;
+  background-color:#fffaf2;
+  border-radius:9px !important;
+  font-weight:600;
+  transition:.18s;
 }
-.proj-pick select:hover{border-color:#f0ad1f !important;background:rgba(255,253,246,.96) !important;transform:translateY(-1px);box-shadow:0 4px 12px rgba(240,173,31,.14) !important}
-.proj-pick select:focus{transform:translateY(-1px) scale(1.02)}
+.proj-pick select:hover{border-color:#f0ad1f !important;background:#fffdf6}
 
-/* Toolbar filters – capsule thông minh */
-.toolbar{
-  display:flex;flex-wrap:wrap;gap:10px !important;
-  padding:12px 14px !important;
-  background:rgba(255,255,255,.58) !important;
-  backdrop-filter:blur(12px) saturate(1.15);
-  -webkit-backdrop-filter:blur(12px) saturate(1.15);
-  border:1px solid rgba(236,229,216,.6) !important;
-  border-radius:14px !important;
-  box-shadow:0 1px 2px rgba(0,0,0,.03) !important;
-}
+/* toolbar filter dropdowns – mini pill */
 .toolbar select.inp{
-  padding:8px 34px 8px 14px !important;
+  padding:7px 32px 7px 12px !important;
   font-size:13px !important;
-  border-radius:999px !important;
-  background-color:rgba(255,255,255,.78) !important;
-  border-color:rgba(236,229,216,.9) !important;
-  font-weight:600 !important;
-  min-height:36px !important;
+  border-radius:20px !important;
+  background-color:#fffaf2;
+  border-color:#ece5d8 !important;
 }
-.toolbar select.inp:hover{transform:translateY(-1px);background:rgba(255,255,255,.94) !important}
-.toolbar .inp:not(select){border-radius:999px !important;min-height:36px !important}
 
-/* Input thường – đồng bộ glass, thoáng chữ */
-.inp:not(select){
-  background:rgba(255,255,255,.74) !important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(26,20,16,.08) !important;
-  border-radius:12px !important;
-  padding:11px 14px !important;
-  font-size:13.8px !important;
-  line-height:1.5 !important;
-  letter-spacing:-.1px !important;
-  box-shadow:0 1px 2px rgba(0,0,0,.03), 0 0 0 1px rgba(255,255,255,.6) inset !important;
-  transition:all .22s cubic-bezier(.16,1,.3,1) !important;
+/* Modal / popup – từ to thô -> gọn sang */
+.mback{
+  background:rgba(15,23,42,.38) !important;
+  backdrop-filter:blur(10px) saturate(1.15);
+  -webkit-backdrop-filter:blur(10px) saturate(1.15);
+  padding:20px 16px !important;
 }
-.inp:not(select):hover{border-color:rgba(26,20,16,.14) !important;background:rgba(255,255,255,.88) !important;transform:translateY(-0.5px)}
+.mback.open{animation:fadeIn .22s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal{
+  border-radius:18px !important;
+  border:1px solid rgba(236,229,216,.9) !important;
+  box-shadow:0 24px 60px -12px rgba(26,20,16,.22), 0 8px 24px -8px rgba(26,20,16,.12), 0 0 0 1px rgba(255,255,255,.6) inset !important;
+  overflow:hidden;
+  animation:popUp .28s cubic-bezier(.16,1,.3,1);
+}
+@keyframes popUp{from{transform:translateY(12px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal.lg{border-radius:18px !important}
+
+.m-head{
+  padding:18px 20px 16px !important;
+  background:linear-gradient(180deg,#fffdf6 0%,#ffffff 100%);
+  border-bottom:1px solid #f2eadc !important;
+}
+.m-head h3{font-size:15.5px !important;font-weight:800 !important;letter-spacing:-.2px}
+.m-x{
+  width:32px;height:32px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f8f2e7;color:#8a7f70;
+  border:1px solid #ece5d8;
+  transition:.15s;font-size:18px !important;
+}
+.m-x:hover{background:#fef2f2;border-color:#fecaca;color:#b91c1c;transform:rotate(90deg)}
+.m-body{padding:20px !important;background:#fff}
+.m-foot{
+  padding:14px 20px !important;
+  background:#faf7f2 !important;
+  border-top:1px solid #ece5d8 !important;
+  gap:10px !important;
+}
+
+/* input chung cho đồng bộ với dropdown */
+.inp:not(select){border:1.5px solid #e8ddd0 !important;border-radius:10px !important;transition:.18s}
+.inp:not(select):hover{border-color:#e0d3bf !important}
+.inp:not(select):focus{border-color:#f0ad1f !important;box-shadow:0 0 0 3.5px rgba(240,173,31,.16) !important}
+
+/* scrollbar tinh tế cho modal */
+.m-body::-webkit-scrollbar{width:6px;height:6px}
+.m-body::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:10px}
+.m-body::-webkit-scrollbar-thumb:hover{background:#c8b8a0}
+
+/* responsive: popup không còn chiếm full màn xấu */
+@media(max-width:640px){
+  .mback{padding:12px !important;align-items:flex-end !important}
+  .modal{border-radius:18px 18px 0 0 !important;max-height:92vh !important;margin:0 !important;width:100% !important}
+  select.inp{font-size:16px !important} /* tránh zoom iOS */
+}
+
+
+/* ===== TRANSPARENT + MOTION NHẸ - BẢN NÂNG CẤP ===== */
+/* dropdown trong suốt nhẹ + động */
+select.inp{
+  background-color:rgba(255,255,255,.86) !important;
+  backdrop-filter:blur(8px) saturate(1.08);
+  -webkit-backdrop-filter:blur(8px) saturate(1.08);
+  will-change:transform, box-shadow;
+}
+select.inp:hover{
+  background-color:rgba(255,253,246,.92) !important;
+  transform:translateY(-1px);
+}
+select.inp:focus{
+  background-color:rgba(255,255,255,.96) !important;
+  transform:translateY(-1px) scale(1.005);
+}
+
+/* tạo cảm giác dropdown nổi lên nhẹ khi hover – dùng filter */
+.toolbar select.inp:hover, .proj-pick select:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(240,173,31,.14) !important;
+}
+
+/* popup/modal trong suốt mờ – glass nhẹ */
+.mback{
+  background:rgba(15,23,42,.28) !important;
+  backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
+}
+.modal{
+  background:rgba(255,255,255,.90) !important;
+  backdrop-filter:blur(18px) saturate(1.18) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.18) !important;
+  border:1px solid rgba(255,255,255,.7) !important;
+  box-shadow:
+    0 20px 60px -18px rgba(26,20,16,.28),
+    0 8px 20px -10px rgba(26,20,16,.14),
+    0 0 0 1px rgba(255,255,255,.5) inset !important;
+  will-change:transform, opacity;
+}
+.m-head{
+  background:linear-gradient(180deg, rgba(255,253,246,.92) 0%, rgba(255,255,255,.78) 100%) !important;
+  backdrop-filter:blur(10px);
+}
+.m-body{
+  background:rgba(255,255,255,.72) !important;
+}
+.m-foot{
+  background:rgba(250,247,242,.82) !important;
+  backdrop-filter:blur(10px);
+}
+
+/* động nhẹ: modal trôi lên + mờ dần – rất nhẹ, 0.3s */
+@keyframes floatIn{
+  0%{transform:translateY(10px) scale(.985);opacity:0;filter:blur(4px)}
+  100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}
+}
+.modal{animation:floatIn .34s cubic-bezier(.16,1,.3,1) !important}
+
+/* nút X xoay nhẹ trong suốt */
+.m-x{
+  background:rgba(248,242,231,.85) !important;
+  backdrop-filter:blur(6px);
+  transition:transform .25s cubic-bezier(.16,1,.3,1), background .18s, color .18s !important;
+}
+.m-x:hover{transform:rotate(90deg) scale(1.06)}
+
+/* input đi kèm cũng glass nhẹ cho đồng bộ, không đụng kỹ thuật */
+.inp:not(select){
+  background:rgba(255,255,255,.86) !important;
+  backdrop-filter:blur(6px);
+  transition:border-color .18s, box-shadow .18s, transform .18s, background .18s !important;
+}
+.inp:not(select):hover{transform:translateY(-0.5px)}
 .inp:not(select):focus{
-  outline:none !important;
-  border-color:#f0ad1f !important;
   background:rgba(255,255,255,.96) !important;
-  box-shadow:0 0 0 4px rgba(240,173,31,.13), 0 6px 16px -6px rgba(240,173,31,.18) !important;
   transform:translateY(-1px);
 }
 
-/* Topbar – trong suốt tinh tế */
-.topbar{
-  background:rgba(255,255,255,.76) !important;
-  backdrop-filter:blur(14px) saturate(1.18) !important;
-  -webkit-backdrop-filter:blur(14px) saturate(1.18) !important;
-  border-bottom:1px solid rgba(236,229,216,.6) !important;
-  box-shadow:0 1px 0 rgba(255,255,255,.8) inset !important;
-}
-.main{background:radial-gradient(1200px 600px at 50% -20%, #fffdf6 0%, #faf7f2 60%, #f6f0e6 100%) !important}
-
-/* Bảng – thoáng, smart */
-.tbl-wrap{
-  background:rgba(255,255,255,.68) !important;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(236,229,216,.6) !important;
-  border-radius:14px !important;
-  overflow:hidden !important;
-  box-shadow:0 1px 3px rgba(0,0,0,.03) !important;
-}
-table
-table.tbl th{
-  font-size:11px !important;letter-spacing:.6px !important;text-transform:uppercase !important;
-  color:#8a7f70 !important;font-weight:700 !important;
-  padding:13px 14px !important;background:rgba(250,247,242,.75) !important;
-  border-bottom:1px solid rgba(236,229,216,.7) !important;white-space:nowrap;
-}
-table.tbl td{padding:12px 14px !important;line-height:1.55 !important;border-bottom:1px solid rgba(236,229,216,.38) !important;color:#2b241e !important}
-table.tbl tr:last-child td{border-bottom:none !important}
-table.tbl tr:hover td{background:rgba(255,253,246,.72) !important}
-
-/* Stats / KPI – không gom */
-.stat{padding:16px 18px !important;border-radius:14px !important;gap:10px !important;background:rgba(255,255,255,.76) !important;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.6) !important}
-.stat .lb{font-size:11px !important;letter-spacing:.5px !important;text-transform:uppercase !important;color:#8a7f70 !important;font-weight:700 !important;line-height:1.2 !important}
-.stat .vl{font-size:20px !important;font-weight:800 !important;letter-spacing:-.4px !important;line-height:1.2 !important;margin-top:2px !important}
-
-/* Modal / Popup – glass cao cấp + động mượt */
-.mback{
-  background:rgba(15,23,42,.22) !important;
-  backdrop-filter:blur(22px) saturate(1.25) brightness(1.03) !important;
-  -webkit-backdrop-filter:blur(22px) saturate(1.25) brightness(1.03) !important;
-  padding:24px 16px !important;
-  transition:backdrop-filter .3s ease, background .3s ease !important;
-}
-.mback.open{animation:glassFade .28s ease}
-@keyframes glassFade{from{opacity:0;backdrop-filter:blur(0px)}to{opacity:1;backdrop-filter:blur(22px)}}
-
-.modal{
-  background:rgba(255,255,255,.86) !important;
-  backdrop-filter:blur(28px) saturate(1.22) !important;
-  -webkit-backdrop-filter:blur(28px) saturate(1.22) !important;
-  border:1px solid rgba(255,255,255,.72) !important;
-  border-radius:20px !important;
-  box-shadow:0 20px 64px -20px rgba(26,20,16,.32), 0 8px 24px -10px rgba(26,20,16,.16), 0 0 0 1px rgba(255,255,255,.5) inset !important;
-  overflow:hidden !important;
-  animation:modalFloat .42s cubic-bezier(.16,1,.3,1) !important;
-  will-change:transform, opacity;
-}
-@keyframes modalFloat{
-  0%{transform:translateY(14px) scale(.97);opacity:0;filter:blur(8px)}
-  60%{transform:translateY(-2px) scale(1.01);opacity:1;filter:blur(0)}
-  100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}
-}
-.modal.lg{border-radius:20px !important}
-.m-head{
-  padding:20px 22px 16px !important;
-  background:linear-gradient(180deg, rgba(255,253,246,.88) 0%, rgba(255,255,255,.55) 100%) !important;
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(236,229,216,.55) !important;
-  gap:14px !important;
-}
-.m-head h3{font-size:15.5px !important;font-weight:800 !important;letter-spacing:-.25px !important;line-height:1.3 !important}
-.m-x{
-  width:34px !important;height:34px !important;border-radius:11px !important;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(248,242,231,.9) !important;
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(236,229,216,.7) !important;
-  color:#8a7f70 !important;
-  transition:all .28s cubic-bezier(.16,1,.3,1) !important;
-}
-.m-x:hover{background:rgba(254,226,226,.9) !important;border-color:#fecaca !important;color:#b91c1c !important;transform:rotate(90deg) scale(1.08)}
-.m-body{padding:22px !important;background:rgba(255,255,255,.62) !important;line-height:1.65 !important}
-.m-body::-webkit-scrollbar{width:6px;height:6px}
-.m-body::-webkit-scrollbar-thumb{background:rgba(216,203,183,.9);border-radius:10px}
-.m-body::-webkit-scrollbar-thumb:hover{background:#c8b8a0}
-.m-foot{
-  padding:16px 22px !important;
-  background:rgba(250,247,242,.78) !important;
-  backdrop-filter:blur(12px);
-  border-top:1px solid rgba(236,229,216,.55) !important;
-  gap:12px !important;
+/* hiệu ứng sáng nhẹ chạy viền khi focus dropdown – không chói */
+select.inp:focus{
+  box-shadow:
+    0 0 0 3.5px rgba(240,173,31,.14),
+    0 6px 20px rgba(240,173,31,.16),
+    0 0 18px rgba(240,173,31,.08) inset !important;
 }
 
-/* Button trong modal/footer – động nhẹ */
-.btn{transition:all .2s cubic-bezier(.16,1,.3,1) !important;will-change:transform, box-shadow}
-.btn:hover{transform:translateY(-1px)}
-.btn:active{transform:translateY(0) scale(.98)}
-.btn-pri{box-shadow:0 2px 8px rgba(240,173,31,.22) !important}
-.btn-pri:hover{box-shadow:0 6px 18px rgba(240,173,31,.28) !important}
 
-/* Tabs / search – thoáng hơn */
-.tabs{gap:6px !important;padding:4px !important;background:rgba(255,255,255,.55) !important;backdrop-filter:blur(8px);border-radius:12px !important;border:1px solid rgba(236,229,216,.5) !important;width:fit-content !important}
-.tab{border-radius:8px !important;padding:7px 14px !important;font-weight:600 !important;letter-spacing:-.1px !important;transition:all .2s ease !important}
-.search .inp{backdrop-filter:blur(10px)}
-
-/* Badge – glass nhỏ xinh */
-.badge{backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.5);letter-spacing:.1px !important;font-weight:600 !important}
-
-/* Responsive – popup không thô, dropdown đủ to để chạm */
-@media(max-width:900px){
-  #view{padding:16px !important;gap:18px !important}
-  .card-b{padding:16px !important}
-  .toolbar{padding:12px !important;gap:8px !important}
-  .mback{padding:0 !important;align-items:flex-end !important;background:rgba(15,23,42,.28) !important}
-  .modal{border-radius:22px 22px 0 0 !important;max-height:92vh !important;width:100% !important;margin:0 !important;animation:modalSlideUp .44s cubic-bezier(.16,1,.3,1) !important}
-  @keyframes modalSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  select.inp{font-size:16px !important;padding:13px 46px 13px 14px !important;min-height:48px !important}
-}
-@media(max-width:640px){
-  .proj-pick select{border-radius:14px !important;min-height:42px !important}
-}
-
-/* Motion giảm cho ai cần */
-@media(prefers-reduced-motion:reduce){
-  *, *::before, *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
-}
-
-/* Tinh chỉnh chữ không gom: tăng khoảng trắng, chống dính */
-.kv{ gap:10px !important}
-.kv dt{font-size:11px !important;letter-spacing:.4px !important;text-transform:uppercase !important;color:#8a7f70 !important;font-weight:700 !important}
-.kv dd{font-size:13.5px !important;line-height:1.6 !important;color:#1f1811 !important}
-.alert{border-radius:12px !important;padding:12px 14px !important;line-height:1.6 !important;backdrop-filter:blur(8px)}
-
-/* Nút hiện đại */
-.btn{border-radius:12px!important;font-weight:600;transition:all .2s}
-.btn:active{transform:scale(.97)}
-/* Page head */
-.page-head h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
-
-.tbl-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}</style>
+/* ===== CUSTOM DROPDOWN BOTTOM-SHEET ===== */
+.csel{position:relative}
+.csel-btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
+.csel-btn:after{content:'▾';color:#999}
+.sheet-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9998;opacity:0;pointer-events:none;transition:opacity .2s}
+.sheet-back.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1e293b;color:#fff;border-radius:16px 16px 0 0;max-height:70vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .25s}
+.sheet.open{transform:translateY(0)}
+.sheet-head{padding:14px 16px;border-bottom:1px solid #334155;font-weight:700;display:flex;justify-content:space-between}
+.sheet-list{overflow-y:auto;padding:8px}
+.sheet-item{padding:13px 14px;border-radius:10px;font-size:15px}
+.sheet-item:active{background:#334155}
+.sheet-item.sel{background:#f59e0b;color:#000;font-weight:700}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -682,14 +624,7 @@ phatsinh:[
  {id:'ps1',projectId:'p1',date:'2026-09-28',noidung:'Phát sinh chống thấm tầng hầm (ngoài hợp đồng)',sotien:85000000,trangthai:'da_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'Lê Hà',lydo:''}],
 dutru:[
  {id:'dt1',projectId:'p1',hangmuc:'Phần thô',diengiai:'Bê tông + sắt thép + cốp pha',soluong:1,dongia:4200000000,thanhtien:4200000000,trangthai:'da_duyet',nguoitao:'Lê Hà',nguoiduyet:'Lê Hà',lydo:''},
- {id:'dt2',projectId:'p1',hangmuc:'Hoàn thiện',diengiai:'Gạch, sơn, thiết bị vệ sinh',soluong:1,dongia:2800000000,thanhtien:2800000000,trangthai:'cho_duyet',nguoitao:'Lê Hà',nguoiduyet:'',lydo:''},
-{id:'dt6',projectId:'p6',hangmuc:'Phần thô',diengiai:'Bê tông móng + cột dầm sàn 3 tầng',soluong:1,dongia:8500000000,thanhtien:8500000000,trangthai:'da_duyet'},
-{id:'dt7',projectId:'p6',hangmuc:'Hoàn thiện',diengiai:'Gạch ốp lát + sơn nước toàn trường',soluong:1,dongia:3200000000,thanhtien:3200000000,trangthai:'cho_duyet'},
-{id:'dt8',projectId:'p7',hangmuc:'Phần thô',diengiai:'Kết cấu 15 tầng + hầm',soluong:1,dongia:22000000000,thanhtien:22000000000,trangthai:'da_duyet'},
-{id:'dt9',projectId:'p7',hangmuc:'MEP',diengiai:'Điều hòa trung tâm + PCCC',soluong:1,dongia:8500000000,thanhtien:8500000000,trangthai:'da_duyet'},
-{id:'dt10',projectId:'p8',hangmuc:'Phần thô',diengiai:'Móng cọc + khung 10 tầng',soluong:1,dongia:28000000000,thanhtien:28000000000,trangthai:'cho_duyet'},
-{id:'dt11',projectId:'p2',hangmuc:'Nội thất',diengiai:'Tủ bếp + thiết bị vệ sinh cao cấp',soluong:1,dongia:1800000000,thanhtien:1800000000,trangthai:'da_duyet'},
-{id:'dt12',projectId:'p3',hangmuc:'Kết cấu thép',diengiai:'Khung thép tiền chế 5000m2',soluong:1,dongia:6500000000,thanhtien:6500000000,trangthai:'da_duyet'},],
+ {id:'dt2',projectId:'p1',hangmuc:'Hoàn thiện',diengiai:'Gạch, sơn, thiết bị vệ sinh',soluong:1,dongia:2800000000,thanhtien:2800000000,trangthai:'cho_duyet',nguoitao:'Lê Hà',nguoiduyet:'',lydo:''}],
 thanhtoan:[
  {id:'tt1',projectId:'p2',denghiId:'dn3',date:'2026-10-05',sotien:14500000,hinhthuc:'Chuyển khoản',trangthai:'da_chi',ghichu:'Gạch Tuynel'}],
 tamung:[
@@ -945,9 +880,8 @@ ROUTES['#/dashboard']=function(){
  $('#view').innerHTML=h;
 };
 function statusBadge(s){
- const m={'Đang thi công':'b-blue','dang_thi_cong':'b-blue','Hoàn thành':'b-green','hoan_thanh':'b-green','Tạm dừng':'b-amber','tam_dung':'b-amber','Đã hủy':'b-gray','da_huy':'b-gray','Chuẩn bị':'b-amber','chuan_bi':'b-amber'};
- const label={'dang_thi_cong':'Đang thi công','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy','chuan_bi':'Chuẩn bị'}[s]||s;
- return '<span class="badge '+(m[s]||'b-gray')+'">'+esc(label)+'</span>';
+ const m={'Đang thi công':'b-blue','Hoàn thành':'b-green','Tạm dừng':'b-amber','Đã hủy':'b-gray'};
+ return '<span class="badge '+(m[s]||'b-gray')+'">'+esc(s)+'</span>';
 }
 /* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
@@ -957,7 +891,7 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1072,7 +1006,7 @@ function savePartner(coll,id){
  if(!cfg.noProj)o.projectId=formVal('projectId');
  if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data[coll].find(x=>x.id===id),o);else DB.data[coll].push(Object.assign({id:uid(coll[0])},o));
- DB.log(id?'Sửa '+cfg.t:'Thêm '+cfg.t,o.name);DB.save();closeModal();nav(false);;
+ DB.log(id?'Sửa '+cfg.t:'Thêm '+cfg.t,o.name);DB.save();closeModal();nav(false);toast('Đã lưu');
 }
 function partnerTxForm(coll,oid){
  const cfg=Object.values(PCFG).find(c=>c.coll===coll);
@@ -1090,7 +1024,7 @@ function savePartnerTx(coll,oid){
  const t={id:uid('t'),date:formVal('date')||todayISO(),type:formVal('type'),amount:+formVal('amount')||0,note:formVal('note')};
  t[cfg.fk]=oid;t.projectId=cfg.noProj?formVal('projectId'):(o.projectId||SEL.projectId||'');
  if(!t.amount){toast('Nhập số tiền');return;}
- DB.data[cfg.tx].push(t);DB.log('Giao dịch '+cfg.t,(t.type===cfg.inT?cfg.inL:cfg.outL)+' '+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);;
+ DB.data[cfg.tx].push(t);DB.log('Giao dịch '+cfg.t,(t.type===cfg.inT?cfg.inL:cfg.outL)+' '+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');
 }
 function renderPartnerLedger(cfg,id){
  const o=DB.data[cfg.coll].find(x=>x.id===id);if(!o){location.hash=cfg.back;return;}
@@ -1125,7 +1059,7 @@ function contractorForm(id){
 }
 function saveContractor(id){const o={name:formVal('name'),phone:formVal('phone'),projectId:formVal('projectId'),note:formVal('note')};if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.contractors.find(x=>x.id===id),o);else DB.data.contractors.push(Object.assign({id:uid('k')},o));
- DB.log(id?'Sửa nhà thầu':'Thêm nhà thầu',o.name);DB.save();closeModal();nav(false);;}
+ DB.log(id?'Sửa nhà thầu':'Thêm nhà thầu',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
 function contractorTxForm(oid){
  const o=DB.data.contractors.find(x=>x.id===oid);
  openModal('Ghi giao dịch — '+esc(o.name),fld('Loại',sel('type',[{v:'entry',t:'Nghiệm thu khối lượng'},{v:'payment',t:'Tạm ứng/Thanh toán'}],'entry'))+'<div class="frm-row">'+fld('Ngày',inp('date',todayISO(),'date'))+fld('Số tiền (VND)',inp('amount','','number','min="0"'))+'</div>'+fld('Diễn giải',txa('note','')),
@@ -1136,7 +1070,7 @@ function saveContractorTx(oid){const o=DB.data.contractors.find(x=>x.id===oid);
  if(!t.amount){toast('Nhập số tiền');return;}
  if(t.type==='payment'){const inn=DB.data.contractorTx.filter(x=>x.contractorId===oid&&x.type==='entry').reduce((s,x)=>s+x.amount,0);const out=DB.data.contractorTx.filter(x=>x.contractorId===oid&&x.type==='payment').reduce((s,x)=>s+x.amount,0);
   if(t.amount>(inn-out)){if(!confirm('Số tiền vượt khối lượng đã nghiệm thu ('+fmtVND(inn-out)+'). Vẫn ghi?'))return;}}
- DB.data.contractorTx.push(t);DB.log('Giao dịch nhà thầu',(t.type==='entry'?'Nghiệm thu ':'Tạm ứng ')+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);;}
+ DB.data.contractorTx.push(t);DB.log('Giao dịch nhà thầu',(t.type==='entry'?'Nghiệm thu ':'Tạm ứng ')+fmtVND(t.amount)+' — '+o.name);DB.save();closeModal();nav(false);toast('Đã ghi');}
 function renderContractorLedger(id){
  const o=DB.data.contractors.find(x=>x.id===id);if(!o){location.hash='#/contractors';return;}
  const txs=DB.data.contractorTx.filter(t=>t.contractorId===id).map(t=>({date:t.date,desc:(t.type==='entry'?'Nghiệm thu: ':'Tạm ứng: ')+t.note,in:t.type==='entry'?t.amount:0,out:t.type==='payment'?t.amount:0,id:t.id}));
@@ -1166,7 +1100,7 @@ function bankForm(id){
 }
 function saveBank(id){const o={name:formVal('name'),number:formVal('number'),note:formVal('note')};if(!o.name){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.bankAccounts.find(x=>x.id===id),o);else DB.data.bankAccounts.push(Object.assign({id:uid('b')},o));
- DB.log(id?'Sửa tài khoản':'Thêm tài khoản',o.name);DB.save();closeModal();nav(false);;}
+ DB.log(id?'Sửa tài khoản':'Thêm tài khoản',o.name);DB.save();closeModal();nav(false);toast('Đã lưu');}
 function bankTxForm(aid,defType){
  const a=DB.data.bankAccounts.find(x=>x.id===aid);if(!a){toast('Chưa có tài khoản ngân hàng/quỹ');return;}
  openModal((defType==='outflow'?'Chi tiền':'Thu tiền')+' — '+esc(a.name),
@@ -1179,7 +1113,7 @@ function bankTxForm(aid,defType){
 function saveBankTx(aid){const a=DB.data.bankAccounts.find(x=>x.id===aid);
  const t={id:uid('bt'),accountId:aid,projectId:formVal('projectId'),date:formVal('date')||todayISO(),type:formVal('type'),amount:+formVal('amount')||0,note:formVal('note')};
  if(!t.amount){toast('Nhập số tiền');return;}
- DB.data.bankTx.push(t);DB.log(t.type==='inflow'?'Thu tiền':'Chi tiền',fmtVND(t.amount)+' — '+a.name+(t.note?' • '+t.note:''));DB.save();closeModal();nav(false);;}
+ DB.data.bankTx.push(t);DB.log(t.type==='inflow'?'Thu tiền':'Chi tiền',fmtVND(t.amount)+' — '+a.name+(t.note?' • '+t.note:''));DB.save();closeModal();nav(false);toast('Đã ghi');}
 function renderBankLedger(id){
  const a=DB.data.bankAccounts.find(x=>x.id===id);if(!a){location.hash='#/bank';return;}
  const txs=DB.data.bankTx.filter(t=>t.accountId===id).map(t=>({date:t.date,desc:t.note+(t.projectId?' <span class="badge b-gray">'+esc(projCode(t.projectId))+'</span>':''),in:t.type==='inflow'?t.amount:0,out:t.type==='outflow'?t.amount:0,id:t.id}));
@@ -1225,7 +1159,7 @@ function expenseForm(id){
 function saveExpense(id){const o={projectId:formVal('projectId'),date:formVal('date')||todayISO(),category:formVal('category'),amount:+formVal('amount')||0,by:formVal('by'),note:formVal('note')};
  if(!o.amount){toast('Nhập số tiền');return;}
  if(id)Object.assign(DB.data.expenses.find(x=>x.id===id),o);else DB.data.expenses.push(Object.assign({id:uid('x')},o));
- DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);;}
+ DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);toast('Đã lưu');}
 /* ================= LIABILITIES ================= */
 ROUTES['#/liabilities']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
@@ -1314,7 +1248,7 @@ function saveUser(id){const pids=[];document.querySelectorAll('#mBody [data-proj
  if(!o.name||!o.username||!o.pass){toast('Nhập đủ họ tên, tên đăng nhập, mật khẩu');return;}
  if(DB.data.users.some(x=>x.username===o.username&&x.id!==id)){toast('Tên đăng nhập đã tồn tại');return;}
  if(id)Object.assign(DB.data.users.find(x=>x.id===id),o);else DB.data.users.push(Object.assign({id:uid('u')},o));
- DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);;}
+ DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);toast('Đã lưu');}
 /* checklist phân quyền chi tiết */
 function userPerms(u){
  if(u.role==='Giám đốc')return null; // full
@@ -1342,7 +1276,7 @@ function savePerms(id){const u=DB.data.users.find(x=>x.id===id);const p={};docum
 /* ================= AUDIT LOGS ================= */
 ROUTES['#/audit']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
+ let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi • mọi thao tác thêm/sửa/xóa</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Chi tiết</th></tr></thead><tbody>';
  DB.data.auditLogs.slice(0,300).forEach(a=>{h+='<tr><td style="white-space:nowrap;font-size:12.5px">'+esc(a.ts)+'</td><td><b>'+esc(a.user)+'</b></td><td><span class="badge b-purple">'+esc(a.action)+'</span></td><td>'+esc(a.detail)+'</td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
@@ -1462,7 +1396,7 @@ function saveDuTru(id){
  if(!o.hangmuc||!o.thanhtien){toast('Nhập hạng mục và đơn giá');return;}
  if(id)Object.assign(DB.data.dutru.find(x=>x.id===id),o);
  else DB.data.dutru.push(Object.assign({id:uid('dt'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
- DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);;
+ DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);toast('Đã lưu');
 }
 /* ---------- PHÁT SINH ---------- */
 ROUTES['#/phatsinh']=function(){if(!Auth.can('phatsinh_view')){location.hash='#/dashboard';return;}
@@ -1486,7 +1420,7 @@ function savePhatSinh(id){
  if(!o.noidung||!o.sotien){toast('Nhập nội dung và số tiền');return;}
  if(id)Object.assign(DB.data.phatsinh.find(x=>x.id===id),o);
  else DB.data.phatsinh.push(Object.assign({id:uid('ps'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
- DB.log(id?'Sửa phát sinh':'Thêm phát sinh',fmtVND(o.sotien)+' — '+o.noidung);DB.save();closeModal();nav(false);;
+ DB.log(id?'Sửa phát sinh':'Thêm phát sinh',fmtVND(o.sotien)+' — '+o.noidung);DB.save();closeModal();nav(false);toast('Đã lưu');
 }
 
 /* ================= THANH TOÁN ================= */
@@ -1624,7 +1558,7 @@ function xlsxMake(sheets,logoB64){
   +'<font><sz val="11"/><name val="Calibri"/></font>'
   +'<font><b/><sz val="16"/><name val="Calibri"/></font>'
   +'<font><b/><sz val="12"/><name val="Calibri"/></font>'
-  +'<font><sz val="10"/><name val="Calibri"/></font>'
+  +'<font><sz val="12"/><name val="Calibri"/></font>'
   +'</fonts>'
   +'<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills>'
   +'<borders count="2">'
@@ -1636,13 +1570,13 @@ function xlsxMake(sheets,logoB64){
   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
   +'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
-  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
   +'<xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf>'
-  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
+  +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf>'
   +'<xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
   +'</cellXfs>'
@@ -1928,7 +1862,7 @@ function danhmucForm(id){
 }
 function saveDanhMuc(id){const o={nhom:formVal('nhom'),ten:formVal('ten')};if(!o.ten){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.danhmuc.find(x=>x.id===id),o);else DB.data.danhmuc.push(Object.assign({id:uid('dm')},o));
- DB.save();closeModal();nav(false);;}
+ DB.save();closeModal();nav(false);toast('Đã lưu');}
 
 /* ================= EXCEL EXPORT (kiểu TW cũ) ================= */
 function dlXls(html,filename){
@@ -1959,10 +1893,10 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  // R9: ngày xuất
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
  // R10: header vàng
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:h,s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);for(let i=0;i<n;i++)rf[i]={v:'',s:4};if(typeof foot==='object'&&foot.total!=null){rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[n-2]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:2};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();rf[0]={v:clean,s:2};}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
@@ -2119,9 +2053,8 @@ function renderSyncPill(){
 async function pullAll(silent){
  if(typeof FB!=='undefined' && FB.isConfigured()){
    const d = await FB.loadAll();
-   if(d && d.projects && d.projects.length > 0){ DB.data = d; ensureArrays(); DB.save(); SYNC.dirty=false; SYNC.connected=true; SYNC.msg='Firebase • '+new Date().toLocaleTimeString('vi-VN'); renderSyncPill(); if(!silent); nav(false); return; }
-   if(d){ /* Firebase trống - giữ dữ liệu mẫu và đẩy lên */ await FB.saveAll(); nav(false); return; }
-   if(!silent); return;
+   if(d){ DB.data = d; ensureArrays(); DB.save(); SYNC.dirty=false; SYNC.connected=true; SYNC.msg='Firebase • '+new Date().toLocaleTimeString('vi-VN'); renderSyncPill(); if(!silent)toast('Đã tải từ Firebase'); nav(false); return; }
+   if(!silent)toast('Firebase chưa có dữ liệu'); return;
  }
  syncCfgForm();
  const d=await apiCall('pull',{});
@@ -2135,7 +2068,7 @@ async function pullAll(silent){
 async function pushAll(silent){
  if(typeof FB!=='undefined' && FB.isConfigured()){
    const ok = await FB.saveAll();
-   if(ok){ SYNC.dirty=false; if(!silent); DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên Firebase'); }
+   if(ok){ SYNC.dirty=false; if(!silent)toast('Đã đẩy lên Firebase'); DB.log('Đồng bộ','Đẩy toàn bộ dữ liệu lên Firebase'); }
    return;
  }
  syncCfgForm();
@@ -2225,13 +2158,13 @@ function saveFbForm(){
   };
   if(!cfg.apiKey || !cfg.projectId){ toast('Nhập ít nhất API Key và Project ID'); return; }
   saveFbCfg(cfg);
-  if(FB.init()){ ; FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); ; }); }
+  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); toast('Dữ liệu mới từ Firebase'); }); }
   else toast('Đã lưu, nhưng kết nối thất bại — kiểm tra lại config');
   nav(false);
 }
 function testFb(){
   if(FB.init()){ FB.docRef().get().then(s=>toast(s.exists?'Firebase OK — đã có dữ liệu':'Firebase OK — chưa có dữ liệu')).catch(e=>toast('Lỗi: '+e.message)); }
-  else ;
+  else toast('Chưa cấu hình Firebase hoặc SDK chưa tải');
 }
 function clearFb(){ if(confirm('Xóa cấu hình Firebase?')){ localStorage.removeItem(FB_KEY); FB.ready=false; FB.stop(); toast('Đã xóa'); nav(false); } }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
@@ -2256,7 +2189,7 @@ try{
       try{ localStorage.setItem(DBKEY, JSON.stringify(DB.data)); }catch(e){} /* lưu local, không trigger save ngược */
       SYNC.connected = true; SYNC.msg = 'Firebase • ' + new Date().toLocaleTimeString('vi-VN');
       renderSyncPill(); nav(false);
-      ;
+      toast('Dữ liệu mới từ Firebase');
     });
   }
 }catch(e){ console.warn('Firebase listen:', e.message); }
