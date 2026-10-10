@@ -504,7 +504,7 @@ select.inp:focus{
 .sheet-item.sel{background:#f59e0b;color:#000;font-weight:700}
 
 
-/* ===== TIẾN ĐỘ PRO V2 -  + IN ẤN + ZOOM + SPLIT ===== */
+/* ===== TIẾN ĐỘ PRO V2 - 14 DỰ ÁN CHUẨN + IN ẤN + ZOOM + SPLIT ===== */
 .prog{height:8px;background:#eef2f7;border-radius:99px;overflow:hidden;position:relative}
 .prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:99px;transition:width .35s}
 .prog.big{height:10px;background:#f1f5f9;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
@@ -623,228 +623,10 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .login-logo{display:block;margin:0 auto 12px;width:120px;height:auto;background:transparent;border-radius:0;padding:0}
 .sb-brand img{width:44px;height:44px;object-fit:contain;background:#fff;border-radius:8px;padding:2px;flex-shrink:0}
 
-
-/* ===== TUONG THICH DT - TAT CA VIEW - FULL ===== */
-@media(max-width:768px){
-  .page-head{flex-direction:column!important;align-items:flex-start!important;gap:12px!important;padding:12px!important;}
-  .page-head h1{font-size:18px!important;}
-  .page-actions{width:100%!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;}
-  .page-actions .btn{flex:1 1 auto!important;min-width:120px!important;}
-  .toolbar{flex-direction:column!important;gap:8px!important;}
-  .grid.g2,.grid.g3,.grid.g4{grid-template-columns:1fr!important;}
-  .td-card .row{flex-direction:column!important;align-items:flex-start!important;gap:4px!important;}
-  .gantt{overflow-x:auto!important;display:block!important;}
-  .gantt-scale{min-width:1200px!important;}
-  .gantt-row{min-width:1200px!important;}
-  .kanban{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;padding-bottom:16px!important;gap:12px!important;}
-  .kanban-col{flex:0 0 85vw!important;min-width:85vw!important;max-width:85vw!important;max-height:75vh!important;}
-  .cal-grid{gap:1px!important;}
-  .cal-cell{min-height:80px!important;padding:2px!important;}
-  .split-wrap{grid-template-columns:1fr!important;}
-  .kv{grid-template-columns:1fr!important;}
-  .tbl-wrap{border-radius:8px!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;}
-  table.tbl{min-width:850px!important;}
-  table.tbl th:nth-child(2), table.tbl td:nth-child(2){position:sticky!important;left:0!important;z-index:3!important;background:#fffdf6!important;border-right:2px solid #f0ad1f!important;}
-  table.tbl th:nth-child(2){background:#f0ad1f!important;color:#1a1410!important;}
-  .tbl-wrap:after{content:"⬅ Kéo để xem Giai đoạn & Ngày ➡";display:block;text-align:center;font-size:11px;color:#d97706;background:#fdf3dc;padding:6px;border-top:1px solid #f0ad1f;position:sticky;left:0;right:0;bottom:0;}
-  .td-view-switch{display:flex!important;overflow-x:auto!important;gap:6px!important;padding:8px 0!important;}
-  .td-view-switch button{white-space:nowrap!important;flex:0 0 auto!important;}
-  .badge{font-size:10px!important;white-space:nowrap!important;}
-}
-
-
-/* FIX MOBILE + IN MAU */
-@media(max-width:768px){
-  .tbl-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;}
-  table.tbl{min-width:850px!important;}
-  table.tbl th:nth-child(2), table.tbl td:nth-child(2){position:sticky!important;left:0!important;z-index:3!important;background:#fffdf6!important;border-right:2px solid #f0ad1f!important;}
-  table.tbl th:nth-child(2){background:#f0ad1f!important;color:#1a1410!important;}
-  .tbl-wrap:after{content:"⬅ Kéo để xem ➡";display:block;text-align:center;font-size:11px;color:#d97706;background:#fdf3dc;padding:6px;}
-  .kanban{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:10px!important;padding-bottom:12px!important;}
-  .kanban-col{flex:0 0 62vw!important;min-width:62vw!important;max-width:62vw!important;max-height:75vh!important;}
-  .kanban-item .k-title{display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important;white-space:normal!important;word-break:break-word!important;font-size:13px!important;line-height:1.5!important;}
-  .kanban-item{padding:10px 10px 10px 14px!important;overflow:visible!important;min-height:auto!important;}
-  .kanban-item .k-meta{white-space:normal!important;}
-  .gantt{overflow-x:auto!important;}
-  .gantt-scale{min-width:1200px!important;}
-  .gantt-row{min-width:1200px!important;}
-  .cal-grid{grid-template-columns:repeat(7,minmax(40px,1fr))!important;}
-  .td-view-switch{overflow-x:auto!important;white-space:nowrap!important;}
-  .page-head{flex-direction:column!important;gap:8px!important;}
-}
-
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js">
-/* ===== SWIPE SIDEBAR - VUOT TRAI PHAI DE MO ===== */
-(function(){
-  let startX=0, startY=0, isSwiping=false, startTime=0;
-  const EDGE=30, THRESHOLD=60, VERTICAL_LIMIT=80;
-  function getSidebar(){return document.getElementById('sidebar');}
-  function getBackdrop(){return document.getElementById('sbBackdrop');}
-  function isOpen(){const s=getSidebar();return s&&s.classList.contains('open');}
-  function openSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.add('open');}if(b){b.classList.add('show');}}
-  function closeSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.remove('open');}if(b){b.classList.remove('show');}}
-
-  document.addEventListener('touchstart', function(e){
-    if(e.touches.length!==1) return;
-    const t=e.touches[0];
-    startX=t.clientX; startY=t.clientY; startTime=Date.now();
-    // chi bat dau vuot khi o mep trai hoac sidebar dang mo
-    if(startX<EDGE || isOpen()){
-      isSwiping=true;
-    } else {
-      isSwiping=false;
-    }
-  }, {passive:true});
-
-  document.addEventListener('touchmove', function(e){
-    if(!isSwiping) return;
-    // neu dang trong bang co the cuon ngang thi bo qua de khong xung dot
-    const target=e.target;
-    if(target.closest && target.closest('.tbl-wrap, .gantt, .kanban, .cal-grid')) return;
-  }, {passive:true});
-
-  document.addEventListener('touchend', function(e){
-    if(!isSwiping) return;
-    isSwiping=false;
-    if(!e.changedTouches || !e.changedTouches.length) return;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-startX, dy=Math.abs(t.clientY-startY);
-    const dt=Date.now()-startTime;
-    if(dy>VERTICAL_LIMIT) return;
-    if(dt>600) return;
-    // vuot phai tu mep trai -> mo
-    if(!isOpen() && startX<EDGE && dx>THRESHOLD){
-      openSidebar();
-    }
-    // vuot trai khi sidebar dang mo -> dong
-    else if(isOpen() && dx< -THRESHOLD){
-      closeSidebar();
-    }
-  }, {passive:true});
-
-  // them vung vuot an o mep trai de de vuot hon
-  const swipeZone=document.createElement('div');
-  swipeZone.id='swipeZone';
-  swipeZone.style.cssText='position:fixed;left:0;top:0;bottom:0;width:18px;z-index:55;background:transparent;touch-action:pan-y;';
-  document.body.appendChild(swipeZone);
-})();
-
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js">
-/* ===== SWIPE SIDEBAR - VUOT TRAI PHAI DE MO ===== */
-(function(){
-  let startX=0, startY=0, isSwiping=false, startTime=0;
-  const EDGE=30, THRESHOLD=60, VERTICAL_LIMIT=80;
-  function getSidebar(){return document.getElementById('sidebar');}
-  function getBackdrop(){return document.getElementById('sbBackdrop');}
-  function isOpen(){const s=getSidebar();return s&&s.classList.contains('open');}
-  function openSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.add('open');}if(b){b.classList.add('show');}}
-  function closeSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.remove('open');}if(b){b.classList.remove('show');}}
-
-  document.addEventListener('touchstart', function(e){
-    if(e.touches.length!==1) return;
-    const t=e.touches[0];
-    startX=t.clientX; startY=t.clientY; startTime=Date.now();
-    // chi bat dau vuot khi o mep trai hoac sidebar dang mo
-    if(startX<EDGE || isOpen()){
-      isSwiping=true;
-    } else {
-      isSwiping=false;
-    }
-  }, {passive:true});
-
-  document.addEventListener('touchmove', function(e){
-    if(!isSwiping) return;
-    // neu dang trong bang co the cuon ngang thi bo qua de khong xung dot
-    const target=e.target;
-    if(target.closest && target.closest('.tbl-wrap, .gantt, .kanban, .cal-grid')) return;
-  }, {passive:true});
-
-  document.addEventListener('touchend', function(e){
-    if(!isSwiping) return;
-    isSwiping=false;
-    if(!e.changedTouches || !e.changedTouches.length) return;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-startX, dy=Math.abs(t.clientY-startY);
-    const dt=Date.now()-startTime;
-    if(dy>VERTICAL_LIMIT) return;
-    if(dt>600) return;
-    // vuot phai tu mep trai -> mo
-    if(!isOpen() && startX<EDGE && dx>THRESHOLD){
-      openSidebar();
-    }
-    // vuot trai khi sidebar dang mo -> dong
-    else if(isOpen() && dx< -THRESHOLD){
-      closeSidebar();
-    }
-  }, {passive:true});
-
-  // them vung vuot an o mep trai de de vuot hon
-  const swipeZone=document.createElement('div');
-  swipeZone.id='swipeZone';
-  swipeZone.style.cssText='position:fixed;left:0;top:0;bottom:0;width:18px;z-index:55;background:transparent;touch-action:pan-y;';
-  document.body.appendChild(swipeZone);
-})();
-
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js">
-/* ===== SWIPE SIDEBAR - VUOT TRAI PHAI DE MO ===== */
-(function(){
-  let startX=0, startY=0, isSwiping=false, startTime=0;
-  const EDGE=30, THRESHOLD=60, VERTICAL_LIMIT=80;
-  function getSidebar(){return document.getElementById('sidebar');}
-  function getBackdrop(){return document.getElementById('sbBackdrop');}
-  function isOpen(){const s=getSidebar();return s&&s.classList.contains('open');}
-  function openSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.add('open');}if(b){b.classList.add('show');}}
-  function closeSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.remove('open');}if(b){b.classList.remove('show');}}
-
-  document.addEventListener('touchstart', function(e){
-    if(e.touches.length!==1) return;
-    const t=e.touches[0];
-    startX=t.clientX; startY=t.clientY; startTime=Date.now();
-    // chi bat dau vuot khi o mep trai hoac sidebar dang mo
-    if(startX<EDGE || isOpen()){
-      isSwiping=true;
-    } else {
-      isSwiping=false;
-    }
-  }, {passive:true});
-
-  document.addEventListener('touchmove', function(e){
-    if(!isSwiping) return;
-    // neu dang trong bang co the cuon ngang thi bo qua de khong xung dot
-    const target=e.target;
-    if(target.closest && target.closest('.tbl-wrap, .gantt, .kanban, .cal-grid')) return;
-  }, {passive:true});
-
-  document.addEventListener('touchend', function(e){
-    if(!isSwiping) return;
-    isSwiping=false;
-    if(!e.changedTouches || !e.changedTouches.length) return;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-startX, dy=Math.abs(t.clientY-startY);
-    const dt=Date.now()-startTime;
-    if(dy>VERTICAL_LIMIT) return;
-    if(dt>600) return;
-    // vuot phai tu mep trai -> mo
-    if(!isOpen() && startX<EDGE && dx>THRESHOLD){
-      openSidebar();
-    }
-    // vuot trai khi sidebar dang mo -> dong
-    else if(isOpen() && dx< -THRESHOLD){
-      closeSidebar();
-    }
-  }, {passive:true});
-
-  // them vung vuot an o mep trai de de vuot hon
-  const swipeZone=document.createElement('div');
-  swipeZone.id='swipeZone';
-  swipeZone.style.cssText='position:fixed;left:0;top:0;bottom:0;width:18px;z-index:55;background:transparent;touch-action:pan-y;';
-  document.body.appendChild(swipeZone);
-})();
-
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 <!-- ============ LOGIN ============ -->
@@ -1220,7 +1002,7 @@ const NAV=[
  {label:'Người dùng',icon:'',hash:'#/users',perm:'users_manage'},
  {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
-let navExpanded={'Tiến độ thi công':false};
+let navExpanded={};
 function buildSidebar(){
  const u=Auth.user;
  let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
@@ -1304,10 +1086,7 @@ ROUTES['#/dashboard']=function(){
  const exps=scoped(DB.data.expenses);
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
- let h='<div class="page-head"><div><h1>Tổng quan</h1><button class="btn btn-sec noprint" onclick="window.print()" style="margin-left:10px">🖨️ In màu</button> - Đã có nút in</h1><p>Báo cáo tổng quan có thể in màu</p></div><div class=\"page-actions\"><button class=\"btn btn-sec\" onclick=\"window.print()\">🖨️ In báo cáo</button></div></div>';
- let _h=h; h=_h+''; // placeholder to keep original logic
- // --- original dashboard continues ---
-<p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
+ let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
@@ -1965,7 +1744,7 @@ function xlsxMake(sheets,logoB64){
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="13"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF0AD1F"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="14"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="4" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="12"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="9"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
@@ -2265,47 +2044,27 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
+ // R1-4: thông tin công ty (cột B)
  const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:2};R.push(rc);
  const ra=new Array(n).fill(null);ra[1]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[1]={v:'Tel: (84) 8 5410 4013 - (84) 903 865 240',s:3};R.push(rt);
  const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
+ // R5-7: trống 3 dòng
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
- const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:1};R.push(rti);
- const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:8};R.push(rnx);
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:9};});R.push(rh);
- rows.forEach(row=>{
-   const r=new Array(n).fill(null);
-   row.forEach((v,i)=>{
-     if(v==null||v==='') return;
-     if(typeof v==='number'){r[i]={v:v,s:6};}
-     else {r[i]={v:String(v),s:5};}
-   });
-   R.push(r);
- });
- if(foot){
-   const rf=new Array(n).fill(null);
-   if(typeof foot==='object'&&foot.total!=null){
-     for(let i=0;i<n;i++) rf[i]={v:'',s:5};
-     rf[n-2]={v:'Tổng cộng',s:9};rf[n-1]={v:foot.total,s:7};
-   } else {
-     const clean=String(foot).replace(/<[^>]*>/g,' ').trim();
-     const parts=clean.split(':');
-     if(parts.length>1){
-       for(let i=0;i<n;i++) rf[i]={v:'',s:5};
-       rf[n-2]={v:parts[0].trim(),s:9};rf[n-1]={v:parts.slice(1).join(':').trim(),s:7};
-     } else {
-       rf[0]={v:clean,s:9};
-     }
-   }
-   R.push(rf);
- }
+ // R8: tiêu đề
+ const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
+ // R9: ngày xuất
+ const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
+ // R10: header vàng
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
+ // Dữ liệu
+ rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DuAn',widths:[14,12,26,22,20,14,14,16,16,26].slice(0,n),rows:R,merges:merges}],filename);
+ xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
-}
-
 
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
@@ -2608,7 +2367,7 @@ ROUTES['#/tiendo-kanban']=function(){
   const items=DB.data.tienDo||[];
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1></h1><p>${items.length} hạng mục • Kéo thả theo giai đoạn thi công thực tế</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Kanban tiến độ - 14 dự án chuẩn</h1><p>${items.length} hạng mục • Kéo thả theo giai đoạn thi công thực tế</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar('<span style="font-size:12px;color:#666">💡 Sắp xếp: Chuẩn bị → Ngầm → Thô → Hoàn thiện → MEP</span>');h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
     const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
@@ -2793,7 +2552,7 @@ function ensureArrays(){
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
  // Merge tự động: nếu SEED có id mới mà DB.data chưa có thì thêm vào (không xóa cũ)
  try{
-  ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx','dutru','tienDo','danhmuc'].forEach(col=>{
+  ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
     if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
     const existing = new Set(DB.data[col].map(x=>x.id));
     SEED[col].forEach(item=>{
@@ -2879,62 +2638,6 @@ function autoPushSheets(){
   }catch(e){}
 }
 setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pullAll!=='undefined') await pullAll(true); }catch(e){} },5*60*1000);
-
-/* ===== SWIPE SIDEBAR - VUOT TRAI PHAI DE MO ===== */
-(function(){
-  let startX=0, startY=0, isSwiping=false, startTime=0;
-  const EDGE=30, THRESHOLD=60, VERTICAL_LIMIT=80;
-  function getSidebar(){return document.getElementById('sidebar');}
-  function getBackdrop(){return document.getElementById('sbBackdrop');}
-  function isOpen(){const s=getSidebar();return s&&s.classList.contains('open');}
-  function openSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.add('open');}if(b){b.classList.add('show');}}
-  function closeSidebar(){const s=getSidebar(),b=getBackdrop();if(s){s.classList.remove('open');}if(b){b.classList.remove('show');}}
-
-  document.addEventListener('touchstart', function(e){
-    if(e.touches.length!==1) return;
-    const t=e.touches[0];
-    startX=t.clientX; startY=t.clientY; startTime=Date.now();
-    // chi bat dau vuot khi o mep trai hoac sidebar dang mo
-    if(startX<EDGE || isOpen()){
-      isSwiping=true;
-    } else {
-      isSwiping=false;
-    }
-  }, {passive:true});
-
-  document.addEventListener('touchmove', function(e){
-    if(!isSwiping) return;
-    // neu dang trong bang co the cuon ngang thi bo qua de khong xung dot
-    const target=e.target;
-    if(target.closest && target.closest('.tbl-wrap, .gantt, .kanban, .cal-grid')) return;
-  }, {passive:true});
-
-  document.addEventListener('touchend', function(e){
-    if(!isSwiping) return;
-    isSwiping=false;
-    if(!e.changedTouches || !e.changedTouches.length) return;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-startX, dy=Math.abs(t.clientY-startY);
-    const dt=Date.now()-startTime;
-    if(dy>VERTICAL_LIMIT) return;
-    if(dt>600) return;
-    // vuot phai tu mep trai -> mo
-    if(!isOpen() && startX<EDGE && dx>THRESHOLD){
-      openSidebar();
-    }
-    // vuot trai khi sidebar dang mo -> dong
-    else if(isOpen() && dx< -THRESHOLD){
-      closeSidebar();
-    }
-  }, {passive:true});
-
-  // them vung vuot an o mep trai de de vuot hon
-  const swipeZone=document.createElement('div');
-  swipeZone.id='swipeZone';
-  swipeZone.style.cssText='position:fixed;left:0;top:0;bottom:0;width:18px;z-index:55;background:transparent;touch-action:pan-y;';
-  document.body.appendChild(swipeZone);
-})();
-
 </script>
 </body>
 </html>
