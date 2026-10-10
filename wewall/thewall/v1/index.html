@@ -2250,18 +2250,30 @@ function tienDoQuick(id,val){
 function tienDoForm(pid,id){
   const t=id?(DB.data.tienDo||[]).find(x=>x.id===id):{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:''};
   const projs=DB.data.projects||[];
-  openModal(''+(id?'Sửa':'Thêm')+' tiến độ',
+  openModal((id?'Sửa':'Thêm')+' tiến độ',
     '<label>Dự án</label><select class="inp" id="td_pid">'+projs.map(p=>'<option value="'+p.id+'"'+(t.projectId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+
     '<label>Hạng mục</label><input class="inp" id="td_hm" value="'+esc(t.hangMuc||'')+'" placeholder="VD: Móng, Thô, Hoàn thiện">'+
     '<label>Tiến độ (%)</label><input class="inp" type="number" id="td_pct" min="0" max="100" value="'+(t.phanTram||0)+'">'+
     '<label>Ghi chú</label><input class="inp" id="td_note" value="'+esc(t.ghiChu||'')+'">',
-    function(){
-      const d={projectId:document.getElementById('td_pid').value,hangMuc:document.getElementById('td_hm').value,phanTram:+document.getElementById('td_pct').value||0,ghiChu:document.getElementById('td_note').value,ngayCapNhat:new Date().toISOString().slice(0,10)};
-      if(!d.hangMuc){toast('Nhập hạng mục');return false;}
-      if(id){Object.assign(t,d);}else{d.id='td'+Date.now();(DB.data.tienDo=DB.data.tienDo||[]).push(d);}
-      DB.save();nav(false);return true;
-    });
+    '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo(\''+(id||'')+'\')">Lưu</button>');
 }
+function saveTienDo(id){
+  const pid=document.getElementById('td_pid').value;
+  const hangMuc=document.getElementById('td_hm').value.trim();
+  const phanTram=+document.getElementById('td_pct').value||0;
+  const ghiChu=document.getElementById('td_note').value.trim();
+  if(!hangMuc){toast('Nhập hạng mục');return;}
+  const d={projectId:pid,hangMuc:hangMuc,phanTram:phanTram,ghiChu:ghiChu,ngayCapNhat:new Date().toISOString().slice(0,10)};
+  if(id){
+    const t=(DB.data.tienDo||[]).find(x=>x.id===id);
+    if(t)Object.assign(t,d);
+  }else{
+    d.id='td'+Date.now();
+    (DB.data.tienDo=DB.data.tienDo||[]).push(d);
+  }
+  DB.save();closeModal();nav(false);
+}
+function closeModal(){document.getElementById('mback').classList.remove('open');}
 
 
 function fillFbForm(){
