@@ -46,7 +46,10 @@ textarea.inp{resize:vertical;min-height:70px}
 .sb-brand .t2{font-size:10.5px;color:#8a7f70;margin-top:2px}
 .sb-proj{margin:10px 18px 0;padding:8px 10px;background:rgba(240,173,31,.12);border:1px solid rgba(240,173,31,.4);border-radius:8px;font-size:12px;color:#f0ad1f;font-weight:700;display:none;word-break:break-word}
 .sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:10px 12px;-webkit-overflow-scrolling:touch}
-.sb-sec{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#6e6257;text-transform:uppercase;padding:12px 10px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-sec{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#8c8073;text-transform:uppercase;padding:12px 10px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-sec-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:transparent;cursor:pointer;text-align:left;line-height:1.3}
+.sb-sec-toggle:hover{color:#f0ad1f}
+.sb-sec-arrow{font-size:16px;line-height:1;flex-shrink:0;color:#f0ad1f}
 .sb-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:#d6cfc2;font-size:13.5px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;min-width:0;overflow:hidden}
 .sb-link:hover{background:rgba(255,255,255,.06);color:#fff}
 .sb-link.active{background:#f0ad1f;color:#1a1410;font-weight:700}
@@ -150,6 +153,14 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .tab{padding:10px 16px;font-size:13.5px;font-weight:600;color:var(--mut);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;flex-shrink:0}
 .tab.active{color:var(--pri);border-bottom-color:var(--pri)}
 .prog{height:8px;background:#eef2f7;border-radius:6px;overflow:hidden;min-width:0}
+.project-name{color:#9a4f00!important;font-weight:800!important}
+.project-code{display:block;font-size:11px;color:#7e7b7b!important;font-weight:600;line-height:1.25}
+.project-progress{min-width:108px}
+.project-progress summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px;color:#7c4a13;font-size:12px;font-weight:700;padding:5px 7px;border:1px solid #ead8bd;border-radius:7px;background:#fffaf2;white-space:nowrap}
+.project-progress summary::-webkit-details-marker{display:none}
+.project-progress summary:before{content:'▸';font-size:18px;line-height:1;color:#9a4f00;transition:transform .15s}
+.project-progress[open] summary:before{transform:rotate(90deg)}
+.project-progress summary:focus-visible{outline:2px solid #f0ad1f;outline-offset:2px}
 .prog i{display:block;height:100%;border-radius:6px;background:var(--ok)}
 .prog.over i{background:var(--bad)}
 .ledger-in{color:var(--ok);font-weight:700}.ledger-out{color:var(--bad);font-weight:700}
@@ -188,6 +199,20 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .phieu-words{margin:10px 0;word-break:break-word}
 .phieu-foot{display:flex;justify-content:flex-end;gap:60px;margin-top:18px;text-align:center;font-size:13px;flex-wrap:wrap}
 .phieu-modal-body{max-height:70vh;overflow-y:auto;overflow-x:hidden}
+/* Compact, single-page A4 payment form */
+body.printing-phieu .phieu-wrap{width:100%;max-width:190mm;margin:0 auto;padding:3mm 4mm;border:0;font-size:9.2px;line-height:1.16}
+body.printing-phieu .phieu-head{gap:8px;padding-bottom:4px;margin-bottom:3px}
+body.printing-phieu .phieu-head .logo{width:48px;height:48px}
+body.printing-phieu .phieu-head .co{font-size:9px;line-height:1.2}
+body.printing-phieu .ptitle{font-size:14px;margin:3px 0 1px}
+body.printing-phieu .pdate{font-size:9px;margin-bottom:3px}
+body.printing-phieu .ptbl{font-size:8.8px;margin:3px 0}
+body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:2px 3px;line-height:1.12}
+body.printing-phieu .psec{font-size:9px;margin:3px 0 0;line-height:1.15}
+body.printing-phieu .pdot{height:5px;margin:0}
+body.printing-phieu .prow{gap:5px;margin:3px 0;font-size:9px}
+body.printing-phieu .prow .dot{height:6px}
+body.printing-phieu .pfoot{font-size:8.5px;margin-top:4px;padding:3px}
 body.printing-phieu .sidebar,body.printing-phieu .topbar,body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
 body.printing-phieu .mback{position:static;padding:0;background:none}
 body.printing-phieu .modal{box-shadow:none;width:100%;max-width:100%}
@@ -251,7 +276,6 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   .login-card{padding:28px 20px;width:100%;max-width:400px}
 }
 @media(max-width:480px){
-  .cal-cell{min-height:76px;padding:3px}.cal-cell .citem{font-size:9px;padding:2px 3px}.cal-proj-tag{font-size:8px;padding:0 2px}
   .topbar h2{display:none}
   .page-actions{width:100%}
   .page-actions .btn{flex:1;justify-content:center;min-width:0}
@@ -268,41 +292,27 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
   body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
   body.printing-phieu{font-family:Arial,sans-serif!important}
-  body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:8px 12px!important;font-size:10.5px!important;line-height:1.3!important;font-family:Arial,sans-serif!important}
-  body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important}
-  body.printing-phieu .ptbl{font-size:11px!important}
-  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:3px 5px!important}
-  body.printing-phieu .psig td{height:44px!important}
-  body.printing-phieu .ptitle{font-size:16px!important;margin:6px 0 2px!important}
-  body.printing-phieu .psec{margin:5px 0 1px!important}
-  body.printing-phieu .pdot{height:10px!important}
-  body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
-  @page{size:A4;margin:8mm}
-  body.printing-phieu .phieu-wrap{page-break-inside:auto!important;break-inside:auto!important}
+  body.printing-phieu .phieu-wrap{width:100%!important;max-width:190mm!important;margin:0 auto!important;padding:3mm 4mm!important;font-size:9.2px!important;line-height:1.16!important;font-family:Arial,sans-serif!important;break-inside:avoid!important;page-break-inside:avoid!important;zoom:.92}
+  body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important;box-sizing:border-box!important}
+  body.printing-phieu .phieu-head{gap:8px!important;padding-bottom:4px!important;margin-bottom:3px!important}
+  body.printing-phieu .phieu-head .logo{width:48px!important;height:48px!important}
+  body.printing-phieu .phieu-head .co{font-size:9px!important;line-height:1.2!important}
+  body.printing-phieu .ptbl{font-size:8.8px!important;margin:3px 0!important;break-inside:avoid!important}
+  body.printing-phieu .ptbl tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:2px 3px!important;line-height:1.12!important}
+  body.printing-phieu .ptitle{font-size:14px!important;margin:3px 0 1px!important}
+  body.printing-phieu .pdate{font-size:9px!important;margin-bottom:3px!important}
+  body.printing-phieu .psec{font-size:9px!important;margin:3px 0 0!important;line-height:1.15!important}
+  body.printing-phieu .pdot{height:5px!important;margin:0!important}
+  body.printing-phieu .prow{gap:5px!important;margin:3px 0!important;font-size:9px!important}
+  body.printing-phieu .prow .dot{height:6px!important}
+  body.printing-phieu .pfoot{margin-top:4px!important;padding:3px!important;font-size:8.5px!important}
+  @page{size:A4 portrait;margin:5mm}
   #view{padding:0;overflow:visible}
   .main{overflow:visible}
   .card{box-shadow:none;break-inside:avoid}
   body{background:#fff}
 }
-
-
-/* User refinements: readable project labels, compact progress disclosure, custom mobile-friendly item picker */
-.project-name-strong{color:#9a4d00!important;font-weight:800!important}
-.project-code-strong{font-size:11px;color:#8b4513;font-weight:700;letter-spacing:.2px;margin-top:2px}
-.progress-details>summary{display:flex;align-items:center;gap:7px;font-size:12px!important;font-weight:800;padding:7px 10px!important;color:#8a4300!important;background:#fff4e5!important;border:1px solid #e9b36b!important;border-radius:8px!important;cursor:pointer;user-select:none}
-.progress-chevron{display:inline-flex;align-items:center;justify-content:center;font-size:22px;line-height:1;width:20px;height:20px;font-weight:900;transition:transform .16s}
-.progress-details[open] .progress-chevron{transform:rotate(90deg)}
-.td-hm-picker{position:relative;width:100%;z-index:20}
-.td-hm-inputrow{display:flex;align-items:stretch;gap:0}
-.td-hm-inputrow .inp{border-radius:10px 0 0 10px!important;flex:1;min-width:0}
-.td-hm-toggle{width:44px;flex-shrink:0;border:1px solid #d9c5a5;border-left:0;border-radius:0 10px 10px 0;background:linear-gradient(180deg,#fffaf0,#f5e7d0);color:#8a4b08;font-size:24px;font-weight:800;cursor:pointer}
-.td-hm-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:250px;overflow:auto;padding:6px;background:#fff;border:1px solid #e7d4b7;border-radius:12px;box-shadow:0 14px 35px rgba(55,35,12,.2);z-index:1000}
-.td-hm-menu[hidden]{display:none!important}
-.td-hm-option{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;border:0;background:#fff;border-radius:8px;padding:11px 12px;text-align:left;color:#3d3328;font-size:14px;font-weight:600;cursor:pointer}
-.td-hm-option:hover,.td-hm-option:focus{background:#fff2d9;color:#8a4300;outline:none}
-.td-hm-check{color:#b7791f;font-size:12px}
-.td-hm-custom{padding:9px 12px;color:#78716c;font-size:12px;border-top:1px solid #f1e6d5;margin-top:4px}
-@media(max-width:600px){.td-hm-menu{max-height:42vh}.td-hm-option{padding:13px 12px;font-size:15px}}
 
 /* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
 select.inp{
@@ -312,9 +322,11 @@ select.inp{
   background-repeat:no-repeat;
   background-position:right 12px center;
   background-size:16px;
-  padding:10px 38px 10px 12px !important;
-  border:1.5px solid #e8ddd0 !important;
-  border-radius:10px !important;
+  padding:7px 32px 7px 10px !important;
+  border:1px solid #d7c9b6 !important;
+  border-radius:8px !important;
+  font-size:13px;
+  min-height:36px;
   font-weight:500;
   color:#2b241e;
   box-shadow:0 1px 2px rgba(26,20,16,.04), 0 0 0 1px rgba(255,255,255,.8) inset;
@@ -334,7 +346,7 @@ select.inp:focus{
 }
 select.inp:active{transform:scale(.99)}
 /* option – native vẫn đẹp hơn */
-select.inp option{padding:10px 12px;font-weight:500;color:#1a1410;background:#fff}
+select.inp option{padding:6px 8px;font-size:13px;font-weight:500;color:#1a1410;background:#fff}
 select.inp option:checked{background:linear-gradient(90deg,#fef3c7,#fde68a);color:#78350f}
 
 /* proj pick – gọn tinh tế */
@@ -509,7 +521,6 @@ select.inp:focus{
 }
 
 
-.dropdown-premium,details.card{border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--sh)}details.card>summary,details.progress-details>summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;color:#3f3428}details.card>summary::-webkit-details-marker,details.progress-details>summary::-webkit-details-marker{display:none}.progress-details{min-width:90px}.progress-details>summary{font-size:11px;color:#8a5a14;background:#fff8e7;border:1px solid #f0dfb4;border-radius:7px;padding:4px 8px;white-space:nowrap}.progress-details[open]>summary{margin-bottom:6px}details.card>summary:after{content:'＋';float:right;color:#b7791f}details.card[open]>summary:after{content:'−'}
 /* ===== CUSTOM DROPDOWN BOTTOM-SHEET ===== */
 .csel{position:relative}
 .csel-btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
@@ -537,17 +548,23 @@ select.inp:focus{
 .td-card .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 
 /* KANBAN PRO */
-.kanban{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 16px;scroll-snap-type:x proximity}
+.kanban{display:flex;gap:10px;overflow-x:auto;padding:4px 4px 12px;scroll-snap-type:x proximity}
 .kanban::-webkit-scrollbar{height:8px}
 .kanban::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
-.kanban-col{min-width:300px;max-width:340px;flex:1 0 300px;background:linear-gradient(180deg,#fbf9f5 0%,#f8fafc 100%);border:1px solid #ece5d8;border-radius:16px;padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 200px)}
-.kanban-col-header{position:sticky;top:0;z-index:2;padding:12px 12px 10px;background:rgba(251,249,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid #ece5d8;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}
+.kanban-col{min-width:205px;max-width:235px;flex:1 0 215px;background:linear-gradient(180deg,#fbf9f5 0%,#f8fafc 100%);border:1px solid #ece5d8;border-radius:16px;padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 200px)}
+.kanban-col-header{position:sticky;top:0;z-index:2;padding:9px 9px 8px;background:rgba(251,249,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid #ece5d8;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}
 .kanban-col-title{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
 .kanban-col-title .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .kanban-col-meta{display:flex;gap:6px;align-items:center}
 .kanban-col-count{background:#fff;border:1px solid #e8ddd0;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
 .kanban-col-avg{font-size:11px;font-weight:700;color:#92400e;background:#fef3c7;border-radius:20px;padding:2px 8px}
-.kanban-col-body{padding:10px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px}
+.kanban-col-body{padding:7px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:6px}
+.kanban-item{padding:7px 8px;border-radius:9px;box-shadow:0 1px 2px rgba(26,20,16,.04)}
+.kanban-item .k-title{font-size:12px;line-height:1.3;margin-bottom:4px}
+.kanban-item .k-meta{gap:5px;margin-bottom:5px}
+.kanban-item .k-proj{font-size:10px;padding:1px 5px;max-width:65%}
+.kanban-item .k-bar{margin-bottom:5px}
+.kanban-item .k-foot{font-size:10px;gap:4px}
 .kanban-col[data-stage="chuanbi"]{border-top:3px solid #94a3b8}
 .kanban-col[data-stage="ngam"]{border-top:3px solid #3b82f6}
 .kanban-col[data-stage="tho"]{border-top:3px solid #f59e0b}
@@ -601,7 +618,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .cal-cell.other{background:#fbfaf8;color:#a8a29e}
 .cal-cell.today{background:#fffbeb;box-shadow:inset 0 0 0 2px #f0ad1f}
 .cal-cell .dnum{font-size:12px;font-weight:700;margin-bottom:6px}
-.cal-cell .citem{font-size:11px;padding:3px 6px;border-radius:6px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:600}.cal-proj-tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.1px;padding:1px 4px;margin-right:2px;border-radius:4px;background:rgba(255,255,255,.72);border:1px solid currentColor;vertical-align:1px}
+.cal-cell .citem{font-size:11px;padding:3px 6px;border-radius:6px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:600}
 .citem.c-blue{background:#dbeafe;color:#1e40af}
 .citem.c-amber{background:#fef3c7;color:#92400e}
 .citem.c-green{background:#dcfce7;color:#166534}
@@ -615,42 +632,25 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .split-pane-head{padding:10px 14px;background:#faf7f2;border-bottom:1px solid #ece5d8;font-weight:700;font-size:13px;display:flex;justify-content:space-between}
 .split-pane-body{flex:1;overflow:auto;padding:10px}
 @media(max-width:1100px){.split-wrap{grid-template-columns:1fr}}
+@media(max-width:700px){select.inp,.proj-pick select{font-size:13px!important;min-height:34px!important;padding:6px 30px 6px 9px!important;border-radius:7px!important}.sb-sec-toggle{padding-top:10px;padding-bottom:5px}.kanban-col{min-width:195px;max-width:220px;flex-basis:205px}.project-progress summary{min-height:34px;padding:6px 8px}.split-pane-body{padding:7px}}
 
 /* PRINT CHUYEN NGHIỆP */
 .print-header{display:none}
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
   @page{size:A4 landscape;margin:12mm}
   body{background:#fff!important}
   .sidebar,#sbBackdrop,.topbar,.page-actions .btn-sec,.td-view-switch,.td-toolbar .noprint,.td-zoom,.footer{display:none!important}
-  .print-header{display:block!important;border:2px solid #b88a35;padding:12px 16px;margin-bottom:14px;border-radius:8px;background:#fffaf0!important;color:#1a1410!important}
+  .print-header{display:block!important;border:2px solid #1a1410;padding:12px 16px;margin-bottom:14px;border-radius:8px}
   .print-header h1{font-size:18px;font-weight:800;margin:0 0 6px}
   .print-header .meta{font-size:12px;color:#333;display:flex;gap:18px;flex-wrap:wrap}
   .print-header .meta b{color:#000}
   .print-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#666;border-top:1px solid #ccc;padding:6px}
   .gantt,.kanban,.cal-grid{box-shadow:none!important;border:1px solid #000!important}
-  .cal-cell.today,.cal-head,.kanban-col-header,.kanban-col,.badge,.k-status,.prog,.prog i,.gantt-bar,.gantt-bar i,.citem,.stat,.td-card{ -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important }
   .gantt{overflow:visible!important}
   .kanban{overflow:visible!important;flex-wrap:wrap}
   .kanban-col{break-inside:avoid;max-height:none!important}
-  #appView,.shell,.main,#view,.card,.card-b,.tbl-wrap,.split-wrap,.split-pane,.split-pane-body,#tiendoScope,#rpOut{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important}
-  #appView,.shell,.main{display:block!important;width:100%!important;max-width:none!important}
-  #view{padding:0!important;width:100%!important;max-width:none!important}
-  .card{box-shadow:none!important;break-inside:auto!important;page-break-inside:auto!important}
-  .card-h,.page-head,.print-header{break-inside:avoid!important;page-break-inside:avoid!important}
-  table{width:100%!important;border-collapse:collapse!important}
-  thead{display:table-header-group}
-  tfoot{display:table-footer-group}
-  tr{break-inside:avoid!important;page-break-inside:avoid!important}
-  .tbl-wrap{overflow:visible!important}
-  .kanban,.cal-grid,.gantt{max-height:none!important;overflow:visible!important}
-  .split-wrap{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
-  .split-pane{min-width:0!important}
-  .split-pane-body{overflow:visible!important}
-  .kanban{flex-wrap:wrap!important}
-  .kanban-col{break-inside:avoid!important;max-height:none!important}
-  .print-footer{position:static!important}
-  body{height:auto!important;overflow:visible!important}
+  #view{overflow:visible!important;padding:0!important}
+  .main{overflow:visible!important}
 }
 #tiendoScope{transition:transform .2s ease;transform-origin:top left}
 #tiendoScope.zoom-90{transform:scale(.9);width:111.11%}
@@ -1030,16 +1030,16 @@ const NAV=[
  {sec:'TỔNG QUAN'},
  {label:'Tổng quan',icon:'',hash:'#/dashboard'},
  {sec:'DỰ ÁN'},
- {label:'Tất cả Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
+ {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
-   {label:'Dashboard',hash:'#/tiendo'},
+   {label:'Tổng quan Dashboard',hash:'#/tiendo'},
    {label:'Danh sách chi tiết',hash:'#/tiendo-list'},
    {label:'Kanban Board',hash:'#/tiendo-kanban'},
    {label:'Timeline Gantt',hash:'#/tiendo-gantt'},
-   {label:'Calendar',hash:'#/tiendo-calendar'},
-   {label:'Split View',hash:'#/tiendo-split'}
+   {label:'Lịch Calendar',hash:'#/tiendo-calendar'},
+   {label:'Split View (2 màn hình)',hash:'#/tiendo-split'}
  ]},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
@@ -1069,8 +1069,10 @@ function buildSidebar(){
  {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
  h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>';
+ let secOpen=true;
  NAV.forEach(it=>{
-  if(it.sec){h+='<div class="sb-sec">'+it.sec+'</div>';return;}
+  if(it.sec){const key='sec:'+it.sec;secOpen=navExpanded[key]!==false;h+='<button type="button" class="sb-sec sb-sec-toggle" aria-expanded="'+secOpen+'" onclick="navExpanded[\''+key+'\']='+(secOpen?'false':'true')+';buildSidebar()"><span>'+it.sec+'</span><span class="sb-sec-arrow">'+(secOpen?'⌄':'›')+'</span></button>';return;}
+  if(!secOpen)return;
   if(it.min==='Admin'&&!Auth.canAdmin())return;
   if(it.min==='Super Admin'&&!Auth.canSuper())return;
   if(it.perm&&!Auth.can(it.perm))return;
@@ -1146,7 +1148,7 @@ ROUTES['#/dashboard']=function(){
  const exps=scoped(DB.data.expenses);
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
- let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
+ let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
@@ -1163,7 +1165,7 @@ ROUTES['#/dashboard']=function(){
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
  h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
-  h+='<tr><td><a class="linklike project-name-strong" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:#8b4513;font-weight:600">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
+  h+='<tr><td><a class="linklike project-name" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><span class="project-code">'+esc(p.code)+'</span><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
  h+='<div class="grid g4">'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/vendors\'"><div style="font-size:12px;color:var(--mut)">Nhà cung cấp</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.vendors).length+'</div></div>'
@@ -1178,20 +1180,22 @@ function statusBadge(s){
  const norm={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'}[s]||s;
  return '<span class="badge '+(m[norm]||'b-gray')+'">'+esc(norm)+'</span>';
 }
-/* Tiến độ thi công dạng gọn trong danh sách dự án; tránh lỗi render khi thiếu helper. */
+/* Tiến độ dự án thu gọn mặc định; mở khi người dùng chủ động bấm */
 function tienDoCell(pid){
- const pct=typeof tienDoProject==='function'?tienDoProject(pid):0;
- return '<div style="min-width:88px"><div class="prog"><i style="width:'+Math.max(0,Math.min(100,pct))+'%"></i></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:11px;color:var(--mut)"><b>'+pct+'%</b><a href="#/tiendo/'+encodeURIComponent(pid)+'">Chi tiết</a></div></div>';
+ const list=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
+ const avg=list.length?Math.round(list.reduce((n,t)=>n+(+t.phanTram||0),0)/list.length):0;
+ const label=list.length?(avg+'% • '+list.length+' hạng mục'):'Chưa có tiến độ';
+ return '<details class="project-progress"><summary aria-label="Mở tiến độ dự án">'+esc(label)+'</summary><div style="padding:7px 2px 2px;min-width:160px"><div class="prog"><i style="width:'+avg+'%;background:#c47a13"></i></div><div style="display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:11px;color:#6b6258"><span>'+avg+'% hoàn thành</span><a href="#/tiendo-list" style="font-weight:700">Chi tiết →</a></div></div></details>';
 }
 /* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
- let h='<div class="page-head"><div><h1>Tất cả Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
+ let h='<div class="page-head"><div><h1>Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike project-name-strong" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div class="project-code-strong">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td><details class="progress-details"><summary><span class="progress-chevron">▸</span> Tiến độ</summary>'+tienDoCell(p.id)+'</details></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike project-name" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><span class="project-code">'+esc(p.code)+'</span></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1268,23 +1272,6 @@ function nav(rebuild){
  if(!fn)fn=ROUTES['#/dashboard'];
  $('#view').innerHTML='';fn();window.scrollTo(0,0);
 }
-
-// In báo cáo: bổ sung tên trang, dự án đang chọn, ngày in và số trang trên mọi trang in.
-(function(){
-  let printMeta=null;
-  window.addEventListener('beforeprint',function(){
-    if(document.querySelector('body.printing-phieu'))return;
-    const view=document.getElementById('view');if(!view)return;
-    if(view.querySelector('.print-header'))return;
-    const title=(view.querySelector('.page-head h1')||view.querySelector('h1')||{}).textContent||document.title;
-    const pick=document.getElementById('projPick');const project=pick&&pick.selectedOptions&&pick.selectedOptions[0]?pick.selectedOptions[0].textContent:'Tất cả dự án';
-    printMeta=document.createElement('div');printMeta.className='print-header print-meta-auto';
-    printMeta.innerHTML='<h1>'+String(title).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</h1><div class="meta"><span><b>Dự án:</b> '+String(project).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</span><span><b>Ngày in:</b> '+new Date().toLocaleString('vi-VN')+'</span><span><b>Người in:</b> '+String((window.Auth&&Auth.user&&Auth.user.name)||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</span></div>';
-    view.insertBefore(printMeta,view.firstChild);
-  });
-  window.addEventListener('afterprint',function(){if(printMeta&&printMeta.parentNode)printMeta.parentNode.removeChild(printMeta);printMeta=null;});
-})();
-
 /* ================= PARTNERS (generic) ================= */
 const PCFG={
  vendors:{coll:'vendors',tx:'vendorTx',fk:'vendorId',t:'Nhà cung cấp',icon:'',inT:'purchase',outT:'payment',inL:'Mua hàng/Nhập',outL:'Thanh toán',dueL:'Công nợ phải trả',back:'#/vendors'},
@@ -1507,16 +1494,13 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
 };
 /* ================= REPORTS ================= */
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div><div class="page-actions"><button class="btn btn-pri" onclick="window.print()">🖨 In báo cáo</button></div></div>';
- const reportPie=DB.data.projects.map((p,i)=>({label:p.name,value:Math.max(0,projectSpent(p.id)),color:['#d97706','#0f766e','#2563eb','#7c3aed','#dc2626','#0891b2','#65a30d','#db2777'][i%8]})).filter(x=>x.value>0);
- h+='<div class="card" style="margin:0 0 16px"><div class="card-h"><div><h3>Biểu đồ tròn — cơ cấu chi phí theo dự án</h3><div class="sub">Tỷ trọng chi phí thực tế của các dự án</div></div></div><div class="card-b">'+(reportPie.length?donutChart(reportPie):'<div class="empty">Chưa có dữ liệu chi phí để lập biểu đồ</div>')+'</div></div>';
+ let h='';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
   +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))
   +'<button class="btn btn-pri" onclick="reportCash()">Xem báo cáo</button></div></div>';
- h+='</div>';
+ h+='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ</h3><div class="sub">Phải trả & phải thu toàn công ty</div></div></div><div class="card-b"><button class="btn btn-pri" onclick="reportDebt()">Xem báo cáo</button></div></div></div>';
  h+='<div id="rpOut" style="margin-top:16px"></div>';
  $('#view').innerHTML=h;
- reportDebt();
 };
 function reportCash(){
  const pid=formVal('rp'),p=DB.data.projects.find(x=>x.id===pid);
@@ -1530,7 +1514,7 @@ function reportDebt(){
  let tp=0,tr=0,rows='';
  scoped(DB.data.projects).forEach(p=>{const l=projectLiab(p.id),r=projectRecv(p.id);tp+=l.total;tr+=r;
   rows+='<tr><td>'+esc(p.name)+'</td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
- $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ phải trả & phải thu toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
+ $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
 }
 /* ================= QUICK ENTRY ================= */
 ROUTES['#/quick']=function(){
@@ -1774,14 +1758,13 @@ function xuatPhieuDNTT_XLSX(id){
  const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
  const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
- let r=mk();
- r=mk();C(r,0,'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',2);
- r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',2);
- r=mk();C(r,0,'Tel: (84) 8 5410 4013 - (84) 903 865 240',2);
- r=mk();C(r,0,'Website: www.thewall.com.vn',2);
+ let r=mk();C(r,1,'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',2);
+ r=mk();C(r,1,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',3);
+ r=mk();C(r,1,'Tel: (84) 8 5410 4013 - (84) 903 865 240',3);
+ r=mk();C(r,1,'Website: www.thewall.com.vn',3);
  mk();mk();mk();
- r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',1);
- r=mk();C(r,5,'Ngày: '+fmtDate(t.date),3);
+ r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',11);
+ r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
  r=mk();C(r,0,'Người đề nghị: '+(dn.nguoitao||(Auth.user&&Auth.user.name)||''),2);C(r,7,'Bộ phận:',2);
  r=mk();C(r,0,'Mục đích thanh toán:',2);C(r,2,dn.noidung||t.ghichu||'',2);
  r=mk();C(r,0,'Hạng mục:',2);C(r,2,dn.hangmuc||'',2);
@@ -1812,7 +1795,7 @@ function xuatPhieuDNTT_XLSX(id){
  r=mk();C(r,0,'XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN',5);
  mk();
  r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',2);
- const merges=['A1:J1','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
+ const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
  xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
@@ -1829,16 +1812,14 @@ function xlsxMake(sheets,logoB64){
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="16"/><color rgb="FF7A4E20"/><name val="Arial"/></font><font><b/><sz val="13"/><color rgb="FF000000"/><name val="Arial"/></font><font><i/><sz val="10"/><color rgb="FF808080"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FF000000"/><name val="Arial"/></font><font><b/><sz val="9"/><name val="Arial"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFF2CC"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFF8E7"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FFE7C66B"/></top><bottom style="thin"><color rgb="FFE7C66B"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="7"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
   function sheetXml(sh,withDrawing){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
       +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
-      +'<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>'
-      +'<pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="1"/>'
-      +'<printOptions horizontalCentered="1"/>';
+      +'<sheetPr><pageSetUpPr fitToPage="1" autoPageBreaks="0"/></sheetPr>';
     if(sh.widths&&sh.widths.length){
       s+='<cols>';
       sh.widths.forEach((w,i)=>{s+='<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';});
@@ -1850,7 +1831,7 @@ function xlsxMake(sheets,logoB64){
       const ht=(sh.heights&&sh.heights[rn])?(' ht="'+sh.heights[rn]+'" customHeight="1"'):'';
       s+='<row r="'+rn+'"'+ht+'>';
       row.forEach((cell,c)=>{
-        if(cell==null||cell.v==null||cell.v==='')return;
+        if(cell==null||cell.v==null)return;
         const ref=colName(c)+rn;
         const st=(cell.s!=null)?(' s="'+cell.s+'"'):'';
         if(typeof cell.v==='number'){
@@ -1867,6 +1848,9 @@ function xlsxMake(sheets,logoB64){
       sh.merges.forEach(m=>{s+='<mergeCell ref="'+m+'"/>';});
       s+='</mergeCells>';
     }
+    s+='<printOptions horizontalCentered="1" verticalCentered="0"/>'
+      +'<pageMargins left="0.2" right="0.2" top="0.25" bottom="0.25" header="0.1" footer="0.1"/>'
+      +'<pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="1" scale="75"/>';
     if(withDrawing)s+='<drawing r:id="rId1"/>';
     s+='</worksheet>';
     return s;
@@ -1968,10 +1952,18 @@ function xlsxMake(sheets,logoB64){
   return out;
 }
 function xlsxDownload(sheets,filename){
-  const finish=function(_logo){const data=xlsxMake(sheets,_logo);const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);};
-  let src='';try{if(typeof TW_LOGO==='string')src=TW_LOGO;}catch(e){}
-  if(src.startsWith('data:image/')){finish(src);return;}
-  if(src){const im=new Image();im.onload=function(){try{const cv=document.createElement('canvas');cv.width=im.naturalWidth||160;cv.height=im.naturalHeight||100;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);finish(cv.toDataURL('image/png'));}catch(e){finish(null);}};im.onerror=function(){finish(null);};im.src=src;}else finish(null);
+  const makeAndDownload=(logoData)=>{
+  const data=xlsxMake(sheets,logoData||null);
+  const blob=new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
+  a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+  };
+  try{
+    if(typeof TW_LOGO==='string'&&TW_LOGO.indexOf('base64,')>0){makeAndDownload(TW_LOGO);return;}
+    if(typeof TW_LOGO==='string'&&TW_LOGO){const im=new Image();im.onload=()=>{try{const cv=document.createElement('canvas');cv.width=im.naturalWidth||im.width;cv.height=im.naturalHeight||im.height;cv.getContext('2d').drawImage(im,0,0);makeAndDownload(cv.toDataURL('image/png'));}catch(e){makeAndDownload(null);}};im.onerror=()=>makeAndDownload(null);im.src=TW_LOGO;return;}
+  }catch(e){}
+  makeAndDownload(null);
 }
 
 
@@ -2142,7 +2134,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:15};rf[n-1]={v:foot.total,s:7};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:15};rf[n-1]={v:parts.slice(1).join(':').trim(),s:7};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
@@ -2420,8 +2412,7 @@ ROUTES['#/tiendo']=function(){
     const its=(DB.data.tienDo||[]).filter(t=>t.projectId===p.id);
     h+=`<div class="td-card"><div class="row"><b>${esc(p.code)} - ${esc(p.name)}</b><span style="font-weight:800;color:#d97706">${pct}%</span></div><div class="prog big"><i style="width:${pct}%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b;display:flex;justify-content:space-between"><span>${gd.gdl} • ${its.length} hạng mục</span><span><a href="#/tiendo/${p.id}">Chi tiết →</a> | <a href="#/tiendo-gantt">Gantt</a> | <a href="#/tiendo-kanban">Kanban</a></span></div></div>`;
   });
-  h+='</div>';
-  h+='</div>';
+  h+='</div></div>';
   h+='<div class="print-footer" style="display:none">In lúc: '+new Date().toLocaleString('vi-VN')+' - The Wall PMS</div>';
   document.getElementById('view').innerHTML=h;
 };
@@ -2442,7 +2433,7 @@ ROUTES['#/tiendo-list']=function(){
     const p=DB.data.projects.find(x=>x.id===t.projectId);
     const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
     const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
-    h+=`<tr><td><b>${esc(p?p.name:'Không xác định')}</b></td><td><span class="badge b-gray">${esc(({chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & Hạ tầng'})[t.giaiDoan]||t.giaiDoan||'Chưa xác định')}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
+    h+=`<tr><td><b>${esc(p?p.code:'')}</b><div style="font-size:11px;color:#666">${esc(p?p.name:'')}</div></td><td><span class="badge b-gray">${esc(t.giaiDoan)}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
   });
   h+='</tbody></table></div></div></div>';
   document.getElementById('view').innerHTML=h;
@@ -2451,7 +2442,7 @@ ROUTES['#/tiendo-kanban']=function(){
   const items=DB.data.tienDo||[];
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Kanban tiến độ</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=`<div class="page-actions" style="justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div>`;
   h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar();h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
     const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
@@ -2479,7 +2470,7 @@ ROUTES['#/tiendo-gantt']=function(){
   scale+='</div>';
   let h=getPrintHeader();
   h+=`<div class="page-head"><div><h1>Timeline Gantt tháng ${now.getMonth()+1}/${now.getFullYear()} - 14 dự án</h1><p>${items.length} hạng mục • Đường đỏ: hôm nay • Thanh dài: thời gian • Tô màu: % hoàn thành</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
-  h+=tdViewSwitcher('#/tiendo-gantt');h+=tdToolbar('<span style="font-size:12px">14 dự án mẫu sắp xếp theo thứ tự: Chung cư → Biệt thự → Resort → Trường → Khách sạn → Bệnh viện → Villa → Golf → Long Thành</span>');h+='<div id="tiendoScope"><div class="gantt">'+scale;
+  h+=tdViewSwitcher('#/tiendo-gantt');h+=tdToolbar();h+='<div id="tiendoScope"><div class="gantt">'+scale;
   const projs={};items.forEach(t=>{(projs[t.projectId]=projs[t.projectId]||[]).push(t);});
   const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
   orderIds.forEach(pid=>{
@@ -2510,7 +2501,7 @@ ROUTES['#/tiendo-calendar']=function(){
   for(let d=1;d<=last.getDate();d++){
     const dt=new Date(y,m,d);const isToday=d===now.getDate();
     const dayItems=items.filter(t=>{const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cur=new Date(y,m,d);return cur>=new Date(s.getFullYear(),s.getMonth(),s.getDate()) && cur<=new Date(e.getFullYear(),e.getMonth(),e.getDate());});
-    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');const pr=(DB.data.projects||[]).find(p=>p.id===t.projectId);const tag=pr?(pr.code||pr.name):'DA';return `<div class="citem ${c}" title="${esc((pr?pr.name+' • ':'')+t.hangMuc+' - '+t.phanTram+'%')}" onclick="tienDoForm('${t.projectId}','${t.id}')"><span class="cal-proj-tag">${esc(tag)}</span> ${esc(t.hangMuc.slice(0,13))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
+    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');return `<div class="citem ${c}" title="${esc(t.hangMuc)} - ${t.phanTram}%" onclick="tienDoForm('${t.projectId}','${t.id}')">${esc(t.hangMuc.slice(0,18))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
   }
   h+='</div></div>';
   document.getElementById('view').innerHTML=h;
@@ -2518,14 +2509,13 @@ ROUTES['#/tiendo-calendar']=function(){
 ROUTES['#/tiendo-split']=function(){
   const items=DB.data.tienDo||[];
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Split View - Xem 2 view cùng lúc</h1><p>So sánh Kanban + Gantt cùng lúc - chuẩn PM pro</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-split');h+=tdToolbar();h+='<div id="tiendoScope"><div class="split-wrap">';
   // Left: Kanban mini
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & HT','#22c55e']];
-  let kanbanHtml='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px">';
+  let kanbanHtml='<div class="split-kanban" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:8px">';
   GDS.forEach(g=>{
     const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).slice(0,6);
-    kanbanHtml+=`<div style="min-width:200px;flex:1;background:#f8fafc;border-radius:10px;padding:8px;border-top:3px solid ${g[2]}"><div style="font-weight:800;font-size:11px;text-transform:uppercase;color:${g[2]};margin-bottom:6px">${g[1]} (${list.length})</div>${list.map(t=>`<div style="background:#fff;border:1px solid #ece5d8;border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px"><b>${esc(t.hangMuc.slice(0,20))}</b><div style="display:flex;justify-content:space-between;font-size:11px;color:#666"><span>${t.phanTram}%</span><span>${fmtDate(t.ngayKetThuc)}</span></div></div>`).join('')}</div>`;
+    kanbanHtml+=`<div style="min-width:175px;max-width:205px;flex:1 0 185px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:7px;border-top:3px solid ${g[2]}"><div style="font-weight:800;font-size:11px;text-transform:uppercase;color:${g[2]};margin-bottom:6px">${g[1]} (${list.length})</div>${list.map(t=>`<div style="background:#fff;border:1px solid #ece5d8;border-radius:8px;padding:5px 6px;margin-bottom:5px;font-size:11px"><b>${esc(t.hangMuc.slice(0,20))}</b><div style="display:flex;justify-content:space-between;font-size:11px;color:#666"><span>${t.phanTram}%</span><span>${fmtDate(t.ngayKetThuc)}</span></div></div>`).join('')}</div>`;
   });
   kanbanHtml+='</div>';
   // Right: Gantt mini
@@ -2568,22 +2558,11 @@ function tienDoForm(pid,id){
   const projs=DB.data.projects||[];
   openModal((id?'Sửa':'Thêm')+' tiến độ',
     '<label>Dự án</label><select class="inp" id="td_pid">'+projs.map(p=>'<option value="'+p.id+'"'+(t.projectId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+
-    '<label>Hạng mục</label><div class="td-hm-picker"><div class="td-hm-inputrow"><input class="inp" id="td_hm" autocomplete="off" value="'+esc(t.hangMuc||'')+'" placeholder="Chọn hạng mục hoặc nhập tên" onfocus="showTdSuggestions()" oninput="showTdSuggestions(this.value)"><button type="button" class="td-hm-toggle" onclick="toggleTdSuggestions()" aria-label="Mở danh sách hạng mục">⌄</button></div><div class="td-hm-menu" id="tdHmMenu" hidden></div></div>'+
+    '<label>Hạng mục</label><input class="inp" id="td_hm" value="'+esc(t.hangMuc||'')+'" placeholder="VD: Móng, Thô, Hoàn thiện">'+
     '<label>Tiến độ (%)</label><input class="inp" type="number" id="td_pct" min="0" max="100" value="'+(t.phanTram||0)+'">'+
     '<label>Ghi chú</label><input class="inp" id="td_note" value="'+esc(t.ghiChu||'')+'">',
     '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo(\''+(id||'')+'\')">Lưu</button>');
 }
-const TD_HANG_MUC_OPTIONS=['Cọc & móng','Tầng hầm','Kết cấu tầng trệt','Kết cấu tầng điển hình','Mái','Xây tô','Chống thấm','Hoàn thiện','MEP','Cảnh quan & hạ tầng'];
-function showTdSuggestions(query){
- const input=document.getElementById('td_hm'),menu=document.getElementById('tdHmMenu');if(!input||!menu)return;
- const q=(query===undefined?input.value:query).trim().toLocaleLowerCase('vi');
- const opts=TD_HANG_MUC_OPTIONS.filter(x=>!q||x.toLocaleLowerCase('vi').includes(q));
- menu.innerHTML=opts.map(x=>'<button type="button" class="td-hm-option" data-value="'+esc(x)+'" onclick="selectTdHm(this.dataset.value)"><span>'+esc(x)+'</span><span class="td-hm-check">↵</span></button>').join('')+(q&&!TD_HANG_MUC_OPTIONS.some(x=>x.toLocaleLowerCase('vi')===q)?'<div class="td-hm-custom">Bạn có thể tiếp tục nhập tên hạng mục riêng</div>':'');
- menu.hidden=false;
-}
-function toggleTdSuggestions(){const menu=document.getElementById('tdHmMenu');if(!menu)return;if(menu.hidden)showTdSuggestions();else menu.hidden=true;}
-function selectTdHm(value){const input=document.getElementById('td_hm'),menu=document.getElementById('tdHmMenu');if(input)input.value=value;if(menu)menu.hidden=true;}
-document.addEventListener('click',function(e){const picker=e.target.closest&&e.target.closest('.td-hm-picker');if(!picker){const menu=document.getElementById('tdHmMenu');if(menu)menu.hidden=true;}});
 function saveTienDo(id){
   const pid=document.getElementById('td_pid').value;
   const hangMuc=document.getElementById('td_hm').value.trim();
@@ -2734,6 +2713,79 @@ function autoPushSheets(){
   }catch(e){}
 }
 setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pullAll!=='undefined') await pullAll(true); }catch(e){} },5*60*1000);
+/* Compact custom dropdowns for touch/mobile; original select remains the data source. */
+(function(){
+ const TARGET='select.inp, .proj-pick select';
+ let active=null;
+ function sync(sel,wrap){
+  const btn=wrap.querySelector('.tw-select-trigger');
+  const menu=wrap.querySelector('.tw-select-menu');
+  if(!btn||!menu)return;
+  const opts=Array.from(sel.options||[]);
+  const chosen=opts.find(o=>o.value===sel.value)||opts[0];
+  btn.textContent=(chosen?chosen.textContent:'Chọn…')+'　⌄';
+  btn.disabled=!!sel.disabled;
+  btn.setAttribute('aria-expanded',String(menu.classList.contains('open')));
+  menu.innerHTML=opts.map((o,i)=>'<button type="button" class="tw-select-option'+(o.value===sel.value?' selected':'')+'" role="option" aria-selected="'+(o.value===sel.value)+'" '+(o.disabled?'disabled':'')+' data-index="'+i+'">'+o.textContent+'</button>').join('');
+  menu.querySelectorAll('.tw-select-option').forEach(b=>b.addEventListener('click',()=>{
+   const o=sel.options[+b.dataset.index];if(!o||o.disabled)return;
+   sel.value=o.value;
+   sel.dispatchEvent(new Event('change',{bubbles:true}));
+   sync(sel,wrap);close(wrap);
+  }));
+ }
+ function close(wrap){
+  const w=wrap||active;if(!w)return;
+  const menu=w.querySelector('.tw-select-menu');const btn=w.querySelector('.tw-select-trigger');
+  if(menu)menu.classList.remove('open');if(btn)btn.setAttribute('aria-expanded','false');
+  if(active===w)active=null;
+ }
+ function enhance(sel){
+  if(sel.dataset.twEnhanced==='1'||!sel.parentNode)return;
+  sel.dataset.twEnhanced='1';
+  sel.classList.add('tw-native-select');
+  const wrap=document.createElement('div');wrap.className='tw-select-wrap';
+  sel.parentNode.insertBefore(wrap,sel);wrap.appendChild(sel);
+  const btn=document.createElement('button');btn.type='button';btn.className='tw-select-trigger';btn.setAttribute('aria-haspopup','listbox');btn.setAttribute('aria-expanded','false');
+  const menu=document.createElement('div');menu.className='tw-select-menu';menu.setAttribute('role','listbox');
+  wrap.appendChild(btn);wrap.appendChild(menu);
+  sel.addEventListener('change',()=>sync(sel,wrap));
+  btn.addEventListener('click',()=>{
+   if(active&&active!==wrap)close(active);
+   const open=menu.classList.toggle('open');active=open?wrap:null;
+   btn.setAttribute('aria-expanded',String(open));
+   if(open){sync(sel,wrap);menu.classList.add('open');}
+  });
+  sync(sel,wrap);
+ }
+ function scan(root){
+  if(!root||!root.querySelectorAll)return;
+  if(root.matches&&root.matches(TARGET))enhance(root);
+  root.querySelectorAll(TARGET).forEach(enhance);
+ }
+ document.addEventListener('click',e=>{if(active&&!active.contains(e.target))close(active);});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active){close(active);}});
+ const style=document.createElement('style');
+ style.textContent=`
+ .tw-select-wrap{position:relative;width:100%;min-width:0;display:block}
+ .tw-select-wrap>select.tw-native-select,.tw-select-wrap>select.inp,.tw-select-wrap>.proj-pick select{position:absolute!important;left:0!important;top:0!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;margin:0!important;padding:0!important}
+ .tw-select-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:35px;padding:7px 10px;border:1px solid #d7c9b6;border-radius:8px;background:linear-gradient(180deg,#fff,#fffdf8);color:#352a20;font-family:inherit;font-size:13px;font-weight:500;line-height:1.3;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(26,20,16,.04);}
+ .tw-select-trigger:after{content:'';display:none}
+ .tw-select-trigger:focus-visible{outline:2px solid #f0ad1f;outline-offset:2px;border-color:#d97706}
+ .tw-select-trigger:disabled{opacity:.55;cursor:not-allowed}
+ .tw-select-menu{display:none;position:absolute;z-index:1000;top:calc(100% + 4px);left:0;right:0;max-height:min(260px,45vh);overflow:auto;padding:4px;background:#fff;border:1px solid #e7d5b7;border-radius:10px;box-shadow:0 12px 30px rgba(26,20,16,.18);overscroll-behavior:contain}
+ .tw-select-menu.open{display:block}
+ .tw-select-option{display:block;width:100%;border:0;border-radius:6px;background:transparent;padding:7px 9px;text-align:left;font-family:inherit;font-size:13px;font-weight:400;line-height:1.25;color:#33291f;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+ .tw-select-option:hover,.tw-select-option.selected{background:#fff2cf;color:#7c3f00;font-weight:700}
+ .tw-select-option:disabled{opacity:.4;cursor:not-allowed}
+ @media(max-width:700px){.tw-select-trigger{min-height:34px;padding:6px 9px;font-size:13px}.tw-select-menu{max-height:42vh}.tw-select-option{padding:8px 9px;font-size:13px}}
+ `;
+ document.head.appendChild(style);
+ scan(document);
+ const mo=new MutationObserver(records=>records.forEach(r=>{if(r.target&&r.target.matches&&r.target.matches('select.tw-native-select'))sync(r.target,r.target.parentElement);r.addedNodes.forEach(n=>{if(n.nodeType===1)scan(n);});}));
+ mo.observe(document.body,{childList:true,subtree:true});
+})();
+
 </script>
 </body>
 </html>
