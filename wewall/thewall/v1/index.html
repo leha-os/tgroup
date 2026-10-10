@@ -791,6 +791,93 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 
 
 </style>
+
+<style id="tw-final-compact-fixes">
+/* Unified custom dropdowns: never show native/system select UI */
+select[data-native-dropdown="true"]{appearance:none!important;-webkit-appearance:none!important;background-image:none!important}
+.tw-select-wrap{min-width:0!important;max-width:100%}
+.tw-select-trigger{border-color:#e3d8c7!important;border-radius:9px!important;background:#fffdf9!important;color:#29251f!important;min-height:32px!important;padding:5px 9px!important;box-shadow:0 1px 2px rgba(30,25,18,.04)!important}
+.tw-select-trigger:hover,.tw-select-trigger[aria-expanded="true"]{border-color:#e5a52a!important;background:#fff!important}
+.tw-select-menu{border:1px solid #eadfce!important;border-radius:12px!important;padding:5px!important;box-shadow:0 14px 38px rgba(31,25,16,.2)!important;background:#fffefa!important}
+.tw-select-option{border-radius:7px!important;padding:8px 10px!important;color:#29251f!important}
+.tw-select-option:hover,.tw-select-option:focus-visible{background:#fff3d5!important;color:#7a4b00!important}
+.tw-select-option.selected{background:#f9e7b8!important;color:#704500!important}
+button,.btn{min-width:0}
+.btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.25}
+.sb-nav .sb-link,.sb-nav .sb-sub .sb-link{border-radius:9px!important;border-bottom:0!important;margin:2px 0;padding-top:8px!important;padding-bottom:8px!important}
+.sb-nav .sb-link.active{border-radius:10px!important;box-shadow:inset 3px 0 0 rgba(26,20,16,.22)}
+.sb-nav .sb-sec-toggle{border-radius:8px!important}
+.sb-nav-tools{gap:6px}
+.sb-nav-tools button{border-radius:8px!important}
+.td-toolbar{gap:6px!important;margin-bottom:9px!important;align-items:center}
+.td-date-range{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.td-date-range label{display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
+.td-date-range input[type=date]{min-width:0;width:132px;max-width:100%;padding:5px 7px;border:1px solid #e5dccd;border-radius:8px;font:inherit}
+.td-zoom{gap:6px!important;padding:4px 8px!important;border-radius:8px!important}
+.td-zoom input[type=range]{width:90px!important}
+.td-view-switch{gap:4px!important;padding:4px!important;border-radius:9px!important}
+.td-view-switch button{padding:6px 9px!important;font-size:12px!important}
+.kanban{gap:7px!important}
+.kanban-col{min-width:0!important;max-width:none!important;flex:1 1 0!important}
+.kanban-col-header{gap:4px!important;padding:8px 6px!important;align-items:flex-start!important}
+.kanban-col-title{min-width:0!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;line-height:1.25!important;letter-spacing:0!important;font-size:10px!important;gap:4px!important}
+.kanban-col-meta{gap:3px!important;flex-shrink:0}
+.kanban-col-count,.kanban-col-avg{padding:2px 5px!important;font-size:9px!important}
+.kanban-col-body{padding:5px!important}
+.kanban-item .k-title{-webkit-line-clamp:unset!important;overflow:visible!important;display:block!important;overflow-wrap:anywhere!important}
+.split-kanban{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
+.split-mini-col{min-width:0!important;max-width:none!important}
+.split-mini-col *{min-width:0;overflow-wrap:anywhere}
+.split-mini-col .kanban-col-title,.split-mini-col .split-mini-title{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.2!important}
+.cal-cell .citem{overflow-wrap:anywhere!important}
+@media(max-width:900px){
+ #view{padding:9px!important}
+ .page-head{gap:7px!important;margin-bottom:10px!important}
+ .page-head h1{font-size:19px!important}
+ .card-h{padding:9px 11px!important}
+ .card-b{padding:10px!important}
+ .stat{padding:9px!important}
+ .btn{padding:6px 9px!important;font-size:12px!important;min-height:32px!important;gap:5px!important;border-radius:7px!important}
+ .btn-sm{padding:4px 7px!important;font-size:11px!important;min-height:28px!important}
+ .td-toolbar{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important}
+ .td-date-range{display:flex!important;flex-wrap:wrap!important;gap:5px!important}
+ .td-date-range input[type=date]{width:clamp(105px,30vw,145px)!important;font-size:12px!important}
+ .td-date-range .btn{flex:0 0 auto!important}
+ .td-zoom{flex:0 1 auto!important;width:max-content;max-width:100%}
+ .td-zoom input[type=range]{width:80px!important}
+ .kanban{display:flex!important;gap:6px!important}
+ .kanban-col{flex:0 0 calc((100vw - 48px)/2)!important;min-width:135px!important;max-width:190px!important}
+ .kanban-col-title{font-size:10px!important}
+ .split-kanban{grid-template-columns:repeat(4,minmax(112px,1fr))!important;overflow-x:auto!important}
+ .split-pane-body{overflow-x:auto!important}
+ .sb-nav .sb-link{padding:8px 10px!important}
+}
+@media(max-width:480px){
+ .btn-ok,.btn-bad{padding:4px 7px!important;font-size:11px!important;min-height:28px!important}
+ .rowbtns{gap:4px!important}
+ .rowbtns .btn{padding:4px 6px!important;font-size:10.5px!important}
+ .td-date-range label{font-size:10.5px!important}
+ .td-date-range input[type=date]{width:calc(50vw - 32px)!important;min-width:0!important}
+ .td-view-switch button{padding:5px 7px!important;font-size:11px!important}
+ .cal-cell{padding:3px!important;min-width:0!important}
+ .cal-cell .citem{font-size:9px!important}
+ .split-kanban{grid-template-columns:repeat(4,minmax(100px,1fr))!important}
+}
+/* Continuous, readable project-progress printing without scaled blank pages */
+@media print{
+ html,body,#appView,.shell,.main,#view,#tiendoScope{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;transform:none!important;width:100%!important;max-width:none!important}
+ #view{padding:0!important}
+ #tiendoScope{display:block!important;break-inside:auto!important;page-break-inside:auto!important}
+ .project-overview-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5mm!important;overflow:visible!important}
+ .project-overview-card,.td-card,.split-pane,.kanban-col,.cal-cell{break-inside:avoid!important;page-break-inside:avoid!important}
+ .kanban{overflow:visible!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .kanban-col{min-width:0!important;max-width:none!important;max-height:none!important}
+ .kanban-col-body,.split-pane-body{overflow:visible!important;max-height:none!important}
+ .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:visible!important}
+ .tw-select-wrap{display:none!important}
+}
+</style>
+
 </head>
 <body>
 <!-- ============ LOGIN ============ -->
@@ -1248,7 +1335,7 @@ function buildSidebar(){
  let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div></div></div>';
  {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
- h+='<div class="sb-nav-tools"><button type="button" onclick="toggleSidebarAll(false)" title="Thu gọn tất cả">− Thu gọn</button><button type="button" onclick="toggleSidebarAll(true)" title="Mở tất cả">＋ Mở tất cả</button></div>'; 
+ h+='<div class="sb-nav-tools"><button type="button" onclick="toggleSidebarAll(!(Object.keys(navExpanded).length===0||Object.keys(navExpanded).every(k=>navExpanded[k]!==false)))" title="Mở rộng hoặc thu gọn tất cả">↕ Mở / thu gọn</button></div>'; 
  let secOpen=true;
  NAV.forEach(it=>{
   if(it.sec){const key='sec:'+it.sec;secOpen=navExpanded[key]!==false;h+='<button type="button" class="sb-sec sb-sec-toggle" aria-expanded="'+secOpen+'" onclick="navExpanded[\''+key+'\']='+(secOpen?'false':'true')+';buildSidebar()"><span>'+it.sec+'</span><span class="sb-sec-arrow">'+(secOpen?'⌄':'›')+'</span></button>';return;}
