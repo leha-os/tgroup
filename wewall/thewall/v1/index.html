@@ -2550,7 +2550,7 @@ ROUTES['#/tiendo-calendar']=function(){
   const now=new Date();const y=now.getFullYear(), m=now.getMonth();
   const first=new Date(y,m,1);const last=new Date(y,m+1,0);const startDay=first.getDay(); // 0 CN
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Lịch tiến độ tháng ${m+1}/${y}</h1><p>Xem theo ngày</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
+  h+=`<div class="page-head"><div><h1></h1><p></p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-calendar');h+=tdToolbar();h+='<div id="tiendoScope"><div class="cal-grid">';
   ['CN','T2','T3','T4','T5','T6','T7'].forEach(d=>h+=`<div class="cal-head">${d}</div>`);
   for(let i=0;i<startDay;i++)h+=`<div class="cal-cell other"></div>`;
@@ -2608,7 +2608,7 @@ ROUTES['#/tiendo-split']=function(){
     });
   });
   ganttMini+='</div>';
-  h+=`<div class="split-pane"><div class="split-pane-head">📋 Kanban Board <span style="font-size:11px;color:#666">${items.length} hạng mục</span></div><div class="split-pane-body">${kanbanHtml}</div></div>`;
+  h+=`<div class="split-pane"><div class="split-pane-head">Kanban Board <span style="font-size:11px;color:#666">${items.length} hạng mục</span></div><div class="split-pane-body">${kanbanHtml}</div></div>`;
   h+=`<div class="split-pane"><div class="split-pane-head">📊 Timeline Gantt <span style="font-size:11px;color:#666">Tháng ${now.getMonth()+1}</span></div><div class="split-pane-body">${ganttMini}</div></div>`;
   h+='</div></div>';
   document.getElementById('view').innerHTML=h;
