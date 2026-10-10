@@ -744,7 +744,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 <!-- ============ LOGIN ============ -->
 <div id="loginView">
   <div class="login-card">
-    <img id="loginLogo" class="login-logo" alt="THE WALL" src="logo.png">
+    <img id="loginLogo" class="login-logo" alt="THE WALL" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAACFCAYAAAAenrcsAAAKMWlDQ1BJQ0">
     <h1 style="text-align:center;font-size:18px">The Wall - Project Management System [DEMO]</h1>
     <div class="fld"><label>Tên đăng nhập</label><input class="inp" id="lgUser" placeholder="Tên đăng nhập"></div>
     <div class="fld"><label>Mật khẩu</label><input class="inp" id="lgPass" type="password" placeholder="Mật khẩu"></div>
@@ -755,7 +755,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
     <b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>
     Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>
     Tel: (84) 8 5410 4013 - (84) 903 865 240 • Website: www.thewall.com.vn<br>
-    © 2026 The Wall PMS - Demo Version
+    © 2026 The Wall PMS - Demo Version<br><a href="#" onclick="localStorage.clear();location.reload()" style="font-size:10px;color:#d97706">Xóa bộ nhớ & tải lại nếu không đăng nhập được</a><br>Tài khoản: <b>nbatam / admin123</b>
   </div>
 </div>
 <!-- ============ APP ============ -->
@@ -2754,7 +2754,7 @@ function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');sav
 /* đảm bảo collection mới tồn tại khi mở bản cũ + tự động merge dự án/NCC/đội mới từ SEED */
 function ensureArrays(){
  let ch=false;
- Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
+ Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||DB.data[k].length===0||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
  // Merge tự động: nếu SEED có id mới mà DB.data chưa có thì thêm vào (không xóa cũ)
  try{
   ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx','dutru','tienDo','danhmuc'].forEach(col=>{
