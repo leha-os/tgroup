@@ -2119,7 +2119,8 @@ function renderSyncPill(){
 async function pullAll(silent){
  if(typeof FB!=='undefined' && FB.isConfigured()){
    const d = await FB.loadAll();
-   if(d){ DB.data = d; ensureArrays(); DB.save(); SYNC.dirty=false; SYNC.connected=true; SYNC.msg='Firebase • '+new Date().toLocaleTimeString('vi-VN'); renderSyncPill(); if(!silent); nav(false); return; }
+   if(d && d.projects && d.projects.length > 0){ DB.data = d; ensureArrays(); DB.save(); SYNC.dirty=false; SYNC.connected=true; SYNC.msg='Firebase • '+new Date().toLocaleTimeString('vi-VN'); renderSyncPill(); if(!silent); nav(false); return; }
+   if(d){ /* Firebase trống - giữ dữ liệu mẫu và đẩy lên */ await FB.saveAll(); nav(false); return; }
    if(!silent); return;
  }
  syncCfgForm();
