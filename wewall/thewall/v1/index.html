@@ -768,6 +768,94 @@ button,.btn{min-width:0}
 }
 </style>
 
+
+<style id="tw-safe-ui-print-patch">
+/* Safe presentation-only patch: leaves authentication, storage, APIs and integrations unchanged. */
+@media (max-width:720px){
+  .td-toolbar{display:flex!important;flex-wrap:wrap!important;gap:6px!important;align-items:center!important}
+  .td-date-range{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important;width:100%!important}
+  .td-date-range label{display:flex!important;flex-direction:column!important;align-items:stretch!important;min-width:0!important;font-size:11px!important}
+  .td-date-range input{width:100%!important;min-width:0!important;height:38px!important;font-size:16px!important}
+  .td-date-range button{min-height:38px!important}
+  .td-zoom{width:auto!important;flex:1 1 150px!important;min-width:0!important;min-height:38px!important}
+  .td-zoom input[type=range]{min-width:40px!important;width:auto!important;flex:1!important}
+  .td-actions{display:flex!important;flex:1 1 100%!important;flex-wrap:wrap!important;gap:6px!important}
+  .td-actions .btn{flex:1 1 auto!important;min-width:0!important;min-height:40px!important;white-space:normal!important}
+  .td-view-switch{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .td-view-switch button{white-space:normal!important;min-height:36px!important}
+  .toolbar{gap:7px!important}
+  .toolbar>.btn,.toolbar>button{min-height:40px}
+  .page-actions{gap:6px!important}
+  .tbl-wrap{-webkit-overflow-scrolling:touch}
+  .mback{overflow-y:auto!important}
+  .modal{max-height:92dvh!important}
+}
+@media print{
+  /* Keep report colors and readable scale; let long reports continue naturally across pages. */
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  html,body,#appView,.shell,.main,#view{height:auto!important;min-height:0!important;overflow:visible!important;max-height:none!important}
+  #view{padding:0!important;width:100%!important;max-width:none!important}
+  #view .card,#view .card-b,#view .grid,#view .grid>*{max-width:none!important}
+  #view .tbl-wrap{overflow:visible!important;width:100%!important;max-width:none!important}
+  #view table.tbl{width:100%!important;min-width:0!important;table-layout:auto!important;border-collapse:collapse!important}
+  #view table.tbl thead{display:table-header-group!important}
+  #view table.tbl tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  #view table.tbl th{background:#1a1d29!important;color:#f0ad1f!important;border:1px solid #9ca3af!important}
+  #view .badge,#view .b-green,#view .b-amber,#view .b-red,#view .b-blue,#view .b-gray,#view .b-purple,
+  #view .prog,#view .prog i,#view .stat,#view .project-overview-card,
+  #view .citem,#view .k-status,#view .gantt-bar,#view .gantt-bar i{
+    -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important
+  }
+  #view .card,#view .project-overview-card,#view .stat{break-inside:avoid-page!important;page-break-inside:avoid!important}
+  body.printing-phieu .phieu-wrap{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    margin:0!important;padding:4mm!important;box-sizing:border-box!important;
+    font-size:10pt!important;line-height:1.35!important;
+  }
+  body.printing-phieu .phieu-head .co{font-size:9.5pt!important}
+  body.printing-phieu .phieu-sign6{font-size:9pt!important}
+  body.printing-phieu .phieu-sign6 div{overflow-wrap:anywhere!important}
+}
+@page payment{size:A4 portrait;margin:8mm}
+</style>
+
+
+<style id="tw-payment-template-refinement">
+/* Payment request form: align the print layout with the supplied THE WALL A4 reference. */
+.phieu-wrap{color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif}
+.phieu-head{border-bottom:0;align-items:flex-start;margin-bottom:8px;padding-bottom:0}
+.phieu-head .logo{width:82px;height:82px;object-fit:contain}
+.phieu-head .co{font-size:14px;line-height:1.55;color:#333}
+.ptitle{text-align:center;text-decoration:underline;font-size:22px;font-weight:700;letter-spacing:0;margin:24px 0 4px}
+.pdate{text-align:center;margin:0 0 2px;font-weight:600}
+.ptbl{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}
+.ptbl td,.ptbl th{border:1px solid #111;padding:4px 5px;vertical-align:middle}
+.ptbl .ctr td{text-align:center}
+.ptbl .ul{text-decoration:underline}
+.ptbl .gray{background:#c9c9c9;color:#111}
+.psec{font-size:14px;font-weight:400;margin:8px 0 2px}
+.pdot{height:13px;margin:2px 0;border-bottom:1px dotted #555}
+.pfoot{margin-top:12px;font-size:13px;padding:7px 4px;border:1px solid #111}
+@page payment{size:A4 portrait;margin:7mm}
+@media print{
+ body.printing-phieu .phieu-wrap{width:196mm!important;max-width:196mm!important;padding:2mm!important;margin:0 auto!important;font-size:10pt!important;line-height:1.25!important;box-sizing:border-box!important;background:#fff!important;color:#000!important}
+ body.printing-phieu .phieu-head{display:flex!important;gap:5mm!important;border:0!important;padding:0!important;margin:0 0 2mm!important;align-items:flex-start!important}
+ body.printing-phieu .phieu-head .logo{width:22mm!important;height:22mm!important}
+ body.printing-phieu .phieu-head .co{font-size:10pt!important;line-height:1.35!important;color:#333!important}
+ body.printing-phieu .ptitle{font-size:15pt!important;margin:3mm 0 1mm!important;text-decoration:underline!important}
+ body.printing-phieu .pdate{font-size:10pt!important;margin:0 0 1mm!important}
+ body.printing-phieu .ptbl{font-size:9pt!important;margin:0!important;table-layout:fixed!important}
+ body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:1.2mm 1.4mm!important;line-height:1.2!important;vertical-align:middle!important}
+ body.printing-phieu .ptbl tr:nth-child(5) td{height:auto!important}
+ body.printing-phieu .ptbl .gray{background:#bfbfbf!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body.printing-phieu .psec{font-size:9pt!important;margin:1.4mm 0 .5mm!important;line-height:1.2!important}
+ body.printing-phieu .pdot{height:3mm!important;margin:.4mm 0!important}
+ body.printing-phieu .prow{font-size:9pt!important;margin:1.5mm 0!important;gap:1.5mm!important}
+ body.printing-phieu .prow .dot{height:3mm!important}
+ body.printing-phieu .pfoot{font-size:9pt!important;padding:1.5mm!important;margin-top:2mm!important}
+ body.printing-phieu .phieu-wrap,body.printing-phieu .phieu-wrap *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+</style>
 </head>
 <body>
 <div id="loginView">
