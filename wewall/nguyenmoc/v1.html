@@ -25,7 +25,7 @@ body{
 .topbar{
   background:#fff; color:var(--nau-dam);
   padding:12px 18px; position:sticky; top:0; z-index:40;
-  margin-left:292px; border-bottom:1px solid var(--vien);
+  margin-left:244px; border-bottom:1px solid var(--vien);
 }
 .topbar .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .topbar .t1{font-size:14px;font-weight:800}
@@ -45,7 +45,7 @@ body{
 
 /* Side nav - rounded, slide animation, no icon */
 .nav{
-  position:fixed; left:12px; top:12px; bottom:12px; width:268px;
+  position:fixed; left:12px; top:12px; bottom:12px; width:220px;
   background:linear-gradient(180deg,#211610 0%,#2F201B 100%);
   border:1px solid rgba(255,255,255,.08); z-index:60;
   display:flex; flex-direction:column; border-radius:20px;
@@ -54,13 +54,18 @@ body{
   transition:transform .42s cubic-bezier(.32,.72,0,1);
 }
 .nav::before{
-  content:"NGUYEN MOC\AWEWALL GROUP"; white-space:pre;
-  font-weight:800; font-size:12px; line-height:1.35; color:#fff;
-  padding:20px 18px; border-bottom:1px solid rgba(255,255,255,.08);
+  content:"NGUYEN MOC\A WEWALL GROUP\A➔ CONG TY TNHH\A SXTM NGUYEN MOC";
+  white-space:pre;
+  font-weight:800;
+  font-size:11px;
+  line-height:1.45;
+  color:#fff;
+  padding:16px 14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
   background:rgba(255,255,255,.04);
 }
 .nav-in{display:flex;flex-direction:column;gap:4px;padding:12px 10px;height:100%;overflow-y:auto}
-.nav button{
+.nav button{ text-transform:uppercase; font-size:11.5px; 
   border:none; background:transparent; color:rgba(255,255,255,.62);
   font-size:13.5px; font-weight:600; display:flex; align-items:center;
   padding:11px 14px; cursor:pointer; border-radius:12px; text-align:left;
@@ -72,7 +77,7 @@ body{
 .nav button::before{content:none!important; display:none!important}
 
 /* Content */
-#view{margin-left:292px; min-height:100vh}
+#view{margin-left:244px; min-height:100vh}
 body.no-nav #view{margin-left:0}
 body.no-nav .topbar{margin-left:0}
 body.no-nav .nav{display:none!important}
@@ -81,7 +86,7 @@ body.no-nav .nav-overlay{display:none!important}
 
 /* Footer */
 .cty-footer{
-  position:fixed; bottom:0; left:292px; right:0; z-index:30;
+  position:fixed; bottom:0; left:244px; right:0; z-index:30;
   background:rgba(248,245,240,.94); text-align:center;
   padding:8px 10px calc(8px + env(safe-area-inset-bottom));
   color:var(--nau-nhat); font-size:11px; line-height:1.5; border-top:1px solid var(--vien-mo);
@@ -210,7 +215,7 @@ pre.log{background:var(--nau-dam);color:#FFE0B2;border-radius:12px;padding:12px;
 /* Mobile - drawer */
 @media (max-width: 900px){
   .nav-toggle{display:flex}
-  .nav{left:0;top:0;bottom:0;width:280px;max-width:84vw;border-radius:0 18px 18px 0;transform:translateX(-102%);box-shadow:12px 0 28px rgba(0,0,0,.18)}
+  .nav{left:0;top:0;bottom:0;width:240px;max-width:82vw;border-radius:0 18px 18px 0;transform:translateX(-102%);box-shadow:12px 0 28px rgba(0,0,0,.18)}
   .nav.open{transform:translateX(0)}
   #view,.topbar,.cty-footer{margin-left:0!important;left:0!important}
   .topbar{padding:10px 12px}
@@ -285,12 +290,20 @@ function api(action,data,silent){
   var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
   var timer=setTimeout(function(){ if(ctrl) ctrl.abort(); },25000);
   var p=fetch(cfg.apiUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),signal:ctrl?ctrl.signal:undefined})
-    .then(function(r){ return r.text(); }).then(function(t){ var j; try{ j=JSON.parse(t); }catch(e){ throw new Error('Máy chủ trả về dữ liệu không hợp lệ.'); } if(!j.ok){ var e2=new Error(j.error||'Lỗi không xác định.'); e2.auth=!!j.auth; throw e2; } return j; });
+    .then(function(r){ return r.text(); }).then(function(t){ var j; try{ j=JSON.parse(t); }catch(e){ throw new Error('May chu tra ve khong hop le. Kiem tra URL /exec.'); } if(!j.ok){ var e2=new Error(j.error||'Loi khong xac dinh.'); e2.auth=!!j.auth; throw e2; } return j; });
   return p.then(function(j){ clearTimeout(timer); setLoading(false); return j; },
-    function(err){ clearTimeout(timer); setLoading(false); if(silent) throw err;
-      if(err&&err.auth){ dangXuat(); showErr(err.message||'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'); }
-      else showErr((err&&err.message)||'Lỗi kết nối. Kiểm tra mạng và thử lại.', function(){ api(action,data).then(function(){}).catch(function(){}); });
-      throw err; });
+    function(err){
+      clearTimeout(timer); setLoading(false);
+      if(silent) throw err;
+      var m='';
+      if(err && err.name==='AbortError'){ m='Het thoi gian cho 25s. Kiem tra: URL /exec dung chua, Deploy -> Anyone, mang.'; }
+      else if(err && err.message && err.message.toLowerCase().indexOf('aborted')>=0){ m='Ket noi bi ngat (aborted). Kiem tra URL /exec va quyen Anyone.'; }
+      else if(err && err.message && err.message.indexOf('Failed to fetch')>=0){ m='Khong ket noi duoc. Kiem tra URL /exec va Deploy Anyone.'; }
+      else { m=(err&&err.message)||'Loi ket noi.'; }
+      if(err&&err.auth){ dangXuat(); showErr(m); }
+      else showErr(m, function(){ api(action,data).then(function(){}).catch(function(){}); });
+      throw err;
+    });
 }
 /* ---------------- auth ---------------- */
 function dangXuat(){ sess=null; APP={gioMo:'05:00'}; try{ localStorage.removeItem(SES_KEY); }catch(e){} veLogin(); }
@@ -380,7 +393,10 @@ function veConfig(){
     var url=$('cfgUrl').value.trim(), key=$('cfgKey').value.trim();
     if(!url||!key){ toast('Vui lòng nhập đủ URL và API key.'); return; }
     cfg={apiUrl:url,apiKey:key}; saveLS(CFG_KEY,cfg);
-    api('ping',{}).then(function(){ toast('Kết nối thành công.'); veLogin(); }).catch(function(){});
+    api('ping',{}).then(function(){ toast('Kết nối thành công.'); veLogin(); }).catch(function(e){
+      toast('Đã lưu cấu hình, vào đăng nhập thử. Nếu lỗi, kiểm tra Deploy -> Anyone.');
+      setTimeout(function(){ veLogin(); }, 600);
+    });
   };
 }
 /* ================= MÀN HÌNH: đăng nhập ================= */
@@ -1077,20 +1093,61 @@ document.addEventListener('DOMContentLoaded',init);
   var btn=document.getElementById('navToggle');
   var nav=document.getElementById('nav');
   var ov=document.getElementById('navOverlay');
-  if(!btn||!nav||!ov) return;
-  btn.addEventListener('click', function(e){
-    e.stopPropagation();
-    nav.classList.toggle('open'); ov.classList.toggle('open');
-  });
-  ov.addEventListener('click', function(){ nav.classList.remove('open'); ov.classList.remove('open'); });
+  if(!nav||!ov) return;
+  function openNav(){ nav.classList.add('open'); ov.classList.add('open'); }
+  function closeNav(){ nav.classList.remove('open'); ov.classList.remove('open'); }
+  function toggleNav(){ nav.classList.toggle('open'); ov.classList.toggle('open'); }
+  if(btn){
+    btn.addEventListener('click', function(e){ e.stopPropagation(); toggleNav(); });
+  }
+  ov.addEventListener('click', closeNav);
   var navIn=document.getElementById('navIn');
   if(navIn){
     navIn.addEventListener('click', function(ev){
-      if(ev.target.closest('button') && window.innerWidth<=900){
-        setTimeout(function(){ nav.classList.remove('open'); ov.classList.remove('open'); },150);
+      if(ev.target.closest('button')){
+        setTimeout(closeNav,150);
       }
     });
   }
+  // Swipe gesture: vuốt phải từ mép trái để mở, vuốt trái để đóng
+  var startX=0, startY=0, isTracking=false;
+  var EDGE=36; // vùng mép trái cho phép vuốt
+  var THRESHOLD=72; // khoảng vuốt tối thiểu
+  var RESTRAINT=80; // giới hạn lệch dọc
+
+  document.addEventListener('touchstart', function(e){
+    if(document.body.classList.contains('no-nav')) return;
+    if(e.touches.length!==1) return;
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    // chỉ track khi bắt đầu từ mép trái (mở) hoặc đang mở (đóng)
+    if(startX < EDGE || nav.classList.contains('open')){
+      isTracking=true;
+    }
+  }, {passive:true});
+
+  document.addEventListener('touchmove', function(e){
+    if(!isTracking) return;
+    // không can thiệp khi đang cuộn dọc mạnh trong bảng
+  }, {passive:true});
+
+  document.addEventListener('touchend', function(e){
+    if(!isTracking) return;
+    isTracking=false;
+    if(document.body.classList.contains('no-nav')) return;
+    var endX = (e.changedTouches && e.changedTouches[0].clientX) || 0;
+    var endY = (e.changedTouches && e.changedTouches[0].clientY) || 0;
+    var dx = endX - startX;
+    var dy = Math.abs(endY - startY);
+    if(dy > RESTRAINT) return; // bỏ qua vuốt chéo/dọc
+    if(dx > THRESHOLD && startX < EDGE){
+      // vuốt phải từ mép -> mở
+      openNav();
+    }else if(dx < -THRESHOLD && nav.classList.contains('open')){
+      // vuốt trái khi đang mở -> đóng
+      closeNav();
+    }
+  }, {passive:true});
 })();
 </script>
 
