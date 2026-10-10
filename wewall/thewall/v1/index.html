@@ -514,6 +514,19 @@ select.inp:focus{
 .kanban-col h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;color:#64748b}
 .kanban-item{background:#fff;border-radius:8px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer}
 input[type=range].td-range{width:100%;accent-color:#f59e0b}
+
+/* ===== GANTT TIMELINE ===== */
+.gantt{overflow-x:auto;border:1px solid #e2e8f0;border-radius:12px;background:#fff}
+.gantt-row{display:flex;align-items:center;border-bottom:1px solid #f1f5f9;min-height:44px}
+.gantt-row:hover{background:#f8fafc}
+.gantt-label{width:180px;min-width:180px;padding:8px 12px;font-size:13px;font-weight:600;border-right:1px solid #e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gantt-track{flex:1;position:relative;height:44px;min-width:600px}
+.gantt-bar{position:absolute;top:12px;height:20px;border-radius:6px;background:#e2e8f0;overflow:hidden}
+.gantt-bar i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706)}
+.gantt-bar.done i{background:linear-gradient(90deg,#22c55e,#16a34a)}
+.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:#ef4444;z-index:2}
+.gantt-scale{display:flex;border-bottom:2px solid #e2e8f0;background:#f8fafc}
+.gantt-scale div{flex:1;text-align:center;font-size:11px;color:#64748b;padding:6px 0;border-right:1px solid #e2e8f0;min-width:60px}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -691,39 +704,39 @@ danhmuc:[
  {id:'dm1',nhom:'Vật tư',ten:'Xi măng'},{id:'dm2',nhom:'Vật tư',ten:'Sắt thép'},{id:'dm3',nhom:'Vật tư',ten:'Bê tông'},
  {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}],
  tienDo:[
-  {id:'td1',projectId:'p1',hangMuc:'Móng & tầng hầm',phanTram:100,ngayCapNhat:'2026-04-15',ghiChu:'Hoàn thành đúng tiến độ'},
-  {id:'td2',projectId:'p1',hangMuc:'Kết cấu thô',phanTram:75,ngayCapNhat:'2026-08-20',ghiChu:'Đang thi công tầng 12'},
-  {id:'td3',projectId:'p1',hangMuc:'Hoàn thiện',phanTram:30,ngayCapNhat:'2026-09-01',ghiChu:'Bắt đầu ốp lát'},
+  {id:'td1',projectId:'p1',hangMuc:'Móng & tầng hầm',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-04-15',ghiChu:'Hoàn thành đúng tiến độ'},
+  {id:'td2',projectId:'p1',hangMuc:'Kết cấu thô',phanTram:75,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-08-20',ghiChu:'Đang thi công tầng 12'},
+  {id:'td3',projectId:'p1',hangMuc:'Hoàn thiện',phanTram:30,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-01',ghiChu:'Bắt đầu ốp lát'},
   {id:'td4',projectId:'p1',hangMuc:'MEP',phanTram:45,ngayCapNhat:'2026-08-25',ghiChu:'Điện nước tầng 1-8'},
-  {id:'td5',projectId:'p2',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-05-10',ghiChu:'Xong'},
+  {id:'td5',projectId:'p2',hangMuc:'Móng',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-05-10',ghiChu:'Xong'},
   {id:'td6',projectId:'p2',hangMuc:'Thô',phanTram:60,ngayCapNhat:'2026-09-05',ghiChu:'Đang xây tường bao'},
-  {id:'td7',projectId:'p2',hangMuc:'Hoàn thiện',phanTram:15,ngayCapNhat:'2026-09-10',ghiChu:'Chuẩn bị vật tư'},
+  {id:'td7',projectId:'p2',hangMuc:'Hoàn thiện',phanTram:15,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-10',ghiChu:'Chuẩn bị vật tư'},
   {id:'td8',projectId:'p3',hangMuc:'Nền móng',phanTram:100,ngayCapNhat:'2026-04-01',ghiChu:'Xong'},
   {id:'td9',projectId:'p3',hangMuc:'Khung thép',phanTram:80,ngayCapNhat:'2026-09-12',ghiChu:'Lắp dựng 80%'},
-  {id:'td10',projectId:'p4',hangMuc:'Cọc móng',phanTram:100,ngayCapNhat:'2026-06-20',ghiChu:'Xong'},
-  {id:'td11',projectId:'p4',hangMuc:'Tầng hầm',phanTram:50,ngayCapNhat:'2026-09-15',ghiChu:'Đang đào đất'},
+  {id:'td10',projectId:'p4',hangMuc:'Cọc móng',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-06-20',ghiChu:'Xong'},
+  {id:'td11',projectId:'p4',hangMuc:'Tầng hầm',phanTram:50,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-15',ghiChu:'Đang đào đất'},
   {id:'td12',projectId:'p5',hangMuc:'San lấp',phanTram:100,ngayCapNhat:'2026-03-15',ghiChu:'Xong'},
   {id:'td13',projectId:'p5',hangMuc:'Thô GĐ2',phanTram:40,ngayCapNhat:'2026-09-01',ghiChu:'Đang thi công'}
  ,
   {id:'td14',projectId:'p6',hangMuc:'Móng & kết cấu',phanTram:70,ngayCapNhat:'2026-09-10',ghiChu:'Đang thi công tầng 2'},
-  {id:'td15',projectId:'p6',hangMuc:'Hoàn thiện',phanTram:20,ngayCapNhat:'2026-09-12',ghiChu:'Chuẩn bị'},
-  {id:'td16',projectId:'p7',hangMuc:'Móng cọc',phanTram:100,ngayCapNhat:'2026-07-01',ghiChu:'Xong'},
-  {id:'td17',projectId:'p7',hangMuc:'Thô 15 tầng',phanTram:55,ngayCapNhat:'2026-09-15',ghiChu:'Tầng 8'},
+  {id:'td15',projectId:'p6',hangMuc:'Hoàn thiện',phanTram:20,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-12',ghiChu:'Chuẩn bị'},
+  {id:'td16',projectId:'p7',hangMuc:'Móng cọc',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-07-01',ghiChu:'Xong'},
+  {id:'td17',projectId:'p7',hangMuc:'Thô 15 tầng',phanTram:55,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-15',ghiChu:'Tầng 8'},
   {id:'td18',projectId:'p8',hangMuc:'Cọc & móng',phanTram:90,ngayCapNhat:'2026-09-08',ghiChu:'Gần xong'},
   {id:'td19',projectId:'p8',hangMuc:'Khung',phanTram:25,ngayCapNhat:'2026-09-14',ghiChu:'Bắt đầu'},
   {id:'td20',projectId:'p9',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-06-15',ghiChu:'Xong'},
   {id:'td21',projectId:'p9',hangMuc:'Thô',phanTram:85,ngayCapNhat:'2026-09-10',ghiChu:'Hoàn thiện thô'},
-  {id:'td22',projectId:'p9',hangMuc:'Nội thất',phanTram:40,ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp đặt'},
-  {id:'td23',projectId:'p10',hangMuc:'Nền & hạ tầng',phanTram:100,ngayCapNhat:'2026-05-20',ghiChu:'Xong'},
-  {id:'td24',projectId:'p10',hangMuc:'Clubhouse thô',phanTram:65,ngayCapNhat:'2026-09-11',ghiChu:'Đang xây'},
-  {id:'td25',projectId:'p11',hangMuc:'Móng 10 căn',phanTram:100,ngayCapNhat:'2026-07-10',ghiChu:'Xong'},
+  {id:'td22',projectId:'p9',hangMuc:'Nội thất',phanTram:40,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp đặt'},
+  {id:'td23',projectId:'p10',hangMuc:'Nền & hạ tầng',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-05-20',ghiChu:'Xong'},
+  {id:'td24',projectId:'p10',hangMuc:'Clubhouse thô',phanTram:65,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-11',ghiChu:'Đang xây'},
+  {id:'td25',projectId:'p11',hangMuc:'Móng 10 căn',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-07-10',ghiChu:'Xong'},
   {id:'td26',projectId:'p11',hangMuc:'Thô',phanTram:50,ngayCapNhat:'2026-09-09',ghiChu:'5/10 căn xong thô'},
   {id:'td27',projectId:'p12',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-08-01',ghiChu:'Xong'},
   {id:'td28',projectId:'p12',hangMuc:'Thô',phanTram:75,ngayCapNhat:'2026-09-13',ghiChu:'Đang tô trát'},
   {id:'td29',projectId:'p13',hangMuc:'San nền sân golf',phanTram:90,ngayCapNhat:'2026-09-05',ghiChu:'16/18 lỗ'},
   {id:'td30',projectId:'p13',hangMuc:'Clubhouse',phanTram:30,ngayCapNhat:'2026-09-10',ghiChu:'Mới khởi công'},
   {id:'td31',projectId:'p14',hangMuc:'Móng nhà ga',phanTram:60,ngayCapNhat:'2026-09-15',ghiChu:'Đang thi công'},
-  {id:'td32',projectId:'p14',hangMuc:'Kết cấu thép',phanTram:15,ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị lắp dựng'}]
+  {id:'td32',projectId:'p14',hangMuc:'Kết cấu thép',phanTram:15,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị lắp dựng'}]
 };
 
 /* ================= DB ================= */
@@ -833,6 +846,8 @@ const NAV=[
  {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
+ {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view'},
+ {label:'Timeline (Gantt)',icon:'',hash:'#/tiendo-gantt',perm:'projects_view'},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
  {label:'Phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
@@ -953,7 +968,7 @@ ROUTES['#/dashboard']=function(){
  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
  h+='<div class="card"><div class="card-h"><div><h3>Chi phí theo loại</h3><div class="sub">Các dự án đang thi công</div></div></div><div class="card-b">'
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
- h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a><a class="sb-link" href="#/tiendo">📊 Tiến độ</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
+ h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
   h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
@@ -2176,6 +2191,45 @@ ROUTES['#/tiendo-kanban']=function(){
   h+='</div>';
   document.getElementById('view').innerHTML=h;
 };
+ROUTES['#/tiendo-gantt']=function(){
+  const items=(DB.data.tienDo||[]).filter(t=>t.ngayBatDau&&t.ngayKetThuc);
+  if(!items.length){
+    document.getElementById('view').innerHTML='<div class="page-head"><div><h1>Timeline dự án</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button></div></div><div class="empty">Chưa có dữ liệu timeline</div>';
+    return;
+  }
+  // Tính min/max date
+  const dates=items.flatMap(t=>[t.ngayBatDau,t.ngayKetThuc]).sort();
+  const minD=new Date(dates[0]), maxD=new Date(dates[dates.length-1]);
+  maxD.setDate(maxD.getDate()+7);
+  const totalMs=maxD-minD;
+  const today=new Date();
+  const todayPct=Math.max(0,Math.min(100,(today-minD)/totalMs*100));
+  // Scale tháng
+  let scale='<div class="gantt-scale">';
+  const cur=new Date(minD.getFullYear(),minD.getMonth(),1);
+  while(cur<=maxD){ scale+='<div>T'+(cur.getMonth()+1)+'/'+cur.getFullYear()+'</div>'; cur.setMonth(cur.getMonth()+1); }
+  scale+='</div>';
+  let h='<div class="page-head"><div><h1>Timeline dự án</h1><p>Kiểu MS Project • '+items.length+' hạng mục</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-kanban\'">Kanban</button></div></div>';
+  h+='<div class="gantt">'+scale;
+  // Nhóm theo dự án
+  const projs={};
+  items.forEach(t=>{ (projs[t.projectId]=projs[t.projectId]||[]).push(t); });
+  Object.keys(projs).forEach(pid=>{
+    const p=(DB.data.projects||[]).find(x=>x.id===pid);
+    const pname=p?esc(p.name):pid;
+    h+='<div class="gantt-row" style="background:#fef3c7;font-weight:800"><div class="gantt-label">'+pname+'</div><div class="gantt-track"></div></div>';
+    projs[pid].forEach(t=>{
+      const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);
+      const left=Math.max(0,(s-minD)/totalMs*100);
+      const width=Math.max(2,(e-s)/totalMs*100);
+      const done=t.phanTram>=100;
+      h+='<div class="gantt-row"><div class="gantt-label" title="'+esc(t.hangMuc)+'">'+esc(t.hangMuc)+'</div><div class="gantt-track"><div class="gantt-bar'+(done?' done':'')+'" style="left:'+left+'%;width:'+width+'%" title="'+esc(t.hangMuc)+' '+t.phanTram+'%"><i style="width:'+t.phanTram+'%"></i></div>'+(today>=minD&&today<=maxD?'<div class="gantt-today" style="left:'+todayPct+'%" title="Hôm nay"></div>':'')+'</div></div>';
+    });
+  });
+  h+='</div><div style="margin-top:12px;font-size:12px;color:#64748b">Đường đỏ: hôm nay • Kéo ngang để xem</div>';
+  document.getElementById('view').innerHTML=h;
+};
+
 ROUTES['#/tiendo/:id']=function(pid){
   const p=(DB.data.projects||[]).find(x=>x.id===pid);
   if(!p){location.hash='#/tiendo';return;}
