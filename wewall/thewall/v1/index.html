@@ -718,13 +718,39 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<style>
+
+/* ===== Sidebar & modern visual polish ===== */
+.sb-brand .sb-system{font-size:10.5px;line-height:1.25;color:#b9b0a3;white-space:nowrap;letter-spacing:.05px;margin-top:3px}
+.sb-brand .sb-demo{font-size:9px;line-height:1.2;color:#f0ad1f;font-weight:800;letter-spacing:2px;margin-top:3px}
+.sb-brand .t1{font-size:15px!important;letter-spacing:0!important}
+.sb-quick{margin:5px 16px 7px!important;padding:7px 10px!important;font-size:12px!important;background:#f0ad1f!important;color:#1a1d29!important;border:1px solid rgba(240,173,31,.45)!important;border-radius:7px!important;box-shadow:0 2px 7px rgba(240,173,31,.12)!important}
+.sb-quick:hover{background:#ffc247!important;filter:none!important}
+.sb-sec-toggle{font-size:13px!important;padding:14px 9px 8px!important;border-bottom:1px solid rgba(255,255,255,.11)!important;margin-bottom:4px!important;letter-spacing:0!important}
+.sb-sec-toggle>span:first-child{font-size:13px!important}
+.sb-link{transition:background .16s ease,color .16s ease,transform .16s ease}
+.sb-link:hover{transform:translateX(2px)}
+.sb-sub{border-left-color:rgba(240,173,31,.25)!important}
+.sb-user .rl{text-transform:uppercase;letter-spacing:.35px;font-weight:700;color:#f0ad1f!important}
+.avatar{display:none!important}
+/* Raise cards from the background with restrained shadows and clearer surfaces */
+.card,.stat,.kanban-board,.kanban-column,.modal,.qentry,.panel,.report-card{box-shadow:0 5px 18px rgba(24,35,54,.08),0 1px 3px rgba(24,35,54,.05)!important;border-color:#e4e8ef!important}
+.card{border-radius:14px!important}
+.card-h{background:linear-gradient(180deg,#fff,#fbfcfe);}
+.stat{border-radius:13px!important;transition:transform .18s ease,box-shadow .18s ease}
+.stat:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(24,35,54,.12)!important}
+.btn,.inp{transition:box-shadow .15s ease,border-color .15s ease,transform .15s ease}
+.btn-pri{box-shadow:0 3px 9px rgba(240,173,31,.18)}
+.inp:focus{box-shadow:0 0 0 3px rgba(240,173,31,.14)!important}
+
+</style>
 </head>
 <body>
 <!-- ============ LOGIN ============ -->
 <div id="loginView">
   <div class="login-card">
     <img id="loginLogo" class="login-logo" alt="THE WALL" src="logo.png">
-    <h1 style="text-align:center;font-size:18px">The Wall - Project Management System [DEMO]</h1>
+    <h1 style="text-align:center;font-size:18px">The Wall - Project Management System</h1><div style="text-align:center;color:#d97706;font-size:11px;font-weight:800;letter-spacing:2px;margin:-8px 0 14px">DEMO</div>
     <div class="fld"><label>Tên đăng nhập</label><input class="inp" id="lgUser" placeholder="Tên đăng nhập"></div>
     <div class="fld"><label>Mật khẩu</label><input class="inp" id="lgPass" type="password" placeholder="Mật khẩu"></div>
     <div id="lgErr" class="alert alert-red" style="display:none"></div>
@@ -1121,7 +1147,7 @@ function toggleSidebarAll(open){
 }
 function buildSidebar(){
  const u=Auth.user;
- let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div></div></div>';
+ let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div class="sb-system">Project Management System</div><div class="sb-demo">DEMO</div></div></div>';
  {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
  h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>';
@@ -1146,7 +1172,7 @@ function buildSidebar(){
   }
  });
  h+='</div>';
- h+='<div class="sb-user"><div class="row"><div class="avatar">'+esc(u.name.slice(0,2).toUpperCase())+'</div><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">Đăng xuất</button></div>';
+ h+='<div class="sb-user"><div class="row"><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">Đăng xuất</button></div>';
  $('#sidebar').innerHTML=h;
  $$('#sidebar [data-h]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.h;$('#sidebar').classList.remove('open');});
 }
@@ -2119,7 +2145,57 @@ function xuatPhieuDNXls(id){
  h+='<table border="1"><tr><th>Số tiền đề nghị</th><th>Bằng chữ</th></tr>'
   +'<tr><td>'+d.sotien+'</td><td>'+esc(docSoTien(d.sotien))+'</td></tr></table>';
  h+='<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>';
- h+='</body></html>';
+ h+='
+<style id="dntt-a4-final-fix">
+/* Phiếu DNTT: fit the printable A4 width without clipping, and use the full page height */
+@media print {
+  @page { size: A4 portrait; margin: 6mm; }
+  html, body { width: auto !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+  body.printing-phieu { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body.printing-phieu .mback {
+    position: static !important; inset: auto !important; display: block !important;
+    width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important;
+    overflow: visible !important; background: #fff !important;
+  }
+  body.printing-phieu .modal,
+  body.printing-phieu .modal.lg {
+    width: 100% !important; max-width: none !important; min-width: 0 !important;
+    margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-modal-body {
+    width: 100% !important; max-width: none !important; max-height: none !important;
+    padding: 0 !important; margin: 0 !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-wrap {
+    width: 198mm !important; max-width: 198mm !important; min-width: 0 !important;
+    min-height: 285mm !important; height: auto !important; box-sizing: border-box !important;
+    margin: 0 auto !important; padding: 3mm 3.5mm !important; border: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: flex-start !important;
+    font-family: Arial, sans-serif !important; font-size: 11pt !important; line-height: 1.3 !important;
+    zoom: 1 !important; transform: none !important; overflow: visible !important;
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+  body.printing-phieu .phieu-wrap * { box-sizing: border-box !important; max-width: 100%; }
+  body.printing-phieu .phieu-head { flex: 0 0 auto !important; gap: 4mm !important; padding-bottom: 3mm !important; margin-bottom: 2mm !important; }
+  body.printing-phieu .phieu-head .logo { width: 23mm !important; height: 23mm !important; object-fit: contain !important; }
+  body.printing-phieu .phieu-head .co { min-width: 0 !important; font-size: 10pt !important; line-height: 1.35 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptitle { flex: 0 0 auto !important; font-size: 16pt !important; line-height: 1.25 !important; margin: 2mm 0 1mm !important; text-align: center !important; }
+  body.printing-phieu .pdate { flex: 0 0 auto !important; font-size: 10pt !important; margin: 0 0 2mm !important; text-align: center !important; }
+  body.printing-phieu .ptbl { flex: 0 0 auto !important; width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5pt !important; line-height: 1.25 !important; margin: 1mm 0 2mm !important; }
+  body.printing-phieu .ptbl td, body.printing-phieu .ptbl th { padding: 2mm 1.5mm !important; line-height: 1.25 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptbl tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+  body.printing-phieu .ptbl tr:has(td[style*="height:70px"]) td,
+  body.printing-phieu .ptbl tr:has(td[style*="height:68px"]) td { height: 19mm !important; }
+  body.printing-phieu .psec { flex: 0 0 auto !important; font-size: 10pt !important; line-height: 1.25 !important; margin: 2mm 0 0.5mm !important; }
+  body.printing-phieu .pdot { flex: 1 1 8mm !important; min-height: 7mm !important; height: auto !important; margin: 0.5mm 0 !important; }
+  body.printing-phieu .prow { flex: 0 0 auto !important; gap: 3mm !important; margin: 2mm 0 !important; font-size: 10pt !important; }
+  body.printing-phieu .prow .dot { min-height: 8mm !important; height: auto !important; }
+  body.printing-phieu .pfoot { flex: 0 0 auto !important; margin-top: auto !important; padding: 2.5mm !important; font-size: 9pt !important; line-height: 1.25 !important; }
+}
+</style>
+
+</body></html>';
  toast('Dùng nút Tải Excel trong phiếu DNTT');
 }
 
@@ -2170,7 +2246,57 @@ function xlsTable(title,headers,rows,foot){
  let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
  h+='<h3>'+esc(title)+'</h3><table border="1"><thead><tr>'+headers.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>';
  rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+esc(c==null?'':c)+'</td>').join('')+'</tr>';});
- h+='</tbody></table>'+(foot?'<p>'+foot+'</p>':'')+'</body></html>';return h;
+ h+='</tbody></table>'+(foot?'<p>'+foot+'</p>':'')+'
+<style id="dntt-a4-final-fix">
+/* Phiếu DNTT: fit the printable A4 width without clipping, and use the full page height */
+@media print {
+  @page { size: A4 portrait; margin: 6mm; }
+  html, body { width: auto !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+  body.printing-phieu { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body.printing-phieu .mback {
+    position: static !important; inset: auto !important; display: block !important;
+    width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important;
+    overflow: visible !important; background: #fff !important;
+  }
+  body.printing-phieu .modal,
+  body.printing-phieu .modal.lg {
+    width: 100% !important; max-width: none !important; min-width: 0 !important;
+    margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-modal-body {
+    width: 100% !important; max-width: none !important; max-height: none !important;
+    padding: 0 !important; margin: 0 !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-wrap {
+    width: 198mm !important; max-width: 198mm !important; min-width: 0 !important;
+    min-height: 285mm !important; height: auto !important; box-sizing: border-box !important;
+    margin: 0 auto !important; padding: 3mm 3.5mm !important; border: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: flex-start !important;
+    font-family: Arial, sans-serif !important; font-size: 11pt !important; line-height: 1.3 !important;
+    zoom: 1 !important; transform: none !important; overflow: visible !important;
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+  body.printing-phieu .phieu-wrap * { box-sizing: border-box !important; max-width: 100%; }
+  body.printing-phieu .phieu-head { flex: 0 0 auto !important; gap: 4mm !important; padding-bottom: 3mm !important; margin-bottom: 2mm !important; }
+  body.printing-phieu .phieu-head .logo { width: 23mm !important; height: 23mm !important; object-fit: contain !important; }
+  body.printing-phieu .phieu-head .co { min-width: 0 !important; font-size: 10pt !important; line-height: 1.35 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptitle { flex: 0 0 auto !important; font-size: 16pt !important; line-height: 1.25 !important; margin: 2mm 0 1mm !important; text-align: center !important; }
+  body.printing-phieu .pdate { flex: 0 0 auto !important; font-size: 10pt !important; margin: 0 0 2mm !important; text-align: center !important; }
+  body.printing-phieu .ptbl { flex: 0 0 auto !important; width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5pt !important; line-height: 1.25 !important; margin: 1mm 0 2mm !important; }
+  body.printing-phieu .ptbl td, body.printing-phieu .ptbl th { padding: 2mm 1.5mm !important; line-height: 1.25 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptbl tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+  body.printing-phieu .ptbl tr:has(td[style*="height:70px"]) td,
+  body.printing-phieu .ptbl tr:has(td[style*="height:68px"]) td { height: 19mm !important; }
+  body.printing-phieu .psec { flex: 0 0 auto !important; font-size: 10pt !important; line-height: 1.25 !important; margin: 2mm 0 0.5mm !important; }
+  body.printing-phieu .pdot { flex: 1 1 8mm !important; min-height: 7mm !important; height: auto !important; margin: 0.5mm 0 !important; }
+  body.printing-phieu .prow { flex: 0 0 auto !important; gap: 3mm !important; margin: 2mm 0 !important; font-size: 10pt !important; }
+  body.printing-phieu .prow .dot { min-height: 8mm !important; height: auto !important; }
+  body.printing-phieu .pfoot { flex: 0 0 auto !important; margin-top: auto !important; padding: 2.5mm !important; font-size: 9pt !important; line-height: 1.25 !important; }
+}
+</style>
+
+</body></html>';return h;
 }
 function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
@@ -2866,5 +2992,55 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
 })();
 
 </script>
+
+<style id="dntt-a4-final-fix">
+/* Phiếu DNTT: fit the printable A4 width without clipping, and use the full page height */
+@media print {
+  @page { size: A4 portrait; margin: 6mm; }
+  html, body { width: auto !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+  body.printing-phieu { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body.printing-phieu .mback {
+    position: static !important; inset: auto !important; display: block !important;
+    width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important;
+    overflow: visible !important; background: #fff !important;
+  }
+  body.printing-phieu .modal,
+  body.printing-phieu .modal.lg {
+    width: 100% !important; max-width: none !important; min-width: 0 !important;
+    margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-modal-body {
+    width: 100% !important; max-width: none !important; max-height: none !important;
+    padding: 0 !important; margin: 0 !important; overflow: visible !important;
+  }
+  body.printing-phieu .phieu-wrap {
+    width: 198mm !important; max-width: 198mm !important; min-width: 0 !important;
+    min-height: 285mm !important; height: auto !important; box-sizing: border-box !important;
+    margin: 0 auto !important; padding: 3mm 3.5mm !important; border: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: flex-start !important;
+    font-family: Arial, sans-serif !important; font-size: 11pt !important; line-height: 1.3 !important;
+    zoom: 1 !important; transform: none !important; overflow: visible !important;
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+  body.printing-phieu .phieu-wrap * { box-sizing: border-box !important; max-width: 100%; }
+  body.printing-phieu .phieu-head { flex: 0 0 auto !important; gap: 4mm !important; padding-bottom: 3mm !important; margin-bottom: 2mm !important; }
+  body.printing-phieu .phieu-head .logo { width: 23mm !important; height: 23mm !important; object-fit: contain !important; }
+  body.printing-phieu .phieu-head .co { min-width: 0 !important; font-size: 10pt !important; line-height: 1.35 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptitle { flex: 0 0 auto !important; font-size: 16pt !important; line-height: 1.25 !important; margin: 2mm 0 1mm !important; text-align: center !important; }
+  body.printing-phieu .pdate { flex: 0 0 auto !important; font-size: 10pt !important; margin: 0 0 2mm !important; text-align: center !important; }
+  body.printing-phieu .ptbl { flex: 0 0 auto !important; width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5pt !important; line-height: 1.25 !important; margin: 1mm 0 2mm !important; }
+  body.printing-phieu .ptbl td, body.printing-phieu .ptbl th { padding: 2mm 1.5mm !important; line-height: 1.25 !important; overflow-wrap: anywhere !important; }
+  body.printing-phieu .ptbl tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+  body.printing-phieu .ptbl tr:has(td[style*="height:70px"]) td,
+  body.printing-phieu .ptbl tr:has(td[style*="height:68px"]) td { height: 19mm !important; }
+  body.printing-phieu .psec { flex: 0 0 auto !important; font-size: 10pt !important; line-height: 1.25 !important; margin: 2mm 0 0.5mm !important; }
+  body.printing-phieu .pdot { flex: 1 1 8mm !important; min-height: 7mm !important; height: auto !important; margin: 0.5mm 0 !important; }
+  body.printing-phieu .prow { flex: 0 0 auto !important; gap: 3mm !important; margin: 2mm 0 !important; font-size: 10pt !important; }
+  body.printing-phieu .prow .dot { min-height: 8mm !important; height: auto !important; }
+  body.printing-phieu .pfoot { flex: 0 0 auto !important; margin-top: auto !important; padding: 2.5mm !important; font-size: 9pt !important; line-height: 1.25 !important; }
+}
+</style>
+
 </body>
 </html>
