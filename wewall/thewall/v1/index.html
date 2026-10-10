@@ -2475,7 +2475,14 @@ ROUTES['#/tiendo-calendar']=function(){
   for(let d=1;d<=last.getDate();d++){
     const dt=new Date(y,m,d);const isToday=d===now.getDate();
     const dayItems=items.filter(t=>{const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cur=new Date(y,m,d);return cur>=new Date(s.getFullYear(),s.getMonth(),s.getDate()) && cur<=new Date(e.getFullYear(),e.getMonth(),e.getDate());});
-    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');return `<div class="citem ${c}" title="${esc(t.hangMuc)} - ${t.phanTram}%" onclick="tienDoForm('${t.projectId}','${t.id}')">${esc(t.hangMuc.slice(0,18))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
+    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{
+      const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');
+      const prj=DB.data.projects.find(p=>p.id===t.projectId);
+      const pcode=prj?prj.code:'?';
+      return `<div class="citem ${c}" title="${esc(prj?prj.name+' • ':'')}${esc(t.hangMuc)} - ${t.phanTram}%" onclick="tienDoForm('${t.projectId}','${t.id}')">
+        <span style="font-size:8px;font-weight:800;background:rgba(0,0,0,.15);padding:0 3px;border-radius:3px;margin-right:2px">${esc(pcode)}</span>${esc(t.hangMuc.slice(0,14))} ${t.phanTram}%
+      </div>`;
+    }).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
   }
   h+='</div></div>';
   document.getElementById('view').innerHTML=h;
