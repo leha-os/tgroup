@@ -571,9 +571,9 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .gantt-row{display:flex;align-items:stretch;border-bottom:1px solid #f1f5f9;min-height:48px;transition:.12s}
 .gantt-row:hover{background:#fffaf2}
 .gantt-row.is-project{background:linear-gradient(90deg,#fffbeb,#fffdf6);border-bottom:1px solid #fde68a}
-.gantt-label{width:160px;min-width:160px;max-width:160px;padding:8px 12px;font-size:12.5px;font-weight:600;border-right:1px solid #e8ddd0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;flex-direction:column;justify-content:center;position:sticky;left:0;z-index:3;background:inherit}
+.gantt-label{width:220px;min-width:220px;max-width:220px;padding:8px 12px;font-size:12.5px;font-weight:600;border-right:1px solid #e8ddd0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;flex-direction:column;justify-content:center;position:sticky;left:0;z-index:3;background:inherit}
 .gantt-label small{font-size:10.5px;font-weight:600;color:#8a7f70;text-transform:uppercase}
-.gantt-track{flex:1;position:relative;height:48px;min-width:600px;background-image:linear-gradient(to right,#f8fafc 1px,transparent 1px);background-size:40px 100%}
+.gantt-track{flex:1;position:relative;height:48px;min-width:900px;background-image:linear-gradient(to right,#f8fafc 1px,transparent 1px);background-size:40px 100%}
 .gantt-bar{position:absolute;top:14px;height:20px;border-radius:8px;background:#e2e8f0;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.12);z-index:1;transition:.15s;display:flex;align-items:center}
 .gantt-bar:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:4}
 .gantt-bar i{display:block;height:100%;border-radius:8px 0 0 8px}
@@ -623,15 +623,23 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
   #view{overflow:visible!important;padding:0!important}
   .main{overflow:visible!important}
 }
-#tiendoScope{transition:transform .2s ease;transform-origin:top left}
-#tiendoScope.zoom-90{transform:scale(.9);width:111.11%}
-#tiendoScope.zoom-80{transform:scale(.8);width:125%}
-#tiendoScope.zoom-70{transform:scale(.7);width:142.85%}
-#tiendoScope.zoom-60{transform:scale(.6);width:166.66%}
+#tiendoScope{transition:transform .2s ease;transform-origin:top left;overflow:auto;-webkit-overflow-scrolling:touch}
+#tiendoScope.zoom-90{transform:scale(.9)}
+#tiendoScope.zoom-80{transform:scale(.8)}
+#tiendoScope.zoom-70{transform:scale(.7)}
+#tiendoScope.zoom-60{transform:scale(.6)}
+#view{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;max-height:100%!important}
+.main{overflow:hidden!important}
+
 
 /* LOGO FIX */
 .login-logo{display:block!important;margin:0 auto 10px;width:140px;height:auto;background:#fff;border-radius:12px;padding:6px;object-fit:contain}
 .sb-brand img{display:block!important;width:44px!important;height:44px!important;background:#fff!important;border-radius:8px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
+
+
+/* FIX SCROLL - DAM BAO LUOT DUOC */
+#view{overflow-y:auto!important;overflow-x:auto!important;overscroll-behavior:contain}
+.td-card,.kanban,.gantt,.cal-grid{max-width:100%}
 
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -2357,11 +2365,17 @@ function tienDoGiaiDoan(pid){
   const cur=doing?doing.giaiDoan:(items[items.length-1]?.giaiDoan||'tho');
   return{avg,gd:cur,gdl:GDN[cur]||cur};
 }
-function tienDoCell(pid){
-  const d=tienDoGiaiDoan(pid);
-  return'<div style="min-width:140px"><div style="font-size:11px;font-weight:700;margin-bottom:3px">'+d.gdl+' • '+d.avg+'%</div><div class="td-bar"><i style="width:'+d.avg+'%"></i></div></div>';
-}
 function tienDoProject(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);if(!items.length)return 0;return Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);}
+
+function tienDoCell(pid){
+  try{
+    const pct = typeof tienDoProject==='function' ? tienDoProject(pid) : (typeof tienDoProjectPRO==='function' ? tienDoProjectPRO(pid) : 0);
+    const gd = typeof tienDoGiaiDoan==='function' ? tienDoGiaiDoan(pid) : (typeof tienDoGiaiDoanPRO==='function' ? tienDoGiaiDoanPRO(pid) : {gdl:'—',avg:0});
+    const color = pct>=100 ? '#22c55e' : pct>=70 ? '#f59e0b' : '#3b82f6';
+    return `<div style="min-width:120px"><div class="prog" style="height:6px"><i style="width:${pct}%;background:${color}"></i></div><div style="font-size:11px;color:#64748b;margin-top:3px">${pct}% • ${gd.gdl||gd.gd||''}</div></div>`;
+  }catch(e){ return `<div style="font-size:11px;color:#999">—</div>`; }
+}
+
 ROUTES['#/tiendo']=function(){
   const projs=typeof visibleProjects==='function'?visibleProjects():DB.data.projects;
   const items=DB.data.tienDo||[];
