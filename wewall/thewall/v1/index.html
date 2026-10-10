@@ -1039,6 +1039,57 @@ const DB={
  reset(){this.data=JSON.parse(JSON.stringify(SEED));this.save();},
  log(action,detail){this.data.auditLogs.unshift({id:uid('a'),ts:new Date().toLocaleString('vi-VN'),user:Auth.user?Auth.user.name:'?',action,detail});this.save();}
 };
+/* ================= PERSISTENT LOGIN SESSION ================= */
+/* Persist only the minimal user identity needed to keep the current login
+   across a page refresh. Never store the user's password or API key here. */
+const SESSION_KEY='twpro_session_v1';
+function saveSession(){
+  try{
+    if(!Auth || !Auth.user){
+      localStorage.removeItem(SESSION_KEY);
+      return false;
+    }
+    const u=Auth.user;
+    localStorage.setItem(SESSION_KEY,JSON.stringify({
+      user:{id:u.id||'',name:u.name||'',role:u.role||'',projectIds:Array.isArray(u.projectIds)?u.projectIds:[]},
+      savedAt:Date.now()
+    }));
+    return true;
+  }catch(e){
+    console.warn('Không thể lưu phiên đăng nhập trên thiết bị này.',e);
+    return false;
+  }
+}
+function restoreSession(){
+  try{
+    const raw=localStorage.getItem(SESSION_KEY);
+    if(!raw)return false;
+    const parsed=JSON.parse(raw);
+    const saved=parsed&&parsed.user;
+    if(!saved || !saved.id || !saved.name || !saved.role){
+      localStorage.removeItem(SESSION_KEY);
+      return false;
+    }
+    /* Prefer current user records if available, but preserve a valid server
+       session when the local user list has not yet been refreshed. */
+    const localUser=(DB.data.users||[]).find(x=>String(x.id)===String(saved.id));
+    Auth.user={
+      id:saved.id,
+      name:(localUser&&localUser.name)||saved.name,
+      role:(localUser&&localUser.role)||saved.role,
+      projectIds:Array.isArray(localUser&&localUser.projectIds)?localUser.projectIds:
+        (Array.isArray(saved.projectIds)?saved.projectIds:[])
+    };
+    return true;
+  }catch(e){
+    try{localStorage.removeItem(SESSION_KEY);}catch(_){}
+    return false;
+  }
+}
+function clearSession(){
+  try{localStorage.removeItem(SESSION_KEY);}catch(e){}
+}
+
 /* ================= AUTH ================= */
 const Auth={
  user:null,
