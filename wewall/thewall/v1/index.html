@@ -2456,7 +2456,7 @@ ROUTES['#/tiendo']=function(){
   const items=DB.data.tienDo||[];
   const totalPct=projs.length?Math.round(projs.reduce((s,p)=>s+tienDoProject(p.id),0)/projs.length):0;
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1></h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
+  h+=`<div class="page-head"><div><h1></h1><p></p></div><div class="page-actions"><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo');
   h+=tdToolbar();
   h+='<div id="tiendoScope">';
@@ -2499,7 +2499,7 @@ ROUTES['#/tiendo-kanban']=function(){
   const items=DB.data.tienDo||[];
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
   let h=getPrintHeader();
-  h+=`<div class="page-actions" style="justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div>`;
+  h+=`<div class="page-actions" style="justify-content:flex-end;margin-bottom:1px"><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div>`;
   h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar();h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
     const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
@@ -2522,11 +2522,11 @@ ROUTES['#/tiendo-gantt']=function(){
   const items=DB.data.tienDo||[];
   const now=new Date();const mStart=new Date(now.getFullYear(),now.getMonth(),1);const mEnd=new Date(now.getFullYear(),now.getMonth()+1,0);mEnd.setHours(23,59,59);const totalMs=mEnd-mStart;const daysInMonth=mEnd.getDate();const todayPct=((now-mStart)/totalMs*100);
   const GDN={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};
-  let scale='<div class="gantt-scale"><div style="min-width:220px;flex:0 0 220px;position:sticky;left:0;z-index:6;background:#fffdf6;border-right:1px solid #e8ddd0">Dự án / Hạng mục</div>';
+  let scale='<div class="gantt-scale"><div style="min-width:220px;flex:0 0 220px;position:sticky;left:0;z-index:6;background:#fffdf6;border-right:1px solid #e8ddd0">Dự án/Hạng mục</div>';
   for(let d=1;d<=daysInMonth;d++){const dt=new Date(now.getFullYear(),now.getMonth(),d);const isWk=dt.getDay()===0||dt.getDay()===6;const isToday=d===now.getDate();scale+=`<div class="${isWk?'weekend':''} ${isToday?'today':''}" style="min-width:40px">${d}<div style="font-size:9px">${['CN','T2','T3','T4','T5','T6','T7'][dt.getDay()]}</div></div>`;}
   scale+='</div>';
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Timeline Gantt tháng ${now.getMonth()+1}/${now.getFullYear()} - 14 dự án</h1><p>${items.length} hạng mục • Đường đỏ: hôm nay • Thanh dài: thời gian • Tô màu: % hoàn thành</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Timeline Gantt tháng ${now.getMonth()+1}/${now.getFullYear()}</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-gantt');h+=tdToolbar();h+='<div id="tiendoScope"><div class="gantt">'+scale;
   const projs={};items.forEach(t=>{(projs[t.projectId]=projs[t.projectId]||[]).push(t);});
   const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
