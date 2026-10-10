@@ -278,12 +278,31 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body.printing-phieu .pdot{height:10px!important}
   body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
   @page{size:A4;margin:8mm}
-  body.printing-phieu .phieu-wrap{page-break-inside:avoid}
+  body.printing-phieu .phieu-wrap{page-break-inside:auto!important;break-inside:auto!important}
   #view{padding:0;overflow:visible}
   .main{overflow:visible}
   .card{box-shadow:none;break-inside:avoid}
   body{background:#fff}
 }
+
+
+/* User refinements: readable project labels, compact progress disclosure, custom mobile-friendly item picker */
+.project-name-strong{color:#9a4d00!important;font-weight:800!important}
+.project-code-strong{font-size:11px;color:#8b4513;font-weight:700;letter-spacing:.2px;margin-top:2px}
+.progress-details>summary{display:flex;align-items:center;gap:7px;font-size:12px!important;font-weight:800;padding:7px 10px!important;color:#8a4300!important;background:#fff4e5!important;border:1px solid #e9b36b!important;border-radius:8px!important;cursor:pointer;user-select:none}
+.progress-chevron{display:inline-flex;align-items:center;justify-content:center;font-size:22px;line-height:1;width:20px;height:20px;font-weight:900;transition:transform .16s}
+.progress-details[open] .progress-chevron{transform:rotate(90deg)}
+.td-hm-picker{position:relative;width:100%;z-index:20}
+.td-hm-inputrow{display:flex;align-items:stretch;gap:0}
+.td-hm-inputrow .inp{border-radius:10px 0 0 10px!important;flex:1;min-width:0}
+.td-hm-toggle{width:44px;flex-shrink:0;border:1px solid #d9c5a5;border-left:0;border-radius:0 10px 10px 0;background:linear-gradient(180deg,#fffaf0,#f5e7d0);color:#8a4b08;font-size:24px;font-weight:800;cursor:pointer}
+.td-hm-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:250px;overflow:auto;padding:6px;background:#fff;border:1px solid #e7d4b7;border-radius:12px;box-shadow:0 14px 35px rgba(55,35,12,.2);z-index:1000}
+.td-hm-menu[hidden]{display:none!important}
+.td-hm-option{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;border:0;background:#fff;border-radius:8px;padding:11px 12px;text-align:left;color:#3d3328;font-size:14px;font-weight:600;cursor:pointer}
+.td-hm-option:hover,.td-hm-option:focus{background:#fff2d9;color:#8a4300;outline:none}
+.td-hm-check{color:#b7791f;font-size:12px}
+.td-hm-custom{padding:9px 12px;color:#78716c;font-size:12px;border-top:1px solid #f1e6d5;margin-top:4px}
+@media(max-width:600px){.td-hm-menu{max-height:42vh}.td-hm-option{padding:13px 12px;font-size:15px}}
 
 /* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
 select.inp{
@@ -614,8 +633,24 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
   .gantt{overflow:visible!important}
   .kanban{overflow:visible!important;flex-wrap:wrap}
   .kanban-col{break-inside:avoid;max-height:none!important}
-  #view{overflow:visible!important;padding:0!important}
-  .main{overflow:visible!important}
+  #appView,.shell,.main,#view,.card,.card-b,.tbl-wrap,.split-wrap,.split-pane,.split-pane-body,#tiendoScope,#rpOut{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important}
+  #appView,.shell,.main{display:block!important;width:100%!important;max-width:none!important}
+  #view{padding:0!important;width:100%!important;max-width:none!important}
+  .card{box-shadow:none!important;break-inside:auto!important;page-break-inside:auto!important}
+  .card-h,.page-head,.print-header{break-inside:avoid!important;page-break-inside:avoid!important}
+  table{width:100%!important;border-collapse:collapse!important}
+  thead{display:table-header-group}
+  tfoot{display:table-footer-group}
+  tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  .tbl-wrap{overflow:visible!important}
+  .kanban,.cal-grid,.gantt{max-height:none!important;overflow:visible!important}
+  .split-wrap{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .split-pane{min-width:0!important}
+  .split-pane-body{overflow:visible!important}
+  .kanban{flex-wrap:wrap!important}
+  .kanban-col{break-inside:avoid!important;max-height:none!important}
+  .print-footer{position:static!important}
+  body{height:auto!important;overflow:visible!important}
 }
 #tiendoScope{transition:transform .2s ease;transform-origin:top left}
 #tiendoScope.zoom-90{transform:scale(.9);width:111.11%}
@@ -1128,7 +1163,7 @@ ROUTES['#/dashboard']=function(){
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
  h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
+  h+='<tr><td><a class="linklike project-name-strong" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:#8b4513;font-weight:600">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
  h+='<div class="grid g4">'
   +'<div class="card card-b" style="cursor:pointer" onclick="location.hash=\'#/vendors\'"><div style="font-size:12px;color:var(--mut)">Nhà cung cấp</div><div style="font-size:24px;font-weight:800">'+scoped(DB.data.vendors).length+'</div></div>'
@@ -1156,7 +1191,7 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td><details class="progress-details"><summary>Tiến độ</summary>'+tienDoCell(p.id)+'</details></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike project-name-strong" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div class="project-code-strong">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td><details class="progress-details"><summary><span class="progress-chevron">▸</span> Tiến độ</summary>'+tienDoCell(p.id)+'</details></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1472,15 +1507,16 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
 };
 /* ================= REPORTS ================= */
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
- let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div></div>';
+ let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div><div class="page-actions"><button class="btn btn-pri" onclick="window.print()">🖨 In báo cáo</button></div></div>';
  const reportPie=DB.data.projects.map((p,i)=>({label:p.name,value:Math.max(0,projectSpent(p.id)),color:['#d97706','#0f766e','#2563eb','#7c3aed','#dc2626','#0891b2','#65a30d','#db2777'][i%8]})).filter(x=>x.value>0);
  h+='<div class="card" style="margin:0 0 16px"><div class="card-h"><div><h3>Biểu đồ tròn — cơ cấu chi phí theo dự án</h3><div class="sub">Tỷ trọng chi phí thực tế của các dự án</div></div></div><div class="card-b">'+(reportPie.length?donutChart(reportPie):'<div class="empty">Chưa có dữ liệu chi phí để lập biểu đồ</div>')+'</div></div>';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
   +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))
   +'<button class="btn btn-pri" onclick="reportCash()">Xem báo cáo</button></div></div>';
- h+='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ</h3><div class="sub">Phải trả & phải thu toàn công ty</div></div></div><div class="card-b"><button class="btn btn-pri" onclick="reportDebt()">Xem báo cáo</button></div></div></div>';
+ h+='</div>';
  h+='<div id="rpOut" style="margin-top:16px"></div>';
  $('#view').innerHTML=h;
+ reportDebt();
 };
 function reportCash(){
  const pid=formVal('rp'),p=DB.data.projects.find(x=>x.id===pid);
@@ -1494,7 +1530,7 @@ function reportDebt(){
  let tp=0,tr=0,rows='';
  scoped(DB.data.projects).forEach(p=>{const l=projectLiab(p.id),r=projectRecv(p.id);tp+=l.total;tr+=r;
   rows+='<tr><td>'+esc(p.name)+'</td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
- $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
+ $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ phải trả & phải thu toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
 }
 /* ================= QUICK ENTRY ================= */
 ROUTES['#/quick']=function(){
@@ -2415,8 +2451,8 @@ ROUTES['#/tiendo-kanban']=function(){
   const items=DB.data.tienDo||[];
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Kanban tiến độ - 14 dự án chuẩn</h1><p>${items.length} hạng mục • Kéo thả theo giai đoạn thi công thực tế</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
-  h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar('<span style="font-size:12px;color:#666">💡 Sắp xếp: Chuẩn bị → Ngầm → Thô → Hoàn thiện → MEP</span>');h+='<div id="tiendoScope"><div class="kanban">';
+  h+=`<div class="page-head"><div><h1>Kanban tiến độ</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar();h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
     const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
     const avg=list.length?Math.round(list.reduce((s,t)=>s+(+t.phanTram||0),0)/list.length):0;
@@ -2483,7 +2519,7 @@ ROUTES['#/tiendo-split']=function(){
   const items=DB.data.tienDo||[];
   let h=getPrintHeader();
   h+=`<div class="page-head"><div><h1>Split View - Xem 2 view cùng lúc</h1><p>So sánh Kanban + Gantt cùng lúc - chuẩn PM pro</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
-  h+=tdViewSwitcher('#/tiendo-split');h+=tdToolbar('<span style="font-size:12px">Kéo thanh cuộn riêng từng pane - In ra sẽ gộp 2 view trên 1 trang A4 ngang</span>');h+='<div id="tiendoScope"><div class="split-wrap">';
+  h+=tdViewSwitcher('#/tiendo-split');h+=tdToolbar();h+='<div id="tiendoScope"><div class="split-wrap">';
   // Left: Kanban mini
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & HT','#22c55e']];
   let kanbanHtml='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px">';
@@ -2532,11 +2568,22 @@ function tienDoForm(pid,id){
   const projs=DB.data.projects||[];
   openModal((id?'Sửa':'Thêm')+' tiến độ',
     '<label>Dự án</label><select class="inp" id="td_pid">'+projs.map(p=>'<option value="'+p.id+'"'+(t.projectId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+
-    '<label>Hạng mục</label><input class="inp" id="td_hm" list="tdHmOptions" value="'+esc(t.hangMuc||'')+'" placeholder="Chọn hoặc nhập hạng mục"><datalist id="tdHmOptions"><option value="Cọc & móng"><option value="Tầng hầm"><option value="Kết cấu tầng trệt"><option value="Kết cấu tầng điển hình"><option value="Mái"><option value="Xây tô"><option value="Chống thấm"><option value="Hoàn thiện"><option value="MEP"><option value="Cảnh quan & hạ tầng"></datalist>'+
+    '<label>Hạng mục</label><div class="td-hm-picker"><div class="td-hm-inputrow"><input class="inp" id="td_hm" autocomplete="off" value="'+esc(t.hangMuc||'')+'" placeholder="Chọn hạng mục hoặc nhập tên" onfocus="showTdSuggestions()" oninput="showTdSuggestions(this.value)"><button type="button" class="td-hm-toggle" onclick="toggleTdSuggestions()" aria-label="Mở danh sách hạng mục">⌄</button></div><div class="td-hm-menu" id="tdHmMenu" hidden></div></div>'+
     '<label>Tiến độ (%)</label><input class="inp" type="number" id="td_pct" min="0" max="100" value="'+(t.phanTram||0)+'">'+
     '<label>Ghi chú</label><input class="inp" id="td_note" value="'+esc(t.ghiChu||'')+'">',
     '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo(\''+(id||'')+'\')">Lưu</button>');
 }
+const TD_HANG_MUC_OPTIONS=['Cọc & móng','Tầng hầm','Kết cấu tầng trệt','Kết cấu tầng điển hình','Mái','Xây tô','Chống thấm','Hoàn thiện','MEP','Cảnh quan & hạ tầng'];
+function showTdSuggestions(query){
+ const input=document.getElementById('td_hm'),menu=document.getElementById('tdHmMenu');if(!input||!menu)return;
+ const q=(query===undefined?input.value:query).trim().toLocaleLowerCase('vi');
+ const opts=TD_HANG_MUC_OPTIONS.filter(x=>!q||x.toLocaleLowerCase('vi').includes(q));
+ menu.innerHTML=opts.map(x=>'<button type="button" class="td-hm-option" data-value="'+esc(x)+'" onclick="selectTdHm(this.dataset.value)"><span>'+esc(x)+'</span><span class="td-hm-check">↵</span></button>').join('')+(q&&!TD_HANG_MUC_OPTIONS.some(x=>x.toLocaleLowerCase('vi')===q)?'<div class="td-hm-custom">Bạn có thể tiếp tục nhập tên hạng mục riêng</div>':'');
+ menu.hidden=false;
+}
+function toggleTdSuggestions(){const menu=document.getElementById('tdHmMenu');if(!menu)return;if(menu.hidden)showTdSuggestions();else menu.hidden=true;}
+function selectTdHm(value){const input=document.getElementById('td_hm'),menu=document.getElementById('tdHmMenu');if(input)input.value=value;if(menu)menu.hidden=true;}
+document.addEventListener('click',function(e){const picker=e.target.closest&&e.target.closest('.td-hm-picker');if(!picker){const menu=document.getElementById('tdHmMenu');if(menu)menu.hidden=true;}});
 function saveTienDo(id){
   const pid=document.getElementById('td_pid').value;
   const hangMuc=document.getElementById('td_hm').value.trim();
