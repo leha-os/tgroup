@@ -266,24 +266,21 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body.printing-phieu .modal{box-shadow:none!important;width:100%!important;max-width:100%!important;margin:0!important;max-height:none!important;overflow:visible!important}
   body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
   body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
-  @page{size:A4 portrait;margin:6mm 8mm 8mm 8mm}
-  body.printing-phieu .phieu-wrap{max-width:100%!important;width:100%!important;margin:0!important;padding:4px 8px!important;font-size:8.5px!important;line-height:1.2!important;font-family:Arial,sans-serif!important;max-height:284mm!important;overflow:hidden!important}
+  @page{size:A4 portrait;margin:5mm 7mm 7mm 7mm}
+  body.printing-phieu .phieu-wrap{max-width:100%!important;width:100%!important;margin:0!important;padding:3px 6px!important;font-size:7.5px!important;line-height:1.15!important;font-family:Arial,sans-serif!important}
   body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important;box-sizing:border-box!important}
-  body.printing-phieu .phieu-head{padding-bottom:3px!important;margin-bottom:2px!important;border-bottom-width:1px!important}
-  body.printing-phieu .phieu-head .logo{width:42px!important;height:42px!important}
-  body.printing-phieu .phieu-head .co{font-size:8px!important;line-height:1.2!important}
-  body.printing-phieu .ptitle{font-size:13px!important;margin:4px 0 4px!important}
-  body.printing-phieu .pdate{font-size:8px!important;margin-bottom:2px!important}
-  body.printing-phieu .ptbl{font-size:8px!important;border-collapse:collapse!important;width:100%!important}
-  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:1.5px 3px!important;line-height:1.15!important}
-  body.printing-phieu .psig td{height:22px!important}
-  body.printing-phieu .psec{margin:2px 0 0px!important;font-size:8px!important;font-weight:700!important}
-  body.printing-phieu .pdot{height:8px!important;margin:0px 0!important;border-bottom:1px dotted #999!important}
-  body.printing-phieu .prow{margin:2px 0!important}
-  body.printing-phieu .prow .lab{font-size:8px!important}
-  body.printing-phieu .pfoot{font-size:6.5px!important;margin-top:3px!important;text-align:center!important}
-  body.printing-phieu .ptbl tr{page-break-inside:avoid!important}
-  body.printing-phieu .phieu-wrap{page-break-after:avoid!important;page-break-before:avoid!important}
+  body.printing-phieu .phieu-head{padding-bottom:2px!important;margin-bottom:1px!important}
+  body.printing-phieu .phieu-head .logo{width:36px!important;height:36px!important}
+  body.printing-phieu .phieu-head .co{font-size:7px!important;line-height:1.15!important}
+  body.printing-phieu .ptitle{font-size:11px!important;margin:2px 0 2px!important}
+  body.printing-phieu .pdate{font-size:7px!important;margin-bottom:1px!important}
+  body.printing-phieu .ptbl{font-size:7px!important;border-collapse:collapse!important;width:100%!important}
+  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:1px 2px!important;line-height:1.1!important}
+  body.printing-phieu .psig td{height:18px!important}
+  body.printing-phieu .psec{margin:1px 0 0px!important;font-size:7px!important;font-weight:700!important}
+  body.printing-phieu .pdot{height:6px!important;margin:0px 0!important;border-bottom:1px dotted #999!important}
+  body.printing-phieu .prow{margin:1px 0!important}
+  body.printing-phieu .pfoot{font-size:6px!important;margin-top:2px!important}
 }
 
 /* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
@@ -624,6 +621,27 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 /* LOGO FIX */
 .login-logo{display:block!important;margin:0 auto 10px;width:140px;height:auto;background:#fff;border-radius:12px;padding:6px;object-fit:contain}
 .sb-brand img{display:block!important;width:44px!important;height:44px!important;background:#fff!important;border-radius:8px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
+
+
+@media print{
+  /* Fix bao cao in nhieu trang - bo gioi han chieu cao */
+  html, body, #appView, .shell, .main, #view, #rpOut {height:auto!important; min-height:auto!important; overflow:visible!important; max-height:none!important;}
+  .card, .card-b {overflow:visible!important; height:auto!important; max-height:none!important; break-inside:auto!important; page-break-inside:auto!important;}
+  .tbl-wrap {overflow:visible!important;}
+  /* Tieu de in */
+  .print-header {display:block!important; page-break-after:avoid;}
+  /* Cho phep ngat trang tu dong */
+  .card {page-break-inside:auto;}
+  .card-b > div {page-break-inside:auto;}
+  h4 {page-break-after:avoid;}
+  table {page-break-inside:auto;}
+  tr {page-break-inside:avoid; page-break-after:auto;}
+  /* An nut khi in */
+  .noprint, .page-actions, .btn {display:none!important;}
+}
+@media print{
+  @page {size:A4 portrait; margin:12mm 10mm 14mm 10mm;}
+}
 
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -1004,7 +1022,7 @@ const NAV=[
  {label:'Người dùng',icon:'',hash:'#/users',perm:'users_manage'},
  {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
-let navExpanded={};
+let navExpanded={'Tiến độ thi công':false};
 function buildSidebar(){
  const u=Auth.user;
  let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
@@ -1043,9 +1061,46 @@ function buildProjPick(){
 function projName(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.name:'';}
 function projCode(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.code:'';}
 /* ================= CHARTS (SVG thuần, không lib) ================= */
-function hbarChart(data,color){ // data:[{label,value}]
- const max=Math.max(...data.map(d=>d.value),1);
- return '<div style="display:flex;flex-direction:column;gap:10px">'+data.map(d=>'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>'+esc(d.label)+'</span><b>'+fmtVND(d.value)+'</b></div><div class="prog"><i style="width:'+Math.round(100*d.value/max)+'%;background:'+color+'"></i></div></div>').join('')+'</div>';
+function barChartVertical(data, colors){
+  const max=Math.max(...data.map(d=>d.value),1);
+  const cols=colors||['#f0ad1f','#3b82f6','#ef4444','#22c55e','#8b5cf6'];
+  let h='<div style="display:flex;align-items:end;gap:12px;height:180px;padding:12px 8px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;margin:12px 0">';
+  data.forEach((d,i)=>{
+    const pct=Math.round(100*d.value/max);
+    const hh=Math.max(8,pct*1.5);
+    h+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;max-width:60px;background:${cols[i%cols.length]};height:${hh}px;border-radius:6px 6px 0 0;position:relative" title="${d.label}: ${fmtVND(d.value)}"><span style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;white-space:nowrap">${d.value>0? (d.value>=1000000? (d.value/1000000).toFixed(1)+'Tr' : fmtVND(d.value)) : ''}</span></div><div style="font-size:11px;font-weight:600;text-align:center;line-height:1.2">${esc(d.label)}</div></div>`;
+  });
+  h+='</div>';
+  return h;
+}
+function pieChart(data, colors){
+  const total=data.reduce((s,d)=>s+d.value,0)||1;
+  const cols=colors||['#f0ad1f','#3b82f6','#ef4444','#22c55e','#8b5cf6','#06b6d4','#f97316'];
+  let deg=0;
+  let grad=[];
+  data.forEach((d,i)=>{
+    const pct=d.value/total;
+    const next=deg+pct*360;
+    grad.push(`${cols[i%cols.length]} ${deg}deg ${next}deg`);
+    deg=next;
+  });
+  let h='<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:12px 0"><div style="width:160px;height:160px;border-radius:50%;background:conic-gradient('+','.join(grad)+');border:1px solid #e5e7eb;flex-shrink:0"></div><div style="display:flex;flex-direction:column;gap:6px">';
+  data.forEach((d,i)=>{
+    const pct=Math.round(100*d.value/total);
+    h+=`<div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:12px;height:12px;border-radius:2px;background:${cols[i%cols.length]};display:inline-block"></span><b>${esc(d.label)}</b><span>${fmtVND(d.value)} (${pct}%)</span></div>`;
+  });
+  h+='</div></div>';
+  return h;
+}
+function hbarChart(data,color){
+  const max=Math.max(...data.map(d=>d.value),1);
+  let h='<div style="display:flex;flex-direction:column;gap:8px;margin:10px 0">';
+  data.forEach(d=>{
+    const pct=Math.round(100*d.value/max);
+    h+=`<div style="display:flex;align-items:center;gap:8px"><div style="width:110px;font-size:12px;font-weight:600;text-align:right">${esc(d.label)}</div><div style="flex:1;height:18px;background:#f1f5f9;border-radius:9px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${color||'#f0ad1f'};border-radius:9px"></div></div><div style="width:90px;font-size:11px;font-weight:700">${fmtVND(d.value)}</div></div>`;
+  });
+  h+='</div>';
+  return h;
 }
 function donutChart(data){ // data:[{label,value,color}]
  const total=data.reduce((s,d)=>s+d.value,0)||1;let acc=0;
@@ -1746,7 +1801,7 @@ function xlsxMake(sheets,logoB64){
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="12"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="9"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="2" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="12"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="9"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
@@ -1756,7 +1811,7 @@ function xlsxMake(sheets,logoB64){
       +'<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>'
       +'<pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="1"/>'
       +'<printOptions horizontalCentered="1"/>';
-    if(sh.freeze){
+    if(sh.freeze && sh.freeze.xSplit){
       const x=sh.freeze.xSplit||0, y=sh.freeze.ySplit||0, tl=sh.freeze.topLeft||'A1';
       s+='<sheetViews><sheetView><pane xSplit="'+x+'" ySplit="'+y+'" topLeftCell="'+tl+'" activePane="bottomRight" state="frozen"/></sheetView></sheetViews>';
     }
@@ -2086,8 +2141,8 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  // Freeze cột B (xSplit=1) và hàng 10 (ySplit=9) -> B10
- const freezePane = {xSplit:1, ySplit:9, topLeft:'B10'};
- xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges,freeze:freezePane}],filename);
+ const freezePane = null; // bo freeze theo yeu cau
+ xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 
@@ -2326,11 +2381,11 @@ function getPrintHeader(pid){
   return `<div class="print-header"><h1>📋 BÁO CÁO TIẾN ĐỘ THI CÔNG - ${projName}</h1><div class="meta"><span><b>Dự án:</b> ${projName}</span><span><b>${projInfo}</b></span><span><b>Ngày in:</b> ${now}</span><span><b>Người in:</b> ${esc(Auth.user?Auth.user.name:'')}</span></div></div>`;
 }
 function tdViewSwitcher(cur){
-  const views=[['#/tiendo','Tổng quan'],['#/tiendo-list','Danh sách'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Lịch'],['#/tiendo-split','Split 2 màn']];
+  const views=[['#/tiendo','Tong quan'],['#/tiendo-list','Danh sach'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Lich'],['#/tiendo-split','Split']];
   return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;
 }
 function tdToolbar(extra=''){
-  return `<div class="td-toolbar noprint"><div class="td-zoom"><span style="font-size:12px;font-weight:700">🔍 Thu nhỏ:</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><button class="btn btn-sec btn-sm" onclick="window.print()">🖨️ In báo cáo</button>${extra}</div>`;
+  return `<div class="td-toolbar noprint"><div class="td-zoom"><span style="font-size:12px;font-weight:700">Thu nho:</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><button class="btn btn-sec btn-sm" onclick="window.print()">In bao cao</button>${extra}</div>`;
 }
 function setTdZoom(v){window._tdZoom=+v;document.getElementById('tdZoomLb').textContent=v+'%';const sc=document.getElementById('tiendoScope');if(!sc)return;sc.className='';if(v!=100)sc.classList.add('zoom-'+v);}
 
@@ -2342,6 +2397,14 @@ function tienDoGiaiDoan(pid){
   const doing=items.find(t=>t.phanTram>0&&t.phanTram<100);
   const cur=doing?doing.giaiDoan:(items[items.length-1]?.giaiDoan||'tho');
   return{avg,gd:cur,gdl:GDN[cur]||cur};
+}
+function tienDoCell(pid){
+  try{
+    const pct = typeof tienDoProject==='function' ? tienDoProject(pid) : 0;
+    const gd = typeof tienDoGiaiDoan==='function' ? tienDoGiaiDoan(pid) : {gdl:'—'};
+    const color = pct>=100 ? '#16a34a' : pct>=70 ? '#d97706' : '#2563eb';
+    return `<div style="min-width:120px"><div class="prog" style="height:6px"><i style="width:${pct}%;background:${color}"></i></div><div style="font-size:11px;color:#64748b;margin-top:3px">${pct}% ${gd.gdl? '• '+gd.gdl : ''}</div></div>`;
+  }catch(e){ return `<div style="font-size:11px;color:#999">—</div>`; }
 }
 function tienDoProject(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);if(!items.length)return 0;return Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);}
 ROUTES['#/tiendo']=function(){
@@ -2368,22 +2431,26 @@ ROUTES['#/tiendo']=function(){
 };
 ROUTES['#/tiendo-list']=function(){
   const projs=visibleProjects();
+  const GDN={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};
+  const GDC={chuanbi:'#94a3b8',ngam:'#3b82f6',tho:'#f59e0b',hoanthien:'#8b5cf6',mep:'#22c55e'};
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Danh sách chi tiết - 14 dự án</h1><p>Sắp xếp chuẩn theo giai đoạn thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Danh sách chi tiết - 14 dự án</h1><p>${(DB.data.tienDo||[]).length} hạng mục</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-list');h+=tdToolbar();h+='<div id="tiendoScope">';
   h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Giai đoạn</th><th>Hạng mục</th><th>Ngày</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
   const order={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};
+  const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
   const sorted=[...(DB.data.tienDo||[])].sort((a,b)=>{
-    const pa=projs.findIndex(p=>p.id===a.projectId); const pb=projs.findIndex(p=>p.id===b.projectId);
-    if(pa!==pb)return pa-pb;
+    const ia=orderIds.indexOf(a.projectId), ib=orderIds.indexOf(b.projectId);
+    if(ia!==ib) return ia-ib;
     if((order[a.giaiDoan]||0)!==(order[b.giaiDoan]||0))return (order[a.giaiDoan]||0)-(order[b.giaiDoan]||0);
     return new Date(a.ngayBatDau)-new Date(b.ngayBatDau);
   });
   sorted.forEach(t=>{
     const p=DB.data.projects.find(x=>x.id===t.projectId);
     const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
-    const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
-    h+=`<tr><td><b>${esc(p?p.code:'')}</b><div style="font-size:11px;color:#666">${esc(p?p.name:'')}</div></td><td><span class="badge b-gray">${esc(t.giaiDoan)}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
+    const gdLabel=GDN[t.giaiDoan]||t.giaiDoan||'—';
+    const gdColor=GDC[t.giaiDoan]||'#64748b';
+    h+=`<tr><td><b>${esc(p?p.code:'')}</b><div style="font-size:11px;color:#666">${esc(p?p.name:'')}</div></td><td><span class="badge" style="background:${gdColor};color:#fff">${esc(gdLabel)}</span></td><td><b>${esc(t.hangMuc)}</b></td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%;background:${gdColor}"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Tre han</span>':(t.phanTram>=100?'<span class="k-status done">Xong</span>':(t.phanTram>0?'<span class="k-status doing">Dang lam</span>':'<span class="k-status todo">Chua</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sua</button></td></tr>`;
   });
   h+='</tbody></table></div></div></div>';
   document.getElementById('view').innerHTML=h;
@@ -2393,14 +2460,14 @@ ROUTES['#/tiendo-kanban']=function(){
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
   let h=getPrintHeader();
   h+=`<div class="page-head"><div><h1>Kanban tiến độ - 14 dự án chuẩn</h1><p>${items.length} hạng mục • Kéo thả theo giai đoạn thi công thực tế</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
-  h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar('<span style="font-size:12px;color:#666">💡 Sắp xếp: Chuẩn bị → Ngầm → Thô → Hoàn thiện → MEP</span>');h+='<div id="tiendoScope"><div class="kanban">';
+  h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar('<span style="font-size:12px;color:#666">Sắp xếp: Chuẩn bị → Ngầm → Thô → Hoàn thiện → MEP</span>');h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
-    const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
+    const list=items.filter(t=>((t.giaiDoan||'tho')===g[0])).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau)).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
     const avg=list.length?Math.round(list.reduce((s,t)=>s+(+t.phanTram||0),0)/list.length):0;
     h+=`<div class="kanban-col" data-stage="${g[0]}"><div class="kanban-col-header"><div class="kanban-col-title"><span class="dot" style="background:${g[2]}"></span>${g[1]}</div><div class="kanban-col-meta"><span class="kanban-col-count">${list.length}</span><span class="kanban-col-avg">${avg}%</span></div></div><div class="kanban-col-body">`;
     if(!list.length)h+='<div class="kanban-empty">Trống - Chưa có hạng mục</div>';
     list.forEach(t=>{
-      const p=(DB.data.projects||[]).find(x=>x.id===t.projectId);
+      const p=(DB.data.projects||[]).find(x=>x.id===pid)||{code:pid,name:'',id:pid}; const _pCheck=(DB.data.projects||[]).find(x=>x.id===t.projectId);
       const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
       const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
       const col={chuanbi:'#94a3b8',ngam:'#3b82f6',tho:'#f59e0b',hoanthien:'#8b5cf6',mep:'#22c55e'}[t.giaiDoan]||'#94a3b8';
@@ -2425,7 +2492,7 @@ ROUTES['#/tiendo-gantt']=function(){
   const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
   orderIds.forEach(pid=>{
     if(!projs[pid])return;
-    const p=(DB.data.projects||[]).find(x=>x.id===pid);
+    const p=(DB.data.projects||[]).find(x=>x.id===pid)||{code:pid,name:'',id:pid}; const _pCheck=(DB.data.projects||[]).find(x=>x.id===pid);
     const gd=tienDoGiaiDoan(pid);
     h+=`<div class="gantt-row is-project"><div class="gantt-label" style="font-weight:800"><div class="gantt-label-main">${esc(p?p.code+' - '+p.name:pid)}</div><small>${gd.gdl} • ${gd.avg}% • ${projs[pid].length} HM</small></div><div class="gantt-track"></div></div>`;
     projs[pid].sort((a,b)=>{const o={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};return (o[a.giaiDoan]||0)-(o[b.giaiDoan]||0) || new Date(a.ngayBatDau)-new Date(b.ngayBatDau);}).forEach(t=>{
@@ -2499,7 +2566,7 @@ ROUTES['#/tiendo-split']=function(){
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & HT','#22c55e']];
   let kanbanHtml='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px">';
   GDS.forEach(g=>{
-    const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).slice(0,6);
+    const list=items.filter(t=>((t.giaiDoan||'tho')===g[0])).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau)).slice(0,6);
     kanbanHtml+=`<div style="min-width:200px;flex:1;background:#f8fafc;border-radius:10px;padding:8px;border-top:3px solid ${g[2]}"><div style="font-weight:800;font-size:11px;text-transform:uppercase;color:${g[2]};margin-bottom:6px">${g[1]} (${list.length})</div>${list.map(t=>`<div style="background:#fff;border:1px solid #ece5d8;border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px"><b>${esc(t.hangMuc.slice(0,20))}</b><div style="display:flex;justify-content:space-between;font-size:11px;color:#666"><span>${t.phanTram}%</span><span>${fmtDate(t.ngayKetThuc)}</span></div></div>`).join('')}</div>`;
   });
   kanbanHtml+='</div>';
@@ -2507,7 +2574,7 @@ ROUTES['#/tiendo-split']=function(){
   const now=new Date();const mStart=new Date(now.getFullYear(),now.getMonth(),1);const mEnd=new Date(now.getFullYear(),now.getMonth()+1,0);const totalMs=mEnd-mStart;const todayPct=((now-mStart)/totalMs*100);
   let ganttMini='<div class="gantt" style="font-size:12px">';
   ['p1','p2','p3','p14'].forEach(pid=>{
-    const p=(DB.data.projects||[]).find(x=>x.id===pid);if(!p)return;
+    const p=(DB.data.projects||[]).find(x=>x.id===pid)||{code:pid,name:'',id:pid}; const _pCheck=(DB.data.projects||[]).find(x=>x.id===pid);if(!p)return;
     ganttMini+=`<div class="gantt-row is-project"><div class="gantt-label" style="width:140px;min-width:140px;font-size:11px">${esc(p.code)}</div><div class="gantt-track" style="min-width:400px;height:36px"></div></div>`;
     (DB.data.tienDo||[]).filter(t=>t.projectId===pid).slice(0,2).forEach(t=>{
       const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cs=s<mStart?mStart:s, ce=e>mEnd?mEnd:e;if(ce<cs)return;const left=(cs-mStart)/totalMs*100;const width=Math.max(2,(ce-cs)/totalMs*100);
@@ -2522,7 +2589,7 @@ ROUTES['#/tiendo-split']=function(){
 };
 
 ROUTES['#/tiendo/:id']=function(pid){
-  const p=(DB.data.projects||[]).find(x=>x.id===pid);
+  const p=(DB.data.projects||[]).find(x=>x.id===pid)||{code:pid,name:'',id:pid}; const _pCheck=(DB.data.projects||[]).find(x=>x.id===pid);
   if(!p){location.hash='#/tiendo';return;}
   const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
   const pct=tienDoProject(pid);
