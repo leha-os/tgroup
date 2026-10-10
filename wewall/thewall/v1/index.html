@@ -1087,7 +1087,7 @@ const NAV=[
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
     {label:'— Dashboard',hash:'#/tiendo'},
-   {label:'— List',hash:'#/tiendo-list'},
+   {label:'— Table',hash:'#/tiendo-list'},
    {label:'— Kanban',hash:'#/tiendo-kanban'},
    {label:'— Timeline',hash:'#/tiendo-gantt'},
    {label:'— Calendar',hash:'#/tiendo-calendar'},
@@ -2433,7 +2433,7 @@ function getPrintHeader(pid){
   return `<div class="print-header"><h1>📋 BÁO CÁO TIẾN ĐỘ THI CÔNG - ${projName}</h1><div class="meta"><span><b>Dự án:</b> ${projName}</span><span><b>${projInfo}</b></span><span><b>Ngày in:</b> ${now}</span><span><b>Người in:</b> ${esc(Auth.user?Auth.user.name:'')}</span></div></div>`;
 }
 function tdViewSwitcher(cur){
-  const views=[['#/tiendo','Tổng quan'],['#/tiendo-list','Danh sách'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Lịch'],['#/tiendo-split','Split 2 màn']];
+  const views=[['#/tiendo','Dashboard'],['#/tiendo-list','Table'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Timeline'],['#/tiendo-calendar','Calendar'],['#/tiendo-split','Split']];
   return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;
 }
 function tdToolbar(extra=''){
