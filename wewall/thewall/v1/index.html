@@ -1135,7 +1135,7 @@ function buildSidebar(){
   if(it.children){
    const open=navExpanded[it.label]!==false;
    const act=it.children.some(c=>location.hash===c.hash);
-   h+='<button class="sb-link'+(act?' active':'')+'" onclick="navExpanded[\''+it.label+'\']='+(open?'false':'true')+';buildSidebar();nav(false)"><span class="ic">'+it.icon+'</span>'+it.label+'<span style="margin-left:auto">'+(open?'▼':'')+'</span></button>';
+   h+='<button class="sb-link'+(act?' active':'')+'" onclick="navExpanded[\''+it.label+'\']='+(open?'false':'true')+';buildSidebar();nav(false)"><span class="ic">'+it.icon+'</span>'+it.label+'<span style="margin-left:auto">'+(open?'▼':'▶︎')+'</span></button>';
    if(open)h+='<div class="sb-sub">'+it.children.map(c=>'<button class="sb-link'+(location.hash===c.hash?' active':'')+'" data-h="'+c.hash+'"><span class="ic">·</span>'+c.label+'</button>').join('')+'</div>';
   }else{
    let cnt='';
