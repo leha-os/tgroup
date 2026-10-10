@@ -46,6 +46,9 @@ textarea.inp{resize:vertical;min-height:70px}
 .sb-brand .t2{font-size:10.5px;color:#8a7f70;margin-top:2px}
 .sb-proj{margin:10px 18px 0;padding:8px 10px;background:rgba(240,173,31,.12);border:1px solid rgba(240,173,31,.4);border-radius:8px;font-size:12px;color:#f0ad1f;font-weight:700;display:none;word-break:break-word}
 .sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:10px 12px;-webkit-overflow-scrolling:touch}
+.sb-nav-tools{display:flex;gap:6px;padding:0 0 8px}
+.sb-nav-tools button{flex:1;min-width:0;padding:6px 5px;border:1px solid rgba(240,173,31,.28);border-radius:6px;background:rgba(240,173,31,.08);color:#f0ad1f;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sb-nav-tools button:hover{background:rgba(240,173,31,.18)}
 .sb-sec{font-size:10.5px;font-weight:700;letter-spacing:1.2px;color:#8c8073;text-transform:uppercase;padding:12px 10px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-sec-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:transparent;cursor:pointer;text-align:left;line-height:1.3}
 .sb-sec-toggle:hover{color:#f0ad1f}
@@ -662,6 +665,32 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .login-logo{display:block!important;margin:0 auto 10px;width:140px;height:auto;background:#fff;border-radius:12px;padding:6px;object-fit:contain}
 .sb-brand img{display:block!important;width:44px!important;height:44px!important;background:#fff!important;border-radius:8px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
 
+
+/* ===== PATCH: navigation hierarchy, project overview and consistent Kanban ===== */
+.sb-sec-toggle{font-size:12px!important;font-weight:800!important;color:#f0ad1f!important;letter-spacing:0!important;padding-top:15px!important;padding-bottom:7px!important}
+.sb-sec-toggle>span:first-child{font-size:12px!important}
+.sb-nav>.sb-link:not(.sb-quick){padding-left:20px!important}
+.sb-sub{margin-left:30px!important;padding-left:8px!important;border-left-color:rgba(240,173,31,.35)!important}
+.sb-sub .sb-link{padding-left:12px!important;font-size:12.5px!important;color:#c8c0b5!important}
+.sb-sub .sb-link.active{color:#1a1410!important}
+.kanban{align-items:stretch;gap:12px}
+.kanban-col{min-width:185px;max-width:none;flex:1 0 185px;max-height:calc(100vh - 230px)}
+.kanban-col-header{padding:10px;background:#faf7f2}
+.kanban-col-title{font-size:11px;letter-spacing:0}
+.kanban-col-body{padding:8px;gap:7px}
+.kanban-item{padding:8px 9px;border-radius:9px}
+.kanban-item .k-title{font-size:12px;margin-bottom:5px}
+.kanban-item .k-meta{gap:5px;margin-bottom:6px}
+.kanban-item .k-proj{font-size:10px;max-width:62%}
+.kanban-item .k-foot{font-size:10px;gap:4px;flex-wrap:wrap}
+.project-overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.project-overview-card{background:#fff;border:1px solid #e8ddd0;border-radius:14px;padding:15px;min-width:0}
+.project-overview-card h3{font-size:14px;margin-bottom:4px}
+.project-overview-card .phase-row{display:grid;grid-template-columns:82px 1fr 38px;gap:8px;align-items:center;margin-top:9px;font-size:11px}
+.project-overview-card .phase-bar{height:7px;background:#f1f5f9;border-radius:99px;overflow:hidden}
+.project-overview-card .phase-bar i{display:block;height:100%;background:linear-gradient(90deg,#fbbc04,#d97706)}
+.xlsx-overview-btn{margin-right:8px}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -1034,7 +1063,8 @@ const NAV=[
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
-   {label:'Tổng quan Dashboard',hash:'#/tiendo'},
+   {label:'Tổng quan toàn dự án',hash:'#/tiendo-overview'},
+    {label:'Tổng quan Dashboard',hash:'#/tiendo'},
    {label:'Danh sách chi tiết',hash:'#/tiendo-list'},
    {label:'Kanban Board',hash:'#/tiendo-kanban'},
    {label:'Timeline Gantt',hash:'#/tiendo-gantt'},
@@ -1063,12 +1093,17 @@ const NAV=[
  {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
 let navExpanded={};
+function toggleSidebarAll(open){
+ NAV.forEach(it=>{if(it.sec)navExpanded['sec:'+it.sec]=open; if(it.children)navExpanded[it.label]=open;});
+ buildSidebar();
+}
 function buildSidebar(){
  const u=Auth.user;
- let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div><div class="t2">Quản lý tài chính công trình</div></div></div>';
+ let h='<div class="sb-brand"><img src="'+TW_LOGO+'" alt="TW"><div><div class="t1">THE WALL</div><div style="font-size:9px;color:#8a7f70">Project Management System [DEMO]</div></div></div>';
  {const ap=Auth.assignedProjects();if(ap&&ap.length)h+='<div class="sb-proj" style="display:block">'+esc(ap.length===1?projName(ap[0]):ap.length+' dự án phụ trách')+'</div>';}
  h+='<div class="sb-nav">';
- h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>';
+ h+='<div class="sb-nav-tools"><button type="button" onclick="toggleSidebarAll(false)" title="Thu gọn tất cả">− Thu gọn</button><button type="button" onclick="toggleSidebarAll(true)" title="Mở tất cả">＋ Mở tất cả</button></div>';
+ h+='<button class="sb-link sb-quick" data-h="#/quick"><span class="ic"></span>Nhập nhanh</button>'; 
  let secOpen=true;
  NAV.forEach(it=>{
   if(it.sec){const key='sec:'+it.sec;secOpen=navExpanded[key]!==false;h+='<button type="button" class="sb-sec sb-sec-toggle" aria-expanded="'+secOpen+'" onclick="navExpanded[\''+key+'\']='+(secOpen?'false':'true')+';buildSidebar()"><span>'+it.sec+'</span><span class="sb-sec-arrow">'+(secOpen?'⌄':'›')+'</span></button>';return;}
@@ -1758,9 +1793,9 @@ function xuatPhieuDNTT_XLSX(id){
  const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
  const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
- let r=mk();C(r,1,'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',2);
- r=mk();C(r,1,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',3);
- r=mk();C(r,1,'Tel: (84) 8 5410 4013 - (84) 903 865 240',3);
+ let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',2);
+ r=mk();C(r,1,'Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam',3);
+ r=mk();C(r,1,'Tel  : +848 3535 1905 - 0903 865 240',3);
  r=mk();C(r,1,'Website: www.thewall.com.vn',3);
  mk();mk();mk();
  r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',11);
@@ -1794,7 +1829,7 @@ function xuatPhieuDNTT_XLSX(id){
  mk();mk();
  r=mk();C(r,0,'XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN',5);
  mk();
- r=mk();C(r,0,'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',2);
+ r=mk();C(r,0,'Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam',2);
  const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
  xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
@@ -1812,7 +1847,7 @@ function xlsxMake(sheets,logoB64){
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="7"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="7"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
@@ -1974,7 +2009,7 @@ function inPhieuDNTT(id){
  const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
  const nguoide=esc(dn.nguoitao||Auth.user.name||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</b><br>Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam<br>Tel  : +848 3535 1905 - 0903 865 240<br>Website: www.thewall.com.vn</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="ptbl">'
@@ -2017,7 +2052,7 @@ function inPhieuDeNghi(id){
  const ckTM='☐',ckCK='☐',ckTU='☐',ckTH='☐';
  const nguoide=esc(dn.nguoitao||Auth.user.name||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
+  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</b><br>Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam<br>Tel  : +848 3535 1905 - 0903 865 240<br>Website: www.thewall.com.vn</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="ptbl">'
@@ -2052,7 +2087,7 @@ function xuatPhieuDNXls(id){
  const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;
  const p=DB.data.projects.find(x=>x.id===d.projectId)||{};
  let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
- h+='<table width="100%"><tr><td><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
+ h+='<table width="100%"><tr><td><b>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
  h+='<h2 align="center">PHIẾU ĐỀ NGHỊ</h2>';
  h+='<table><tr><td>Ngày:</td><td><b>'+fmtDate(d.date)+'</b></td><td>Người đề nghị:</td><td><b>'+esc(d.nguoitao||'')+'</b></td></tr>'
   +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc(p.name)+'</b></td></tr>'
@@ -2120,9 +2155,9 @@ function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
  // R1-4: thông tin công ty (cột B)
- const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:2};R.push(rc);
- const ra=new Array(n).fill(null);ra[1]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
- const rt=new Array(n).fill(null);rt[1]={v:'Tel: (84) 8 5410 4013 - (84) 903 865 240',s:3};R.push(rt);
+ const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:2};R.push(rc);
+ const ra=new Array(n).fill(null);ra[1]={v:'Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam',s:3};R.push(ra);
+ const rt=new Array(n).fill(null);rt[1]={v:'Tel  : +848 3535 1905 - 0903 865 240',s:3};R.push(rt);
  const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
  // R5-7: trống 3 dòng
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
@@ -2134,7 +2169,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:'Tổng cộng',s:10};rf[n-1]={v:foot.total,s:10};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
@@ -2505,6 +2540,28 @@ ROUTES['#/tiendo-calendar']=function(){
   }
   h+='</div></div>';
   document.getElementById('view').innerHTML=h;
+};
+ROUTES['#/tiendo-overview']=function(){
+  const projects=(DB.data.projects||[]).filter(p=>!Auth.assignedProjects||!Auth.assignedProjects().length||Auth.assignedProjects().some(a=>(a.id||a)===p.id));
+  const stages=[['chuanbi','Chuẩn bị'],['ngam','Phần ngầm'],['tho','Phần thô'],['hoanthien','Hoàn thiện'],['mep','MEP & Hạ tầng']];
+  let h='<div class="page-head"><div><h1>Tổng quan toàn dự án</h1><p>Một màn hình để theo dõi giai đoạn, tiến độ và các hạng mục của từng dự án.</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-kanban\'">Mở Kanban</button><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-split\'">Mở Split View</button></div></div>';
+  const all=DB.data.tienDo||[];
+  h+='<div class="project-overview-grid">';
+  projects.forEach(p=>{
+    const list=all.filter(t=>t.projectId===p.id);
+    const avg=list.length?Math.round(list.reduce((sum,t)=>sum+(+t.phanTram||0),0)/list.length):0;
+    const done=list.filter(t=>(+t.phanTram||0)>=100).length;
+    h+='<div class="project-overview-card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div><h3>'+esc(p.code||'')+' · '+esc(p.name||'Dự án')+'</h3><div style="font-size:11px;color:#8a7f70">'+list.length+' hạng mục · '+done+' hoàn thành</div></div><b style="color:#9a4f00;font-size:18px">'+avg+'%</b></div><div class="prog big" style="margin:10px 0 12px"><i style="width:'+avg+'%"></i></div>';
+    stages.forEach(st=>{
+      const its=list.filter(t=>(t.giaiDoan||'tho')===st[0]);
+      const pct=its.length?Math.round(its.reduce((sum,t)=>sum+(+t.phanTram||0),0)/its.length):0;
+      h+='<div class="phase-row"><span>'+st[1]+'</span><div class="phase-bar"><i style="width:'+pct+'%"></i></div><b style="text-align:right">'+(its.length?pct+'%':'—')+'</b></div>';
+      if(its.length)h+='<div style="padding:3px 0 0 90px;font-size:10px;color:#78716c">'+its.map(t=>esc(t.hangMuc)+' ('+(+t.phanTram||0)+'%)').join(' · ')+'</div>';
+    });
+    h+='<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-sm btn-sec" onclick="location.hash=\'#/tiendo/'+p.id+'\'">Chi tiết tiến độ</button><button class="btn btn-sm btn-pri" onclick="tienDoForm(\''+p.id+'\')">+ Hạng mục</button></div></div>';
+  });
+  if(!projects.length)h+='<div class="empty">Chưa có dự án để hiển thị.</div>';
+  h+='</div>';document.getElementById('view').innerHTML=h;
 };
 ROUTES['#/tiendo-split']=function(){
   const items=DB.data.tienDo||[];
