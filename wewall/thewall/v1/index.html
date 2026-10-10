@@ -502,6 +502,18 @@ select.inp:focus{
 .sheet-item{padding:13px 14px;border-radius:10px;font-size:15px}
 .sheet-item:active{background:#334155}
 .sheet-item.sel{background:#f59e0b;color:#000;font-weight:700}
+
+/* ===== TIẾN ĐỘ ===== */
+.prog{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:99px;transition:width .3s}
+.prog.big{height:12px}
+.td-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px}
+.td-card .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px}
+.kanban-col{min-width:260px;background:#f8fafc;border-radius:12px;padding:10px}
+.kanban-col h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;color:#64748b}
+.kanban-item{background:#fff;border-radius:8px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer}
+input[type=range].td-range{width:100%;accent-color:#f59e0b}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -677,7 +689,41 @@ tamung:[
  {id:'tu1',projectId:'p1',nguoingan:'Anh Ba Chỉ huy',date:'2026-10-01',sotien:50000000,lydo:'Tạm ứng chi phí công trình tháng 10',trangthai:'da_duyet',ngayqt:''}],
 danhmuc:[
  {id:'dm1',nhom:'Vật tư',ten:'Xi măng'},{id:'dm2',nhom:'Vật tư',ten:'Sắt thép'},{id:'dm3',nhom:'Vật tư',ten:'Bê tông'},
- {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}]
+ {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}],
+ tienDo:[
+  {id:'td1',projectId:'p1',hangMuc:'Móng & tầng hầm',phanTram:100,ngayCapNhat:'2026-04-15',ghiChu:'Hoàn thành đúng tiến độ'},
+  {id:'td2',projectId:'p1',hangMuc:'Kết cấu thô',phanTram:75,ngayCapNhat:'2026-08-20',ghiChu:'Đang thi công tầng 12'},
+  {id:'td3',projectId:'p1',hangMuc:'Hoàn thiện',phanTram:30,ngayCapNhat:'2026-09-01',ghiChu:'Bắt đầu ốp lát'},
+  {id:'td4',projectId:'p1',hangMuc:'MEP',phanTram:45,ngayCapNhat:'2026-08-25',ghiChu:'Điện nước tầng 1-8'},
+  {id:'td5',projectId:'p2',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-05-10',ghiChu:'Xong'},
+  {id:'td6',projectId:'p2',hangMuc:'Thô',phanTram:60,ngayCapNhat:'2026-09-05',ghiChu:'Đang xây tường bao'},
+  {id:'td7',projectId:'p2',hangMuc:'Hoàn thiện',phanTram:15,ngayCapNhat:'2026-09-10',ghiChu:'Chuẩn bị vật tư'},
+  {id:'td8',projectId:'p3',hangMuc:'Nền móng',phanTram:100,ngayCapNhat:'2026-04-01',ghiChu:'Xong'},
+  {id:'td9',projectId:'p3',hangMuc:'Khung thép',phanTram:80,ngayCapNhat:'2026-09-12',ghiChu:'Lắp dựng 80%'},
+  {id:'td10',projectId:'p4',hangMuc:'Cọc móng',phanTram:100,ngayCapNhat:'2026-06-20',ghiChu:'Xong'},
+  {id:'td11',projectId:'p4',hangMuc:'Tầng hầm',phanTram:50,ngayCapNhat:'2026-09-15',ghiChu:'Đang đào đất'},
+  {id:'td12',projectId:'p5',hangMuc:'San lấp',phanTram:100,ngayCapNhat:'2026-03-15',ghiChu:'Xong'},
+  {id:'td13',projectId:'p5',hangMuc:'Thô GĐ2',phanTram:40,ngayCapNhat:'2026-09-01',ghiChu:'Đang thi công'}
+ ,
+  {id:'td14',projectId:'p6',hangMuc:'Móng & kết cấu',phanTram:70,ngayCapNhat:'2026-09-10',ghiChu:'Đang thi công tầng 2'},
+  {id:'td15',projectId:'p6',hangMuc:'Hoàn thiện',phanTram:20,ngayCapNhat:'2026-09-12',ghiChu:'Chuẩn bị'},
+  {id:'td16',projectId:'p7',hangMuc:'Móng cọc',phanTram:100,ngayCapNhat:'2026-07-01',ghiChu:'Xong'},
+  {id:'td17',projectId:'p7',hangMuc:'Thô 15 tầng',phanTram:55,ngayCapNhat:'2026-09-15',ghiChu:'Tầng 8'},
+  {id:'td18',projectId:'p8',hangMuc:'Cọc & móng',phanTram:90,ngayCapNhat:'2026-09-08',ghiChu:'Gần xong'},
+  {id:'td19',projectId:'p8',hangMuc:'Khung',phanTram:25,ngayCapNhat:'2026-09-14',ghiChu:'Bắt đầu'},
+  {id:'td20',projectId:'p9',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-06-15',ghiChu:'Xong'},
+  {id:'td21',projectId:'p9',hangMuc:'Thô',phanTram:85,ngayCapNhat:'2026-09-10',ghiChu:'Hoàn thiện thô'},
+  {id:'td22',projectId:'p9',hangMuc:'Nội thất',phanTram:40,ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp đặt'},
+  {id:'td23',projectId:'p10',hangMuc:'Nền & hạ tầng',phanTram:100,ngayCapNhat:'2026-05-20',ghiChu:'Xong'},
+  {id:'td24',projectId:'p10',hangMuc:'Clubhouse thô',phanTram:65,ngayCapNhat:'2026-09-11',ghiChu:'Đang xây'},
+  {id:'td25',projectId:'p11',hangMuc:'Móng 10 căn',phanTram:100,ngayCapNhat:'2026-07-10',ghiChu:'Xong'},
+  {id:'td26',projectId:'p11',hangMuc:'Thô',phanTram:50,ngayCapNhat:'2026-09-09',ghiChu:'5/10 căn xong thô'},
+  {id:'td27',projectId:'p12',hangMuc:'Móng',phanTram:100,ngayCapNhat:'2026-08-01',ghiChu:'Xong'},
+  {id:'td28',projectId:'p12',hangMuc:'Thô',phanTram:75,ngayCapNhat:'2026-09-13',ghiChu:'Đang tô trát'},
+  {id:'td29',projectId:'p13',hangMuc:'San nền sân golf',phanTram:90,ngayCapNhat:'2026-09-05',ghiChu:'16/18 lỗ'},
+  {id:'td30',projectId:'p13',hangMuc:'Clubhouse',phanTram:30,ngayCapNhat:'2026-09-10',ghiChu:'Mới khởi công'},
+  {id:'td31',projectId:'p14',hangMuc:'Móng nhà ga',phanTram:60,ngayCapNhat:'2026-09-15',ghiChu:'Đang thi công'},
+  {id:'td32',projectId:'p14',hangMuc:'Kết cấu thép',phanTram:15,ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị lắp dựng'}]
 };
 
 /* ================= DB ================= */
@@ -685,7 +731,7 @@ const DBKEY='twpro_v1';
 const DB={
  data:null,
  load(){try{const raw=localStorage.getItem(DBKEY);this.data=raw?JSON.parse(raw):JSON.parse(JSON.stringify(SEED));}catch(e){this.data=JSON.parse(JSON.stringify(SEED));}},
- save(){localStorage.setItem(DBKEY,JSON.stringify(this.data));try{if(typeof FB!=='undefined')FB.scheduleSave();}catch(e){}},
+ save(){localStorage.setItem(DBKEY,JSON.stringify(this.data));try{if(typeof autoPushSheets!=='undefined')autoPushSheets();}catch(e){}try{if(typeof FB!=='undefined')FB.scheduleSave();}catch(e){}},
  reset(){this.data=JSON.parse(JSON.stringify(SEED));this.save();},
  log(action,detail){this.data.auditLogs.unshift({id:uid('a'),ts:new Date().toLocaleString('vi-VN'),user:Auth.user?Auth.user.name:'?',action,detail});this.save();}
 };
@@ -907,7 +953,7 @@ ROUTES['#/dashboard']=function(){
  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
  h+='<div class="card"><div class="card-h"><div><h3>Chi phí theo loại</h3><div class="sub">Các dự án đang thi công</div></div></div><div class="card-b">'
   +(cats.length?hbarChart(cats.map(c=>({label:c[0],value:c[1]})),'#0891b2'):'<div class="empty">Chưa có chi phí</div>')+'</div></div></div>';
- h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
+ h+='<div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Tổng quan dự án</h3></div><a href="#/projects">Xem tất cả →</a><a class="sb-link" href="#/tiendo">📊 Tiến độ</a></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Trạng thái</th><th class="num">Đã chi</th><th class="num">Công nợ</th><th class="num">Ngân sách còn lại</th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),l=projectLiab(p.id).total,bal=bd-s;
   h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11.5px;color:var(--mut)">'+esc(p.client||'')+'</div></td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(s)+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(l)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td></tr>';});
  h+='</tbody></table></div></div>';
@@ -1921,10 +1967,7 @@ const FB = {
     if(typeof FIREBASE_CONFIG!=="undefined"&&FIREBASE_CONFIG.projectId&&!String(FIREBASE_CONFIG.projectId).includes("YOUR"))return FIREBASE_CONFIG;
     return null;
   },
-  isConfigured(){
-    const c = this.getCfg();
-    return !!(c && c.apiKey && c.projectId && typeof firebase !== 'undefined');
-  },
+  isConfigured(){ return false; },
   /* Khởi tạo Firebase. Trả về false nếu chưa có config */
   init(){
     if(this.ready) return true;
@@ -2099,6 +2142,74 @@ ROUTES['#/caidat']=function(){
       +'<div style="display:flex;gap:8px"><button class="btn btn-pri" onclick="CFG.apiUrl=formVal(\'apiUrl2\');CFG.key=formVal(\'apiKey2\');saveCfg();renderSyncPill();toast(\'Đã lưu\')">Lưu</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra</button></div>'
  $('#view').innerHTML=h;
 };
+/* ===== TIẾN ĐỘ DỰ ÁN - 3 VIEWS ===== */
+function tienDoProject(pid){
+  const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
+  if(!items.length) return 0;
+  return Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);
+}
+ROUTES['#/tiendo']=function(){
+  const projs=typeof visibleProjects==='function'?visibleProjects():DB.data.projects;
+  let h='<div class="page-head"><div><h1>Tiến độ dự án</h1><p>'+projs.length+' dự án</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-kanban\'">Kanban</button><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>';
+  h+='<div class="grid g2">';
+  projs.forEach(p=>{
+    const pct=tienDoProject(p.id);
+    const items=(DB.data.tienDo||[]).filter(t=>t.projectId===p.id);
+    h+='<div class="td-card"><div class="row"><b>'+esc(p.name)+'</b><span style="font-weight:800;color:#d97706">'+pct+'%</span></div><div class="prog big"><i style="width:'+pct+'%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b">'+items.length+' hạng mục • <a href="#/tiendo/'+p.id+'">Chi tiết</a></div></div>';
+  });
+  h+='</div>';
+  document.getElementById('view').innerHTML=h;
+};
+ROUTES['#/tiendo-kanban']=function(){
+  const projs=typeof visibleProjects==='function'?visibleProjects():DB.data.projects;
+  const cols=[['chuan_bi','Chuẩn bị','#f59e0b'],['dang_thi_cong','Đang thi công','#3b82f6'],['hoan_thanh','Hoàn thành','#22c55e']];
+  let h='<div class="page-head"><div><h1>Tiến độ Kanban</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button></div></div><div class="kanban">';
+  cols.forEach(([st,label,color])=>{
+    const list=projs.filter(p=>(p.status||'dang_thi_cong')===st);
+    h+='<div class="kanban-col"><h4><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+color+';margin-right:6px"></span>'+label+' ('+list.length+')</h4>';
+    list.forEach(p=>{
+      const pct=tienDoProject(p.id);
+      h+='<div class="kanban-item" onclick="location.hash=\'#/tiendo/'+p.id+'\'"><b style="font-size:13px">'+esc(p.name)+'</b><div class="prog" style="margin-top:8px"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:#64748b;margin-top:4px">'+pct+'%</div></div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById('view').innerHTML=h;
+};
+ROUTES['#/tiendo/:id']=function(pid){
+  const p=(DB.data.projects||[]).find(x=>x.id===pid);
+  if(!p){location.hash='#/tiendo';return;}
+  const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
+  const pct=tienDoProject(pid);
+  let h='<div class="page-head"><div><h1>'+esc(p.name)+'</h1><p>Tiến độ tổng: '+pct+'%</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">← Danh sách</button><button class="btn btn-pri" onclick="tienDoForm(\''+pid+'\')">+ Hạng mục</button></div></div>';
+  h+='<div class="prog big" style="margin-bottom:16px"><i style="width:'+pct+'%"></i></div>';
+  if(!items.length) h+='<div class="empty">Chưa có hạng mục</div>';
+  items.forEach(t=>{
+    h+='<div class="td-card"><div class="row"><b>'+esc(t.hangMuc)+'</b><span style="font-weight:800;color:#d97706">'+t.phanTram+'%</span></div><div class="prog"><i style="width:'+t.phanTram+'%"></i></div><div style="font-size:12px;color:#64748b;margin-top:6px">Cập nhật: '+esc(t.ngayCapNhat||'')+(t.ghiChu?' • '+esc(t.ghiChu):'')+'</div><div style="margin-top:8px;display:flex;gap:8px"><input type="range" class="td-range" min="0" max="100" value="'+t.phanTram+'" oninput="this.nextElementSibling.textContent=this.value+\'%\'" onchange="tienDoQuick(\''+t.id+'\',this.value)"><span style="min-width:40px;font-weight:700">'+t.phanTram+'%</span><button class="iconbtn" onclick="tienDoForm(\''+pid+'\',\''+t.id+'\')">Sửa</button><button class="iconbtn" style="color:#dc2626" onclick="if(confirm(\'Xóa?\'))delObj(\'tienDo\',\''+t.id+'\')">Xóa</button></div></div>';
+  });
+  document.getElementById('view').innerHTML=h;
+};
+function tienDoQuick(id,val){
+  const t=(DB.data.tienDo||[]).find(x=>x.id===id);
+  if(t){t.phanTram=+val;t.ngayCapNhat=new Date().toISOString().slice(0,10);DB.save();nav(false);}
+}
+function tienDoForm(pid,id){
+  const t=id?(DB.data.tienDo||[]).find(x=>x.id===id):{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:''};
+  const projs=DB.data.projects||[];
+  openModal(''+(id?'Sửa':'Thêm')+' tiến độ',
+    '<label>Dự án</label><select class="inp" id="td_pid">'+projs.map(p=>'<option value="'+p.id+'"'+(t.projectId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('')+'</select>'+
+    '<label>Hạng mục</label><input class="inp" id="td_hm" value="'+esc(t.hangMuc||'')+'" placeholder="VD: Móng, Thô, Hoàn thiện">'+
+    '<label>Tiến độ (%)</label><input class="inp" type="number" id="td_pct" min="0" max="100" value="'+(t.phanTram||0)+'">'+
+    '<label>Ghi chú</label><input class="inp" id="td_note" value="'+esc(t.ghiChu||'')+'">',
+    function(){
+      const d={projectId:document.getElementById('td_pid').value,hangMuc:document.getElementById('td_hm').value,phanTram:+document.getElementById('td_pct').value||0,ghiChu:document.getElementById('td_note').value,ngayCapNhat:new Date().toISOString().slice(0,10)};
+      if(!d.hangMuc){toast('Nhập hạng mục');return false;}
+      if(id){Object.assign(t,d);}else{d.id='td'+Date.now();(DB.data.tienDo=DB.data.tienDo||[]).push(d);}
+      DB.save();nav(false);return true;
+    });
+}
+
+
 function fillFbForm(){
   try{
     var fc = (typeof FB!=='undefined') ? FB.getCfg() : null;
@@ -2218,6 +2329,17 @@ function restoreSession(){
 }
 if(restoreSession()){enterApp();if(CFG.apiUrl)pullAll(true).catch(()=>{});}
 else{showLogin();}
+
+/* Auto-sync Google Sheets */
+let _pushTimer=null;
+function autoPushSheets(){
+  try{
+    if(typeof CFG==='undefined'||!CFG.apiUrl) return;
+    clearTimeout(_pushTimer);
+    _pushTimer=setTimeout(async()=>{ try{ await pushAll(true); }catch(e){} },3000);
+  }catch(e){}
+}
+setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pullAll!=='undefined') await pullAll(true); }catch(e){} },5*60*1000);
 </script>
 </body>
 </html>
