@@ -982,7 +982,7 @@ function renderProjectLedger(pid){
  DB.data.clientTx.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chủ đầu tư — '+t.note,in:t.type==='received'?t.amount:0,out:0});});
  DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chi phí ['+t.category+'] — '+t.note,in:0,out:t.amount});});
  const led=runLedger(rows,'in','out');
- h+='<div class="card"><div class="card-h"><div><h3>Dòng tiền dự án</h3><div class="sub" style="display:none"></div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Phát sinh</th><th class="num">Đã chi/trả</th><th class="num">Số dư nợ</th></tr></thead><tbody>';
+ h+='<div class="card"><div class="card-h"><div><h3>Dòng tiền dự án</h3><div class="sub">Ghi tăng = phát sinh phải trả/Ghi giảm = tiền đã chi • Số dư = còn nợ ròng</div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Diễn giải</th><th class="num">Phát sinh</th><th class="num">Đã chi/trả</th><th class="num">Số dư nợ</th></tr></thead><tbody>';
  if(!led.length)h+='<tr><td colspan="5"><div class="empty">Chưa có giao dịch</div></td></tr>';
  led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td></tr>';});
  h+='</tbody></table></div></div>';
@@ -2127,7 +2127,7 @@ function saveFbForm(){
   };
   if(!cfg.apiKey || !cfg.projectId){ toast('Nhập ít nhất API Key và Project ID'); return; }
   saveFbCfg(cfg);
-  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); // đã tắt popup Firebase; }); }
+  if(FB.init()){ toast('Đã lưu & kết nối Firebase'); FB.listen(function(remote){ DB.data=remote; ensureArrays(); try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){} nav(false); toast('Dữ liệu mới từ Firebase'); }); }
   else toast('Đã lưu, nhưng kết nối thất bại — kiểm tra lại config');
   nav(false);
 }
@@ -2137,10 +2137,23 @@ function testFb(){
 }
 function clearFb(){ if(confirm('Xóa cấu hình Firebase?')){ localStorage.removeItem(FB_KEY); FB.ready=false; FB.stop(); toast('Đã xóa'); nav(false); } }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
-/* đảm bảo collection mới tồn tại khi mở bản cũ + chuẩn hoá trạng thái thuần việc */
+/* đảm bảo collection mới tồn tại khi mở bản cũ + tự động merge dự án/NCC/đội mới từ SEED */
 function ensureArrays(){
  let ch=false;
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
+ // Merge tự động: nếu SEED có id mới mà DB.data chưa có thì thêm vào (không xóa cũ)
+ try{
+  ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
+    if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
+    const existing = new Set(DB.data[col].map(x=>x.id));
+    SEED[col].forEach(item=>{
+      if(!existing.has(item.id)){
+        DB.data[col].push(JSON.parse(JSON.stringify(item)));
+        ch=true;
+      }
+    });
+  });
+ }catch(e){}
  // Thuần việc: đổi các mã cũ dang_thi_cong, chuan_bi... sang tiếng Việt chuẩn
  try{
   const MAP={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'};
@@ -2171,7 +2184,7 @@ try{
       try{ localStorage.setItem(DBKEY, JSON.stringify(DB.data)); }catch(e){} /* lưu local, không trigger save ngược */
       SYNC.connected = true; SYNC.msg = 'Firebase • ' + new Date().toLocaleTimeString('vi-VN');
       renderSyncPill(); nav(false);
-      // đã tắt popup Firebase;
+      toast('Dữ liệu mới từ Firebase');
     });
   }
 }catch(e){ console.warn('Firebase listen:', e.message); }
