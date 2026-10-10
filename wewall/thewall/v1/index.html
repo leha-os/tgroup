@@ -1086,12 +1086,12 @@ const NAV=[
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
-    {label:'Tổng quan Dashboard',hash:'#/tiendo'},
-   {label:'Danh sách chi tiết',hash:'#/tiendo-list'},
-   {label:'Kanban Board',hash:'#/tiendo-kanban'},
-   {label:'Timeline Gantt',hash:'#/tiendo-gantt'},
-   {label:'Lịch Calendar',hash:'#/tiendo-calendar'},
-   {label:'Split View (2 màn hình)',hash:'#/tiendo-split'}
+    {label:'Dashboard',hash:'#/tiendo'},
+   {label:'List',hash:'#/tiendo-list'},
+   {label:'Kanban',hash:'#/tiendo-kanban'},
+   {label:'Timeline',hash:'#/tiendo-gantt'},
+   {label:'Calendar',hash:'#/tiendo-calendar'},
+   {label:'Split',hash:'#/tiendo-split'}
  ]},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
@@ -2476,7 +2476,7 @@ ROUTES['#/tiendo']=function(){
 ROUTES['#/tiendo-list']=function(){
   const projs=visibleProjects();
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Danh sách chi tiết - 14 dự án</h1><p>Sắp xếp chuẩn theo giai đoạn thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>List</h1><p></p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-list');h+=tdToolbar();h+='<div id="tiendoScope">';
   h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Giai đoạn</th><th>Hạng mục</th><th>Ngày</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
   const order={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};
