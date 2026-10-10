@@ -566,7 +566,7 @@ select.inp:focus{
 input[type=range].td-range{width:100%;accent-color:#f59e0b}
 
 /* GANTT PRO */
-.gantt{overflow:auto;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
+.gantt{overflow-x:auto;overflow-y:visible;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative;max-width:100%}
 .gantt::-webkit-scrollbar{height:8px;width:8px}
 .gantt::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
 .gantt-scale{display:flex;position:sticky;top:0;z-index:5;border-bottom:2px solid #e8ddd0;background:linear-gradient(180deg,#fffdf6,#fbf9f5)}
@@ -622,7 +622,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
   .print-header .meta b{color:#000}
   .print-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#666;border-top:1px solid #ccc;padding:6px}
   .gantt,.kanban,.cal-grid{box-shadow:none!important;border:1px solid #000!important}
-  .gantt{overflow:visible!important}
+  
   .kanban{overflow:visible!important;flex-wrap:wrap}
   .kanban-col{break-inside:avoid;max-height:none!important}
   #view{overflow:visible!important;padding:0!important}
