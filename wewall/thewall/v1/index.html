@@ -503,30 +503,126 @@ select.inp:focus{
 .sheet-item:active{background:#334155}
 .sheet-item.sel{background:#f59e0b;color:#000;font-weight:700}
 
-/* ===== TIẾN ĐỘ ===== */
-.prog{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}
-.prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:99px;transition:width .3s}
-.prog.big{height:12px}
-.td-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px}
+
+/* ===== TIẾN ĐỘ PRO V2 - 14 DỰ ÁN CHUẨN + IN ẤN + ZOOM + SPLIT ===== */
+.prog{height:8px;background:#eef2f7;border-radius:99px;overflow:hidden;position:relative}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:99px;transition:width .35s}
+.prog.big{height:10px;background:#f1f5f9;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+.td-view-switch{display:flex;gap:6px;padding:6px;background:#f8f2e7;border:1px solid #ece5d8;border-radius:12px;flex-wrap:wrap}
+.td-view-switch button{padding:8px 14px;border-radius:8px;border:1px solid transparent;background:transparent;font-size:13px;font-weight:600;color:#57534e;cursor:pointer;transition:.15s}
+.td-view-switch button.active{background:#fff;border-color:#e8ddd0;box-shadow:0 2px 8px rgba(26,20,16,.08);color:#1a1410;font-weight:800}
+.td-card{background:#fff;border:1px solid #e8ddd0;border-radius:14px;padding:14px;margin-bottom:12px;transition:.18s}
+.td-card:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(26,20,16,.08)}
 .td-card .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px}
-.kanban-col{min-width:260px;background:#f8fafc;border-radius:12px;padding:10px}
-.kanban-col h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;color:#64748b}
-.kanban-item{background:#fff;border-radius:8px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer}
+
+/* KANBAN PRO */
+.kanban{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 16px;scroll-snap-type:x proximity}
+.kanban::-webkit-scrollbar{height:8px}
+.kanban::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
+.kanban-col{min-width:300px;max-width:340px;flex:1 0 300px;background:linear-gradient(180deg,#fbf9f5 0%,#f8fafc 100%);border:1px solid #ece5d8;border-radius:16px;padding:0;display:flex;flex-direction:column;max-height:calc(100vh - 200px)}
+.kanban-col-header{position:sticky;top:0;z-index:2;padding:12px 12px 10px;background:rgba(251,249,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid #ece5d8;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}
+.kanban-col-title{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.kanban-col-title .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.kanban-col-meta{display:flex;gap:6px;align-items:center}
+.kanban-col-count{background:#fff;border:1px solid #e8ddd0;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.kanban-col-avg{font-size:11px;font-weight:700;color:#92400e;background:#fef3c7;border-radius:20px;padding:2px 8px}
+.kanban-col-body{padding:10px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px}
+.kanban-col[data-stage="chuanbi"]{border-top:3px solid #94a3b8}
+.kanban-col[data-stage="ngam"]{border-top:3px solid #3b82f6}
+.kanban-col[data-stage="tho"]{border-top:3px solid #f59e0b}
+.kanban-col[data-stage="hoanthien"]{border-top:3px solid #8b5cf6}
+.kanban-col[data-stage="mep"]{border-top:3px solid #22c55e}
+.kanban-item{background:#fff;border:1px solid #ece5d8;border-radius:12px;padding:11px 12px 10px;box-shadow:0 1px 2px rgba(26,20,16,.06);cursor:pointer;transition:.16s;position:relative;overflow:hidden}
+.kanban-item:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3.5px;background:var(--acc,#94a3b8)}
+.kanban-item:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(26,20,16,.12)}
+.kanban-item .k-title{font-weight:700;font-size:13.5px;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kanban-item .k-meta{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.kanban-item .k-proj{font-size:11px;color:#78716c;background:#faf7f2;border:1px solid #ece5d8;padding:2px 7px;border-radius:20px;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kanban-item .k-pct{font-size:11px;font-weight:800}
+.kanban-item .k-bar{height:5px;background:#f1f5f9;border-radius:99px;overflow:hidden;margin-bottom:8px}
+.kanban-item .k-bar i{display:block;height:100%;border-radius:99px}
+.kanban-item .k-foot{display:flex;justify-content:space-between;font-size:11px;color:#8a7f70}
+.k-status{padding:2px 7px;border-radius:20px;font-weight:700;font-size:10.5px}
+.k-status.todo{background:#f1f5f9;color:#475569}
+.k-status.doing{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.k-status.done{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.k-status.late{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.kanban-empty{color:#a8a29e;font-size:12.5px;text-align:center;padding:28px 10px;border:1.5px dashed #e8ddd0;border-radius:12px;background:rgba(255,255,255,.6)}
 input[type=range].td-range{width:100%;accent-color:#f59e0b}
 
-/* ===== GANTT TIMELINE ===== */
-.gantt{overflow-x:auto;border:1px solid #e2e8f0;border-radius:12px;background:#fff}
-.gantt-row{display:flex;align-items:center;border-bottom:1px solid #f1f5f9;min-height:44px}
-.gantt-row:hover{background:#f8fafc}
-.gantt-label{width:180px;min-width:180px;padding:8px 12px;font-size:13px;font-weight:600;border-right:1px solid #e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gantt-track{flex:1;position:relative;height:44px;min-width:600px}
-.gantt-bar{position:absolute;top:12px;height:20px;border-radius:6px;background:#e2e8f0;overflow:hidden}
-.gantt-bar i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706)}
+/* GANTT PRO */
+.gantt{overflow:auto;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
+.gantt::-webkit-scrollbar{height:8px;width:8px}
+.gantt::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
+.gantt-scale{display:flex;position:sticky;top:0;z-index:5;border-bottom:2px solid #e8ddd0;background:linear-gradient(180deg,#fffdf6,#fbf9f5)}
+.gantt-scale div{flex:0 0 40px;min-width:40px;text-align:center;font-size:11px;font-weight:700;color:#57534e;padding:8px 0 7px;border-right:1px solid #f1f5f9}
+.gantt-scale div.weekend{background:#fef2f2;color:#991b1b}
+.gantt-scale div.today{background:#fef3c7;color:#92400e;border-bottom:2px solid #f0ad1f}
+.gantt-row{display:flex;align-items:stretch;border-bottom:1px solid #f1f5f9;min-height:48px;transition:.12s}
+.gantt-row:hover{background:#fffaf2}
+.gantt-row.is-project{background:linear-gradient(90deg,#fffbeb,#fffdf6);border-bottom:1px solid #fde68a}
+.gantt-label{width:220px;min-width:220px;max-width:220px;padding:8px 12px;font-size:12.5px;font-weight:600;border-right:1px solid #e8ddd0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;flex-direction:column;justify-content:center;position:sticky;left:0;z-index:3;background:inherit}
+.gantt-label small{font-size:10.5px;font-weight:600;color:#8a7f70;text-transform:uppercase}
+.gantt-track{flex:1;position:relative;height:48px;min-width:900px;background-image:linear-gradient(to right,#f8fafc 1px,transparent 1px);background-size:40px 100%}
+.gantt-bar{position:absolute;top:14px;height:20px;border-radius:8px;background:#e2e8f0;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.12);z-index:1;transition:.15s;display:flex;align-items:center}
+.gantt-bar:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:4}
+.gantt-bar i{display:block;height:100%;border-radius:8px 0 0 8px}
+.gantt-bar.done{border:1px solid #bbf7d0}
 .gantt-bar.done i{background:linear-gradient(90deg,#22c55e,#16a34a)}
-.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:#ef4444;z-index:2}
-.gantt-scale{display:flex;border-bottom:2px solid #e2e8f0;background:#f8fafc}
-.gantt-scale div{flex:1;text-align:center;font-size:11px;color:#64748b;padding:6px 0;border-right:1px solid #e2e8f0;min-width:60px}
+.gantt-bar.late{border:1px solid #fecaca;box-shadow:0 0 0 2px rgba(239,68,68,.12)}
+.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#ef4444,#dc2626);z-index:3;pointer-events:none}
+.gantt-today:after{content:'HÔM NAY';position:absolute;top:-1px;left:4px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:0 0 6px 6px}
+
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;background:#fff}
+.cal-head{padding:10px;text-align:center;font-weight:800;font-size:12px;background:#faf7f2;border-bottom:1px solid #e2e8f0;border-right:1px solid #f1f5f9;text-transform:uppercase;color:#57534e}
+.cal-cell{min-height:110px;padding:6px;border-right:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9;position:relative;background:#fff}
+.cal-cell.other{background:#fbfaf8;color:#a8a29e}
+.cal-cell.today{background:#fffbeb;box-shadow:inset 0 0 0 2px #f0ad1f}
+.cal-cell .dnum{font-size:12px;font-weight:700;margin-bottom:6px}
+.cal-cell .citem{font-size:11px;padding:3px 6px;border-radius:6px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:600}
+.citem.c-blue{background:#dbeafe;color:#1e40af}
+.citem.c-amber{background:#fef3c7;color:#92400e}
+.citem.c-green{background:#dcfce7;color:#166534}
+
+/* SPLIT + TOOLBAR */
+.td-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.td-zoom{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #ece5d8;padding:6px 10px;border-radius:10px}
+.td-zoom input[type=range]{width:120px;accent-color:#f59e0b}
+.split-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-height:60vh}
+.split-pane{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.split-pane-head{padding:10px 14px;background:#faf7f2;border-bottom:1px solid #ece5d8;font-weight:700;font-size:13px;display:flex;justify-content:space-between}
+.split-pane-body{flex:1;overflow:auto;padding:10px}
+@media(max-width:1100px){.split-wrap{grid-template-columns:1fr}}
+
+/* PRINT CHUYEN NGHIỆP */
+.print-header{display:none}
+@media print{
+  @page{size:A4 landscape;margin:12mm}
+  body{background:#fff!important}
+  .sidebar,#sbBackdrop,.topbar,.page-actions .btn-sec,.td-view-switch,.td-toolbar .noprint,.td-zoom,.footer{display:none!important}
+  .print-header{display:block!important;border:2px solid #1a1410;padding:12px 16px;margin-bottom:14px;border-radius:8px}
+  .print-header h1{font-size:18px;font-weight:800;margin:0 0 6px}
+  .print-header .meta{font-size:12px;color:#333;display:flex;gap:18px;flex-wrap:wrap}
+  .print-header .meta b{color:#000}
+  .print-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#666;border-top:1px solid #ccc;padding:6px}
+  .gantt,.kanban,.cal-grid{box-shadow:none!important;border:1px solid #000!important}
+  .gantt{overflow:visible!important}
+  .kanban{overflow:visible!important;flex-wrap:wrap}
+  .kanban-col{break-inside:avoid;max-height:none!important}
+  #view{overflow:visible!important;padding:0!important}
+  .main{overflow:visible!important}
+}
+#tiendoScope{transition:transform .2s ease;transform-origin:top left}
+#tiendoScope.zoom-90{transform:scale(.9);width:111.11%}
+#tiendoScope.zoom-80{transform:scale(.8);width:125%}
+#tiendoScope.zoom-70{transform:scale(.7);width:142.85%}
+#tiendoScope.zoom-60{transform:scale(.6);width:166.66%}
+
+/* LOGO FIX */
+.login-logo{display:block!important;margin:0 auto 10px;width:140px;height:auto;background:#fff;border-radius:12px;padding:6px;object-fit:contain}
+.sb-brand img{display:block!important;width:44px!important;height:44px!important;background:#fff!important;border-radius:8px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -536,7 +632,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 <!-- ============ LOGIN ============ -->
 <div id="loginView">
   <div class="login-card">
-    <img id="loginLogo" class="login-logo" alt="THE WALL">
+    <img id="loginLogo" class="login-logo" alt="THE WALL" src="logo.png">
     <h1 style="text-align:center;font-size:18px">The Wall - Project Management System [DEMO]</h1>
     <div class="fld"><label>Tên đăng nhập</label><input class="inp" id="lgUser" placeholder="Tên đăng nhập"></div>
     <div class="fld"><label>Mật khẩu</label><input class="inp" id="lgPass" type="password" placeholder="Mật khẩu"></div>
@@ -572,7 +668,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
    Single-file app. Dữ liệu demo lưu localStorage, sẵn sàng gắn backend.
 ===================================================================== */
 'use strict';
-const TW_LOGO='data:image/png;base64,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';
+const TW_LOGO='logo.png';
 /* ================= UTILS ================= */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const uid=p=>(p||'id')+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -704,56 +800,70 @@ danhmuc:[
  {id:'dm1',nhom:'Vật tư',ten:'Xi măng'},{id:'dm2',nhom:'Vật tư',ten:'Sắt thép'},{id:'dm3',nhom:'Vật tư',ten:'Bê tông'},
  {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}],
  tienDo:[
+  // === P1 ===
   {id:'td1',projectId:'p1',hangMuc:'Cọc & móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-01',ngayKetThuc:'2026-03-15',ngayCapNhat:'2026-03-15',ghiChu:'Ép 120 cọc, đổ móng băng xong'},
   {id:'td2',projectId:'p1',hangMuc:'Tầng hầm',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-16',ngayKetThuc:'2026-04-30',ngayCapNhat:'2026-04-30',ghiChu:'Hoàn thành 2 tầng hầm'},
   {id:'td3',projectId:'p1',hangMuc:'Kết cấu tầng 1-5',giaiDoan:'tho',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-06-30',ngayCapNhat:'2026-06-30',ghiChu:'Xong phần thô 5 tầng đầu'},
   {id:'td4',projectId:'p1',hangMuc:'Kết cấu tầng 6-12',giaiDoan:'tho',phanTram:75,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-09-30',ngayCapNhat:'2026-09-15',ghiChu:'Đang đổ sàn tầng 10'},
-  {id:'td5',projectId:'p1',hangMuc:'Kết cấu tầng 13-18',giaiDoan:'tho',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị cốp pha tầng 13'},
   {id:'td6',projectId:'p1',hangMuc:'Xây tường bao',giaiDoan:'tho',phanTram:45,ngayBatDau:'2026-07-15',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-14',ghiChu:'Xong đến tầng 8'},
-  {id:'td7',projectId:'p1',hangMuc:'Điện nước (MEP)',giaiDoan:'mep',phanTram:35,ngayBatDau:'2026-08-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-09-13',ghiChu:'Đi ống tầng 1-6'},
+  {id:'td5',projectId:'p1',hangMuc:'Kết cấu tầng 13-18',giaiDoan:'tho',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị cốp pha tầng 13'},
   {id:'td8',projectId:'p1',hangMuc:'Hoàn thiện mặt ngoài',giaiDoan:'hoanthien',phanTram:10,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-12',ghiChu:'Bắt đầu ốp tầng 1'},
+  {id:'td7',projectId:'p1',hangMuc:'Điện nước (MEP)',giaiDoan:'mep',phanTram:35,ngayBatDau:'2026-08-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-09-13',ghiChu:'Đi ống tầng 1-6'},
+  // === P2 ===
   {id:'td9',projectId:'p2',hangMuc:'Móng đơn',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-05',ngayKetThuc:'2026-04-10',ngayCapNhat:'2026-04-10',ghiChu:'Xong'},
   {id:'td10',projectId:'p2',hangMuc:'Khung BTCT',giaiDoan:'tho',phanTram:80,ngayBatDau:'2026-04-11',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-10',ghiChu:'Đang đổ mái'},
   {id:'td11',projectId:'p2',hangMuc:'Xây & tô',giaiDoan:'tho',phanTram:50,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-10-15',ngayCapNhat:'2026-09-11',ghiChu:'Tô trong 70%, ngoài 30%'},
   {id:'td12',projectId:'p2',hangMuc:'Sơn & ốp lát',giaiDoan:'hoanthien',phanTram:15,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Bắt đầu sơn lót'},
   {id:'td13',projectId:'p2',hangMuc:'Nội thất',giaiDoan:'hoanthien',phanTram:5,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-09-12',ghiChu:'Đặt hàng tủ bếp'},
+  // === P3 ===
   {id:'td14',projectId:'p3',hangMuc:'San nền',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-15',ngayKetThuc:'2026-03-31',ngayCapNhat:'2026-03-31',ghiChu:'Xong 5000m2'},
   {id:'td15',projectId:'p3',hangMuc:'Móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-05-15',ngayCapNhat:'2026-05-15',ghiChu:'Xong'},
   {id:'td16',projectId:'p3',hangMuc:'Khung thép',giaiDoan:'tho',phanTram:85,ngayBatDau:'2026-05-16',ngayKetThuc:'2026-09-30',ngayCapNhat:'2026-09-14',ghiChu:'Lắp 85%, còn mái'},
   {id:'td17',projectId:'p3',hangMuc:'Tôn & bao che',giaiDoan:'hoanthien',phanTram:40,ngayBatDau:'2026-08-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-13',ghiChu:'Lợp mái 40%'},
   {id:'td18',projectId:'p3',hangMuc:'Nền & hoàn thiện',giaiDoan:'hoanthien',phanTram:10,ngayBatDau:'2026-09-15',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Chuẩn bị đổ nền'}
- ,
+  // === P4 ===
   {id:'td19',projectId:'p4',hangMuc:'Cọc khoan nhồi',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-06-20',ngayCapNhat:'2026-06-20',ghiChu:'200 cọc D800'},
   {id:'td20',projectId:'p4',hangMuc:'Tầng hầm B1-B2',giaiDoan:'ngam',phanTram:60,ngayBatDau:'2026-06-21',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-14',ghiChu:'Đang đào B2'},
   {id:'td21',projectId:'p4',hangMuc:'Tháp văn phòng T1-10',giaiDoan:'tho',phanTram:15,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-03-31',ngayCapNhat:'2026-09-15',ghiChu:'Chuẩn bị lên tầng 1'},
+  // === P5 ===
   {id:'td22',projectId:'p5',hangMuc:'San lấp mặt bằng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-01',ngayKetThuc:'2026-03-15',ngayCapNhat:'2026-03-15',ghiChu:'Xong 2ha'},
   {id:'td23',projectId:'p5',hangMuc:'Hạ tầng GĐ2',giaiDoan:'mep',phanTram:70,ngayBatDau:'2026-03-16',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-10',ghiChu:'Đường nội bộ 70%'},
   {id:'td24',projectId:'p5',hangMuc:'Villa mẫu 5 căn',giaiDoan:'mep',phanTram:45,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-12',ghiChu:'2 căn xong thô'},
+  // === P6 ===
   {id:'td25',projectId:'p6',hangMuc:'Móng & tầng trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-01',ngayKetThuc:'2026-05-31',ngayCapNhat:'2026-05-31',ghiChu:'Xong'},
   {id:'td26',projectId:'p6',hangMuc:'Tầng 1-2',giaiDoan:'tho',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-09-30',ngayCapNhat:'2026-09-13',ghiChu:'Đang xây tầng 2'},
   {id:'td27',projectId:'p6',hangMuc:'Tầng 3 + mái',giaiDoan:'tho',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-14',ghiChu:'Chuẩn bị'},
   {id:'td28',projectId:'p6',hangMuc:'Hoàn thiện',giaiDoan:'hoanthien',phanTram:5,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-15',ghiChu:'Đặt gạch'},
+  // === P7 ===
   {id:'td29',projectId:'p7',hangMuc:'Cọc & đài móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-15',ngayKetThuc:'2026-06-30',ngayCapNhat:'2026-06-30',ghiChu:'Xong'},
   {id:'td30',projectId:'p7',hangMuc:'Hầm & tầng 1-5',giaiDoan:'ngam',phanTram:80,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Tầng 4'},
   {id:'td31',projectId:'p7',hangMuc:'Tầng 6-15',giaiDoan:'tho',phanTram:25,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-04-30',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị'},
+  // === P8 ===
   {id:'td32',projectId:'p8',hangMuc:'Cọc & móng băng',giaiDoan:'ngam',phanTram:95,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-12',ghiChu:'Gần xong'},
   {id:'td33',projectId:'p8',hangMuc:'Khung 10 tầng',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-15',ghiChu:'Tầng 3'},
+  // === P9 ===
   {id:'td34',projectId:'p9',hangMuc:'Móng & trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-06-15',ngayCapNhat:'2026-06-15',ghiChu:'Xong'},
   {id:'td35',projectId:'p9',hangMuc:'Lầu 1-2 + mái',giaiDoan:'tho',phanTram:85,ngayBatDau:'2026-06-16',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-13',ghiChu:'Lợp mái'},
   {id:'td36',projectId:'p9',hangMuc:'Hoàn thiện & nội thất',giaiDoan:'hoanthien',phanTram:40,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-14',ghiChu:'Ốp lát 40%'},
+  // === P10 ===
   {id:'td37',projectId:'p10',hangMuc:'San nền & hạ tầng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-01',ngayKetThuc:'2026-05-20',ngayCapNhat:'2026-05-20',ghiChu:'Xong'},
   {id:'td38',projectId:'p10',hangMuc:'Clubhouse thô',giaiDoan:'tho',phanTram:65,ngayBatDau:'2026-05-21',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Tầng 2'},
   {id:'td39',projectId:'p10',hangMuc:'Cảnh quan',giaiDoan:'mep',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-15',ghiChu:'Trồng cây'},
+  // === P11 ===
   {id:'td40',projectId:'p11',hangMuc:'Móng 10 căn',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-07-10',ngayCapNhat:'2026-07-10',ghiChu:'Xong'},
   {id:'td41',projectId:'p11',hangMuc:'Thô 10 căn',giaiDoan:'tho',phanTram:55,ngayBatDau:'2026-07-11',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-14',ghiChu:'6/10 căn'},
+  // === P12 ===
   {id:'td42',projectId:'p12',hangMuc:'Móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-08-01',ngayCapNhat:'2026-08-01',ghiChu:'Xong'},
   {id:'td43',projectId:'p12',hangMuc:'Thô & tô',giaiDoan:'tho',phanTram:75,ngayBatDau:'2026-08-02',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Tô ngoài'},
   {id:'td44',projectId:'p12',hangMuc:'Hoàn thiện',giaiDoan:'hoanthien',phanTram:20,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị'},
+  // === P13 ===
   {id:'td45',projectId:'p13',hangMuc:'San nền 18 lỗ',giaiDoan:'ngam',phanTram:90,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-10',ghiChu:'16/18 lỗ'},
-  {id:'td46',projectId:'p13',hangMuc:'Hệ thống tưới',giaiDoan:'mep',phanTram:60,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp'},
   {id:'td47',projectId:'p13',hangMuc:'Clubhouse',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-14',ghiChu:'Móng xong'},
+  {id:'td46',projectId:'p13',hangMuc:'Hệ thống tưới',giaiDoan:'mep',phanTram:60,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp'},
+  // === P14 ===
   {id:'td48',projectId:'p14',hangMuc:'Cọc nhà ga',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-15',ghiChu:'70% cọc'},
-  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'}]
+  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'}
+]
 };
 
 /* ================= DB ================= */
@@ -863,8 +973,14 @@ const NAV=[
  {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
- {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view'},
- {label:'Timeline (Gantt)',icon:'',hash:'#/tiendo-gantt',perm:'projects_view'},
+ {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
+   {label:'Tổng quan Dashboard',hash:'#/tiendo'},
+   {label:'Danh sách chi tiết',hash:'#/tiendo-list'},
+   {label:'Kanban Board',hash:'#/tiendo-kanban'},
+   {label:'Timeline Gantt',hash:'#/tiendo-gantt'},
+   {label:'Lịch Calendar',hash:'#/tiendo-calendar'},
+   {label:'Split View (2 màn hình)',hash:'#/tiendo-split'}
+ ]},
  {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
  {label:'Phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
@@ -2176,92 +2292,175 @@ ROUTES['#/caidat']=function(){
 };
 /* ===== TIẾN ĐỘ DỰ ÁN - 3 VIEWS ===== */
 
+
+function getPrintHeader(pid){
+  const p = pid ? (DB.data.projects||[]).find(x=>x.id===pid) : null;
+  const now = new Date().toLocaleString('vi-VN');
+  const projName = p ? `${esc(p.code)} - ${esc(p.name)}` : 'TẤT CẢ DỰ ÁN (14 DỰ ÁN)';
+  const projInfo = p ? `Chủ đầu tư: ${esc(p.client||'—')} | Địa điểm: ${esc(p.location||'—')} | Thời gian: ${fmtDate(p.start)} → ${fmtDate(p.end)} | Ngân sách: ${fmtVND(p.budget)}` : `Tổng ngân sách: ${fmtVND((DB.data.projects||[]).reduce((s,x)=>s+(+x.budget||0),0))} | Số hạng mục: ${(DB.data.tienDo||[]).length}`;
+  return `<div class="print-header"><h1>📋 BÁO CÁO TIẾN ĐỘ THI CÔNG - ${projName}</h1><div class="meta"><span><b>Dự án:</b> ${projName}</span><span><b>${projInfo}</b></span><span><b>Ngày in:</b> ${now}</span><span><b>Người in:</b> ${esc(Auth.user?Auth.user.name:'')}</span></div></div>`;
+}
+function tdViewSwitcher(cur){
+  const views=[['#/tiendo','Tổng quan'],['#/tiendo-list','Danh sách'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Lịch'],['#/tiendo-split','Split 2 màn']];
+  return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;
+}
+function tdToolbar(extra=''){
+  return `<div class="td-toolbar noprint"><div class="td-zoom"><span style="font-size:12px;font-weight:700">🔍 Thu nhỏ:</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><button class="btn btn-sec btn-sm" onclick="window.print()">🖨️ In báo cáo</button>${extra}</div>`;
+}
+function setTdZoom(v){window._tdZoom=+v;document.getElementById('tdZoomLb').textContent=v+'%';const sc=document.getElementById('tiendoScope');if(!sc)return;sc.className='';if(v!=100)sc.classList.add('zoom-'+v);}
+
 function tienDoGiaiDoan(pid){
   const GDN={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};
   const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
   if(!items.length)return{avg:0,gd:'—',gdl:'Chưa có'};
   const avg=Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);
-  // Giai đoạn hiện tại = giai đoạn có item đang làm (0<%<100), hoặc max %
   const doing=items.find(t=>t.phanTram>0&&t.phanTram<100);
-  const cur=doing||items.reduce((a,b)=>(+a.phanTram>+b.phanTram?a:b));
-  const gd=cur.giaiDoan||'tho';
-  return{avg:avg,gd:gd,gdl:GDN[gd]||gd};
+  const cur=doing?doing.giaiDoan:(items[items.length-1]?.giaiDoan||'tho');
+  return{avg,gd:cur,gdl:GDN[cur]||cur};
 }
-function tienDoCell(pid){
-  const d=tienDoGiaiDoan(pid);
-  return'<div style="min-width:140px"><div style="font-size:11px;font-weight:700;margin-bottom:3px">'+d.gdl+' • '+d.avg+'%</div><div class="td-bar"><i style="width:'+d.avg+'%"></i></div></div>';
-}
-function tienDoProject(pid){
-  const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
-  if(!items.length) return 0;
-  return Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);
-}
+function tienDoProject(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);if(!items.length)return 0;return Math.round(items.reduce((s,t)=>s+(+t.phanTram||0),0)/items.length);}
 ROUTES['#/tiendo']=function(){
   const projs=typeof visibleProjects==='function'?visibleProjects():DB.data.projects;
-  let h='<div class="page-head"><div><h1>Tiến độ dự án</h1><p>'+projs.length+' dự án</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-kanban\'">Kanban</button><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>';
+  const items=DB.data.tienDo||[];
+  const totalPct=projs.length?Math.round(projs.reduce((s,p)=>s+tienDoProject(p.id),0)/projs.length):0;
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Tiến độ thi công - 14 dự án</h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo');
+  h+=tdToolbar();
+  h+='<div id="tiendoScope">';
+  // Dashboard tổng
+  h+='<div class="grid g4" style="margin:14px 0"><div class="stat"><div><div class="lb">Tổng tiến độ</div><div class="vl">'+totalPct+'%</div></div></div><div class="stat"><div><div class="lb">Đang thi công</div><div class="vl">'+projs.filter(p=>p.status==='Đang thi công').length+'</div></div></div><div class="stat"><div><div class="lb">Hoàn thành 100%</div><div class="vl">'+projs.filter(p=>tienDoProject(p.id)>=100).length+'</div></div></div><div class="stat"><div><div class="lb">Trễ hạn</div><div class="vl">'+items.filter(t=>new Date(t.ngayKetThuc)<new Date() && t.phanTram<100).length+' hạng mục</div></div></div></div>';
   h+='<div class="grid g2">';
   projs.forEach(p=>{
     const pct=tienDoProject(p.id);
-    const items=(DB.data.tienDo||[]).filter(t=>t.projectId===p.id);
-    h+='<div class="td-card"><div class="row"><b>'+esc(p.name)+'</b><span style="font-weight:800;color:#d97706">'+pct+'%</span></div><div class="prog big"><i style="width:'+pct+'%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b">'+items.length+' hạng mục • <a href="#/tiendo/'+p.id+'">Chi tiết</a></div></div>';
+    const gd=tienDoGiaiDoan(p.id);
+    const its=(DB.data.tienDo||[]).filter(t=>t.projectId===p.id);
+    h+=`<div class="td-card"><div class="row"><b>${esc(p.code)} - ${esc(p.name)}</b><span style="font-weight:800;color:#d97706">${pct}%</span></div><div class="prog big"><i style="width:${pct}%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b;display:flex;justify-content:space-between"><span>${gd.gdl} • ${its.length} hạng mục</span><span><a href="#/tiendo/${p.id}">Chi tiết →</a> | <a href="#/tiendo-gantt">Gantt</a> | <a href="#/tiendo-kanban">Kanban</a></span></div></div>`;
   });
-  h+='</div>';
+  h+='</div></div>';
+  h+='<div class="print-footer" style="display:none">In lúc: '+new Date().toLocaleString('vi-VN')+' - The Wall PMS</div>';
+  document.getElementById('view').innerHTML=h;
+};
+ROUTES['#/tiendo-list']=function(){
+  const projs=visibleProjects();
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Danh sách chi tiết - 14 dự án</h1><p>Sắp xếp chuẩn theo giai đoạn thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-list');h+=tdToolbar();h+='<div id="tiendoScope">';
+  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Giai đoạn</th><th>Hạng mục</th><th>Ngày</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
+  const order={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};
+  const sorted=[...(DB.data.tienDo||[])].sort((a,b)=>{
+    const pa=projs.findIndex(p=>p.id===a.projectId); const pb=projs.findIndex(p=>p.id===b.projectId);
+    if(pa!==pb)return pa-pb;
+    if((order[a.giaiDoan]||0)!==(order[b.giaiDoan]||0))return (order[a.giaiDoan]||0)-(order[b.giaiDoan]||0);
+    return new Date(a.ngayBatDau)-new Date(b.ngayBatDau);
+  });
+  sorted.forEach(t=>{
+    const p=DB.data.projects.find(x=>x.id===t.projectId);
+    const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
+    const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
+    h+=`<tr><td><b>${esc(p?p.code:'')}</b><div style="font-size:11px;color:#666">${esc(p?p.name:'')}</div></td><td><span class="badge b-gray">${esc(t.giaiDoan)}</span></td><td>${esc(t.hangMuc)}</td><td style="font-size:12px;white-space:nowrap">${fmtDate(t.ngayBatDau)}<br>→ ${fmtDate(t.ngayKetThuc)}</td><td><div class="prog" style="width:90px"><i style="width:${t.phanTram}%"></i></div><small>${t.phanTram}%</small></td><td>${late?'<span class="k-status late">Trễ hạn</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</td><td><button class="btn btn-sm btn-sec" onclick="tienDoForm('${t.projectId}','${t.id}')">Sửa</button></td></tr>`;
+  });
+  h+='</tbody></table></div></div></div>';
   document.getElementById('view').innerHTML=h;
 };
 ROUTES['#/tiendo-kanban']=function(){
   const items=DB.data.tienDo||[];
   const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & Hạ tầng','#22c55e']];
-  let h='<div class="page-head"><div><h1>Kanban tiến độ thi công</h1><p>'+items.length+' hạng mục • 14 dự án</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-gantt\'">Timeline</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>';
-  h+='<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px">';
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Kanban tiến độ - 14 dự án chuẩn</h1><p>${items.length} hạng mục • Kéo thả theo giai đoạn thi công thực tế</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-kanban');h+=tdToolbar('<span style="font-size:12px;color:#666">💡 Sắp xếp: Chuẩn bị → Ngầm → Thô → Hoàn thiện → MEP</span>');h+='<div id="tiendoScope"><div class="kanban">';
   GDS.forEach(g=>{
-    const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]);
+    const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).sort((a,b)=>new Date(a.ngayBatDau)-new Date(b.ngayBatDau));
     const avg=list.length?Math.round(list.reduce((s,t)=>s+(+t.phanTram||0),0)/list.length):0;
-    h+='<div style="min-width:260px;flex:1;background:#f8fafc;border-radius:12px;padding:12px"><div style="font-weight:800;margin-bottom:4px;color:'+g[2]+'">'+g[1]+'</div><div style="font-size:12px;color:#64748b;margin-bottom:10px">TB: '+avg+'% • '+list.length+' hạng mục</div><div class="td-bar" style="margin-bottom:10px"><i style="width:'+avg+'%;background:'+g[2]+'"></i></div>';
+    h+=`<div class="kanban-col" data-stage="${g[0]}"><div class="kanban-col-header"><div class="kanban-col-title"><span class="dot" style="background:${g[2]}"></span>${g[1]}</div><div class="kanban-col-meta"><span class="kanban-col-count">${list.length}</span><span class="kanban-col-avg">${avg}%</span></div></div><div class="kanban-col-body">`;
+    if(!list.length)h+='<div class="kanban-empty">Trống - Chưa có hạng mục</div>';
     list.forEach(t=>{
-      const pr=(DB.data.projects||[]).find(p=>p.id===t.projectId);
-      h+='<div class="card" style="margin-bottom:8px;padding:10px"><div style="font-weight:700;font-size:13px">'+esc(t.hangMuc)+'</div><div style="font-size:11px;color:#64748b;margin:4px 0">'+esc(pr?pr.name:'')+'</div><div class="td-bar"><i style="width:'+t.phanTram+'%"></i></div><div style="font-size:11px;margin-top:4px">'+t.phanTram+'%</div><div style="margin-top:6px"><button class="btn btn-sec" style="padding:4px 8px;font-size:11px" onclick="tienDoForm(\''+t.projectId+'\',\''+t.id+'\')">Sửa</button></div></div>';
+      const p=(DB.data.projects||[]).find(x=>x.id===t.projectId);
+      const late=new Date(t.ngayKetThuc)<new Date() && t.phanTram<100;
+      const st=t.phanTram>=100?'done':(t.phanTram>0?'doing':'todo');
+      const col={chuanbi:'#94a3b8',ngam:'#3b82f6',tho:'#f59e0b',hoanthien:'#8b5cf6',mep:'#22c55e'}[t.giaiDoan]||'#94a3b8';
+      h+=`<div class="kanban-item" style="--acc:${col}" onclick="tienDoForm('${t.projectId}','${t.id}')"><div class="k-title">${esc(t.hangMuc)}</div><div class="k-meta"><span class="k-proj">${esc(p?p.code:'' )} - ${esc(p?p.name.slice(0,18):'')}</span><span class="k-pct">${t.phanTram}%</span></div><div class="k-bar"><i style="width:${t.phanTram}%;background:${col}"></i></div><div class="k-foot"><span class="k-dates">📅 ${fmtDate(t.ngayBatDau)} → ${fmtDate(t.ngayKetThuc)}</span>${late?'<span class="k-status late">Trễ</span>':(st==='done'?'<span class="k-status done">Xong</span>':(st==='doing'?'<span class="k-status doing">Đang làm</span>':'<span class="k-status todo">Chưa</span>'))}</div></div>`;
     });
-    if(!list.length)h+='<div style="color:#94a3b8;font-size:12px;text-align:center;padding:20px">Trống</div>';
-    h+='</div>';
+    h+='</div></div>';
   });
-  h+='</div>';
+  h+='</div></div>';
   document.getElementById('view').innerHTML=h;
-};;;
+};
 ROUTES['#/tiendo-gantt']=function(){
   const items=DB.data.tienDo||[];
-  const now=new Date();
-  const mStart=new Date(now.getFullYear(),now.getMonth(),1);
-  const mEnd=new Date(now.getFullYear(),now.getMonth()+1,0);
-  mEnd.setHours(23,59,59);
-  const totalMs=mEnd-mStart;
-  const daysInMonth=mEnd.getDate();
-  const todayPct=((now-mStart)/totalMs*100);
+  const now=new Date();const mStart=new Date(now.getFullYear(),now.getMonth(),1);const mEnd=new Date(now.getFullYear(),now.getMonth()+1,0);mEnd.setHours(23,59,59);const totalMs=mEnd-mStart;const daysInMonth=mEnd.getDate();const todayPct=((now-mStart)/totalMs*100);
   const GDN={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};
-  // Scale ngày
-  let scale='<div class="gantt-scale">';
-  for(let d=1;d<=daysInMonth;d++){scale+='<div style="min-width:28px">'+d+'</div>';}
+  let scale='<div class="gantt-scale"><div style="min-width:220px;flex:0 0 220px;position:sticky;left:0;z-index:6;background:#fffdf6;border-right:1px solid #e8ddd0">Dự án / Hạng mục</div>';
+  for(let d=1;d<=daysInMonth;d++){const dt=new Date(now.getFullYear(),now.getMonth(),d);const isWk=dt.getDay()===0||dt.getDay()===6;const isToday=d===now.getDate();scale+=`<div class="${isWk?'weekend':''} ${isToday?'today':''}" style="min-width:40px">${d}<div style="font-size:9px">${['CN','T2','T3','T4','T5','T6','T7'][dt.getDay()]}</div></div>`;}
   scale+='</div>';
-  let h='<div class="page-head"><div><h1>Timeline tháng '+ (now.getMonth()+1)+'/'+now.getFullYear()+'</h1><p>'+items.length+' hạng mục • 14 dự án</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/tiendo\'">Danh sách</button><button class="btn btn-sec" onclick="location.hash=\'#/tiendo-kanban\'">Kanban</button></div></div>';
-  h+='<div class="gantt">'+scale;
-  const projs={};
-  items.forEach(t=>{(projs[t.projectId]=projs[t.projectId]||[]).push(t);});
-  Object.keys(projs).forEach(pid=>{
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Timeline Gantt tháng ${now.getMonth()+1}/${now.getFullYear()} - 14 dự án</h1><p>${items.length} hạng mục • Đường đỏ: hôm nay • Thanh dài: thời gian • Tô màu: % hoàn thành</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-gantt');h+=tdToolbar('<span style="font-size:12px">14 dự án mẫu sắp xếp theo thứ tự: Chung cư → Biệt thự → Resort → Trường → Khách sạn → Bệnh viện → Villa → Golf → Long Thành</span>');h+='<div id="tiendoScope"><div class="gantt">'+scale;
+  const projs={};items.forEach(t=>{(projs[t.projectId]=projs[t.projectId]||[]).push(t);});
+  const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
+  orderIds.forEach(pid=>{
+    if(!projs[pid])return;
     const p=(DB.data.projects||[]).find(x=>x.id===pid);
     const gd=tienDoGiaiDoan(pid);
-    h+='<div class="gantt-row" style="background:#fef3c7"><div class="gantt-label" style="font-weight:800">'+esc(p?p.name:pid)+'<div style="font-size:10px;font-weight:400;color:#92400e">'+gd.gdl+' • '+gd.avg+'%</div></div><div class="gantt-track"></div></div>';
-    projs[pid].forEach(t=>{
+    h+=`<div class="gantt-row is-project"><div class="gantt-label" style="font-weight:800"><div class="gantt-label-main">${esc(p?p.code+' - '+p.name:pid)}</div><small>${gd.gdl} • ${gd.avg}% • ${projs[pid].length} HM</small></div><div class="gantt-track"></div></div>`;
+    projs[pid].sort((a,b)=>{const o={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};return (o[a.giaiDoan]||0)-(o[b.giaiDoan]||0) || new Date(a.ngayBatDau)-new Date(b.ngayBatDau);}).forEach(t=>{
       const s=new Date(t.ngayBatDau||mStart), e=new Date(t.ngayKetThuc||mEnd);
       const cs=s<mStart?mStart:s, ce=e>mEnd?mEnd:e;
       if(ce<cs)return;
-      const left=(cs-mStart)/totalMs*100;
-      const width=Math.max(1,(ce-cs)/totalMs*100);
-      const done=t.phanTram>=100;
-      h+='<div class="gantt-row"><div class="gantt-label" title="'+esc(t.hangMuc)+'"><span style="font-size:10px;color:#64748b">'+(GDN[t.giaiDoan]||'')+'</span><br>'+esc(t.hangMuc)+'</div><div class="gantt-track"><div class="gantt-bar'+(done?' done':'')+'" style="left:'+left+'%;width:'+width+'%" title="'+esc(t.hangMuc)+' '+t.phanTram+'%"><i style="width:'+t.phanTram+'%"></i></div><div class="gantt-today" style="left:'+todayPct+'%" title="Hôm nay"></div></div></div>';
+      const left=(cs-mStart)/totalMs*100;const width=Math.max(1,(ce-cs)/totalMs*100);const done=t.phanTram>=100;const late=new Date(t.ngayKetThuc)<now && t.phanTram<100;
+      h+=`<div class="gantt-row"><div class="gantt-label" title="${esc(t.hangMuc)}"><small>${GDN[t.giaiDoan]||''}</small><div class="gantt-label-main">${esc(t.hangMuc)}</div></div><div class="gantt-track"><div class="gantt-bar${done?' done':''} ${late?'late':''}" style="left:${left}%;width:${width}%" title="${esc(t.hangMuc)} ${t.phanTram}%"><i style="width:${t.phanTram}%;background:${done?'linear-gradient(90deg,#22c55e,#16a34a)':'linear-gradient(90deg,#f59e0b,#d97706)'}"></i><span class="gantt-pct">${t.phanTram}%</span></div><div class="gantt-today" style="left:${todayPct}%"></div></div></div>`;
     });
   });
-  h+='</div><div style="margin-top:12px;font-size:12px;color:#64748b">Đường đỏ: hôm nay • Thanh dài: thời gian • Phần tô màu: % hoàn thành</div>';
+  h+='</div><div class="gantt-legend noprint"><span><span class="lg" style="background:linear-gradient(90deg,#f59e0b,#d97706)"></span> Đang làm</span><span><span class="lg" style="background:linear-gradient(90deg,#22c55e,#16a34a)"></span> Hoàn thành</span><span><span class="lg" style="background:#fee2e2;border:1px solid #fecaca"></span> Trễ hạn</span><span><span class="lg" style="background:#ef4444;width:2px"></span> Hôm nay</span><span><span class="lg" style="background:#fef2f2;border:1px dashed #fecaca"></span> Cuối tuần</span></div></div>';
   document.getElementById('view').innerHTML=h;
-};;
+};
+ROUTES['#/tiendo-calendar']=function(){
+  const items=DB.data.tienDo||[];
+  const now=new Date();const y=now.getFullYear(), m=now.getMonth();
+  const first=new Date(y,m,1);const last=new Date(y,m+1,0);const startDay=first.getDay(); // 0 CN
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Lịch tiến độ tháng ${m+1}/${y}</h1><p>Xem theo ngày - chuẩn quản lý thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-calendar');h+=tdToolbar();h+='<div id="tiendoScope"><div class="cal-grid">';
+  ['CN','T2','T3','T4','T5','T6','T7'].forEach(d=>h+=`<div class="cal-head">${d}</div>`);
+  for(let i=0;i<startDay;i++)h+=`<div class="cal-cell other"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const dt=new Date(y,m,d);const isToday=d===now.getDate();
+    const dayItems=items.filter(t=>{const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cur=new Date(y,m,d);return cur>=new Date(s.getFullYear(),s.getMonth(),s.getDate()) && cur<=new Date(e.getFullYear(),e.getMonth(),e.getDate());});
+    h+=`<div class="cal-cell ${isToday?'today':''}"><div class="dnum">${d}</div>${dayItems.slice(0,4).map(t=>{const c=t.phanTram>=100?'c-green':(new Date(t.ngayKetThuc)<now && t.phanTram<100?'c-blue':'c-amber');return `<div class="citem ${c}" title="${esc(t.hangMuc)} - ${t.phanTram}%" onclick="tienDoForm('${t.projectId}','${t.id}')">${esc(t.hangMuc.slice(0,18))} ${t.phanTram}%</div>`;}).join('')}${dayItems.length>4?`<div style="font-size:10px;color:#666">+${dayItems.length-4} nữa</div>`:''}</div>`;
+  }
+  h+='</div></div>';
+  document.getElementById('view').innerHTML=h;
+};
+ROUTES['#/tiendo-split']=function(){
+  const items=DB.data.tienDo||[];
+  let h=getPrintHeader();
+  h+=`<div class="page-head"><div><h1>Split View - Xem 2 view cùng lúc</h1><p>So sánh Kanban + Gantt cùng lúc - chuẩn PM pro</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button></div></div>`;
+  h+=tdViewSwitcher('#/tiendo-split');h+=tdToolbar('<span style="font-size:12px">Kéo thanh cuộn riêng từng pane - In ra sẽ gộp 2 view trên 1 trang A4 ngang</span>');h+='<div id="tiendoScope"><div class="split-wrap">';
+  // Left: Kanban mini
+  const GDS=[['chuanbi','Chuẩn bị','#94a3b8'],['ngam','Phần ngầm','#3b82f6'],['tho','Phần thô','#f59e0b'],['hoanthien','Hoàn thiện','#8b5cf6'],['mep','MEP & HT','#22c55e']];
+  let kanbanHtml='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px">';
+  GDS.forEach(g=>{
+    const list=items.filter(t=>(t.giaiDoan||'tho')===g[0]).slice(0,6);
+    kanbanHtml+=`<div style="min-width:200px;flex:1;background:#f8fafc;border-radius:10px;padding:8px;border-top:3px solid ${g[2]}"><div style="font-weight:800;font-size:11px;text-transform:uppercase;color:${g[2]};margin-bottom:6px">${g[1]} (${list.length})</div>${list.map(t=>`<div style="background:#fff;border:1px solid #ece5d8;border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px"><b>${esc(t.hangMuc.slice(0,20))}</b><div style="display:flex;justify-content:space-between;font-size:11px;color:#666"><span>${t.phanTram}%</span><span>${fmtDate(t.ngayKetThuc)}</span></div></div>`).join('')}</div>`;
+  });
+  kanbanHtml+='</div>';
+  // Right: Gantt mini
+  const now=new Date();const mStart=new Date(now.getFullYear(),now.getMonth(),1);const mEnd=new Date(now.getFullYear(),now.getMonth()+1,0);const totalMs=mEnd-mStart;const todayPct=((now-mStart)/totalMs*100);
+  let ganttMini='<div class="gantt" style="font-size:12px">';
+  ['p1','p2','p3','p14'].forEach(pid=>{
+    const p=(DB.data.projects||[]).find(x=>x.id===pid);if(!p)return;
+    ganttMini+=`<div class="gantt-row is-project"><div class="gantt-label" style="width:140px;min-width:140px;font-size:11px">${esc(p.code)}</div><div class="gantt-track" style="min-width:400px;height:36px"></div></div>`;
+    (DB.data.tienDo||[]).filter(t=>t.projectId===pid).slice(0,2).forEach(t=>{
+      const s=new Date(t.ngayBatDau), e=new Date(t.ngayKetThuc);const cs=s<mStart?mStart:s, ce=e>mEnd?mEnd:e;if(ce<cs)return;const left=(cs-mStart)/totalMs*100;const width=Math.max(2,(ce-cs)/totalMs*100);
+      ganttMini+=`<div class="gantt-row"><div class="gantt-label" style="width:140px;min-width:140px;font-size:11px">${esc(t.hangMuc.slice(0,18))}</div><div class="gantt-track" style="min-width:400px;height:36px"><div class="gantt-bar" style="left:${left}%;width:${width}%;top:8px"><i style="width:${t.phanTram}%"></i></div><div class="gantt-today" style="left:${todayPct}%"></div></div></div>`;
+    });
+  });
+  ganttMini+='</div>';
+  h+=`<div class="split-pane"><div class="split-pane-head">📋 Kanban Board <span style="font-size:11px;color:#666">${items.length} hạng mục</span></div><div class="split-pane-body">${kanbanHtml}</div></div>`;
+  h+=`<div class="split-pane"><div class="split-pane-head">📊 Timeline Gantt <span style="font-size:11px;color:#666">Tháng ${now.getMonth()+1}</span></div><div class="split-pane-body">${ganttMini}</div></div>`;
+  h+='</div></div>';
+  document.getElementById('view').innerHTML=h;
+};
 
 ROUTES['#/tiendo/:id']=function(pid){
   const p=(DB.data.projects||[]).find(x=>x.id===pid);
