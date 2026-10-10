@@ -568,14 +568,14 @@ users:[
  {id:'u5',name:'Thủ Quỹ (test)',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:[]},
  {id:'u6',name:'NV Mua hàng (test)',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:[]}],
 projects:[
- {id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'dang_thi_cong',note:'Gói thầu phần thô + hoàn thiện'},
- {id:'p2',code:'BT-2026-02',name:'Biệt thự Nam Long',client:'Ông Trần Minh Đức',location:'KDC Nam Long, TP.HCM',start:'2026-03-05',end:'2026-11-30',budget:3200000000,status:'dang_thi_cong',note:'Xây dựng + nội thất cơ bản'},
- {id:'p3',code:'BT-2026-03',name:'Nhà xưởng Tân Thuận',client:'Cty TNHH Cơ khí Đông Nam',location:'KCN Tân Thuận, TP.HCM',start:'2026-04-15',end:'2027-02-15',budget:12500000000,status:'dang_thi_cong',note:'Nhà thép tiền chế 5000m2'},
- {id:'p4',code:'BT-2026-04',name:'Cao ốc văn phòng Phú Mỹ Hưng',client:'CĐT Phú Mỹ Hưng Corp',location:'Quận 7, TP.HCM',start:'2026-06-01',end:'2027-06-30',budget:28000000000,status:'chuan_bi',note:'Phần móng + hầm'},
- {id:'p5',code:'BT-2026-05',name:'Resort Mũi Né – Giai đoạn 2',client:'Cty Du lịch Biển Xanh',location:'Phan Thiết, Bình Thuận',start:'2026-01-10',end:'2026-12-20',budget:15700000000,status:'dang_thi_cong',note:'30 villa + hồ bơi'},
-{id:'p6',code:'BT-2026-06',name:'Trường học Quốc tế Him Lam',location:'Quận 7, TP.HCM',client:'CĐT Him Lam Edu',start:'2026-03-01',end:'2026-11-30',status:'dang_thi_cong',budget:45000000000},
-{id:'p7',code:'BT-2026-07',name:'Khách sạn Grand Sài Gòn',location:'Quận 1, TP.HCM',client:'CĐT Grand Hotel Group',start:'2026-04-15',end:'2027-02-28',status:'dang_thi_cong',budget:68000000000},
-{id:'p8',code:'BT-2026-08',name:'Bệnh viện Đa khoa Miền Đông',location:'TP.Thủ Đức, TP.HCM',client:'CĐT MediCare VN',start:'2026-06-01',end:'2027-06-30',status:'dang_thi_cong',budget:95000000000},],
+ {id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
+ {id:'p2',code:'BT-2026-02',name:'Biệt thự Nam Long',client:'Ông Trần Minh Đức',location:'KDC Nam Long, TP.HCM',start:'2026-03-05',end:'2026-11-30',budget:3200000000,status:'Đang thi công',note:'Xây dựng + nội thất cơ bản'},
+ {id:'p3',code:'BT-2026-03',name:'Nhà xưởng Tân Thuận',client:'Cty TNHH Cơ khí Đông Nam',location:'KCN Tân Thuận, TP.HCM',start:'2026-04-15',end:'2027-02-15',budget:12500000000,status:'Đang thi công',note:'Nhà thép tiền chế 5000m2'},
+ {id:'p4',code:'BT-2026-04',name:'Cao ốc văn phòng Phú Mỹ Hưng',client:'CĐT Phú Mỹ Hưng Corp',location:'Quận 7, TP.HCM',start:'2026-06-01',end:'2027-06-30',budget:28000000000,status:'Chuẩn bị',note:'Phần móng + hầm'},
+ {id:'p5',code:'BT-2026-05',name:'Resort Mũi Né – Giai đoạn 2',client:'Cty Du lịch Biển Xanh',location:'Phan Thiết, Bình Thuận',start:'2026-01-10',end:'2026-12-20',budget:15700000000,status:'Đang thi công',note:'30 villa + hồ bơi'},
+{id:'p6',code:'BT-2026-06',name:'Trường học Quốc tế Him Lam',location:'Quận 7, TP.HCM',client:'CĐT Him Lam Edu',start:'2026-03-01',end:'2026-11-30',status:'Đang thi công',budget:45000000000},
+{id:'p7',code:'BT-2026-07',name:'Khách sạn Grand Sài Gòn',location:'Quận 1, TP.HCM',client:'CĐT Grand Hotel Group',start:'2026-04-15',end:'2027-02-28',status:'Đang thi công',budget:68000000000},
+{id:'p8',code:'BT-2026-08',name:'Bệnh viện Đa khoa Miền Đông',location:'TP.Thủ Đức, TP.HCM',client:'CĐT MediCare VN',start:'2026-06-01',end:'2027-06-30',status:'Đang thi công',budget:95000000000},],
 vendors:[
  {id:'v1',name:'VLXD Hoàng Phát',phone:'0909123456',address:'QL1A, Thủ Đức',projectId:'p1'},
  {id:'v2',name:'Sắt thép Miền Nam',phone:'0918234567',address:'KCN Sóng Thần',projectId:'p1'},
@@ -835,13 +835,6 @@ function projectRecv(pid){ // phải thu = bán/NT - đã nhận
 }
 /* ================= ROUTER ================= */
 const ROUTES={};
-function nav(rebuild){
- const h=location.hash||'#/dashboard';
- if(rebuild!==false)buildSidebar();
- const fn=ROUTES[h]||ROUTES['#/dashboard'];
- $('#view').innerHTML='';fn();
- window.scrollTo(0,0);
-}
 window.addEventListener('hashchange',()=>{const s=document.getElementById('sidebar'),b=document.getElementById('sbBackdrop');if(s)s.classList.remove('open');if(b)b.classList.remove('show');nav();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 /* ================= DASHBOARD ================= */
@@ -880,8 +873,10 @@ ROUTES['#/dashboard']=function(){
  $('#view').innerHTML=h;
 };
 function statusBadge(s){
- const m={'Đang thi công':'b-blue','Hoàn thành':'b-green','Tạm dừng':'b-amber','Đã hủy':'b-gray'};
- return '<span class="badge '+(m[s]||'b-gray')+'">'+esc(s)+'</span>';
+ const m={'Chuẩn bị':'b-amber','Đang thi công':'b-blue','Tạm dừng':'b-amber','Hoàn thành':'b-green','Đã hủy':'b-gray'};
+ // Thuần việc: chỉ 5 trạng thái công việc, tự chuẩn hoá dữ liệu cũ nếu còn sót
+ const norm={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'}[s]||s;
+ return '<span class="badge '+(m[norm]||'b-gray')+'">'+esc(norm)+'</span>';
 }
 /* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
@@ -891,7 +886,7 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
  projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+' → '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -901,7 +896,7 @@ function projectForm(id){
   fld('Mã dự án',inp('code',p.code))+
   fld('Tên dự án',inp('name',p.name))+
   '<div class="frm-row">'+fld('Chủ đầu tư',inp('client',p.client))+fld('Địa điểm',inp('location',p.location))+'</div>'+
-  '<div class="frm-row3">'+fld('Ngày bắt đầu',inp('start',p.start,'date'))+fld('Ngày kết thúc',inp('end',p.end,'date'))+fld('Trạng thái',sel('status',['Đang thi công','Tạm dừng','Hoàn thành','Đã hủy'].map(s=>({v:s,t:s})),p.status))+'</div>'+
+  '<div class="frm-row3">'+fld('Ngày bắt đầu',inp('start',p.start,'date'))+fld('Ngày kết thúc',inp('end',p.end,'date'))+fld('Trạng thái',sel('status',['Chuẩn bị','Đang thi công','Tạm dừng','Hoàn thành','Đã hủy'].map(s=>({v:s,t:s})),p.status))+'</div>'+
   fld('Ngân sách (VND)',inp('budget',p.budget,'number','min="0"'))+
   fld('Ghi chú',txa('note',p.note)),
   '<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveProject(\''+(id||'')+'\')">Lưu</button>');
@@ -1444,48 +1439,6 @@ function dnttCalc(id){
  const lk=DB.data.thanhtoan.filter(x=>x.projectId===t.projectId&&x.trangthai==='da_chi'&&x.id!==id).reduce((s,x)=>s+x.sotien,0);
  return {t:t,dn:dn,p:pr,lk:lk,conlai:(pr.budget||0)-lk-t.sotien};
 }
-function inPhieuDNTT(id){
- const c=dnttCalc(id);if(!c)return;
- const t=c.t,dn=c.dn,p=c.p;
- const ht=(t.hinhthuc||'').toLowerCase();
- const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
- const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+TW_LOGO+'" alt="logo"><div class="co"><b>CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG</b><br>Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM<br>Tel: (84) 8 5410 4013 - (84) 903 865 240<br>Website: www.thewall.com.vn</div></div>'
-  +'<div class="phieu-title">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
-  +'<div class="phieu-ngay">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
-  +'<table class="phieu-tbl">'
-  +'<tr><td style="width:50%"><span class="lbl">Người đề nghị:</span> <b>'+esc(dn.nguoitao||Auth.user.name||'')+'</b></td><td><span class="lbl">Bộ phận:</span></td></tr>'
-  +'<tr><td colspan="2"><span class="lbl">Mục đích thanh toán:</span> <b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
-  +'<tr><td colspan="2"><span class="lbl">Hạng mục:</span> <b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td colspan="2"><span class="lbl">Dự án:</span> <b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
-  +'</table>'
-  +'<div class="phieu-sign6"><div>Người Đề Nghị</div><div>Trưởng Bộ Phận</div><div>Phụ trách DA</div><div>Trưởng phòng DA</div><div>Kế Toán</div><div>Giám Đốc</div></div>'
-  +'<table class="phieu-tbl">'
-  +'<tr><td colspan="2"><span class="lbl">Thông CK - Họ và tên:</span></td></tr>'
-  +'<tr><td style="width:60%"><span class="lbl">Chuyển tiền đến ngân hàng</span></td><td><span class="lbl">Số TK:</span></td></tr>'
-  +'<tr><td><span class="lbl">CMND số</span></td><td><span class="lbl">Nơi cấp</span></td></tr>'
-  +'</table>'
-  +'<table class="phieu-money"><thead><tr><th>Số tiền thanh toán</th><th>Thanh toán lũy kế</th><th>Tổng giá trị HĐ</th><th>Giá trị còn lại</th></tr></thead>'
-  +'<tbody><tr><td><b>'+fmtVND(t.sotien)+'</b></td><td>'+fmtVND(c.lk)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND(c.conlai)+'</td></tr></tbody></table>'
-  +'<div class="phieu-words"><b>Bằng chữ:</b> <i>'+esc(docSoTien(t.sotien))+'</i></div>'
-  +'<div class="phieu-sec"><b>A. Người nhận thanh toán</b></div>'
-  +'<div class="phieu-sec">B. Hình thức thanh toán &nbsp;&nbsp; '+ckTM+' Tiền Mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ TƯ &nbsp;&nbsp; '+ckTH+' Thu Hồi</div>'
-  +'<div class="phieu-sec"><b>C. Chứng từ kèm theo</b></div>'
-  +'<div class="phieu-line">c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)</div>'
-  +'<div class="phieu-blank"></div>'
-  +'<div class="phieu-line">c2. Không chứng từ tài chính (ghi số tiền)</div>'
-  +'<div class="phieu-blank"></div>'
-  +'<div class="phieu-sec"><b>D. Số tiền thực nhận thanh toán (c1+c2)</b></div>'
-  +'<div class="phieu-blank"></div>'
-  +'<div class="phieu-sec"><b>E. Bằng chữ</b></div>'
-  +'<div class="phieu-words"><i>'+esc(docSoTien(t.sotien))+'</i></div>'
-  +'<div class="phieu-sign2"><div><b>F. Ký nhận</b><br><br><br>....................</div><div style="text-align:right"><b>Ngày nhận</b><br><br><br>....................</div></div>'
-  +'<div class="phieu-note">XIN KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI KHỎI PHÒNG KT, CẢM ƠN</div>'
-  +'</div>';
- openModal('Phiếu đề nghị thanh toán','<div class="phieu-modal-body">'+htm+'</div>',
-  '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
-}
-
 function printPhieu(){const a=$('#phieuPrintArea');if(!a)return;document.body.classList.add('printing-phieu');window.print();setTimeout(()=>document.body.classList.remove('printing-phieu'),600);}
 function xuatPhieuDNTT_XLSX(id){
  const c=dnttCalc(id);if(!c)return;
@@ -2168,8 +2121,21 @@ function testFb(){
 }
 function clearFb(){ if(confirm('Xóa cấu hình Firebase?')){ localStorage.removeItem(FB_KEY); FB.ready=false; FB.stop(); toast('Đã xóa'); nav(false); } }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
-/* đảm bảo collection mới tồn tại khi mở bản cũ */
-function ensureArrays(){let ch=false;Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});if(ch){try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}}}
+/* đảm bảo collection mới tồn tại khi mở bản cũ + chuẩn hoá trạng thái thuần việc */
+function ensureArrays(){
+ let ch=false;
+ Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
+ // Thuần việc: đổi các mã cũ dang_thi_cong, chuan_bi... sang tiếng Việt chuẩn
+ try{
+  const MAP={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'};
+  if(Array.isArray(DB.data.projects)){
+   DB.data.projects.forEach(p=>{
+    if(MAP[p.status]){p.status=MAP[p.status]; ch=true;}
+   });
+  }
+ }catch(e){}
+ if(ch){try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}}
+}
 /* tiền có dấu chấm khi nhập */
 document.addEventListener('input',function(e){
  const t=e.target;if(!t.classList||!t.classList.contains('money'))return;
