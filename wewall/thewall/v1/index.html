@@ -878,6 +878,68 @@ button,.btn{min-width:0}
 }
 </style>
 
+
+<style id="tw-print-and-settings-refinements">
+/* Settings: keep local record inventory collapsed until requested */
+.local-data-collapse{display:block}
+.local-data-summary{display:flex!important;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;user-select:none}
+.local-data-summary::-webkit-details-marker{display:none}
+.local-data-summary::marker{content:""}
+.local-data-summary .collapse-hint{flex:0 0 auto;color:#8a6a2f;font-size:12px;font-weight:700;white-space:nowrap}
+.local-data-collapse[open] .collapse-hint{font-size:0}
+.local-data-collapse[open] .collapse-hint::after{content:"Thu gọn ▴";font-size:12px}
+.local-data-body{padding:0 14px 14px}
+/* Toolbar deliberately arranged in two compact rows */
+.td-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"dates zoom" "actions actions";align-items:center!important;gap:7px 12px!important;width:100%;}
+.td-date-range{grid-area:dates;min-width:0;display:flex!important;flex-wrap:wrap!important;align-items:center;gap:6px!important}
+.td-zoom{grid-area:zoom;justify-self:end;white-space:nowrap}
+.td-actions{grid-area:actions;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:6px;border-top:1px solid #e8e2d8}
+@media(max-width:700px){.td-toolbar{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"dates" "zoom" "actions"!important}.td-zoom{justify-self:start}.td-actions{padding-top:5px}}
+@media print{
+ @page{size:A4 landscape;margin:7mm}
+ *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important}
+ html,body,#appView,.shell,.main,#view,#tiendoScope{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;transform:none!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#fff!important}
+ body{font-size:10.5pt!important;line-height:1.32!important;color:#171717!important}
+ #view{font-size:10.5pt!important}
+ .print-header{margin:0 0 3mm!important;padding:0 0 2.5mm!important;break-after:avoid!important;page-break-after:avoid!important}
+ .print-brand{font-size:9pt!important;margin-bottom:1.5mm!important}
+ .print-header h1{font-size:18pt!important;line-height:1.2!important;margin:0 0 2mm!important}
+ .print-project-line{font-size:11pt!important;margin-bottom:1.5mm!important;padding:1mm 0!important}
+ .print-header .meta{font-size:9.5pt!important;gap:1mm 5mm!important}
+ .page-head{margin:0 0 3mm!important;padding:0!important;gap:3mm!important}
+ .page-head h1{font-size:16pt!important;line-height:1.2!important;margin:0 0 1mm!important}
+ .page-head p,.sub{font-size:10pt!important;line-height:1.3!important;margin:0!important}
+ .stat{padding:3mm!important;margin:0!important;break-inside:auto!important;page-break-inside:auto!important}
+ .stat .lb{font-size:9.5pt!important}.stat .vl{font-size:17pt!important;line-height:1.2!important}
+ .card,.project-overview-card,.td-card,.split-pane,.kanban-col,.cal-cell,.gantt-row,.tbl-wrap{break-inside:auto!important;page-break-inside:auto!important;box-shadow:none!important}
+ .project-overview-grid,.td-detail-list,.split-dual,.split-pane-body{gap:3mm!important;overflow:visible!important;max-height:none!important}
+ .project-overview-card{margin:0 0 2mm!important;padding:3mm!important}
+ .td-card{margin:0 0 2mm!important;padding:3mm!important;font-size:10pt!important;line-height:1.3!important}
+ .td-card b,.td-card strong,.project-overview-card b{font-size:10.5pt!important}
+ .td-meta{font-size:9.5pt!important;gap:2mm 4mm!important;margin-top:2mm!important}
+ table,.tbl{width:100%!important;font-size:9.5pt!important;line-height:1.25!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important}
+ .tbl th,.tbl td,th,td{font-size:9.5pt!important;padding:1.5mm 2mm!important;vertical-align:top!important}
+ thead{display:table-header-group!important}tfoot{display:table-footer-group!important}
+ tr{break-inside:avoid!important;page-break-inside:avoid!important}
+ .kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:2mm!important;overflow:visible!important;align-items:start!important}
+ .kanban-col{min-width:0!important;max-width:none!important;max-height:none!important;margin:0!important}
+ .kanban-col-header{padding:2mm!important}.kanban-col-title{font-size:9.5pt!important;line-height:1.2!important}
+ .kanban-col-body,.split-pane-body{overflow:visible!important;max-height:none!important}
+ .kanban-item{padding:2mm!important;margin-bottom:2mm!important;break-inside:auto!important;page-break-inside:auto!important}
+ .kanban-item .k-title{font-size:9.5pt!important;line-height:1.25!important;display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important}
+ .kanban-item .k-proj,.kanban-item .k-foot{font-size:8.5pt!important;line-height:1.2!important}
+ .cal-grid{gap:1mm!important;overflow:visible!important}.cal-cell{min-height:18mm!important;padding:1.5mm!important}
+ .cal-cell .citem,.cal-task-line{font-size:8pt!important;line-height:1.15!important;margin:1mm 0!important}
+ .cal-project-code{font-size:7.5pt!important}.cal-item-name{font-size:8pt!important}
+ .gantt,.gantt-track{overflow:visible!important;min-width:0!important;max-width:100%!important}
+ .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:visible!important}
+ .split-mini-col{min-width:0!important;max-width:none!important}
+ .split-mini-col *{overflow-wrap:anywhere!important}
+ .prog{margin:1.5mm 0!important}
+ .local-data-summary{display:flex!important}
+}
+</style>
+
 </head>
 <body>
 <!-- ============ LOGIN ============ -->
@@ -2513,7 +2575,7 @@ ROUTES['#/caidat']=function(){
   +fld('Access Key (nếu có)',inp('apiKey',CFG.key))
   +'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pri" onclick="saveApiCfg()">Lưu cấu hình</button><button class="btn btn-sec" onclick="testApi()">Kiểm tra kết nối</button></div><div id="syncPill" style="margin-top:12px"></div></div></div>';
  h+='<div class="card"><div class="card-h"><div><h3>Đồng bộ dữ liệu</h3><div class="sub">Sao lưu / tải dữ liệu giữa thiết bị và máy chủ đã cấu hình</div></div></div><div class="card-b"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ok" onclick="pullAll().catch(e=>toast(\'Lỗi: \'+e.message))">Tải từ máy chủ</button><button class="btn btn-sec" onclick="diagSync()">Chẩn đoán</button><button class="btn btn-warn" onclick="if(confirm(\'Đẩy dữ liệu hiện tại lên máy chủ?\'))pushAll().catch(e=>toast(\'Lỗi: \'+e.message))">Đẩy lên máy chủ</button></div><p style="font-size:12px;color:#64748b;margin-top:12px">Nên tải dữ liệu trước khi ghi đè máy chủ. Nếu chưa cấu hình API, dữ liệu hiện vẫn được lưu cục bộ trên thiết bị.</p></div></div>';
- h+='<div class="card" style="grid-column:1/-1"><div class="card-h"><div><h3>Danh mục dữ liệu cục bộ</h3><div class="sub">Số bản ghi hiện có trong từng module</div></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet máy chủ</th><th class="num">Số bản ghi</th></tr></thead><tbody>'+mods.map(m=>'<tr><td>'+esc(m.k)+'</td><td><span class="badge b-blue">'+esc(m.sh)+'</span></td><td class="num">'+m.n+'</td></tr>').join('')+'</tbody></table></div></div></div>';
+ h+='<div class="card local-data-card" style="grid-column:1/-1"><details class="local-data-collapse"><summary class="card-h local-data-summary"><div><h3>Danh mục dữ liệu cục bộ</h3><div class="sub">Số bản ghi hiện có trong từng module</div></div><span class="collapse-hint">Mở danh mục ▾</span></summary><div class="local-data-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet máy chủ</th><th class="num">Số bản ghi</th></tr></thead><tbody>'+mods.map(m=>'<tr><td>'+esc(m.k)+'</td><td><span class="badge b-blue">'+esc(m.sh)+'</span></td><td class="num">'+m.n+'</td></tr>').join('')+'</tbody></table></div></div></details></div></div>';
  document.getElementById('view').innerHTML=h;renderSyncPill();
 };
 /* ===== TIẾN ĐỘ DỰ ÁN — CÁC VIEW DÙNG CHUNG MỘT MÔ HÌNH DỮ LIỆU ===== */
@@ -2528,7 +2590,7 @@ function tdTaskProgress(items){const valid=items||[];const total=valid.reduce((s
 function tienDoProject(pid){return tdTaskProgress(tdItems(pid));}
 function tienDoGiaiDoan(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);const order=['chuanbi','ngam','tho','hoanthien','mep'];const names={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};const active=order.find(g=>items.some(t=>(t.giaiDoan||'tho')===g&&tdPct(t)<100));return{avg:tienDoProject(pid),gd:active||'',gdl:active?names[active]:'Hoàn thành'};}
 function tdViewSwitcher(cur){const views=[['#/tiendo','Dashboard'],['#/tiendo-list','Table'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Calendar'],['#/tiendo-split','Split']];return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;}
-function tdToolbar(extra=''){return `<div class="td-toolbar noprint"><div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc ngày</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa lọc</button></div><div class="td-zoom"><span style="font-size:11px;font-weight:700">Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><button class="btn btn-sec btn-sm" onclick="window.print()">🖨 Print report</button><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Task</button>${extra}</div>`;}
+function tdToolbar(extra=''){return `<div class="td-toolbar noprint"><div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc ngày</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa lọc</button></div><div class="td-zoom"><span style="font-size:11px;font-weight:700">Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><div class="td-actions"><button class="btn btn-sec btn-sm" onclick="window.print()">🖨 Print report</button><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Task</button>${extra}</div></div>`;}
 function tdApplyRange(){const a=document.getElementById('tdFrom')?.value||'',b=document.getElementById('tdTo')?.value||'';if(a&&b&&a>b){toast('Ngày bắt đầu phải trước hoặc bằng ngày kết thúc');return;}window._tdFrom=a;window._tdTo=b;const r=ROUTES[location.hash.split('/').length>2&&location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash)?'#/tiendo/:id':location.hash];if(r){if(location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash))r(location.hash.split('/')[2]);else r();}}
 function tdClearRange(){window._tdFrom='';window._tdTo='';const a=document.getElementById('tdFrom'),b=document.getElementById('tdTo');if(a)a.value='';if(b)b.value='';tdApplyRange();}
 function setTdZoom(v){window._tdZoom=+v;const lb=document.getElementById('tdZoomLb');if(lb)lb.textContent=v+'%';const sc=document.getElementById('tiendoScope');if(!sc)return;sc.className='';if(v!=100)sc.classList.add('zoom-'+v);}
