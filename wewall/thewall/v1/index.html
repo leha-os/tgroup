@@ -1621,7 +1621,7 @@ function userPerms(u){
 }
 function permForm(id){
  const u=DB.data.users.find(x=>x.id===id);if(!u)return;
- if(u.role==='Giám đốc'){toast('Giám đốc có toàn quyền');return;}
+ if(u.role==='GIÁM ĐỐC'){toast('Giám đốc có toàn quyền');return;}
  const cur=userPerms(u);
  let body='<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Tick chọn từng quyền cho <b>'+esc(u.name)+'</b> ('+esc(u.role)+'). Bỏ tick = thu hồi.</p>';
  body+='<div style="margin-bottom:10px"><button class="btn btn-sec btn-sm" onclick="permAll(true)">Chọn hết</button> <button class="btn btn-sec btn-sm" onclick="permAll(false)">Bỏ hết</button> <button class="btn btn-sec btn-sm" onclick="permDefault(\''+id+'\')">Về mặc định vai trò</button></div>';
@@ -2475,7 +2475,7 @@ ROUTES['#/tiendo']=function(){
 ROUTES['#/tiendo-list']=function(){
   const projs=visibleProjects();
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>List</h1><p></p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
+  h+=`<div class="page-head"><div><h1></h1><p></p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Dashboard</button><button class="btn btn-pri" onclick="tienDoForm()">+ Thêm</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-list');h+=tdToolbar();h+='<div id="tiendoScope">';
   h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Giai đoạn</th><th>Hạng mục</th><th>Ngày</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
   const order={chuanbi:0,ngam:1,tho:2,hoanthien:3,mep:4};
@@ -2525,7 +2525,7 @@ ROUTES['#/tiendo-gantt']=function(){
   for(let d=1;d<=daysInMonth;d++){const dt=new Date(now.getFullYear(),now.getMonth(),d);const isWk=dt.getDay()===0||dt.getDay()===6;const isToday=d===now.getDate();scale+=`<div class="${isWk?'weekend':''} ${isToday?'today':''}" style="min-width:40px">${d}<div style="font-size:9px">${['CN','T2','T3','T4','T5','T6','T7'][dt.getDay()]}</div></div>`;}
   scale+='</div>';
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Timeline Gantt tháng ${now.getMonth()+1}/${now.getFullYear()}</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
+  h+=`<div class="page-head"><div><h1></p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">Dashboard</button><button class="btn btn-sec" onclick="location.hash='#/tiendo-kanban'">Kanban</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo-gantt');h+=tdToolbar();h+='<div id="tiendoScope"><div class="gantt">'+scale;
   const projs={};items.forEach(t=>{(projs[t.projectId]=projs[t.projectId]||[]).push(t);});
   const orderIds=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14'];
