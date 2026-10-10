@@ -12,14 +12,12 @@ body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Aria
 a{color:var(--pri);text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 img{max-width:100%;height:auto}
-/* ===== LOGIN ===== */
 #loginView{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;overflow-y:auto;background:radial-gradient(900px 480px at 50% -40px,#fffdf6 0%,#f7f1e3 55%,#ece1c8 100%);padding:24px 16px}
 .login-card{margin:auto;background:#fff;border-radius:18px;padding:36px 32px;width:400px;max-width:100%;box-shadow:0 18px 50px rgba(140,95,10,.20);border:1px solid #ece1c8;border-top:5px solid #f0ad1f}
 .login-card h1{font-size:22px;margin:14px 0 4px;color:#1a1410;text-align:center}
 .login-card p.sub{color:#8a7f70;font-size:13px;margin-bottom:22px;text-align:center}
 .login-card .btn-pri{padding:13px;font-size:15px;width:100%}
 .logo-badge{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;font-weight:800}
-/* ===== FORM ===== */
 .fld{margin-bottom:14px;min-width:0}
 .fld label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:#374151}
 .inp,select.inp,textarea.inp{width:100%;max-width:100%;padding:10px 12px;border:1px solid #d4dae6;border-radius:9px;font-size:14px;font-family:inherit;background:#fff;color:var(--ink);min-width:0}
@@ -36,7 +34,6 @@ textarea.inp{resize:vertical;min-height:70px}
 .btn-sm{padding:6px 12px;font-size:12.5px;border-radius:7px}
 .btn-block{width:100%}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-/* ===== APP SHELL ===== */
 #appView{display:none;height:100vh;height:100dvh;overflow:hidden;max-width:100vw}
 .shell{display:flex;height:100vh;height:100dvh;max-width:100vw;width:100%;overflow:hidden}
 .sidebar{width:264px;flex-shrink:0;background:#1a1d29;color:#d6cfc2;display:flex;flex-direction:column;z-index:50;overflow:hidden}
@@ -83,7 +80,6 @@ textarea.inp{resize:vertical;min-height:70px}
 .page-head h1{font-size:24px;font-weight:700;min-width:0;word-break:break-word}
 .page-head p{color:var(--mut);font-size:13px;margin-top:4px;word-break:break-word}
 .page-actions{display:flex;gap:10px;flex-wrap:wrap;max-width:100%}
-/* ===== CARDS/STATS ===== */
 .grid{display:grid;gap:14px;width:100%;max-width:100%}
 .grid>*{min-width:0}
 .g7{grid-template-columns:repeat(7,1fr)}
@@ -108,7 +104,6 @@ textarea.inp{resize:vertical;min-height:70px}
 .st-warn{border-top-color:var(--warn)}.st-warn .ic{background:#fef3c7}
 .st-bad{border-top-color:var(--bad)}.st-bad .ic{background:#fee2e2}
 .st-ok{border-top-color:var(--ok)}.st-ok .ic{background:#dcfce7}
-/* ===== TABLE – FIX MOBILE SCROLL ===== */
 .tbl-wrap{display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;position:relative}
 .tbl-wrap::-webkit-scrollbar{height:6px}
 .tbl-wrap::-webkit-scrollbar-thumb{background:#d4c9b3;border-radius:6px}
@@ -127,7 +122,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .rowbtns{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
 .iconbtn{background:#f1f5f9;border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:13px}
 .iconbtn:hover{background:#e2e8f0}
-/* ===== MODAL ===== */
 .mback{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:flex-start;justify-content:center;z-index:200;padding:30px 16px;overflow-y:auto;overflow-x:hidden}
 .mback.open{display:flex}
 .modal{background:#fff;border-radius:14px;width:560px;max-width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:pop .18s ease-out;max-width:min(560px,calc(100vw - 32px))}
@@ -138,7 +132,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .m-x{background:none;border:none;font-size:20px;color:var(--mut);line-height:1}
 .m-body{padding:22px;max-width:100%;min-width:0;overflow-x:hidden}
 .m-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
-/* ===== MISC ===== */
 .toast{position:fixed;bottom:24px;right:24px;z-index:400;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 32px)}
 .toast .t{background:#0f1b33;color:#fff;padding:12px 18px;border-radius:10px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:pop .2s;word-break:break-word}
 .kv{display:grid;grid-template-columns:180px 1fr;gap:8px 14px;font-size:13.5px;max-width:100%}
@@ -172,7 +165,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .qentry .qe:hover{border-color:var(--pri);box-shadow:var(--sh);transform:translateY(-2px)}
 .qentry .qe .ic{font-size:30px;margin-bottom:8px}
 .qentry .qe .t{font-size:13px;font-weight:700;word-break:break-word}
-/* ===== PHIẾU ===== */
 .ptitle{text-align:center;font-size:20px;font-weight:800;text-decoration:underline;margin:10px 0 4px}
 .pdate{text-align:center;margin-bottom:10px}
 .ptbl{width:100%;border-collapse:collapse;margin:8px 0}
@@ -202,7 +194,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .phieu-words{margin:10px 0;word-break:break-word}
 .phieu-foot{display:flex;justify-content:flex-end;gap:60px;margin-top:18px;text-align:center;font-size:13px;flex-wrap:wrap}
 .phieu-modal-body{max-height:70vh;overflow-y:auto;overflow-x:hidden}
-/* Compact, single-page A4 payment form */
 .phieu-tbl{width:100%;border-collapse:collapse;margin:6px 0;font-size:14px}
 .phieu-tbl td{padding:5px 6px;vertical-align:top}
 .phieu-sign6{display:grid;grid-template-columns:repeat(6,1fr);text-align:center;font-size:12.5px;margin:8px 0;min-height:64px}
@@ -212,7 +203,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
 .phieu-blank{min-height:26px;border-bottom:1px dotted #999;margin:2px 0}
 .phieu-sign2{display:flex;justify-content:space-between;margin:10px 0;font-size:14px;flex-wrap:wrap;gap:10px}
 .phieu-note{text-align:center;font-weight:800;font-size:13px;margin:12px 0 4px}
-/* ===== RESPONSIVE FIX ===== */
 @media(max-width:1100px){.g7{grid-template-columns:repeat(4,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
   .grid.g2,.grid.g3{grid-template-columns:1fr!important}
@@ -269,9 +259,6 @@ table.tbl{width:100%;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgb
   .g7,.g5,.g4,.g3{grid-template-columns:1fr 1fr;gap:10px}
   .stat{flex-direction:column;gap:6px}
 }
-
-
-/* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
 select.inp{
   appearance:none;-webkit-appearance:none;-moz-appearance:none;
   background-color:#ffffff;
@@ -290,195 +277,50 @@ select.inp{
   transition:border-color .18s ease, box-shadow .18s ease, background-color .18s ease, transform .12s ease;
   line-height:1.4;
 }
-select.inp:hover{
-  border-color:#f0ad1f !important;
-  background-color:#fffdf6;
-  box-shadow:0 2px 10px rgba(240,173,31,.12), 0 0 0 1px rgba(255,255,255,.9) inset;
-}
-select.inp:focus{
-  outline:none !important;
-  border-color:#f0ad1f !important;
-  background-color:#ffffff;
-  box-shadow:0 0 0 3.5px rgba(240,173,31,.18), 0 4px 16px rgba(240,173,31,.14);
-}
+select.inp:hover{border-color:#f0ad1f !important;background-color:#fffdf6;box-shadow:0 2px 10px rgba(240,173,31,.12), 0 0 0 1px rgba(255,255,255,.9) inset}
+select.inp:focus{outline:none !important;border-color:#f0ad1f !important;background-color:#ffffff;box-shadow:0 0 0 3.5px rgba(240,173,31,.18), 0 4px 16px rgba(240,173,31,.14)}
 select.inp:active{transform:scale(.99)}
-/* option – native vẫn đẹp hơn */
 select.inp option{padding:6px 8px;font-size:13px;font-weight:500;color:#1a1410;background:#fff}
 select.inp option:checked{background:linear-gradient(90deg,#fef3c7,#fde68a);color:#78350f}
-
-/* proj pick – gọn tinh tế */
-.proj-pick select{
-  appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 10px center;
-  padding-right:34px !important;
-  border:1.5px solid #e8ddd0 !important;
-  background-color:#fffaf2;
-  border-radius:9px !important;
-  font-weight:600;
-  transition:.18s;
-}
+.proj-pick select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a38f78' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:34px !important;border:1.5px solid #e8ddd0 !important;background-color:#fffaf2;border-radius:9px !important;font-weight:600;transition:.18s}
 .proj-pick select:hover{border-color:#f0ad1f !important;background:#fffdf6}
-
-/* toolbar filter dropdowns – mini pill */
-.toolbar select.inp{
-  padding:7px 32px 7px 12px !important;
-  font-size:13px !important;
-  border-radius:20px !important;
-  background-color:#fffaf2;
-  border-color:#ece5d8 !important;
-}
-
-/* Modal / popup – từ to thô -> gọn sang */
-.mback{
-  background:rgba(15,23,42,.38) !important;
-  backdrop-filter:blur(10px) saturate(1.15);
-  -webkit-backdrop-filter:blur(10px) saturate(1.15);
-  padding:20px 16px !important;
-}
+.toolbar select.inp{padding:7px 32px 7px 12px !important;font-size:13px !important;border-radius:20px !important;background-color:#fffaf2;border-color:#ece5d8 !important}
+.mback{background:rgba(15,23,42,.38) !important;backdrop-filter:blur(10px) saturate(1.15);-webkit-backdrop-filter:blur(10px) saturate(1.15);padding:20px 16px !important}
 .mback.open{animation:fadeIn .22s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.modal{
-  border-radius:18px !important;
-  border:1px solid rgba(236,229,216,.9) !important;
-  box-shadow:0 24px 60px -12px rgba(26,20,16,.22), 0 8px 24px -8px rgba(26,20,16,.12), 0 0 0 1px rgba(255,255,255,.6) inset !important;
-  overflow:hidden;
-  animation:popUp .28s cubic-bezier(.16,1,.3,1);
-}
+.modal{border-radius:18px !important;border:1px solid rgba(236,229,216,.9) !important;box-shadow:0 24px 60px -12px rgba(26,20,16,.22), 0 8px 24px -8px rgba(26,20,16,.12), 0 0 0 1px rgba(255,255,255,.6) inset !important;overflow:hidden;animation:popUp .28s cubic-bezier(.16,1,.3,1)}
 @keyframes popUp{from{transform:translateY(12px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 .modal.lg{border-radius:18px !important}
-
-.m-head{
-  padding:18px 20px 16px !important;
-  background:linear-gradient(180deg,#fffdf6 0%,#ffffff 100%);
-  border-bottom:1px solid #f2eadc !important;
-}
+.m-head{padding:18px 20px 16px !important;background:linear-gradient(180deg,#fffdf6 0%,#ffffff 100%);border-bottom:1px solid #f2eadc !important}
 .m-head h3{font-size:15.5px !important;font-weight:800 !important;letter-spacing:-.2px}
-.m-x{
-  width:32px;height:32px;border-radius:9px;
-  display:flex;align-items:center;justify-content:center;
-  background:#f8f2e7;color:#8a7f70;
-  border:1px solid #ece5d8;
-  transition:.15s;font-size:18px !important;
-}
+.m-x{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#f8f2e7;color:#8a7f70;border:1px solid #ece5d8;transition:.15s;font-size:18px !important}
 .m-x:hover{background:#fef2f2;border-color:#fecaca;color:#b91c1c;transform:rotate(90deg)}
 .m-body{padding:20px !important;background:#fff}
-.m-foot{
-  padding:14px 20px !important;
-  background:#faf7f2 !important;
-  border-top:1px solid #ece5d8 !important;
-  gap:10px !important;
-}
-
-/* input chung cho đồng bộ với dropdown */
+.m-foot{padding:14px 20px !important;background:#faf7f2 !important;border-top:1px solid #ece5d8 !important;gap:10px !important}
 .inp:not(select){border:1.5px solid #e8ddd0 !important;border-radius:10px !important;transition:.18s}
 .inp:not(select):hover{border-color:#e0d3bf !important}
 .inp:not(select):focus{border-color:#f0ad1f !important;box-shadow:0 0 0 3.5px rgba(240,173,31,.16) !important}
-
-/* scrollbar tinh tế cho modal */
 .m-body::-webkit-scrollbar{width:6px;height:6px}
 .m-body::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:10px}
 .m-body::-webkit-scrollbar-thumb:hover{background:#c8b8a0}
-
-/* responsive: popup không còn chiếm full màn xấu */
-@media(max-width:640px){
-  .mback{padding:12px !important;align-items:flex-end !important}
-  .modal{border-radius:18px 18px 0 0 !important;max-height:92vh !important;margin:0 !important;width:100% !important}
-  select.inp{font-size:16px !important} /* tránh zoom iOS */
-}
-
-
-/* ===== TRANSPARENT + MOTION NHẸ - BẢN NÂNG CẤP ===== */
-/* dropdown trong suốt nhẹ + động */
-select.inp{
-  background-color:rgba(255,255,255,.86) !important;
-  backdrop-filter:blur(8px) saturate(1.08);
-  -webkit-backdrop-filter:blur(8px) saturate(1.08);
-  will-change:transform, box-shadow;
-}
-select.inp:hover{
-  background-color:rgba(255,253,246,.92) !important;
-  transform:translateY(-1px);
-}
-select.inp:focus{
-  background-color:rgba(255,255,255,.96) !important;
-  transform:translateY(-1px) scale(1.005);
-}
-
-/* tạo cảm giác dropdown nổi lên nhẹ khi hover – dùng filter */
-.toolbar select.inp:hover, .proj-pick select:hover{
-  transform:translateY(-1px);
-  box-shadow:0 4px 14px rgba(240,173,31,.14) !important;
-}
-
-/* popup/modal trong suốt mờ – glass nhẹ */
-.mback{
-  background:rgba(15,23,42,.28) !important;
-  backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
-  -webkit-backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);
-}
-.modal{
-  background:rgba(255,255,255,.90) !important;
-  backdrop-filter:blur(18px) saturate(1.18) !important;
-  -webkit-backdrop-filter:blur(18px) saturate(1.18) !important;
-  border:1px solid rgba(255,255,255,.7) !important;
-  box-shadow:
-    0 20px 60px -18px rgba(26,20,16,.28),
-    0 8px 20px -10px rgba(26,20,16,.14),
-    0 0 0 1px rgba(255,255,255,.5) inset !important;
-  will-change:transform, opacity;
-}
-.m-head{
-  background:linear-gradient(180deg, rgba(255,253,246,.92) 0%, rgba(255,255,255,.78) 100%) !important;
-  backdrop-filter:blur(10px);
-}
-.m-body{
-  background:rgba(255,255,255,.72) !important;
-}
-.m-foot{
-  background:rgba(250,247,242,.82) !important;
-  backdrop-filter:blur(10px);
-}
-
-/* động nhẹ: modal trôi lên + mờ dần – rất nhẹ, 0.3s */
-@keyframes floatIn{
-  0%{transform:translateY(10px) scale(.985);opacity:0;filter:blur(4px)}
-  100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}
-}
+@media(max-width:640px){.mback{padding:12px !important;align-items:flex-end !important}.modal{border-radius:18px 18px 0 0 !important;max-height:92vh !important;margin:0 !important;width:100% !important}select.inp{font-size:16px !important}}
+select.inp{background-color:rgba(255,255,255,.86) !important;backdrop-filter:blur(8px) saturate(1.08);-webkit-backdrop-filter:blur(8px) saturate(1.08);will-change:transform, box-shadow}
+select.inp:hover{background-color:rgba(255,253,246,.92) !important;transform:translateY(-1px)}
+select.inp:focus{background-color:rgba(255,255,255,.96) !important;transform:translateY(-1px) scale(1.005)}
+.toolbar select.inp:hover, .proj-pick select:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,173,31,.14) !important}
+.mback{background:rgba(15,23,42,.28) !important;backdrop-filter:blur(14px) saturate(1.2) brightness(1.05);-webkit-backdrop-filter:blur(14px) saturate(1.2) brightness(1.05)}
+.modal{background:rgba(255,255,255,.90) !important;backdrop-filter:blur(18px) saturate(1.18) !important;-webkit-backdrop-filter:blur(18px) saturate(1.18) !important;border:1px solid rgba(255,255,255,.7) !important;box-shadow:0 20px 60px -18px rgba(26,20,16,.28),0 8px 20px -10px rgba(26,20,16,.14),0 0 0 1px rgba(255,255,255,.5) inset !important;will-change:transform, opacity}
+.m-head{background:linear-gradient(180deg, rgba(255,253,246,.92) 0%, rgba(255,255,255,.78) 100%) !important;backdrop-filter:blur(10px)}
+.m-body{background:rgba(255,255,255,.72) !important}
+.m-foot{background:rgba(250,247,242,.82) !important;backdrop-filter:blur(10px)}
+@keyframes floatIn{0%{transform:translateY(10px) scale(.985);opacity:0;filter:blur(4px)}100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}}
 .modal{animation:floatIn .34s cubic-bezier(.16,1,.3,1) !important}
-
-/* nút X xoay nhẹ trong suốt */
-.m-x{
-  background:rgba(227, 218, 200, 0.8470588235294118) !important;
-  backdrop-filter:blur(6px);
-  transition:transform .25s cubic-bezier(.16,1,.3,1), background .18s, color .18s !important;
-}
+.m-x{background:rgba(227, 218, 200, 0.847) !important;backdrop-filter:blur(6px);transition:transform .25s cubic-bezier(.16,1,.3,1), background .18s, color .18s !important}
 .m-x:hover{transform:rotate(90deg) scale(1.06)}
-
-/* input đi kèm cũng glass nhẹ cho đồng bộ, không đụng kỹ thuật */
-.inp:not(select){
-  background:rgba(255,255,255,.86) !important;
-  backdrop-filter:blur(6px);
-  transition:border-color .18s, box-shadow .18s, transform .18s, background .18s !important;
-}
+.inp:not(select){background:rgba(255,255,255,.86) !important;backdrop-filter:blur(6px);transition:border-color .18s, box-shadow .18s, transform .18s, background .18s !important}
 .inp:not(select):hover{transform:translateY(-0.5px)}
-.inp:not(select):focus{
-  background:rgba(255,255,255,.96) !important;
-  transform:translateY(-1px);
-}
-
-/* hiệu ứng sáng nhẹ chạy viền khi focus dropdown – không chói */
-select.inp:focus{
-  box-shadow:
-    0 0 0 3.5px rgba(240,173,31,.14),
-    0 6px 20px rgba(240,173,31,.16),
-    0 0 18px rgba(240,173,31,.08) inset !important;
-}
-
-
-/* ===== CUSTOM DROPDOWN BOTTOM-SHEET ===== */
+.inp:not(select):focus{background:rgba(255,255,255,.96) !important;transform:translateY(-1px)}
+select.inp:focus{box-shadow:0 0 0 3.5px rgba(240,173,31,.14),0 6px 20px rgba(240,173,31,.16),0 0 18px rgba(240,173,31,.08) inset !important}
 .csel{position:relative}
 .csel-btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
 .csel-btn:after{content:'▾';color:#999}
@@ -491,9 +333,6 @@ select.inp:focus{
 .sheet-item{padding:13px 14px;border-radius:10px;font-size:15px}
 .sheet-item:active{background:#334155}
 .sheet-item.sel{background:#f59e0b;color:#000;font-weight:700}
-
-
-/* ===== TIẾN ĐỘ PRO V2 - 14 DỰ ÁN CHUẨN + IN ẤN + ZOOM + SPLIT ===== */
 .prog{height:8px;background:#eef2f7;border-radius:99px;overflow:hidden;position:relative}
 .prog i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#d97706);border-radius:99px;transition:width .35s}
 .prog.big{height:10px;background:#f1f5f9;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
@@ -503,8 +342,6 @@ select.inp:focus{
 .td-card{background:#fff;border:1px solid #e8ddd0;border-radius:14px;padding:14px;margin-bottom:12px;transition:.18s}
 .td-card:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(26,20,16,.08)}
 .td-card .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-
-/* KANBAN PRO */
 .kanban{display:flex;gap:10px;overflow-x:auto;padding:4px 4px 12px;scroll-snap-type:x proximity}
 .kanban::-webkit-scrollbar{height:8px}
 .kanban::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
@@ -544,8 +381,6 @@ select.inp:focus{
 .k-status.late{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
 .kanban-empty{color:#a8a29e;font-size:12.5px;text-align:center;padding:28px 10px;border:1.5px dashed #e8ddd0;border-radius:12px;background:rgba(255,255,255,.6)}
 input[type=range].td-range{width:100%;accent-color:#f59e0b}
-
-/* GANTT PRO */
 .gantt{overflow:auto;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
 .gantt::-webkit-scrollbar{height:8px;width:8px}
 .gantt::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
@@ -567,8 +402,6 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .gantt-bar.late{border:1px solid #fecaca;box-shadow:0 0 0 2px rgba(239,68,68,.12)}
 .gantt-today{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#ef4444,#dc2626);z-index:3;pointer-events:none}
 .gantt-today:after{content:'HÔM NAY';position:absolute;top:-1px;left:4px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:0 0 6px 6px}
-
-/* CALENDAR */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;background:#fff}
 .cal-head{padding:10px;text-align:center;font-weight:800;font-size:12px;background:#faf7f2;border-bottom:1px solid #e2e8f0;border-right:1px solid #f1f5f9;text-transform:uppercase;color:#57534e}
 .cal-cell{min-height:110px;padding:6px;border-right:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9;position:relative;background:#fff}
@@ -579,8 +412,6 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .citem.c-blue{background:#dbeafe;color:#1e40af}
 .citem.c-amber{background:#fef3c7;color:#92400e}
 .citem.c-green{background:#dcfce7;color:#166534}
-
-/* SPLIT + TOOLBAR */
 .td-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .td-zoom{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #ece5d8;padding:6px 10px;border-radius:10px}
 .td-zoom input[type=range]{width:120px;accent-color:#f59e0b}
@@ -590,22 +421,14 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .split-pane-body{flex:1;overflow:auto;padding:10px}
 @media(max-width:1100px){.split-wrap{grid-template-columns:1fr}}
 @media(max-width:700px){select.inp,.proj-pick select{font-size:13px!important;min-height:34px!important;padding:6px 30px 6px 9px!important;border-radius:7px!important}.sb-sec-toggle{padding-top:10px;padding-bottom:5px}.kanban-col{min-width:175px;max-width:205px;flex-basis:185px}.project-progress summary{min-height:34px;padding:6px 8px}.split-pane-body{padding:7px}}
-
-/* PRINT CHUYEN NGHIỆP */
 .print-header{display:none}
-
 #tiendoScope{transition:transform .2s ease;transform-origin:top left}
 #tiendoScope.zoom-90{transform:scale(.9);width:111.11%}
 #tiendoScope.zoom-80{transform:scale(.8);width:125%}
 #tiendoScope.zoom-70{transform:scale(.7);width:142.85%}
 #tiendoScope.zoom-60{transform:scale(.6);width:166.66%}
-
-/* LOGO FIX */
 .login-logo{display:block!important;margin:0 auto 10px;width:140px;height:auto;background:#fff;border-radius:12px;padding:6px;object-fit:contain}
 .sb-brand img{display:block!important;width:44px!important;height:44px!important;background:#fff!important;border-radius:8px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
-
-
-/* ===== PATCH: navigation hierarchy, project overview and consistent Kanban ===== */
 .sb-sec-toggle{font-size:12px!important;font-weight:800!important;color:#f0ad1f!important;letter-spacing:0!important;padding-top:15px!important;padding-bottom:7px!important}
 .sb-sec-toggle>span:first-child{font-size:12px!important}
 .sb-nav>.sb-link:not(.sb-quick){padding-left:20px!important}
@@ -629,99 +452,17 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .project-overview-card .phase-bar{height:7px;background:#f1f5f9;border-radius:99px;overflow:hidden}
 .project-overview-card .phase-bar i{display:block;height:100%;background:linear-gradient(90deg,#fbbc04,#d97706)}
 .xlsx-overview-btn{margin-right:8px}
-
-
-/* DNTT: scale up to use the A4 page instead of printing tiny */
-
-
-/* ===== FINAL PATCH: sidebar, calendar project labels, reliable multi-page printing ===== */
 .sb-quick{display:none!important}
 .cal-cell .citem{display:block;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25;padding:4px 5px}
 .cal-project-code{display:inline-block;max-width:100%;font-size:9px;font-weight:800;letter-spacing:.2px;line-height:1.2;padding:2px 4px;margin:0 0 3px;border-radius:4px;background:rgba(255,255,255,.78);border:1px solid currentColor;overflow-wrap:anywhere}
 .cal-item-name{display:block;overflow-wrap:anywhere}
-
-
-/* Sidebar: subtle one-line separators improve scanning without visual clutter */
 .sb-nav .sb-link{border-bottom:1px solid rgba(255,255,255,.075)!important;border-radius:0!important}
 .sb-nav .sb-sub .sb-link{border-bottom:1px solid rgba(255,255,255,.055)!important}
 .sb-nav .sb-sec-toggle{border-bottom:1px solid rgba(255,255,255,.11)!important}
-
-
-/* Progress workspace — consistent hierarchy and connected views */
 .td-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.td-form-grid .fld{margin:0;min-width:0}.td-form-grid .td-wide{grid-column:1/-1}.td-form-grid label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#475569}.td-form-grid .inp{width:100%;min-width:0}.td-detail-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}.td-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:#64748b;margin-top:8px}.td-gantt-pro .gantt-label{width:245px;min-width:245px;white-space:normal;line-height:1.3}.td-gantt-pro .gantt-label small{display:block;font-size:10px;color:#64748b;margin-top:3px}.td-gantt-pro .gantt-track{position:relative;min-width:700px;height:auto;min-height:38px;background-image:linear-gradient(to right,rgba(148,163,184,.18) 1px,transparent 1px);background-size:8.3333% 100%;overflow:visible}.td-gantt-pro .td-month-track{min-height:32px;background:#f8fafc}.td-gantt-pro .td-month-track span{position:absolute;top:8px;white-space:nowrap;font-size:10px;color:#475569}.td-gantt-pro .gantt-bar{position:absolute;top:9px;height:20px;border-radius:5px;background:#f59e0b;overflow:hidden;cursor:pointer}.td-gantt-pro .gantt-bar i{display:block;height:100%;background:#15803d;opacity:.9}.td-gantt-pro .td-bar-project{background:#d6d3d1;height:16px;top:11px}.td-gantt-pro .td-bar-project i{background:#64748b}.td-gantt-pro .td-bar-late{background:#dc2626}.td-gantt-pro .td-bar-done{background:#16a34a}.td-gantt-pro .td-project-progress{height:7px;max-width:100%;background:#15803d;border-radius:8px;margin-top:15px}.k-status.todo{background:#e2e8f0;color:#475569}.k-status.upcoming{background:#e0e7ff;color:#4338ca}.k-status.blocked{background:#ede9fe;color:#6d28d9;border:1px solid #ddd6fe}.k-status.doing{background:#fef3c7;color:#92400e}.k-status.late{background:#fee2e2;color:#b91c1c}.k-status.done{background:#dcfce7;color:#166534}.td-card .prog{margin-top:8px}
 @media(max-width:700px){.td-form-grid{grid-template-columns:1fr}.td-form-grid .td-wide{grid-column:auto}.td-gantt-pro .gantt-label{width:155px;min-width:155px}.td-detail-list{grid-template-columns:1fr}}
-
-/* PRINT POLICY — one source of truth; default reports A4 landscape, payment voucher A4 portrait */
 @page{size:A4 landscape;margin:10mm}
 @page payment{size:A4 portrait;margin:8mm}
-@media print{
-  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important}
-  html,body{height:auto!important;min-height:0!important;background:#fff!important;overflow:visible!important}
-  body{font-family:Arial,sans-serif!important;color:#111!important}
-  #loginView,.sidebar,#sbBackdrop,.topbar,.footer,.toast,.noprint,.page-actions,.td-view-switch,.td-toolbar,.sb-nav-tools{display:none!important}
-  #appView,.shell,.main,#view{display:block!important;width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:0!important;padding:0!important;position:static!important;transform:none!important}
-  .print-header{display:block!important;border:1px solid #444;padding:8px 10px;margin-bottom:10px;border-radius:0!important;break-after:avoid}
-  .print-header h1{font-size:16pt!important;margin:0 0 5px!important}
-  .print-header .meta{font-size:9pt!important;display:flex;gap:12px;flex-wrap:wrap}
-  .print-footer{position:static!important;text-align:center;font-size:8pt!important;border-top:1px solid #ccc;margin-top:10px;padding:5px}
-  .card,.stat,.td-card,.project-overview-card,.tbl-wrap,.cal-cell,.kanban-col,.gantt-row,.split-pane{break-inside:avoid-page;page-break-inside:avoid}
-  .tbl-wrap,.gantt,.kanban,.cal-grid,.split-wrap,.split-pane-body{overflow:visible!important;max-height:none!important}
-  table{width:100%!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important}
-  thead{display:table-header-group!important} tfoot{display:table-footer-group!important}
-  tr{break-inside:avoid!important;page-break-inside:avoid!important}
-  .kanban{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:5mm!important}
-  .kanban-col{min-width:0!important;max-width:none!important;flex:1 1 28%!important;max-height:none!important}
-  #tiendoScope{transform:none!important;width:100%!important}
-  .gantt{overflow:visible!important;min-width:0!important}
-  .gantt-track{overflow:visible!important}
-  body.printing-phieu{page:payment!important}
-  body.printing-phieu #appView,body.printing-phieu #loginView{display:none!important}
-  body.printing-phieu .mback{display:block!important;position:static!important;width:100%!important;max-width:none!important;padding:0!important;margin:0!important;background:none!important;overflow:visible!important}
-  body.printing-phieu .modal{display:block!important;width:100%!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;overflow:visible!important;box-shadow:none!important;border:0!important;background:#fff!important}
-  body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
-  body.printing-phieu .phieu-modal-body{display:block!important;width:100%!important;max-height:none!important;overflow:visible!important;padding:0!important;margin:0!important}
-  body.printing-phieu .phieu-wrap{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:5mm!important;border:0!important;font-size:11pt!important;line-height:1.35!important;zoom:1!important;transform:none!important;break-inside:auto!important;page-break-inside:auto!important;box-sizing:border-box!important}
-  body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important;box-sizing:border-box!important}
-  body.printing-phieu .phieu-head{gap:10px!important;padding-bottom:7px!important;margin-bottom:7px!important}
-  body.printing-phieu .phieu-head .logo{width:58px!important;height:58px!important}
-  body.printing-phieu .phieu-head .co{font-size:10pt!important;line-height:1.35!important}
-  body.printing-phieu .ptitle{font-size:17pt!important;line-height:1.25!important;margin:8px 0 4px!important}
-  body.printing-phieu .pdate{font-size:10pt!important;margin-bottom:6px!important}
-  body.printing-phieu .ptbl{width:100%!important;font-size:10pt!important;margin:6px 0!important;break-inside:auto!important;page-break-inside:auto!important;border-collapse:collapse!important}
-  body.printing-phieu .ptbl tr{break-inside:avoid!important;page-break-inside:avoid!important}
-  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:5px 6px!important;line-height:1.3!important}
-  body.printing-phieu .psec{font-size:10pt!important;margin:7px 0 2px!important;line-height:1.3!important}
-  body.printing-phieu .pdot{height:12px!important;margin:2px 0!important}
-  body.printing-phieu .prow{gap:8px!important;margin:6px 0!important;font-size:10pt!important}
-  body.printing-phieu .prow .dot{height:12px!important}
-  body.printing-phieu .pfoot{font-size:9pt!important;margin-top:8px!important;padding:6px!important}
-
-  /* consolidated report print overrides */
-.print-header{display:block!important;margin:0 0 5mm!important;padding:0 0 4mm!important;border:0!important;border-bottom:1.5pt solid #222!important;break-after:avoid!important;page-break-after:avoid!important}
- .print-brand{font-size:8pt!important;font-weight:700!important;letter-spacing:1.2pt!important;margin-bottom:3mm!important;color:#555!important}
- .print-header h1{font-size:16pt!important;line-height:1.2!important;margin:0 0 3mm!important;text-align:center!important}
- .print-project-line{font-size:10pt!important;margin:0 0 2mm!important;padding:2mm 0!important;border-bottom:.5pt solid #aaa!important}
- .print-header .meta{font-size:8.5pt!important;display:flex!important;gap:2mm 7mm!important;flex-wrap:wrap!important}
- .print-sep{padding:0 2mm;color:#999!important}
- .card,.tbl-wrap,.td-card,.project-overview-card,.stat,.split-pane,.kanban-col,.cal-cell{break-inside:auto!important;page-break-inside:auto!important}
- .project-overview-grid,.td-detail-list,.split-dual,.split-pane-body{overflow:visible!important;max-height:none!important}
- .project-overview-card{margin-bottom:3mm!important}
- .td-card{margin-bottom:2mm!important;padding:2.5mm!important}
- .td-view-switch,.td-toolbar,.page-actions,.noprint{display:none!important}
- .cal-grid{display:block!important;overflow:visible!important}
- .cal-cell{display:inline-block!important;vertical-align:top!important;width:14.1%!important;min-height:22mm!important;border:0.4pt solid #bbb!important}
- .cal-cell .citem{white-space:normal!important;overflow-wrap:anywhere!important}
- .split-dual{display:block!important}
- .split-pane{margin-bottom:5mm!important}
- .split-pane-body{overflow:visible!important}
- .split-kanban{grid-template-columns:repeat(3,minmax(0,1fr))!important}
- .tbl-wrap{overflow:visible!important}
- table{font-size:8.5pt!important}
- th,td{padding:4px 5px!important}
- tr{break-inside:avoid!important;page-break-inside:avoid!important}
-}
-
-/* ===== Compact project progress workspace / reporting refinements ===== */
 .td-view-switch{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px!important;padding:4px!important;margin:0 0 7px!important;border-radius:8px!important}
 .td-view-switch button{min-width:0!important;padding:6px 3px!important;font-size:11px!important;line-height:1.15!important;border-radius:6px!important;white-space:nowrap!important}
 .td-toolbar{gap:6px!important;margin:0 0 8px!important;align-items:center!important}
@@ -788,12 +529,9 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
  .cal-task-line .cal-project-code{max-width:30px!important;font-size:7px!important}
  .cal-task-line .cal-item-name{font-size:8px!important}
 }
-
-
 </style>
 
 <style id="tw-final-compact-fixes">
-/* Unified custom dropdowns: never show native/system select UI */
 select[data-native-dropdown="true"]{appearance:none!important;-webkit-appearance:none!important;background-image:none!important}
 .tw-select-wrap{min-width:0!important;max-width:100%}
 .tw-select-trigger{border-color:#e3d8c7!important;border-radius:9px!important;background:#fffdf9!important;color:#29251f!important;min-height:32px!important;padding:5px 9px!important;box-shadow:0 1px 2px rgba(30,25,18,.04)!important}
@@ -809,14 +547,6 @@ button,.btn{min-width:0}
 .sb-nav .sb-sec-toggle{border-radius:8px!important}
 .sb-nav-tools{gap:6px}
 .sb-nav-tools button{border-radius:8px!important}
-.td-toolbar{gap:6px!important;margin-bottom:9px!important;align-items:center}
-.td-date-range{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
-.td-date-range label{display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
-.td-date-range input[type=date]{min-width:0;width:132px;max-width:100%;padding:5px 7px;border:1px solid #e5dccd;border-radius:8px;font:inherit}
-.td-zoom{gap:6px!important;padding:4px 8px!important;border-radius:8px!important}
-.td-zoom input[type=range]{width:90px!important}
-.td-view-switch{gap:4px!important;padding:4px!important;border-radius:9px!important}
-.td-view-switch button{padding:6px 9px!important;font-size:12px!important}
 .kanban{gap:7px!important}
 .kanban-col{min-width:0!important;max-width:none!important;flex:1 1 0!important}
 .kanban-col-header{gap:4px!important;padding:8px 6px!important;align-items:flex-start!important}
@@ -839,12 +569,6 @@ button,.btn{min-width:0}
  .stat{padding:9px!important}
  .btn{padding:6px 9px!important;font-size:12px!important;min-height:32px!important;gap:5px!important;border-radius:7px!important}
  .btn-sm{padding:4px 7px!important;font-size:11px!important;min-height:28px!important}
- .td-toolbar{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important}
- .td-date-range{display:flex!important;flex-wrap:wrap!important;gap:5px!important}
- .td-date-range input[type=date]{width:clamp(105px,30vw,145px)!important;font-size:12px!important}
- .td-date-range .btn{flex:0 0 auto!important}
- .td-zoom{flex:0 1 auto!important;width:max-content;max-width:100%}
- .td-zoom input[type=range]{width:80px!important}
  .kanban{display:flex!important;gap:6px!important}
  .kanban-col{flex:0 0 calc((100vw - 48px)/2)!important;min-width:135px!important;max-width:190px!important}
  .kanban-col-title{font-size:10px!important}
@@ -856,93 +580,13 @@ button,.btn{min-width:0}
  .btn-ok,.btn-bad{padding:4px 7px!important;font-size:11px!important;min-height:28px!important}
  .rowbtns{gap:4px!important}
  .rowbtns .btn{padding:4px 6px!important;font-size:10.5px!important}
- .td-date-range label{font-size:10.5px!important}
- .td-date-range input[type=date]{width:calc(50vw - 32px)!important;min-width:0!important}
- .td-view-switch button{padding:5px 7px!important;font-size:11px!important}
  .cal-cell{padding:3px!important;min-width:0!important}
  .cal-cell .citem{font-size:9px!important}
  .split-kanban{grid-template-columns:repeat(4,minmax(100px,1fr))!important}
 }
-/* Continuous, readable project-progress printing without scaled blank pages */
-@media print{
- html,body,#appView,.shell,.main,#view,#tiendoScope{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;transform:none!important;width:100%!important;max-width:none!important}
- #view{padding:0!important}
- #tiendoScope{display:block!important;break-inside:auto!important;page-break-inside:auto!important}
- .project-overview-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5mm!important;overflow:visible!important}
- .project-overview-card,.td-card,.split-pane,.kanban-col,.cal-cell{break-inside:avoid!important;page-break-inside:avoid!important}
- .kanban{overflow:visible!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
- .kanban-col{min-width:0!important;max-width:none!important;max-height:none!important}
- .kanban-col-body,.split-pane-body{overflow:visible!important;max-height:none!important}
- .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:visible!important}
- .tw-select-wrap{display:none!important}
-}
 </style>
-
-
-<style id="tw-print-and-settings-refinements">
-/* Settings: keep local record inventory collapsed until requested */
-.local-data-collapse{display:block}
-.local-data-summary{display:flex!important;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;user-select:none}
-.local-data-summary::-webkit-details-marker{display:none}
-.local-data-summary::marker{content:""}
-.local-data-summary .collapse-hint{flex:0 0 auto;color:#8a6a2f;font-size:12px;font-weight:700;white-space:nowrap}
-.local-data-collapse[open] .collapse-hint{font-size:0}
-.local-data-collapse[open] .collapse-hint::after{content:"Thu gọn ▴";font-size:12px}
-.local-data-body{padding:0 14px 14px}
-/* Toolbar deliberately arranged in two compact rows */
-.td-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"dates zoom" "actions actions";align-items:center!important;gap:7px 12px!important;width:100%;}
-.td-date-range{grid-area:dates;min-width:0;display:flex!important;flex-wrap:wrap!important;align-items:center;gap:6px!important}
-.td-zoom{grid-area:zoom;justify-self:end;white-space:nowrap}
-.td-actions{grid-area:actions;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:6px;border-top:1px solid #e8e2d8}
-@media(max-width:700px){.td-toolbar{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"dates" "zoom" "actions"!important}.td-zoom{justify-self:start}.td-actions{padding-top:5px}}
-@media print{
- @page{size:A4 landscape;margin:7mm}
- *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important}
- html,body,#appView,.shell,.main,#view,#tiendoScope{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;transform:none!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#fff!important}
- body{font-size:10.5pt!important;line-height:1.32!important;color:#171717!important}
- #view{font-size:10.5pt!important}
- .print-header{margin:0 0 3mm!important;padding:0 0 2.5mm!important;break-after:avoid!important;page-break-after:avoid!important}
- .print-brand{font-size:9pt!important;margin-bottom:1.5mm!important}
- .print-header h1{font-size:18pt!important;line-height:1.2!important;margin:0 0 2mm!important}
- .print-project-line{font-size:11pt!important;margin-bottom:1.5mm!important;padding:1mm 0!important}
- .print-header .meta{font-size:9.5pt!important;gap:1mm 5mm!important}
- .page-head{margin:0 0 3mm!important;padding:0!important;gap:3mm!important}
- .page-head h1{font-size:16pt!important;line-height:1.2!important;margin:0 0 1mm!important}
- .page-head p,.sub{font-size:10pt!important;line-height:1.3!important;margin:0!important}
- .stat{padding:3mm!important;margin:0!important;break-inside:auto!important;page-break-inside:auto!important}
- .stat .lb{font-size:9.5pt!important}.stat .vl{font-size:17pt!important;line-height:1.2!important}
- .card,.project-overview-card,.td-card,.split-pane,.kanban-col,.cal-cell,.gantt-row,.tbl-wrap{break-inside:auto!important;page-break-inside:auto!important;box-shadow:none!important}
- .project-overview-grid,.td-detail-list,.split-dual,.split-pane-body{gap:3mm!important;overflow:visible!important;max-height:none!important}
- .project-overview-card{margin:0 0 2mm!important;padding:3mm!important}
- .td-card{margin:0 0 2mm!important;padding:3mm!important;font-size:10pt!important;line-height:1.3!important}
- .td-card b,.td-card strong,.project-overview-card b{font-size:10.5pt!important}
- .td-meta{font-size:9.5pt!important;gap:2mm 4mm!important;margin-top:2mm!important}
- table,.tbl{width:100%!important;font-size:9.5pt!important;line-height:1.25!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important}
- .tbl th,.tbl td,th,td{font-size:9.5pt!important;padding:1.5mm 2mm!important;vertical-align:top!important}
- thead{display:table-header-group!important}tfoot{display:table-footer-group!important}
- tr{break-inside:avoid!important;page-break-inside:avoid!important}
- .kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:2mm!important;overflow:visible!important;align-items:start!important}
- .kanban-col{min-width:0!important;max-width:none!important;max-height:none!important;margin:0!important}
- .kanban-col-header{padding:2mm!important}.kanban-col-title{font-size:9.5pt!important;line-height:1.2!important}
- .kanban-col-body,.split-pane-body{overflow:visible!important;max-height:none!important}
- .kanban-item{padding:2mm!important;margin-bottom:2mm!important;break-inside:auto!important;page-break-inside:auto!important}
- .kanban-item .k-title{font-size:9.5pt!important;line-height:1.25!important;display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important}
- .kanban-item .k-proj,.kanban-item .k-foot{font-size:8.5pt!important;line-height:1.2!important}
- .cal-grid{gap:1mm!important;overflow:visible!important}.cal-cell{min-height:18mm!important;padding:1.5mm!important}
- .cal-cell .citem,.cal-task-line{font-size:8pt!important;line-height:1.15!important;margin:1mm 0!important}
- .cal-project-code{font-size:7.5pt!important}.cal-item-name{font-size:8pt!important}
- .gantt,.gantt-track{overflow:visible!important;min-width:0!important;max-width:100%!important}
- .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:visible!important}
- .split-mini-col{min-width:0!important;max-width:none!important}
- .split-mini-col *{overflow-wrap:anywhere!important}
- .prog{margin:1.5mm 0!important}
- .local-data-summary{display:flex!important}
-}
-</style>
-
 
 <style id="tw-final-print-modal-fix">
-/* Compact project selector and task modal */
 .proj-pick>span{font-size:13.5px!important}
 .proj-pick .tw-select-trigger,.proj-pick select{font-size:14px!important;min-height:36px!important}
 @media screen{
@@ -956,59 +600,176 @@ button,.btn{min-width:0}
  #mback .td-form-grid .inp{min-height:34px!important;padding:6px 9px!important;font-size:13px!important}
  #mback .td-form-grid textarea.inp{min-height:60px!important}
 }
+</style>
+
+<style id="tw-final-readability-print-popup-fixes">
+#view .td-view-switch button{font-size:13px!important;padding:7px 5px!important}
+#view .page-head h1{font-size:22px!important}#view .page-head p{font-size:12.5px!important}
+#view .td-card{font-size:13px!important}#view .td-card b,#view .td-card .row strong{font-size:14px!important}
+#view .td-meta{font-size:12px!important;line-height:1.4!important}
+#view .td-gantt-pro .gantt-label{font-size:12px!important}#view .td-gantt-pro .gantt-label small{font-size:11px!important}
+#view .td-gantt-pro .td-month-track span{font-size:12px!important;font-weight:700!important}
+#view .cal-cell .citem.cal-task-line,#view .cal-task-line .cal-item-name{font-size:10px!important}
+#view .cal-task-line .cal-project-code,#view .cal-task-line strong{font-size:9px!important}
+#mback .modal{width:min(620px,94vw)!important;max-width:620px!important;max-height:88vh!important;border-radius:13px!important}
+#mback .m-head{padding:11px 14px!important}#mback .m-head h3{font-size:15px!important}
+#mback .m-body{padding:12px 14px!important;overflow-y:auto!important}#mback .m-foot{padding:9px 14px!important;gap:7px!important}
+#mback .m-body .frm-row,#mback .m-body .frm-row3{gap:7px!important;margin-bottom:7px!important;align-items:start!important}#mback .m-body .fld{margin:0 0 7px!important;min-width:0!important}#mback .m-body .fld label{font-size:11.5px!important;margin-bottom:3px!important}#mback .m-body .inp,#mback .m-body select.inp,#mback .m-body textarea.inp{font-size:13px!important;padding:6px 8px!important;min-width:0!important}#mback .m-body textarea.inp{min-height:52px!important}
+#mback .td-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px 10px!important}
+#mback .td-form-grid .fld{min-width:0!important}#mback .td-form-grid .fld label{font-size:11.5px!important;margin-bottom:3px!important;line-height:1.2!important}
+#mback .td-form-grid .inp{min-height:32px!important;height:32px!important;padding:5px 8px!important;font-size:13px!important;min-width:0!important}
+#mback .td-form-grid textarea.inp{height:52px!important;min-height:52px!important}#mback .td-form-grid .td-wide{grid-column:1/-1!important}
+</style>
+
+<style id="tw-patch-toolbar">
+.td-toolbar{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px!important;padding:6px 8px!important;background:#f8fafc!important;border:1px solid #e2e8f0!important;border-radius:10px!important;margin:0 0 10px!important}
+.td-date-range{display:flex!important;align-items:center!important;gap:6px!important;flex-wrap:wrap!important;margin:0!important;min-width:0!important}
+.td-date-range label{display:flex!important;align-items:center!important;gap:4px!important;font-size:11.5px!important;font-weight:700!important;color:#64748b!important;margin:0!important;white-space:nowrap!important}
+.td-date-range input[type=date]{height:30px!important;padding:4px 7px!important;border:1px solid #cbd5e1!important;border-radius:7px!important;font-size:12px!important;min-width:0!important;width:125px!important;background:#fff!important}
+.td-zoom{display:flex!important;align-items:center!important;gap:6px!important;font-size:11.5px!important;font-weight:700!important;color:#64748b!important;background:#fff!important;border:1px solid #e2e8f0!important;border-radius:7px!important;padding:4px 8px!important;margin-left:auto!important;white-space:nowrap!important}
+.td-zoom input[type=range]{width:80px!important;accent-color:#f59e0b}
+.td-actions{display:flex!important;align-items:center!important;gap:5px!important;flex-wrap:wrap!important;margin:0!important}
+.td-toolbar .btn{min-height:30px!important;padding:5px 10px!important;font-size:12px!important;white-space:nowrap!important;font-weight:600!important}
+@media(max-width:720px){
+ .td-toolbar{gap:5px!important;padding:6px!important}
+ .td-zoom{margin-left:0!important;width:100%!important;justify-content:flex-start!important}
+ .td-zoom input[type=range]{flex:1!important}
+ .td-date-range{width:100%!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important}
+ .td-date-range label{width:100%!important;flex-direction:column!important;align-items:stretch!important;gap:2px!important}
+ .td-date-range input[type=date]{width:100%!important}
+ .td-actions{width:100%!important}
+ .td-actions .btn{flex:1 1 auto!important;min-width:0!important;justify-content:center!important}
+}
+.td-pct-quick{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.td-pct-chip{padding:5px 9px;border-radius:14px;background:#fff;border:1px solid #cbd5e1;font-size:11.5px;font-weight:700;color:#475569;cursor:pointer;transition:.15s;font-family:inherit}
+.td-pct-chip:hover{background:#fef3c7;border-color:#f59e0b;color:#78350f}
+.td-pct-chip.active{background:#f59e0b;border-color:#d97706;color:#fff;box-shadow:0 2px 6px rgba(240,173,31,.3)}
+.td-pct-quick input[type=number]{width:78px!important;min-width:78px!important;padding:4px 6px!important;font-size:12px!important;height:30px!important}
+.td-hm-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.td-hm-chip{padding:4px 9px;border-radius:12px;background:#f1f5f9;border:1px solid #e2e8f0;font-size:11px;color:#475569;cursor:pointer;transition:.15s;font-family:inherit;font-weight:600}
+.td-hm-chip:hover{background:#fef3c7;border-color:#f59e0b;color:#78350f}
+</style>
+
+<style id="tw-mobile-final-fix">
+@media(max-width:640px){
+ #view{padding:8px!important}
+ .page-head{flex-direction:column!important;align-items:stretch!important;gap:8px!important;margin-bottom:10px!important}
+ .page-head h1{font-size:18px!important;line-height:1.25!important}
+ .page-head p{font-size:11.5px!important}
+ .page-actions{width:100%!important;display:flex!important;flex-wrap:wrap!important;gap:5px!important}
+ .page-actions .btn{flex:1 1 auto!important;min-width:0!important;font-size:12px!important;padding:8px 10px!important;min-height:38px!important;justify-content:center!important}
+ .page-actions .tw-select-wrap{flex:1 1 100%!important;min-width:0!important}
+ .rowbtns{flex-wrap:wrap!important;gap:5px!important;justify-content:flex-end!important}
+ .rowbtns .btn,.rowbtns .iconbtn{font-size:11.5px!important;padding:5px 8px!important;min-height:30px!important;white-space:nowrap!important}
+ .tbl th,.tbl td{padding:6px 8px!important;font-size:11.5px!important}
+ .card-h{flex-direction:column!important;align-items:flex-start!important;gap:6px!important;padding:10px 12px!important}
+ .card-h h3{font-size:13.5px!important}
+ .card-h .sub{font-size:11px!important}
+ .card-b{padding:12px!important}
+ .stat{padding:10px!important;flex-direction:column!important;gap:4px!important}
+ .stat .vl{font-size:15px!important}
+ .stat .lb{font-size:11px!important}
+ .k-status{padding:2px 6px!important;font-size:9.5px!important}
+ .td-view-switch{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:3px!important;padding:3px!important}
+ .td-view-switch button{font-size:10px!important;padding:6px 2px!important}
+ .kanban{gap:5px!important}
+ .kanban-col{flex-basis:calc((100vw - 36px)/2)!important;min-width:140px!important;max-width:180px!important}
+ .kanban-col-title{font-size:10px!important}
+ .kanban-item .k-title{font-size:11px!important}
+ .btn-ok,.btn-bad{font-size:11px!important;padding:5px 8px!important;min-height:28px!important}
+ .alert{font-size:12px!important;padding:10px 12px!important}
+ #mback .modal{width:96vw!important;max-width:96vw!important}
+ #mback .td-form-grid{grid-template-columns:1fr!important}
+ #mback .td-form-grid .td-wide{grid-column:1!important}
+ .td-pct-quick{gap:3px!important}
+ .td-pct-chip{padding:5px 8px!important;font-size:11px!important}
+ .td-hm-chips{gap:3px!important}
+ .td-hm-chip{padding:4px 8px!important;font-size:10.5px!important}
+}
+@media(max-width:400px){
+ .td-view-switch{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .page-actions .btn{font-size:11px!important;padding:7px 8px!important}
+}
+</style>
+
+<style id="tw-print-final-universal">
 @media print{
- /* Dedicated progress report mode: print report content only, not application controls */
- body.printing-tiendo .topbar,
- body.printing-tiendo .footer,
- body.printing-tiendo .page-head,
- body.printing-tiendo .td-view-switch,
- body.printing-tiendo .td-toolbar,
- body.printing-tiendo .page-actions,
- body.printing-tiendo .noprint,
- body.printing-tiendo .sb-nav-tools,
- body.printing-tiendo .tw-select-wrap,
- body.printing-tiendo .tw-select-menu{display:none!important}
- body.printing-tiendo .print-header{display:block!important;visibility:visible!important}
- body.printing-tiendo #view,body.printing-tiendo #tiendoScope,
- body.printing-tiendo #tiendoScope>.card,
- body.printing-tiendo #tiendoScope .card-b,
- body.printing-tiendo #tiendoScope .tbl-wrap,
- body.printing-tiendo #tiendoScope .td-detail-list,
- body.printing-tiendo #tiendoScope .project-overview-grid,
- body.printing-tiendo #tiendoScope .split-dual,
- body.printing-tiendo #tiendoScope .split-pane-body,
- body.printing-tiendo #tiendoScope .kanban,
- body.printing-tiendo #tiendoScope .cal-grid,
- body.printing-tiendo #tiendoScope .gantt,
- body.printing-tiendo #tiendoScope .gantt-track{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;transform:none!important;contain:none!important;content-visibility:visible!important}
- body.printing-tiendo #tiendoScope .tbl-wrap{display:block!important;width:100%!important;break-inside:auto!important;page-break-inside:auto!important}
- body.printing-tiendo #tiendoScope .td-detail-list,
- body.printing-tiendo #tiendoScope .project-overview-grid{display:block!important;grid-template-columns:none!important;column-count:1!important;gap:0!important}
- body.printing-tiendo #tiendoScope .td-card,
- body.printing-tiendo #tiendoScope .project-overview-card,
- body.printing-tiendo #tiendoScope .card,
- body.printing-tiendo #tiendoScope .split-pane{width:100%!important;max-width:none!important;margin:0 0 3mm!important;break-inside:auto!important;page-break-inside:auto!important;box-shadow:none!important}
- body.printing-tiendo #tiendoScope table{display:table!important;width:100%!important;table-layout:auto!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important}
- body.printing-tiendo #tiendoScope thead{display:table-header-group!important}
- body.printing-tiendo #tiendoScope tbody{display:table-row-group!important}
- body.printing-tiendo #tiendoScope tr{break-inside:avoid!important;page-break-inside:avoid!important}
- body.printing-tiendo #tiendoScope th,body.printing-tiendo #tiendoScope td{font-size:10.5pt!important;line-height:1.3!important;padding:2mm 2.2mm!important;white-space:normal!important;overflow-wrap:anywhere!important}
- body.printing-tiendo #tiendoScope .td-card{font-size:11pt!important;line-height:1.35!important;padding:3mm!important}
- body.printing-tiendo #tiendoScope .td-card b{font-size:12pt!important}
- body.printing-tiendo #tiendoScope .td-meta{font-size:10pt!important;line-height:1.3!important}
- body.printing-tiendo #tiendoScope .prog{break-inside:avoid!important}
- body.printing-tiendo #tiendoScope .kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;align-items:start!important;gap:2mm!important}
- body.printing-tiendo #tiendoScope .cal-grid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:1mm!important}
- body.printing-tiendo #tiendoScope .split-dual{display:block!important}
- body.printing-tiendo #tiendoScope .split-pane{display:block!important;margin-bottom:4mm!important}
- body.printing-tiendo #tiendoScope .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
- body.printing-tiendo #tiendoScope .gantt-row{break-inside:avoid!important;page-break-inside:avoid!important}
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  html,body{background:#fff!important;color:#111!important}
+  html,body,#appView,.shell,.main,#view,#tiendoScope,#tiendoScope *,#view *{overflow:visible!important;max-height:none!important;height:auto!important;transform:none!important;zoom:1!important;animation:none!important;transition:none!important;will-change:auto!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  #tiendoScope .td-detail-list,#tiendoScope .project-overview-grid,#tiendoScope .split-dual,#tiendoScope .split-pane-body,#tiendoScope .grid{display:block!important;grid-template-columns:none!important;column-count:1!important;gap:0!important}
+  #tiendoScope .td-card,#tiendoScope .project-overview-card,#tiendoScope .stat,#tiendoScope .card,#tiendoScope .split-pane,#tiendoScope .kanban-col,#tiendoScope .cal-cell{break-inside:auto!important;page-break-inside:auto!important;width:100%!important;max-width:none!important;margin:0 0 3mm!important;padding:3mm!important;box-shadow:none!important;border-radius:0!important;background:#fff!important}
+  #tiendoScope table,#view table{display:table!important;width:100%!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important;table-layout:auto!important;font-size:10pt!important}
+  #tiendoScope thead,#view thead{display:table-header-group!important}
+  #tiendoScope tfoot,#view tfoot{display:table-footer-group!important}
+  #tiendoScope tr,#view tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  #tiendoScope th,#view th{font-size:10pt!important;padding:2mm 2.4mm!important;white-space:normal!important;overflow-wrap:anywhere!important;background:#fde68a!important;color:#78350f!important;border:1px solid #92400e!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #tiendoScope td,#view td{font-size:10pt!important;padding:2mm 2.4mm!important;white-space:normal!important;overflow-wrap:anywhere!important;border:1px solid #cbd5e1!important}
+  #tiendoScope .prog,#tiendoScope .k-bar,#view .prog{background:#e5e7eb!important;height:6px!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #tiendoScope .prog i,#tiendoScope .k-bar i,#view .prog i{background:linear-gradient(90deg,#f59e0b,#d97706)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #tiendoScope .k-status{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;border:1px solid currentColor!important;padding:1.5mm 2.5mm!important;font-size:9.5pt!important}
+  #tiendoScope .k-status.todo{background:#e2e8f0!important;color:#475569!important}
+  #tiendoScope .k-status.doing{background:#fef3c7!important;color:#92400e!important}
+  #tiendoScope .k-status.done{background:#dcfce7!important;color:#166534!important}
+  #tiendoScope .k-status.late{background:#fee2e2!important;color:#991b1b!important}
+  #tiendoScope .k-status.blocked{background:#ede9fe!important;color:#6d28d9!important}
+  #tiendoScope .k-status.upcoming{background:#e0e7ff!important;color:#4338ca!important}
+  #tiendoScope .gantt-bar,#tiendoScope .td-gantt-pro .gantt-bar{background:#f59e0b!important;border:1px solid #92400e!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #tiendoScope .gantt-bar i,#tiendoScope .td-gantt-pro .gantt-bar i{background:#16a34a!important}
+  #tiendoScope .td-bar-late{background:#dc2626!important;border-color:#991b1b!important}
+  #tiendoScope .td-bar-done{background:#16a34a!important;border-color:#15803d!important}
+  #tiendoScope .td-bar-project{background:#d6d3d1!important}
+  #tiendoScope .td-bar-project i{background:#64748b!important}
+  #tiendoScope .kanban-item{border:1px solid #cbd5e1!important;border-left:3.5px solid var(--acc,#94a3b8)!important;background:#fff!important;margin-bottom:2mm!important;padding:2mm!important;break-inside:avoid!important}
+  #tiendoScope .kanban{display:flex!important;flex-wrap:wrap!important;gap:3mm!important;overflow:visible!important}
+  #tiendoScope .kanban-col{flex:1 1 30%!important;min-width:0!important;max-width:none!important;max-height:none!important}
+  #tiendoScope .cal-grid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:.5mm!important;overflow:visible!important}
+  #tiendoScope .cal-cell{display:block!important;width:auto!important;min-width:0!important;min-height:20mm!important;border:.4pt solid #bbb!important;padding:1.5mm!important;background:#fff!important}
+  #tiendoScope .cal-cell.today{background:#fffbeb!important;box-shadow:inset 0 0 0 1.5pt #f0ad1f!important}
+  #tiendoScope .citem,#tiendoScope .cal-task-line{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;font-size:8pt!important;white-space:normal!important;overflow-wrap:anywhere!important;padding:1mm!important}
+  #tiendoScope .citem.c-blue{background:#dbeafe!important;color:#1e40af!important}
+  #tiendoScope .citem.c-amber{background:#fef3c7!important;color:#92400e!important}
+  #tiendoScope .citem.c-green{background:#dcfce7!important;color:#166534!important}
+  .print-header{display:block!important;border:0!important;border-bottom:2pt solid #f0ad1f!important;padding:0 0 3mm!important;margin:0 0 4mm!important;break-after:avoid!important;page-break-after:avoid!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .print-brand{color:#d97706!important;font-size:9.5pt!important;font-weight:800!important;letter-spacing:1pt!important;margin-bottom:2mm!important}
+  .print-header h1{font-size:16pt!important;color:#78350f!important;margin:0 0 2mm!important}
+  .print-project-line{font-size:11pt!important;padding:1.5mm 0!important;border-bottom:.5pt solid #e5d5a8!important;color:#44403c!important}
+  .print-header .meta{font-size:9.5pt!important;color:#57534e!important;margin-top:1.5mm!important;gap:1mm 6mm!important}
+  .noprint,.td-toolbar,.td-view-switch,.page-actions,.sb-nav-tools,.tw-select-wrap,.tw-select-menu,.sidebar,#sbBackdrop,.topbar,.footer,.toast,.burger,.proj-pick,.sb-user,.sb-logout,button.m-x,.m-foot{display:none!important}
+  body.printing-phieu .mback{display:block!important}
+  body.printing-phieu .m-foot{display:none!important}
+  #tiendoScope > .grid,#tiendoScope > .card,#tiendoScope > .project-overview-grid,#tiendoScope > .td-detail-list{margin-bottom:5mm!important}
+}
+</style>
+
+<style id="tw-phieu-a4-print">
+@media print{
+  body.printing-phieu{page:payment!important}
+  body.printing-phieu .mback{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#fff!important;display:block!important;position:static!important;inset:auto!important;padding:0!important;margin:0!important;overflow:visible!important;z-index:auto!important}
+  body.printing-phieu .modal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#fff!important;box-shadow:none!important;animation:none!important;border:0!important;border-radius:0!important;transform:none!important;filter:none!important;opacity:1!important;will-change:auto!important;display:block!important;width:100%!important;max-width:100%!important;max-height:none!important;margin:0!important;overflow:visible!important}
+  body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
+  body.printing-phieu .phieu-modal-body{display:block!important;width:100%!important;max-height:none!important;overflow:visible!important;padding:0!important;margin:0!important}
+  body.printing-phieu .phieu-wrap{display:block!important;width:190mm!important;max-width:190mm!important;min-width:0!important;margin:0 auto!important;padding:8mm 10mm!important;border:0!important;box-shadow:none!important;background:#fff!important;font-size:11pt!important;line-height:1.4!important;zoom:1!important;transform:none!important;box-sizing:border-box!important;break-inside:auto!important;page-break-inside:auto!important}
+  body.printing-phieu .phieu-wrap *{font-family:Arial,'Helvetica Neue',sans-serif!important}
+  body.printing-phieu .phieu-head{border-bottom:1pt solid #000!important;padding-bottom:2mm!important;margin-bottom:3mm!important;display:flex!important;gap:4mm!important}
+  body.printing-phieu .phieu-head .logo{width:18mm!important;height:18mm!important}
+  body.printing-phieu .phieu-head .co{font-size:10.5pt!important;line-height:1.35!important}
+  body.printing-phieu .ptitle{font-size:16pt!important;font-weight:800!important;margin:4mm 0 2mm!important;text-align:center!important}
+  body.printing-phieu .pdate{font-size:11pt!important;text-align:center!important;margin-bottom:3mm!important}
+  body.printing-phieu .ptbl{width:100%!important;border-collapse:collapse!important;font-size:10pt!important;margin:2mm 0!important;break-inside:auto!important;page-break-inside:auto!important}
+  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{border:1px solid #000!important;padding:1.6mm 2mm!important;line-height:1.3!important;vertical-align:top!important}
+  body.printing-phieu .ptbl tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  body.printing-phieu .ptbl .gray{background:#e5e7eb!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body.printing-phieu .psec{font-size:10pt!important;font-weight:700!important;margin:2mm 0 1mm!important;break-after:avoid!important}
+  body.printing-phieu .pdot{border-bottom:.7pt dotted #666!important;height:4mm!important;margin:1mm 0!important}
+  body.printing-phieu .prow{gap:2mm!important;margin:2mm 0!important;font-size:10pt!important}
+  body.printing-phieu .prow .dot{height:4mm!important}
+  body.printing-phieu .pfoot{font-size:9.5pt!important;padding:2mm!important;margin-top:3mm!important;border:1pt solid #000!important;text-align:center!important;font-weight:700!important;break-inside:avoid!important}
 }
 </style>
 
 </head>
 <body>
-<!-- ============ LOGIN ============ -->
 <div id="loginView">
   <div class="login-card">
     <img id="loginLogo" class="login-logo" alt="THE WALL" src="logo.png">
@@ -1019,14 +780,12 @@ button,.btn{min-width:0}
     <button class="btn btn-pri btn-block" onclick="doLogin()">Đăng nhập</button>
   </div>
 </div>
-<!-- ============ APP ============ -->
 <div id="appView">
   <div class="shell">
     <aside class="sidebar" id="sidebar"></aside><div id="sbBackdrop" onclick="document.getElementById('sidebar').classList.remove('open');this.classList.remove('show')"></div>
     <div class="main">
       <div class="topbar">
         <button class="burger" onclick="var s=document.getElementById('sidebar'),b=document.getElementById('sbBackdrop'),o=s.classList.toggle('open');b.classList.toggle('show',o)" aria-label="Menu">☰</button>
-        
         <div class="proj-pick noprint"><span style="font-size:13.5px;color:var(--mut);font-weight:600">Dự án:</span><select id="projPick" class="inp" onchange="setProject(this.value)"></select></div>
       </div>
       <div id="view"></div>
@@ -1041,14 +800,8 @@ button,.btn{min-width:0}
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
-/* =====================================================================
-   THE WALL — Quản lý tài chính công trình xây dựng
-   (bản Việt của Project Ledger Pro)
-   Single-file app. Dữ liệu demo lưu localStorage, sẵn sàng gắn backend.
-===================================================================== */
 'use strict';
 const TW_LOGO='logo.png';
-/* ================= UTILS ================= */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const uid=p=>(p||'id')+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1058,10 +811,9 @@ const fmtDate=d=>{if(!d)return'';const x=new Date(d);return isNaN(x)?d:String(x.
 const todayISO=()=>new Date().toISOString().slice(0,10);
 const todayVN=()=>fmtDate(todayISO());
 function toast(m){const t=document.createElement('div');t.className='t';t.textContent=m;$('#toast').appendChild(t);setTimeout(()=>t.remove(),2600);}
-/* ================= SEED DATA (demo tiếng Việt) ================= */
 const SEED={
 users:[
- {id:'u1',name:'',username:'nbatam',pass:'admin123',role:'GIÁM ĐỐC',projectIds:[]},
+ {id:'u1',name:'Lê Hà',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
  {id:'u2',name:'Kế toán (test)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
  {id:'u3',name:'Anh Dương Chỉ huy (test)',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1']},
  {id:'u4',name:'Quản lý Dự án (test)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:[]},
@@ -1081,7 +833,7 @@ projects:[
  {id:'p11',code:'BT-2026-11',name:'Biệt thự sân Golf Hồ Tràm – 10 căn',client:'CĐT Hồ Tràm Resort',location:'Hồ Tràm, Bà Rịa-Vũng Tàu',start:'2026-04-01',end:'2026-12-15',budget:68000000000,status:'Chuẩn bị',note:'10 biệt thự nghỉ dưỡng view sân golf, nội thất full, hồ bơi riêng'},
  {id:'p12',code:'BT-2026-12',name:'Biệt thự song lập Vinhomes Grand Park',client:'Bà Lê Thị Mai',location:'Vinhomes Grand Park, Q9, TP.HCM',start:'2026-05-20',end:'2026-11-20',budget:9800000000,status:'Đang thi công',note:'Song lập 2 tầng + sân vườn, hàng rào, cổng, hoàn thiện thô + cơ bản'},
  {id:'p13',code:'BT-2026-13',name:'Sân Golf & Resort Đà Lạt – GĐ1 (18 lỗ)',client:'CĐT Đà Lạt Hills',location:'Lạc Dương, Lâm Đồng',start:'2026-06-15',end:'2027-08-30',budget:210000000000,status:'Tạm dừng',note:'18 lỗ par 72, khu resort 30 bungalow, hạ tầng, hồ điều hoà, chờ duyệt PCCC'},
- {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'},],
+ {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'}],
 vendors:[
  {id:'v1',name:'VLXD Hoàng Phát',phone:'0909123456',address:'QL1A, Thủ Đức',projectId:'p1'},
  {id:'v2',name:'Sắt thép Miền Nam',phone:'0918234567',address:'KCN Sóng Thần',projectId:'p1'},
@@ -1109,7 +861,7 @@ vendorTx:[
  {id:'vt12',vendorId:'v8',projectId:'p13',date:'2026-09-25',type:'purchase',amount:5200000000,note:'Xe điện, máy cắt cỏ, thiết bị bảo dưỡng golf Đà Lạt'},
  {id:'vt13',vendorId:'v9',projectId:'p14',date:'2026-09-26',type:'purchase',amount:18500000000,note:'Thép hình + thép tấm kết cấu mái nhà ga'},
  {id:'vt14',vendorId:'v10',projectId:'p14',date:'2026-09-26',type:'purchase',amount:8200000000,note:'Bê tông tươi mác 350 đường lăn E1'},
- {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'},],
+ {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'}],
 contractors:[
  {id:'k1',name:'Đội khoán Anh Ba (cốp pha)',phone:'0978111222',projectId:'p1',note:'Khoán cốp pha dầm sàn'},
  {id:'k2',name:'Tổ điện nước Hùng',phone:'0988222333',projectId:'p2',note:'Khoán điện nước biệt thự'},
@@ -1128,7 +880,7 @@ contractorTx:[
  {id:'kt6',contractorId:'k5',projectId:'p11',date:'2026-09-20',type:'entry',amount:1200000000,note:'Hoàn thiện 3 villa đầu'},
  {id:'kt7',contractorId:'k6',projectId:'p13',date:'2026-09-22',type:'entry',amount:2800000000,note:'Lắp khung thép clubhouse Đà Lạt'},
  {id:'kt8',contractorId:'k7',projectId:'p14',date:'2026-09-28',type:'entry',amount:12500000000,note:'Khối lượng kết cấu thép mái nhà ga đợt 1'},
- {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'},],
+ {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'}],
 bankAccounts:[
  {id:'b1',name:'Vietcombank',number:'0071001234567',note:'TK chính công ty'},
  {id:'b2',name:'Tiền mặt công trình',number:'TM-01',note:'Quỹ tiền mặt tại công trình'}],
@@ -1179,7 +931,6 @@ danhmuc:[
  {id:'dm1',nhom:'Vật tư',ten:'Xi măng'},{id:'dm2',nhom:'Vật tư',ten:'Sắt thép'},{id:'dm3',nhom:'Vật tư',ten:'Bê tông'},
  {id:'dm4',nhom:'Vật tư',ten:'Gạch'},{id:'dm5',nhom:'Nhân công',ten:'Nhân công'},{id:'dm6',nhom:'Máy',ten:'Thuê máy'}],
  tienDo:[
-  // === P1 ===
   {id:'td1',projectId:'p1',hangMuc:'Cọc & móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-01',ngayKetThuc:'2026-03-15',ngayCapNhat:'2026-03-15',ghiChu:'Ép 120 cọc, đổ móng băng xong'},
   {id:'td2',projectId:'p1',hangMuc:'Tầng hầm',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-16',ngayKetThuc:'2026-04-30',ngayCapNhat:'2026-04-30',ghiChu:'Hoàn thành 2 tầng hầm'},
   {id:'td3',projectId:'p1',hangMuc:'Kết cấu tầng 1-5',giaiDoan:'tho',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-06-30',ngayCapNhat:'2026-06-30',ghiChu:'Xong phần thô 5 tầng đầu'},
@@ -1188,64 +939,49 @@ danhmuc:[
   {id:'td5',projectId:'p1',hangMuc:'Kết cấu tầng 13-18',giaiDoan:'tho',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị cốp pha tầng 13'},
   {id:'td8',projectId:'p1',hangMuc:'Hoàn thiện mặt ngoài',giaiDoan:'hoanthien',phanTram:10,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-12',ghiChu:'Bắt đầu ốp tầng 1'},
   {id:'td7',projectId:'p1',hangMuc:'Điện nước (MEP)',giaiDoan:'mep',phanTram:35,ngayBatDau:'2026-08-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-09-13',ghiChu:'Đi ống tầng 1-6'},
-  // === P2 ===
   {id:'td9',projectId:'p2',hangMuc:'Móng đơn',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-05',ngayKetThuc:'2026-04-10',ngayCapNhat:'2026-04-10',ghiChu:'Xong'},
   {id:'td10',projectId:'p2',hangMuc:'Khung BTCT',giaiDoan:'tho',phanTram:80,ngayBatDau:'2026-04-11',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-10',ghiChu:'Đang đổ mái'},
   {id:'td11',projectId:'p2',hangMuc:'Xây & tô',giaiDoan:'tho',phanTram:50,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-10-15',ngayCapNhat:'2026-09-11',ghiChu:'Tô trong 70%, ngoài 30%'},
   {id:'td12',projectId:'p2',hangMuc:'Sơn & ốp lát',giaiDoan:'hoanthien',phanTram:15,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Bắt đầu sơn lót'},
   {id:'td13',projectId:'p2',hangMuc:'Nội thất',giaiDoan:'hoanthien',phanTram:5,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-09-12',ghiChu:'Đặt hàng tủ bếp'},
-  // === P3 ===
   {id:'td14',projectId:'p3',hangMuc:'San nền',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-15',ngayKetThuc:'2026-03-31',ngayCapNhat:'2026-03-31',ghiChu:'Xong 5000m2'},
   {id:'td15',projectId:'p3',hangMuc:'Móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-05-15',ngayCapNhat:'2026-05-15',ghiChu:'Xong'},
   {id:'td16',projectId:'p3',hangMuc:'Khung thép',giaiDoan:'tho',phanTram:85,ngayBatDau:'2026-05-16',ngayKetThuc:'2026-09-30',ngayCapNhat:'2026-09-14',ghiChu:'Lắp 85%, còn mái'},
   {id:'td17',projectId:'p3',hangMuc:'Tôn & bao che',giaiDoan:'hoanthien',phanTram:40,ngayBatDau:'2026-08-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-13',ghiChu:'Lợp mái 40%'},
   {id:'td18',projectId:'p3',hangMuc:'Nền & hoàn thiện',giaiDoan:'hoanthien',phanTram:10,ngayBatDau:'2026-09-15',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Chuẩn bị đổ nền'},
-  // === P4 ===
   {id:'td19',projectId:'p4',hangMuc:'Cọc khoan nhồi',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-06-20',ngayCapNhat:'2026-06-20',ghiChu:'200 cọc D800'},
   {id:'td20',projectId:'p4',hangMuc:'Tầng hầm B1-B2',giaiDoan:'ngam',phanTram:60,ngayBatDau:'2026-06-21',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-14',ghiChu:'Đang đào B2'},
   {id:'td21',projectId:'p4',hangMuc:'Tháp văn phòng T1-10',giaiDoan:'tho',phanTram:15,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-03-31',ngayCapNhat:'2026-09-15',ghiChu:'Chuẩn bị lên tầng 1'},
-  // === P5 ===
   {id:'td22',projectId:'p5',hangMuc:'San lấp mặt bằng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-02-01',ngayKetThuc:'2026-03-15',ngayCapNhat:'2026-03-15',ghiChu:'Xong 2ha'},
   {id:'td23',projectId:'p5',hangMuc:'Hạ tầng GĐ2',giaiDoan:'mep',phanTram:70,ngayBatDau:'2026-03-16',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-10',ghiChu:'Đường nội bộ 70%'},
   {id:'td24',projectId:'p5',hangMuc:'Villa mẫu 5 căn',giaiDoan:'mep',phanTram:45,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-12',ghiChu:'2 căn xong thô'},
-  // === P6 ===
   {id:'td25',projectId:'p6',hangMuc:'Móng & tầng trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-01',ngayKetThuc:'2026-05-31',ngayCapNhat:'2026-05-31',ghiChu:'Xong'},
   {id:'td26',projectId:'p6',hangMuc:'Tầng 1-2',giaiDoan:'tho',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-09-30',ngayCapNhat:'2026-09-13',ghiChu:'Đang xây tầng 2'},
   {id:'td27',projectId:'p6',hangMuc:'Tầng 3 + mái',giaiDoan:'tho',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-14',ghiChu:'Chuẩn bị'},
   {id:'td28',projectId:'p6',hangMuc:'Hoàn thiện',giaiDoan:'hoanthien',phanTram:5,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-15',ghiChu:'Đặt gạch'},
-  // === P7 ===
   {id:'td29',projectId:'p7',hangMuc:'Cọc & đài móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-15',ngayKetThuc:'2026-06-30',ngayCapNhat:'2026-06-30',ghiChu:'Xong'},
   {id:'td30',projectId:'p7',hangMuc:'Hầm & tầng 1-5',giaiDoan:'ngam',phanTram:80,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Tầng 4'},
   {id:'td31',projectId:'p7',hangMuc:'Tầng 6-15',giaiDoan:'tho',phanTram:25,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-04-30',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị'},
-  // === P8 ===
   {id:'td32',projectId:'p8',hangMuc:'Cọc & móng băng',giaiDoan:'ngam',phanTram:95,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-08-31',ngayCapNhat:'2026-09-12',ghiChu:'Gần xong'},
   {id:'td33',projectId:'p8',hangMuc:'Khung 10 tầng',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-15',ghiChu:'Tầng 3'},
-  // === P9 ===
   {id:'td34',projectId:'p9',hangMuc:'Móng & trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-06-15',ngayCapNhat:'2026-06-15',ghiChu:'Xong'},
   {id:'td35',projectId:'p9',hangMuc:'Lầu 1-2 + mái',giaiDoan:'tho',phanTram:85,ngayBatDau:'2026-06-16',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-13',ghiChu:'Lợp mái'},
   {id:'td36',projectId:'p9',hangMuc:'Hoàn thiện & nội thất',giaiDoan:'hoanthien',phanTram:40,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-14',ghiChu:'Ốp lát 40%'},
-  // === P10 ===
   {id:'td37',projectId:'p10',hangMuc:'San nền & hạ tầng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-03-01',ngayKetThuc:'2026-05-20',ngayCapNhat:'2026-05-20',ghiChu:'Xong'},
   {id:'td38',projectId:'p10',hangMuc:'Clubhouse thô',giaiDoan:'tho',phanTram:65,ngayBatDau:'2026-05-21',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Tầng 2'},
   {id:'td39',projectId:'p10',hangMuc:'Cảnh quan',giaiDoan:'mep',phanTram:20,ngayBatDau:'2026-09-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-15',ghiChu:'Trồng cây'},
-  // === P11 ===
   {id:'td40',projectId:'p11',hangMuc:'Móng 10 căn',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-07-10',ngayCapNhat:'2026-07-10',ghiChu:'Xong'},
   {id:'td41',projectId:'p11',hangMuc:'Thô 10 căn',giaiDoan:'tho',phanTram:55,ngayBatDau:'2026-07-11',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-14',ghiChu:'6/10 căn'},
-  // === P12 ===
   {id:'td42',projectId:'p12',hangMuc:'Móng',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-08-01',ngayCapNhat:'2026-08-01',ghiChu:'Xong'},
   {id:'td43',projectId:'p12',hangMuc:'Thô & tô',giaiDoan:'tho',phanTram:75,ngayBatDau:'2026-08-02',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-15',ghiChu:'Tô ngoài'},
   {id:'td44',projectId:'p12',hangMuc:'Hoàn thiện',giaiDoan:'hoanthien',phanTram:20,ngayBatDau:'2026-10-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-09-16',ghiChu:'Chuẩn bị'},
-  // === P13 ===
   {id:'td45',projectId:'p13',hangMuc:'San nền 18 lỗ',giaiDoan:'ngam',phanTram:90,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-10',ghiChu:'16/18 lỗ'},
   {id:'td47',projectId:'p13',hangMuc:'Clubhouse',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-14',ghiChu:'Móng xong'},
   {id:'td46',projectId:'p13',hangMuc:'Hệ thống tưới',giaiDoan:'mep',phanTram:60,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp'},
-  // === P14 ===
   {id:'td48',projectId:'p14',hangMuc:'Cọc nhà ga',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-15',ghiChu:'70% cọc'},
   {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'}
 ]
 };
-
-/* ================= DB ================= */
 const DBKEY='twpro_v1';
 const DB={
  data:null,
@@ -1254,26 +990,17 @@ const DB={
  reset(){this.data=JSON.parse(JSON.stringify(SEED));this.save();},
  log(action,detail){this.data.auditLogs.unshift({id:uid('a'),ts:new Date().toLocaleString('vi-VN'),user:Auth.user?Auth.user.name:'?',action,detail});this.save();}
 };
-/* ================= PERSISTENT LOGIN SESSION ================= */
-/* Persist only the minimal user identity needed to keep the current login
-   across a page refresh. Never store the user's password or API key here. */
 const SESSION_KEY='twpro_session_v1';
 function saveSession(){
   try{
-    if(!Auth || !Auth.user){
-      localStorage.removeItem(SESSION_KEY);
-      return false;
-    }
+    if(!Auth || !Auth.user || !Auth.user.id || !Auth.user.role){localStorage.removeItem(SESSION_KEY);return false;}
     const u=Auth.user;
     localStorage.setItem(SESSION_KEY,JSON.stringify({
       user:{id:u.id||'',name:u.name||'',role:u.role||'',projectIds:Array.isArray(u.projectIds)?u.projectIds:[]},
       savedAt:Date.now()
     }));
     return true;
-  }catch(e){
-    console.warn('Không thể lưu phiên đăng nhập trên thiết bị này.',e);
-    return false;
-  }
+  }catch(e){console.warn('Không thể lưu phiên đăng nhập trên thiết bị này.',e);return false;}
 }
 function restoreSession(){
   try{
@@ -1281,41 +1008,27 @@ function restoreSession(){
     if(!raw)return false;
     const parsed=JSON.parse(raw);
     const saved=parsed&&parsed.user;
-    if(!saved || !saved.id || !saved.name || !saved.role){
-      localStorage.removeItem(SESSION_KEY);
-      return false;
-    }
-    /* Prefer current user records if available, but preserve a valid server
-       session when the local user list has not yet been refreshed. */
+    if(!saved || !saved.id || !saved.role){localStorage.removeItem(SESSION_KEY);return false;}
     const localUser=(DB.data.users||[]).find(x=>String(x.id)===String(saved.id));
     Auth.user={
       id:saved.id,
-      name:(localUser&&localUser.name)||saved.name,
+      name:(localUser&&localUser.name)||saved.name||saved.id,
       role:(localUser&&localUser.role)||saved.role,
-      projectIds:Array.isArray(localUser&&localUser.projectIds)?localUser.projectIds:
-        (Array.isArray(saved.projectIds)?saved.projectIds:[])
+      projectIds:Array.isArray(localUser&&localUser.projectIds)?localUser.projectIds:(Array.isArray(saved.projectIds)?saved.projectIds:[])
     };
     return true;
-  }catch(e){
-    try{localStorage.removeItem(SESSION_KEY);}catch(_){}
-    return false;
-  }
+  }catch(e){try{localStorage.removeItem(SESSION_KEY);}catch(_){}return false;}
 }
-function clearSession(){
-  try{localStorage.removeItem(SESSION_KEY);}catch(e){}
-}
-
-/* ================= AUTH ================= */
+function clearSession(){try{localStorage.removeItem(SESSION_KEY);}catch(e){}}
 const Auth={
  user:null,
- login(u,p){const f=DB.data.users.find(x=>x.username===u&&x.pass===p);if(f){this.user={id:f.id,name:f.name,role:f.role,projectIds:f.projectIds||[]};saveSession();return true;}return false;},
+ login(u,p){const f=DB.data.users.find(x=>x.username===u&&x.pass===p);if(f){this.user={id:f.id,name:f.name||f.username||'Người dùng',role:f.role,projectIds:f.projectIds||[]};saveSession();return true;}return false;},
  logout(){this.user=null;clearSession();location.hash='#/login';showLogin();},
  isSM(){return this.user&&this.user.role==='Chỉ huy công trình';},
  canAdmin(){return this.user&&(this.user.role==='Giám đốc'||this.user.role==='Kế toán');},
  canSuper(){return this.user&&this.user.role==='Giám đốc';}
 };
 const ROLE_VN={'Super Admin':'Giám đốc','Admin':'Kế toán','Site Manager':'Chỉ huy công trình'};
-/* ================= PHÂN QUYỀN CHI TIẾT ================= */
 const PERMS=[
  {grp:'Dự án',items:[{k:'projects_view',t:'Xem dự án'},{k:'projects_create',t:'Tạo dự án'},{k:'projects_edit',t:'Sửa dự án'},{k:'projects_delete',t:'Xóa dự án'}]},
  {grp:'Dự trù',items:[{k:'dutru_view',t:'Xem dự trù'},{k:'dutru_create',t:'Tạo dự trù'},{k:'dutru_approve',t:'Duyệt dự trù'}]},
@@ -1346,7 +1059,7 @@ Auth.can=function(perm){
  if(rp==='*')return true;
  return Array.isArray(rp)&&rp.includes(perm);
 };
-Auth.assignedProjects=function(){ // null = tất cả dự án, [] = không có dự án nào
+Auth.assignedProjects=function(){
  if(!this.user)return [];
  const u=DB.data.users.find(x=>x.id===this.user.id);
  if(!u)return null;
@@ -1359,11 +1072,10 @@ function visibleProjects(){const ap=Auth.assignedProjects();return ap?DB.data.pr
 function doLogin(){
  const u=$('#lgUser').value.trim(),pw=$('#lgPass').value;
  if(!u||!pw){$('#lgErr').style.display='block';$('#lgErr').textContent='Nhập tên đăng nhập và mật khẩu.';return;}
- // Try local first if no API
  try{
    const usr=DB.data.users.find(x=>x.username===u);
    if(usr && usr.pass===pw){
-     Auth.user={id:usr.id,name:usr.name,role:usr.role,projectIds:usr.projectIds||[]};
+     Auth.user={id:usr.id,name:usr.name||usr.username||'Người dùng',role:usr.role,projectIds:usr.projectIds||[]};
      try{DB.log('Đăng nhập','Đăng nhập hệ thống');}catch(e){}
      try{saveSession();}catch(e){}
      enterApp();
@@ -1371,10 +1083,9 @@ function doLogin(){
      return;
    }
  }catch(e){}
- // If API configured, try server
  if(typeof CFG!=='undefined' && CFG.apiUrl){
   apiCall('login',{username:u,pass:pw}).then(r=>{
-   if(r&&r.user){Auth.user={id:r.user.id,name:r.user.name||r.user.ho_ten,role:r.user.role||r.user.vai_tro,projectIds:r.user.projectIds||(r.user.du_an?[r.user.du_an]:[])};DB.log('Đăng nhập','qua server');saveSession();enterApp();pullAll(true).catch(()=>{});}
+   if(r&&r.user){Auth.user={id:r.user.id,name:r.user.name||r.user.ho_ten||r.user.id,role:r.user.role||r.user.vai_tro,projectIds:r.user.projectIds||(r.user.du_an?[r.user.du_an]:[])};DB.log('Đăng nhập','qua server');saveSession();enterApp();pullAll(true).catch(()=>{});}
    else{$('#lgErr').style.display='block';$('#lgErr').textContent='Sai tên đăng nhập hoặc mật khẩu.';}
   }).catch(()=>{
    $('#lgErr').style.display='block';$('#lgErr').textContent='Sai tên đăng nhập hoặc mật khẩu.';
@@ -1385,6 +1096,8 @@ function doLogin(){
 }
 function showLogin(){$('#loginView').style.display='flex';$('#appView').style.display='none';}
 function enterApp(){
+ if(!Auth.user||!Auth.user.role){showLogin();return;}
+ if(!Auth.user.name)Auth.user.name=Auth.user.id||'Người dùng';
  $('#loginView').style.display='none';$('#appView').style.display='flex';
  buildSidebar();buildProjPick();
  if(!$('#syncPill')){const d=document.createElement('div');d.id='syncPill';d.style.marginLeft='10px';document.querySelector('.topbar .burger').after(d);}
@@ -1393,7 +1106,7 @@ function enterApp(){
 }
 function setProject(id){SEL.projectId=id||null;DB.save0=0;nav();}
 let SEL={projectId:null};
-function scoped(arr,key){ // lọc theo dự án được phân công + dự án đang chọn
+function scoped(arr,key){
  key=key||'projectId';
  const isProjArr=arr.length&&arr[0]&&'code' in arr[0]&&'budget' in arr[0];
  const idKey=isProjArr?'id':key;
@@ -1402,7 +1115,6 @@ function scoped(arr,key){ // lọc theo dự án được phân công + dự án
  if(SEL.projectId)return arr.filter(x=>x[idKey]===SEL.projectId);
  return arr;
 }
-/* ================= MODAL ================= */
 let modalCb=null;
 function openModal(title,bodyHTML,footHTML,wide){
  $('#mTitle').innerHTML=title;$('#mBody').innerHTML=bodyHTML;$('#mFoot').innerHTML=footHTML||'';
@@ -1416,7 +1128,6 @@ function inp(name,val,type,attrs){const money=/^(amount|sotien|dongia|thanhtien|
 function sel(name,opts,val,attrs){return '<select class="inp" name="'+name+'" '+(attrs||'')+'>'+opts.map(o=>'<option value="'+esc(o.v)+'"'+(String(o.v)===String(val)?' selected':'')+'>'+esc(o.t)+'</option>').join('')+'</select>';}
 function txa(name,val,attrs){return '<textarea class="inp" name="'+name+'" '+(attrs||'')+'>'+esc(val||'')+'</textarea>';}
 function formVal(name){const el=document.querySelector('#mBody [name="'+name+'"]')||document.querySelector('#view [name="'+name+'"]');if(!el)return '';let v=el.value.trim();if(el.classList.contains('money'))v=v.replace(/[^\d]/g,'');return v;}
-/* ================= SIDEBAR ================= */
 const NAV=[
  {sec:'TỔNG QUAN'},
  {label:'Tổng quan',icon:'',hash:'#/dashboard'},
@@ -1484,7 +1195,7 @@ function buildSidebar(){
   }
  });
  h+='</div>';
- h+='<div class="sb-user"><div class="row"><div class="avatar">'+esc(u.name.slice(0,2).toUpperCase())+'</div><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">Đăng xuất</button></div>';
+ h+='<div class="sb-user"><div class="row"><div class="avatar">'+esc((u.name||'?').slice(0,2).toUpperCase())+'</div><div style="min-width:0"><div class="nm">'+esc(u.name)+'</div><div class="rl">'+esc(u.role)+'</div></div></div><button class="sb-logout" onclick="Auth.logout()">Đăng xuất</button></div>';
  $('#sidebar').innerHTML=h;
  $$('#sidebar [data-h]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.h;$('#sidebar').classList.remove('open');});
 }
@@ -1497,21 +1208,18 @@ function buildProjPick(){
 }
 function projName(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.name:'';}
 function projCode(id){const p=DB.data.projects.find(x=>x.id===id);return p?p.code:'';}
-/* ================= CHARTS (SVG thuần, không lib) ================= */
-function hbarChart(data,color){ // data:[{label,value}]
+function hbarChart(data,color){
  const max=Math.max(...data.map(d=>d.value),1);
  return '<div style="display:flex;flex-direction:column;gap:10px">'+data.map(d=>'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>'+esc(d.label)+'</span><b>'+fmtVND(d.value)+'</b></div><div class="prog"><i style="width:'+Math.round(100*d.value/max)+'%;background:'+color+'"></i></div></div>').join('')+'</div>';
 }
-function donutChart(data){ // data:[{label,value,color}]
+function donutChart(data){
  const total=data.reduce((s,d)=>s+d.value,0)||1;let acc=0;
  const segs=data.map(d=>{const p=d.value/total;const s='<circle cx="80" cy="80" r="56" fill="none" stroke="'+d.color+'" stroke-width="26" stroke-dasharray="'+(p*351.8).toFixed(1)+' 351.8" stroke-dashoffset="'+(-acc*351.8).toFixed(1)+'" transform="rotate(-90 80 80)"/>';acc+=p;return s;}).join('');
  return '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg width="160" height="160" viewBox="0 0 160 160">'+segs+'<text x="80" y="76" text-anchor="middle" font-size="13" fill="#8a7f70">Tổng</text><text x="80" y="98" text-anchor="middle" font-size="15" font-weight="800" fill="#1a1410">'+fmtVND(total)+'</text></svg><div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">'+data.map(d=>'<div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:3px;background:'+d.color+'"></span>'+esc(d.label)+'<b style="margin-left:auto">'+Math.round(100*d.value/total)+'%</b></div>').join('')+'</div></div>';
 }
-/* ================= LEDGER ENGINE ================= */
-function runLedger(rows,inKey,outKey){ // rows:[{date,desc,in,out}] -> [{...,balance}]
+function runLedger(rows,inKey,outKey){
  let b=0;return rows.slice().sort((a,c)=>a.date<c.date?-1:1).map(r=>{b+=(r[inKey]||0)-(r[outKey]||0);return Object.assign({},r,{balance:b});});
 }
-/* chi tiêu 1 dự án = mua vật tư + chi phí + lương/ứng + thuê máy + trả NCC/nhà thầu... (dòng tiền ra thực tế) */
 function projectSpent(pid){
  let s=0;
  DB.data.vendorTx.filter(t=>t.projectId===pid&&t.type==='payment').forEach(t=>s+=(+t.amount||0));
@@ -1527,14 +1235,10 @@ function projectLiab(pid){
  return {vendor:vd,contractor:kd,salary:ed,machine:md,total:vd+kd+ed+md};
 }
 function dueOf(rows,inT,outT){const i=rows.filter(r=>r.type===inT).reduce((s,r)=>s+(+r.amount||0),0);const o=rows.filter(r=>r.type===outT).reduce((s,r)=>s+(+r.amount||0),0);return Math.max(0,i-o);}
-function projectRecv(pid){ // phải thu = bán/NT - đã nhận
- return dueOf(DB.data.clientTx.filter(t=>t.projectId===pid),'billed','received');
-}
-/* ================= ROUTER ================= */
+function projectRecv(pid){return dueOf(DB.data.clientTx.filter(t=>t.projectId===pid),'billed','received');}
 const ROUTES={};
 window.addEventListener('hashchange',()=>{const s=document.getElementById('sidebar'),b=document.getElementById('sbBackdrop');if(s)s.classList.remove('open');if(b)b.classList.remove('show');nav();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-/* ================= DASHBOARD ================= */
 ROUTES['#/dashboard']=function(){
  const projs=scoped(DB.data.projects);
  const actives=projs.filter(p=>p.status==='Đang thi công');
@@ -1571,18 +1275,15 @@ ROUTES['#/dashboard']=function(){
 };
 function statusBadge(s){
  const m={'Chuẩn bị':'b-amber','Đang thi công':'b-blue','Tạm dừng':'b-amber','Hoàn thành':'b-green','Đã hủy':'b-gray'};
- // Thuần việc: chỉ 5 trạng thái công việc, tự chuẩn hoá dữ liệu cũ nếu còn sót
  const norm={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'}[s]||s;
  return '<span class="badge '+(m[norm]||'b-gray')+'">'+esc(norm)+'</span>';
 }
-/* Tiến độ dự án thu gọn mặc định; mở khi người dùng chủ động bấm */
 function tienDoCell(pid){
  const list=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);
  const avg=list.length?Math.round(list.reduce((n,t)=>n+(+t.phanTram||0),0)/list.length):0;
  const label=list.length?(avg+'% • '+list.length+' hạng mục'):'Chưa có tiến độ';
  return '<details class="project-progress"><summary aria-label="Mở tiến độ dự án">'+esc(label)+'</summary><div style="padding:7px 2px 2px;min-width:160px"><div class="prog"><i style="width:'+avg+'%;background:#c47a13"></i></div><div style="display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:11px;color:#6b6258"><span>'+avg+'% hoàn thành</span><a href="#/tiendo-list" style="font-weight:700">Chi tiết →</a></div></div></details>';
 }
-/* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
  let h='<div class="page-head"><div><h1>Xem tất cả Dự án</h1><p></p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
@@ -1612,7 +1313,6 @@ function saveProject(id){
  else{DB.data.projects.push(Object.assign({id:uid('p')},o));DB.log('Tạo dự án',o.code+' • '+o.name);}
  DB.save();closeModal();nav(false);toast('Đã lưu dự án');
 }
-/* ---- Sổ cái dự án ---- */
 ROUTES['#/projects/:id']=null;
 function renderProjectLedger(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p){location.hash='#/projects';return;}
@@ -1624,19 +1324,14 @@ function renderProjectLedger(pid){
   +'<div><b style="color:#64748b">Ngày bắt đầu:</b> '+fmtDate(p.start)+'</div>'
   +'<div><b style="color:#64748b">Ngày kết thúc:</b> '+fmtDate(p.end)+'</div>'
   +'<div><b style="color:#64748b">Trạng thái:</b> '+statusBadge(p.status)+'</div>'
-
   +'</div></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">← Danh sách</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  if(s>p.budget)h+='<div class="alert alert-red">Dự án đã <b>vượt ngân sách</b> '+(fmtVND(s-p.budget))+' ('+Math.round(100*s/p.budget)+'% ngân sách)</div>';
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
  h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Ngân sách',fmtVND(p.budget),'','st-info')+stat('Đã chi',fmtVND(s),'','st-warn')+stat('Công nợ phải trả',fmtVND(l.total),'','st-bad')+stat('Còn lại',fmtVND(bal),'',bal<0?'st-bad':'st-ok')+'</div>';
  h+='<div class="grid g4" style="margin-bottom:16px">'+stat('Phải thu KH',fmtVND(recv),'','st-info')+stat('Nợ NCC',fmtVND(l.vendor),'','st-bad')+stat('Nợ nhà thầu',fmtVND(l.contractor),'','st-bad')+'</div>';
- // dòng tiền
  const rows=[];
  DB.data.vendorTx.filter(t=>t.projectId===pid).forEach(t=>{const v=DB.data.vendors.find(x=>x.id===t.vendorId);rows.push({date:t.date,desc:'NCC '+((v&&v.name)||'')+' — '+t.note,in:t.type==='purchase'?t.amount:0,out:t.type==='payment'?t.amount:0});});
  DB.data.contractorTx.filter(t=>t.projectId===pid).forEach(t=>{const k=DB.data.contractors.find(x=>x.id===t.contractorId);rows.push({date:t.date,desc:'Nhà thầu '+((k&&k.name)||'')+' — '+t.note,in:t.type==='entry'?t.amount:0,out:t.type==='payment'?t.amount:0});});
-
-
-
  DB.data.clientTx.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chủ đầu tư — '+t.note,in:t.type==='received'?t.amount:0,out:0});});
  DB.data.expenses.filter(t=>t.projectId===pid).forEach(t=>{rows.push({date:t.date,desc:'Chi phí ['+t.category+'] — '+t.note,in:0,out:t.amount});});
  const led=runLedger(rows,'in','out');
@@ -1650,7 +1345,6 @@ function delObj(coll,id,msg){
  if(!confirm(msg||'Xóa dòng này?'))return;
  DB.data[coll]=DB.data[coll].filter(x=>x.id!==id);DB.log('Xóa',msg||id);DB.save();nav(false);toast('Đã xóa');
 }
-/* ---- hỗ trợ route có tham số (#/vendors/v1 ...) ---- */
 function nav(rebuild){
  let h=location.hash||'#/dashboard';
  if(rebuild!==false)buildSidebar();
@@ -1667,7 +1361,6 @@ function nav(rebuild){
  if(!fn)fn=ROUTES['#/dashboard'];
  $('#view').innerHTML='';fn();window.scrollTo(0,0);
 }
-/* ================= PARTNERS (generic) ================= */
 const PCFG={
  vendors:{coll:'vendors',tx:'vendorTx',fk:'vendorId',t:'Nhà cung cấp',icon:'',inT:'purchase',outT:'payment',inL:'Mua hàng/Nhập',outL:'Thanh toán',dueL:'Công nợ phải trả',back:'#/vendors'},
  clients:{coll:'clients',tx:'clientTx',fk:'clientId',t:'Chủ đầu tư',icon:'',inT:'billed',outT:'received',inL:'Đã nghiệm thu',outL:'Đã nhận tiền',dueL:'Còn phải thu',back:'#/clients',noProj:true}
@@ -1740,7 +1433,6 @@ function renderPartnerLedger(cfg,id){
 function delTx(txColl,id){if(!confirm('Xóa giao dịch này?'))return;DB.data[txColl]=DB.data[txColl].filter(x=>x.id!==id);DB.log('Xóa giao dịch',txColl);DB.save();nav(false);toast('Đã xóa');}
 ROUTES['#/vendors']=()=>partnerListPage(PCFG.vendors);
 ROUTES['#/clients']=()=>{if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}partnerListPage(PCFG.clients);};
-/* ================= CONTRACTORS ================= */
 ROUTES['#/contractors']=function(){
  const list=scoped(DB.data.contractors);
  let h='<div class="page-head"><div><h1>Nhà thầu</h1><p>'+list.length+' đội khoán • khối lượng nghiệm thu và tạm ứng</p></div><div class="page-actions"><button class="btn btn-pri" onclick="contractorForm()">+ Thêm nhà thầu</button></div></div>';
@@ -1780,8 +1472,6 @@ function renderContractorLedger(id){
  led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+esc(r.desc)+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'contractorTx\',\''+r.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
-/* ================= EMPLOYEES ================= */
-/* ================= BANK ================= */
 ROUTES['#/bank']=function(){if(!Auth.can('quy_view')){location.hash='#/dashboard';return;}
  if(!Auth.canAdmin()){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Ngân hàng & Quỹ</h1><p>'+DB.data.bankAccounts.length+' tài khoản • thu/chi từng quỹ</p></div><div class="page-actions"><button class="btn btn-pri" onclick="bankForm()">+ Thêm tài khoản</button></div></div>';
@@ -1823,7 +1513,6 @@ function renderBankLedger(id){
  led.forEach(r=>{h+='<tr><td style="white-space:nowrap">'+fmtDate(r.date)+'</td><td>'+r.desc+'</td><td class="num ledger-in">'+(r.in?fmtVND(r.in):'—')+'</td><td class="num ledger-out">'+(r.out?fmtVND(r.out):'—')+'</td><td class="num"><b>'+fmtVND(r.balance)+'</b></td><td><div class="rowbtns"><button class="iconbtn" onclick="delTx(\'bankTx\',\''+r.id+'\')" style="color:#dc2626">Xóa</button></div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 }
-/* ================= CASH & EXPENSES ================= */
 const EXPCATS=['Nhân công','Vật tư','Vận chuyển','Điện nước','An toàn','Thiết kế','Thuê máy','Văn phòng','Khác'];
 ROUTES['#/cash']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashboard';return;}
  const txs=scoped(DB.data.bankTx).slice().sort((a,b)=>a.date<b.date?-1:1).slice(-80).reverse();
@@ -1836,7 +1525,6 @@ ROUTES['#/cash']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashbo
 function quickBankTx(type){
  const acc=DB.data.bankAccounts[0];if(!acc){toast('Chưa có tài khoản');return;}bankTxForm(acc.id,type);
 }
-/* ================= EXPENSES ================= */
 ROUTES['#/expenses']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.expenses).slice().sort((a,b)=>a.date<b.date?-1:1);
  const cats=[...new Set(list.map(e=>e.category))];
@@ -1859,7 +1547,6 @@ function saveExpense(id){const o={projectId:formVal('projectId'),date:formVal('d
  if(!o.amount){toast('Nhập số tiền');return;}
  if(id)Object.assign(DB.data.expenses.find(x=>x.id===id),o);else DB.data.expenses.push(Object.assign({id:uid('x')},o));
  DB.log(id?'Sửa chi phí':'Thêm chi phí','['+o.category+'] '+fmtVND(o.amount)+' — '+o.note);DB.save();closeModal();nav(false);toast('Đã lưu');}
-/* ================= LIABILITIES ================= */
 ROUTES['#/liabilities']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
  const rows=[];
@@ -1875,10 +1562,8 @@ ROUTES['#/liabilities']=function(){if(!Auth.can('conno_view')){location.hash='#/
  rows.sort((a,b)=>b.amt-a.amt).forEach(r=>{h+='<tr><td>'+esc(r.p.code+' • '+r.p.name)+'</td><td>'+r.who+'</td><td class="num" style="color:var(--bad);font-weight:700">'+fmtVND(r.amt)+'</td><td><a class="linklike" href="'+r.link+'">Chi tiết →</a></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
-/* ================= RECEIVABLES ================= */
 ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/dashboard';return;}
  const rows=[];
-
  DB.data.clientTx.length&&scoped(DB.data.projects).forEach(p=>{const due=dueOf(DB.data.clientTx.filter(t=>t.projectId===p.id),'billed','received');if(due>0)rows.push({who:'Chủ đầu tư ('+p.client+')',sub:'Dự án '+p.code,amt:due,link:'#/clients'});});
  const total=rows.reduce((s,r)=>s+r.amt,0);
  let h='<div class="page-head"><div><h1>Công nợ phải thu</h1><p>Tiền khách hàng/chủ đầu tư còn nợ • Tổng: <b style="color:var(--info)">'+fmtVND(total)+'</b></p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
@@ -1887,7 +1572,6 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
  rows.sort((a,b)=>b.amt-a.amt).forEach(r=>{h+='<tr><td><b>'+esc(r.who)+'</b><div style="font-size:11.5px;color:var(--mut)">'+esc(r.sub)+'</div></td><td></td><td class="num" style="color:var(--info);font-weight:700">'+fmtVND(r.amt)+'</td><td><a class="linklike" href="'+r.link+'">Chi tiết →</a></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
-/* ================= REPORTS ================= */
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
  let h='';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
@@ -1911,7 +1595,6 @@ function reportDebt(){
   rows+='<tr><td>'+esc(p.name)+'</td><td class="num" style="color:var(--bad)">'+fmtVND(l.total)+'</td><td class="num" style="color:var(--info)">'+fmtVND(r)+'</td></tr>';});
  $('#rpOut').innerHTML='<div class="card"><div class="card-h"><div><h3>Báo cáo công nợ toàn công ty</h3><div class="sub">Ngày lập: '+todayVN()+' • Người lập: '+esc(Auth.user.name)+'</div></div><button class="btn btn-sec noprint" onclick="window.print()">In</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th class="num">Phải trả</th><th class="num">Phải thu</th></tr></thead><tbody>'+rows+'<tr style="font-weight:800;background:#fdf3dc"><td>TỔNG</td><td class="num" style="color:var(--bad)">'+fmtVND(tp)+'</td><td class="num" style="color:var(--info)">'+fmtVND(tr)+'</td></tr></tbody></table></div></div>';
 }
-/* ================= QUICK ENTRY ================= */
 ROUTES['#/quick']=function(){
  const items=[
   ['','Thu tiền','#/bank','bankTxForm',DB.data.bankAccounts[0]?DB.data.bankAccounts[0].id+'\',\'inflow':null],
@@ -1925,7 +1608,6 @@ ROUTES['#/quick']=function(){
  h+='</div>';$('#view').innerHTML=h;
 };
 function firstId(coll){const l=scoped(DB.data[coll]);return l.length?l[0].id:'';}
-/* ================= USERS ================= */
 function projBadges(u){const ids=u.projectIds||[];if(!ids.length||ids.includes('*'))return '<span class="badge b-gray">Tất cả</span>';return ids.map(pid=>{const pr=DB.data.projects.find(x=>x.id===pid);return pr?'<span class="badge b-green">'+esc(pr.code)+'</span>':'';}).join(' ');}
 ROUTES['#/users']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
@@ -1948,9 +1630,8 @@ function saveUser(id){const pids=[];document.querySelectorAll('#mBody [data-proj
  if(DB.data.users.some(x=>x.username===o.username&&x.id!==id)){toast('Tên đăng nhập đã tồn tại');return;}
  if(id)Object.assign(DB.data.users.find(x=>x.id===id),o);else DB.data.users.push(Object.assign({id:uid('u')},o));
  DB.log(id?'Sửa người dùng':'Tạo người dùng',o.name+' ('+o.role+')');DB.save();closeModal();nav(false);toast('Đã lưu');}
-/* checklist phân quyền chi tiết */
 function userPerms(u){
- if(u.role==='Giám đốc')return null; // full
+ if(u.role==='Giám đốc')return null;
  const base={};PERMS.forEach(g=>g.items.forEach(it=>base[it.k]=false));
  const rp=ROLE_PERMS[u.role];
  if(rp==='*')Object.keys(base).forEach(k=>base[k]=true);
@@ -1972,7 +1653,6 @@ function permForm(id){
 function permAll(v){document.querySelectorAll('#mBody [data-perm]').forEach(c=>c.checked=v);}
 function permDefault(id){const u=DB.data.users.find(x=>x.id===id);const d=userPerms(Object.assign({},u,{perms:null}));document.querySelectorAll('#mBody [data-perm]').forEach(c=>c.checked=!!d[c.dataset.perm]);}
 function savePerms(id){const u=DB.data.users.find(x=>x.id===id);const p={};document.querySelectorAll('#mBody [data-perm]').forEach(c=>p[c.dataset.perm]=c.checked);u.perms=p;DB.log('Phân quyền',u.name+': '+Object.keys(p).filter(k=>p[k]).length+' quyền');DB.save();closeModal();nav(false);toast('Đã lưu quyền');}
-/* ================= AUDIT LOGS ================= */
 ROUTES['#/audit']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Nhật ký hệ thống</h1><p>'+DB.data.auditLogs.length+' bản ghi • mọi thao tác thêm/sửa/xóa</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
@@ -1980,11 +1660,9 @@ ROUTES['#/audit']=function(){
  DB.data.auditLogs.slice(0,300).forEach(a=>{h+='<tr><td style="white-space:nowrap;font-size:12.5px">'+esc(a.ts)+'</td><td><b>'+esc(a.user)+'</b></td><td><span class="badge b-purple">'+esc(a.action)+'</span></td><td>'+esc(a.detail)+'</td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
-/* ================= MODULE CŨ: ĐỀ NGHỊ/PHÊ DUYỆT/DỰ TRÙ/PHÁT SINH ================= */
 const LOAI_DN={mua_hang:'Mua hàng',thanh_toan:'Thanh toán',thue_thau:'Thuê thầu',nhan_cong:'Nhân công'};
 const TT_DN={cho_duyet:['Chờ duyệt','b-amber'],da_duyet:['Đã duyệt','b-blue'],da_chi:['Đã chi','b-green'],tu_choi:['Từ chối','b-red']};
 const TT_TU={cho_duyet:['Chờ duyệt','b-amber'],da_duyet:['Đã duyệt','b-blue'],da_quyet_toan:['Đã quyết toán','b-green']};
-/* chuẩn hóa Việt <-> code cho cột loại/trạng thái (Sheet lưu tiếng Việt đầy đủ) */
 const VI2CODE={};
 Object.entries(LOAI_DN).forEach(e=>{VI2CODE[e[1]]=e[0];});
 [TT_DN,TT_TU].forEach(m=>Object.entries(m).forEach(e=>{if(!VI2CODE[e[1][0]])VI2CODE[e[1][0]]=e[0];}));
@@ -1992,14 +1670,12 @@ VI2CODE['Chờ chi']='cho_chi';
 const CODE2VI={};Object.entries(VI2CODE).forEach(e=>{if(!CODE2VI[e[1]])CODE2VI[e[1]]=e[0];});
 const CODE_FIELDS={denghi:['loai','trangthai'],phatsinh:['trangthai'],dutru:['trangthai'],thanhtoan:['trangthai'],tamung:['trangthai']};
 function toCode(k,o){const f=CODE_FIELDS[k];if(!f)return o;const c=Object.assign({},o);f.forEach(fd=>{if(typeof c[fd]==='string'&&VI2CODE[c[fd]])c[fd]=VI2CODE[c[fd]];});return c;}
-/* chuẩn hóa số tiền: '8.500.000.000' -> 8500000000 (tránh NaN khi Sheet lưu dạng chữ) */
 function toNum(v){if(typeof v==='number')return isNaN(v)?0:v;if(v==null||v==='')return 0;const n=parseFloat(String(v).replace(/[^\d-]/g,''));return isNaN(n)?0:n;}
 const MONEY_FIELDS={projects:['budget'],denghi:['soluong','dongia','sotien'],phatsinh:['sotien'],dutru:['soluong','dongia','thanhtien'],thanhtoan:['sotien'],tamung:['sotien'],expenses:['amount'],vendorTx:['amount'],contractorTx:['amount'],bankTx:['amount'],clientTx:['amount']};
 function normMoney(k,o){const f=MONEY_FIELDS[k];if(!f)return o;const c=Object.assign({},o);f.forEach(fd=>{if(fd in c)c[fd]=toNum(c[fd]);});return c;}
 function toVI(k,o){const f=CODE_FIELDS[k];if(!f)return o;const c=Object.assign({},o);f.forEach(fd=>{if(typeof c[fd]==='string'&&CODE2VI[c[fd]])c[fd]=CODE2VI[c[fd]];});return c;}
 function ttBadge(st,map){const m=(map||TT_DN)[st]||[st,'b-gray'];return '<span class="badge '+m[1]+'">'+m[0]+'</span>';}
 let DN_F={loai:'',tt:''},DT_P='';
-/* ---------- ĐỀ NGHỊ ---------- */
 ROUTES['#/denghi']=function(){if(!Auth.can('denghi_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.denghi).slice().sort((a,b)=>a.date<b.date?-1:1);
  const fl=list.filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
@@ -2046,7 +1722,6 @@ function duyetDN(id,ok){
  DB.save();nav(false);toast(ok?'Đã duyệt':'Đã từ chối');
 }
 function markPaidDN(id){const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;d.trangthai='da_chi';DB.log('Đánh dấu đã chi',fmtVND(d.sotien)+' — '+d.noidung);DB.save();nav(false);toast('Đã đánh dấu đã chi');}
-/* ---------- PHÊ DUYỆT (inbox) ---------- */
 ROUTES['#/pheduyet']=function(){if(!Auth.can('pheduyet_view')){location.hash='#/dashboard';return;}
  const items=[];
  scoped(DB.data.denghi).filter(d=>d.trangthai==='cho_duyet').forEach(d=>items.push({kind:'denghi',id:d.id,date:d.date,label:'Đề nghị ['+LOAI_DN[d.loai]+']',desc:d.noidung,amt:d.sotien,by:d.nguoitao}));
@@ -2069,7 +1744,6 @@ function duyetItem(kind,id,ok){
  DB.log(ok?'Duyệt':'Từ chối',kind+' '+(fmtVND(d.sotien||d.thanhtien))+(lydo?' ('+lydo+')':''));
  DB.save();nav(false);toast(ok?'Đã duyệt':'Đã từ chối');
 }
-/* ---------- DỰ TRÙ ---------- */
 ROUTES['#/dutru']=function(){if(!Auth.can('dutru_view')){location.hash='#/dashboard';return;}
  const projs=visibleProjects();
  if(!DT_P)DT_P=SEL.projectId||projs[0].id;
@@ -2097,7 +1771,6 @@ function saveDuTru(id){
  else DB.data.dutru.push(Object.assign({id:uid('dt'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
  DB.log(id?'Sửa dự trù':'Thêm dự trù',o.hangmuc+' '+fmtVND(o.thanhtien));DB.save();closeModal();nav(false);toast('Đã lưu');
 }
-/* ---------- PHÁT SINH ---------- */
 ROUTES['#/phatsinh']=function(){if(!Auth.can('phatsinh_view')){location.hash='#/dashboard';return;}
  const list=scoped(DB.data.phatsinh).slice().sort((a,b)=>a.date<b.date?-1:1);
  const tong=list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
@@ -2121,10 +1794,7 @@ function savePhatSinh(id){
  else DB.data.phatsinh.push(Object.assign({id:uid('ps'),trangthai:'cho_duyet',nguoitao:Auth.user.name,nguoiduyet:'',lydo:''},o));
  DB.log(id?'Sửa phát sinh':'Thêm phát sinh',fmtVND(o.sotien)+' — '+o.noidung);DB.save();closeModal();nav(false);toast('Đã lưu');
 }
-
-/* ================= THANH TOÁN ================= */
 ROUTES['#/thanhtoan']=function(){location.hash='#/denghi';return;};
-/* ---------- PHIẾU DNTT IN Y BẢN CŨ ---------- */
 function docSoTien(n){
  n=Math.round(n||0);if(n===0)return 'Không đồng';
  const dv=['','một','hai','ba','bốn','năm','sáu','bảy','tám','chín'];
@@ -2143,7 +1813,14 @@ function dnttCalc(id){
  const lk=DB.data.thanhtoan.filter(x=>x.projectId===t.projectId&&x.trangthai==='da_chi'&&x.id!==id).reduce((s,x)=>s+x.sotien,0);
  return {t:t,dn:dn,p:pr,lk:lk,conlai:(pr.budget||0)-lk-t.sotien};
 }
-function printPhieu(){const a=$('#phieuPrintArea');if(!a)return;document.body.classList.add('printing-phieu');window.print();setTimeout(()=>document.body.classList.remove('printing-phieu'),600);}
+function printPhieu(){
+  const a=$('#phieuPrintArea');if(!a){toast('Không tìm thấy phiếu để in');return;}
+  document.body.classList.add('printing-phieu');
+  const cleanup=()=>{document.body.classList.remove('printing-phieu');window.removeEventListener('afterprint',cleanup);};
+  window.addEventListener('afterprint',cleanup);
+  setTimeout(()=>window.print(),80);
+  setTimeout(cleanup,3000);
+}
 function xuatPhieuDNTT_XLSX(id){
  const c=dnttCalc(id);if(!c)return;
  const t=c.t,dn=c.dn,p=c.p;
@@ -2174,18 +1851,18 @@ function xuatPhieuDNTT_XLSX(id){
  r=mk();C(r,1,t.sotien,13);C(r,3,c.lk,14);C(r,6,p.budget||0,14);C(r,8,c.conlai,13);
  r=mk();C(r,0,'Bằng chữ:',2);C(r,1,docSoTien(t.sotien),2);
  mk();
- r=mk();C(r,0,'A. Người nhận thanh toán',2);
+ r=mk();C(r,0,'A. Người nhận thanh toán:',2);
  r=mk();C(r,0,'B. Hình thức thanh toán     '+ckTM+' Tiền Mặt               '+ckCK+' Chuyển khoản                         '+ckTU+' Trừ tạm ứng                      '+ckTH+' Thu hồi',2);
  mk();mk();
- r=mk();C(r,0,'C. Chứng từ kèm theo',2);
+ r=mk();C(r,0,'C. Chứng từ kèm theo:',2);
  r=mk();C(r,0,'c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)',2);
  mk();
  r=mk();C(r,0,'c2. Không chứng từ tài chính (ghi số tiền)',2);
  mk();
- r=mk();C(r,0,'D. Số tiền thực nhận thanh toán (c1+c2)',2);
+ r=mk();C(r,0,'D. Số tiền thực nhận (D = c1 + c2):',2);
  mk();
- r=mk();C(r,0,'E. Bằng chữ',2);C(r,2,docSoTien(t.sotien),2);
- r=mk();C(r,0,'F. Ký nhận',2);C(r,5,'Ngày nhận',2);
+ r=mk();C(r,0,'E. Số tiền bằng chữ:',2);C(r,2,docSoTien(t.sotien),2);
+ r=mk();C(r,0,'F. Ký nhận',2);C(r,5,'Ngày nhận tiền',2);
  mk();mk();
  r=mk();C(r,0,'VUI LÒNG KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI PHÒNG KẾ TOÁN. XIN CẢM ƠN!',5);
  mk();
@@ -2194,9 +1871,6 @@ function xuatPhieuDNTT_XLSX(id){
  xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
-
-/* ===== XLSX thật ===== */
-/* Minimal real XLSX writer (store-only ZIP, no external deps) */
 function xlsxMake(sheets,logoB64){
   const enc=new TextEncoder();
   const CT=new Int32Array(256);
@@ -2206,11 +1880,7 @@ function xlsxMake(sheets,logoB64){
   function b64ToBytes(b64){try{const s=String(b64);const raw=s.indexOf(',')>=0?s.slice(s.indexOf(',')+1):s;const bin=atob(raw.replace(/\s/g,''));const b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b;}catch(e){return null;}}
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
-
   const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="7"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
-  /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
-     4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
-
   function sheetXml(sh,withDrawing){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
       +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
@@ -2250,7 +1920,6 @@ function xlsxMake(sheets,logoB64){
     s+='</worksheet>';
     return s;
   }
-
   const parts=[];
   parts.push(['[Content_Types].xml',
     '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
@@ -2304,8 +1973,6 @@ function xlsxMake(sheets,logoB64){
     parts.push(['xl/drawings/_rels/drawing1.xml.rels',DRAWRELS]);
     parts.push(['xl/worksheets/_rels/sheet1.xml.rels',SHEETRELS]);
   }
-
-  // ZIP store-only (hỗ trợ binary cho ảnh)
   const encFiles=parts.map(p=>({name:p[0],data:p[2]?p[1]:enc.encode(p[1])}));
   const chunks=[];const central=[];let off=0;
   function w16(v){chunks.push(new Uint8Array([v&255,(v>>8)&255]));}
@@ -2360,8 +2027,6 @@ function xlsxDownload(sheets,filename){
   }catch(e){}
   makeAndDownload(null);
 }
-
-
 function inPhieuDNTT(id){
  const c=dnttCalc(id);if(!c)return;
  const t=c.t,dn=c.dn,p=c.p;
@@ -2386,28 +2051,24 @@ function inPhieuDNTT(id){
   +'<tr class="ctr"><td colspan="2"><b>'+fmtVND(t.sotien)+'</b></td><td colspan="2">'+fmtVND(c.lk)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND(c.conlai)+'</td></tr>'
   +'<tr><td>Bằng chữ:</td><td>Đồng</td><td colspan="4"><i>'+esc(docSoTien(t.sotien))+'</i></td></tr>'
   +'</table>'
-  +'<div class="psec">A. Người nhận thanh toán</div><div class="pdot"></div>'
+  +'<div class="psec">A. Người nhận thanh toán:</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền Mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ tạm ứng &nbsp;&nbsp; '+ckTH+' Thu hồi</div><div class="pdot"></div><div class="pdot"></div>'
-  +'<div class="psec">C. Chứng từ kèm theo</div>'
+  +'<div class="psec">C. Chứng từ kèm theo:</div>'
   +'<div class="psec"><i>c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)</i></div><div class="pdot"></div>'
   +'<div class="psec"><i>c2. Không chứng từ tài chính (ghi số tiền)</i></div><div class="pdot"></div>'
-  +'<div class="psec">D. Số tiền thực nhận thanh toán (c1+c2)</div><div class="pdot"></div>'
-  +'<div class="psec">E. Bằng chữ</div><div class="pdot"></div>'
-  +'<div class="prow"><div class="lab">F. Ký nhận</div><div class="dot"></div><div class="lab">Ngày nhận</div><div class="dot"></div></div>'
+  +'<div class="psec">D. Số tiền thực nhận (D = c1 + c2):</div><div class="pdot"></div>'
+  +'<div class="psec">E. Số tiền bằng chữ:</div><div class="pdot"></div>'
+  +'<div class="prow"><div class="lab">F. Ký nhận</div><div class="dot"></div><div class="lab">Ngày nhận tiền</div><div class="dot"></div></div>'
   +'<div class="pfoot">VUI LÒNG KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI PHÒNG KẾ TOÁN. XIN CẢM ƠN!</div>'
   +'</div>';
  openModal('Phiếu đề nghị thanh toán','<div class="phieu-modal-body">'+htm+'</div>',
   '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
 }
-
-/* ---------- PHIẾU ĐỀ NGHỊ ---------- */
 function inPhieuDeNghi(id){
  const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;
  const p=DB.data.projects.find(x=>x.id===d.projectId)||{};
- // Tạo phiếu DNTT từ đề nghị
  const t={id:'dn_'+d.id,projectId:d.projectId,date:d.date,sotien:d.sotien,hinhthuc:'',ghichu:d.noidung};
  const dn=d;
- // Tính lũy kế (đơn giản: dùng số tiền đề nghị)
  const ht='';
  const ckTM='☐',ckCK='☐',ckTU='☐',ckTH='☐';
  const nguoide=esc(dn.nguoitao||Auth.user.name||'');
@@ -2429,38 +2090,23 @@ function inPhieuDeNghi(id){
   +'<tr class="ctr"><td colspan="2"><b>'+fmtVND(t.sotien)+'</b></td><td colspan="2">'+fmtVND(t.sotien)+'</td><td>'+fmtVND(p.budget||0)+'</td><td>'+fmtVND((p.budget||0)-t.sotien)+'</td></tr>'
   +'<tr><td>Bằng chữ:</td><td>Đồng</td><td colspan="4"><i>'+esc(docSoTien(t.sotien))+'</i></td></tr>'
   +'</table>'
-  +'<div class="psec">A. Người nhận thanh toán</div><div class="pdot"></div>'
+  +'<div class="psec">A. Người nhận thanh toán:</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; ☐ Tiền Mặt &nbsp;&nbsp; ☐ Chuyển khoản &nbsp;&nbsp; ☐ Trừ tạm ứng &nbsp;&nbsp; ☐ Thu hồi</div><div class="pdot"></div><div class="pdot"></div>'
-  +'<div class="psec">C. Chứng từ kèm theo</div>'
+  +'<div class="psec">C. Chứng từ kèm theo:</div>'
   +'<div class="psec"><i>c1. Có chứng từ tài chính (liệt kê số chứng từ, ngày chứng từ, số tiền)</i></div><div class="pdot"></div>'
   +'<div class="psec"><i>c2. Không chứng từ tài chính (ghi số tiền)</i></div><div class="pdot"></div>'
-  +'<div class="psec">D. Số tiền thực nhận thanh toán (c1+c2)</div><div class="pdot"></div>'
-  +'<div class="psec">E. Bằng chữ</div><div class="pdot"></div>'
-  +'<div class="prow"><div class="lab">F. Ký nhận</div><div class="dot"></div><div class="lab">Ngày nhận</div><div class="dot"></div></div>'
+  +'<div class="psec">D. Số tiền thực nhận (D = c1 + c2):</div><div class="pdot"></div>'
+  +'<div class="psec">E. Số tiền bằng chữ:</div><div class="pdot"></div>'
+  +'<div class="prow"><div class="lab">F. Ký nhận</div><div class="dot"></div><div class="lab">Ngày nhận tiền</div><div class="dot"></div></div>'
   +'<div class="pfoot">VUI LÒNG KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI PHÒNG KẾ TOÁN. XIN CẢM ƠN!</div>'
   +'</div>';
  openModal('Phiếu đề nghị thanh toán','<div class="phieu-modal-body">'+htm+'</div>',
   '<button class="btn btn-sec" onclick="closeModal()">Đóng</button><button class="btn btn-pri" onclick="printPhieu()">In phiếu</button>',true);
 }
-
 function xuatPhieuDNXls(id){
  const d=DB.data.denghi.find(x=>x.id===id);if(!d)return;
- const p=DB.data.projects.find(x=>x.id===d.projectId)||{};
- let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
- h+='<table width="100%"><tr><td><b>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL</b><br>15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM</td></tr></table>';
- h+='<h2 align="center">PHIẾU ĐỀ NGHỊ</h2>';
- h+='<table><tr><td>Ngày:</td><td><b>'+fmtDate(d.date)+'</b></td><td>Người đề nghị:</td><td><b>'+esc(d.nguoitao||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="3"><b>'+esc(p.name)+'</b></td></tr>'
-  +'<tr><td>Loại đề nghị:</td><td><b>'+esc(LOAI_DN[d.loai]||'')+'</b></td><td>Hạng mục:</td><td><b>'+esc(d.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Nội dung:</td><td colspan="3"><b>'+esc(d.noidung||'')+'</b></td></tr>'
-  +'<tr><td>Nhà cung cấp:</td><td><b>'+esc(d.ncc||'')+'</b></td><td>Số lượng/Đơn giá:</td><td><b>'+(d.soluong||'')+'/'+(d.dongia?fmtVND(d.dongia):'')+'</b></td></tr></table><br>';
- h+='<table border="1"><tr><th>Số tiền đề nghị</th><th>Bằng chữ</th></tr>'
-  +'<tr><td>'+d.sotien+'</td><td>'+esc(docSoTien(d.sotien))+'</td></tr></table>';
- h+='<table width="100%"><tr><td width="50%"></td><td align="center"><b>Người nhận<br>Ký nhận</b><br><br><br><br></td><td align="center"><b>Ngày nhận</b><br><br><br><br></td></tr></table>';
- h+='</body></html>';
  toast('Dùng nút Tải Excel trong phiếu DNTT');
 }
-
 function tamungForm(){
  const projs=visibleProjects();
  openModal('Tạo tạm ứng',
@@ -2480,7 +2126,6 @@ function duyetTU(id,ok){const t=DB.data.tamung.find(x=>x.id===id);if(!t)return;
 function quyetToanTU(id){const t=DB.data.tamung.find(x=>x.id===id);if(!t)return;
  if(!confirm('Quyết toán khoản tạm ứng '+fmtVND(t.sotien)+' của '+t.nguoingan+'?'))return;
  t.trangthai='da_quyet_toan';t.ngayqt=todayISO();DB.log('Quyết toán tạm ứng',fmtVND(t.sotien)+' — '+t.nguoingan);DB.save();nav(false);toast('Đã quyết toán');}
-/* ================= DANH MỤC ================= */
 ROUTES['#/danhmuc']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const list=DB.data.danhmuc;
  let h='<div class="page-head"><div><h1>Danh mục hạng mục</h1><p>'+list.length+' hạng mục dùng cho Dự trù/Đề nghị</p></div><div class="page-actions"><button class="btn btn-pri" onclick="danhmucForm()">+ Thêm</button></div></div>';
@@ -2496,8 +2141,6 @@ function danhmucForm(id){
 function saveDanhMuc(id){const o={nhom:formVal('nhom'),ten:formVal('ten')};if(!o.ten){toast('Nhập tên');return;}
  if(id)Object.assign(DB.data.danhmuc.find(x=>x.id===id),o);else DB.data.danhmuc.push(Object.assign({id:uid('dm')},o));
  DB.save();closeModal();nav(false);toast('Đã lưu');}
-
-/* ================= EXCEL EXPORT (kiểu TW cũ) ================= */
 function dlXls(html,filename){
  const blob=new Blob(["\ufeff"+html],{type:'application/vnd.ms-excel;charset=utf-8'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
@@ -2514,20 +2157,14 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
- // R1-4: thông tin công ty (cột B)
  const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:2};R.push(rc);
  const ra=new Array(n).fill(null);ra[1]={v:'Add : 1086/4 Nguyễn Duy Trinh, P.Long Trường, TPHCM, Việt Nam',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[1]={v:'Tel  : +848 3535 1905 - 0903 865 240',s:3};R.push(rt);
  const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
- // R5-7: trống 3 dòng
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
- // R8: tiêu đề
  const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
- // R9: ngày xuất
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
- // R10: header vàng
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
- // Dữ liệu
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
  if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:'Tổng cộng',s:10};rf[n-1]={v:foot.total,s:10};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
@@ -2535,7 +2172,6 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
-
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
  const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien]);
@@ -2560,10 +2196,8 @@ function exportPhatSinh(){
   '<b>Tổng:</b> '+fmtVND(list.reduce((s,d)=>s+d.sotien,0)),fname('baocao_phatsinh'));
  toast('Đã xuất Excel');
 }
-/* ================= API LAYER ================= */
 const CFG_KEY='twpro_cfg';
 let CFG={apiUrl:'',key:''};
-
 function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
 function syncCfgForm(){
@@ -2574,7 +2208,7 @@ function syncCfgForm(){
  if(k&&k.value!==CFG.key){CFG.key=k.value;ch=true;}
  if(ch){saveCfg();renderSyncPill();}
 }
-const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTru',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
+const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
  if(!CFG.apiUrl)throw new Error('Chưa cấu hình API URL');
@@ -2599,7 +2233,7 @@ async function pullAll(silent){
  const d=await apiCall('pull',{});
  let n=0;
  Object.keys(SYNC_MAP).forEach(k=>{const sh=SYNC_MAP[k];if(d[sh]&&Array.isArray(d[sh])){DB.data[k]=d[sh].map(o=>normMoney(k,CODE_FIELDS[k]?toCode(k,o):o));n++;}});
- DB.save0=1;try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}
+ try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}
  SYNC.dirty=false;SYNC.connected=true;SYNC.msg='Lúc '+new Date().toLocaleTimeString('vi-VN');
  renderSyncPill();if(!silent)toast('Đã tải '+n+' bảng từ server');
  nav(false);
@@ -2631,7 +2265,6 @@ async function testApi(){
  try{const d=await apiCall('ping',{});SYNC.connected=true;renderSyncPill();toast('Kết nối OK — '+(d.time||'server phản hồi'));return true;}
  catch(e){toast('Lỗi kết nối: '+e.message);return false;}
 }
-/* ================= CÀI ĐẶT ================= */
 ROUTES['#/caidat']=function(){
  if(!Auth.can('caidat_view')){location.hash='#/dashboard';return;}
  const mods=Object.keys(SYNC_MAP).map(k=>({k,sh:SYNC_MAP[k],n:(DB.data[k]||[]).length}));
@@ -2644,12 +2277,14 @@ ROUTES['#/caidat']=function(){
  h+='<div class="card local-data-card" style="grid-column:1/-1"><details class="local-data-collapse"><summary class="card-h local-data-summary"><div><h3>Danh mục dữ liệu cục bộ</h3><div class="sub">   </div></div><span class="collapse-hint">Mở danh mục ▾</span></summary><div class="local-data-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Module</th><th>Sheet máy chủ</th><th class="num">Số bản ghi</th></tr></thead><tbody>'+mods.map(m=>'<tr><td>'+esc(m.k)+'</td><td><span class="badge b-blue">'+esc(m.sh)+'</span></td><td class="num">'+m.n+'</td></tr>').join('')+'</tbody></table></div></div></details></div></div>';
  document.getElementById('view').innerHTML=h;renderSyncPill();
 };
-/* ===== TIẾN ĐỘ DỰ ÁN — CÁC VIEW DÙNG CHUNG MỘT MÔ HÌNH DỮ LIỆU ===== */
 function tdEsc(v){return esc(v==null?'':String(v));}
 function tdDate(v){const d=v?new Date(v+'T00:00:00'):null;return d&&!isNaN(d)?d:null;}
 function tdDays(t){const a=tdDate(t.ngayBatDau),b=tdDate(t.ngayKetThuc);return a&&b?Math.max(1,Math.round((b-a)/86400000)+1):Math.max(1,+t.thoiLuong||1);}
 function tdWeight(t){const w=+t.trongSo;return Number.isFinite(w)&&w>0?w:tdDays(t);}
 function tdPct(t){return Math.max(0,Math.min(100,+t.phanTram||0));}
+function tdPickPct(v){const el=document.getElementById('td_pct');if(el){el.value=v;tdSyncPctChips();}}
+function tdSyncPctChips(){const el=document.getElementById('td_pct');if(!el)return;const v=+el.value||0;document.querySelectorAll('.td-pct-chip').forEach(c=>c.classList.toggle('active',+c.dataset.v===v));}
+function tdPickTask(name){const el=document.getElementById('td_hm');if(el){el.value=name;el.focus();}}
 function tdStatus(t){if(tdPct(t)>=100)return'done';const end=tdDate(t.ngayKetThuc),start=tdDate(t.ngayBatDau),now=tdDate(todayISO());if(end&&now&&end<now)return'late';if(t.phuThuocId){const dep=(DB.data.tienDo||[]).find(x=>x.id===t.phuThuocId);if(dep&&tdPct(dep)<100)return'blocked';}if(start&&now&&start>now)return'upcoming';if(tdPct(t)>0)return'doing';return'todo';}
 function tdStatusLabel(t){return({done:'Hoàn thành',late:'Trễ hạn',blocked:'Bị chặn',doing:'Đang thực hiện',upcoming:'Sắp bắt đầu',todo:'Chưa bắt đầu'})[tdStatus(t)];}
 function tdTaskProgress(items){const valid=items||[];const total=valid.reduce((s,t)=>s+tdWeight(t),0);return total?Math.round(valid.reduce((s,t)=>s+tdPct(t)*tdWeight(t),0)/total):0;}
@@ -2658,7 +2293,11 @@ function tienDoGiaiDoan(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projec
 function tdViewSwitcher(cur){const views=[['#/tiendo','Dashboard'],['#/tiendo-list','Table'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Calendar'],['#/tiendo-split','Split']];return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;}
 function tdPrintReport(){document.body.classList.add('printing-tiendo');window.print();}
 window.addEventListener('afterprint',()=>document.body.classList.remove('printing-tiendo'));
-function tdToolbar(extra=''){return `<div class="td-toolbar noprint"><div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc ngày</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa lọc</button></div><div class="td-zoom"><span style="font-size:11px;font-weight:700">Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div><div class="td-actions"><button class="btn btn-sec btn-sm" onclick="tdPrintReport()">🖨 Print report</button><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Task</button>${extra}</div></div>`;}
+function tdToolbar(extra=''){return `<div class="td-toolbar noprint">
+<div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa</button></div>
+<div class="td-zoom"><span>🔍 Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)"><span id="tdZoomLb">${window._tdZoom||100}%</span></div>
+<div class="td-actions"><button class="btn btn-sec btn-sm" onclick="tdPrintReport()">🖨 In báo cáo</button><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Hạng mục</button>${extra}</div>
+</div>`;}
 function tdApplyRange(){const a=document.getElementById('tdFrom')?.value||'',b=document.getElementById('tdTo')?.value||'';if(a&&b&&a>b){toast('Ngày bắt đầu phải trước hoặc bằng ngày kết thúc');return;}window._tdFrom=a;window._tdTo=b;const r=ROUTES[location.hash.split('/').length>2&&location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash)?'#/tiendo/:id':location.hash];if(r){if(location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash))r(location.hash.split('/')[2]);else r();}}
 function tdClearRange(){window._tdFrom='';window._tdTo='';const a=document.getElementById('tdFrom'),b=document.getElementById('tdTo');if(a)a.value='';if(b)b.value='';tdApplyRange();}
 function setTdZoom(v){window._tdZoom=+v;const lb=document.getElementById('tdZoomLb');if(lb)lb.textContent=v+'%';const sc=document.getElementById('tiendoScope');if(!sc)return;sc.className='';if(v!=100)sc.classList.add('zoom-'+v);}
@@ -2689,18 +2328,14 @@ ROUTES['#/tiendo-split']=function(){
 };
 ROUTES['#/tiendo/:id']=function(pid){const p=tdProject(pid);if(!p.id){location.hash='#/tiendo';return;}const items=tdItems(pid).sort((a,b)=>(a.ngayBatDau||'').localeCompare(b.ngayBatDau||''));const pct=tienDoProject(pid);let h=tdPrintHeader('CHI TIẾT TIẾN ĐỘ',p)+`<div class="page-head"><div><div style="font-size:11px;font-weight:800;color:#a16207">${tdEsc(p.code||'')}</div><h1>${tdEsc(p.name)}</h1><p>${items.length} hạng mục · tiến độ tổng hợp ${pct}%</p></div><div class="page-actions noprint"><button class="btn btn-sec" onclick="location.hash='#/tiendo'">← Tổng quan</button><button class="btn btn-pri" onclick="tienDoForm('${pid}')">+ Hạng mục</button></div></div><div class="prog big" style="margin-bottom:16px"><i style="width:${pct}%"></i></div>`+tdViewSwitcher('#/tiendo')+tdToolbar()+`<div id="tiendoScope"><div class="td-detail-list">`;items.forEach(t=>{const dep=(DB.data.tienDo||[]).find(x=>x.id===t.phuThuocId);h+=`<div class="td-card"><div class="row"><div><div style="font-size:10px;font-weight:800;color:#a16207">${tdEsc(tdPhaseLabel(t.giaiDoan))}</div><b>${tdEsc(t.hangMuc)}</b></div><strong>${tdPct(t)}%</strong></div><div class="prog"><i style="width:${tdPct(t)}%"></i></div><div class="td-meta"><span>${fmtDate(t.ngayBatDau)||'Chưa có ngày bắt đầu'} → ${fmtDate(t.ngayKetThuc)||'Chưa có hạn'}</span><span>${tdDays(t)} ngày · Trọng số ${tdWeight(t)}</span><span class="k-status ${tdStatus(t)}">${tdStatusLabel(t)}</span></div>${dep?`<div style="font-size:11px;color:#64748b;margin-top:6px">Phụ thuộc: ${tdEsc(dep.hangMuc)} (${tdPct(dep)}%)</div>`:''}<div style="font-size:12px;color:#64748b;margin-top:6px">Cập nhật: ${fmtDate(t.ngayCapNhat)||'—'}${t.ghiChu?' · '+tdEsc(t.ghiChu):''}</div><div class="noprint" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="range" class="td-range" min="0" max="100" value="${tdPct(t)}" oninput="this.nextElementSibling.textContent=this.value+'%'" onchange="tienDoQuick('${t.id}',this.value)"><span style="min-width:40px;font-weight:700">${tdPct(t)}%</span><button class="btn btn-sm btn-sec" onclick="tienDoForm('${pid}','${t.id}')">Sửa</button><button class="btn btn-sm btn-bad" onclick="if(confirm('Xóa hạng mục này?'))delObj('tienDo','${t.id}')">Xóa</button></div></div>`;});if(!items.length)h+='<div class="empty">Chưa có hạng mục. Hãy thêm hạng mục đầu tiên.</div>';h+='</div></div>';document.getElementById('view').innerHTML=h;};
 function tienDoQuick(id,val){const t=(DB.data.tienDo||[]).find(x=>x.id===id);if(t){t.phanTram=Math.max(0,Math.min(100,+val||0));t.ngayCapNhat=todayISO();DB.save();nav(false);}}
-function tienDoForm(pid,id){const old=id?(DB.data.tienDo||[]).find(x=>x.id===id):null;const t=old||{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:'',giaiDoan:'tho',ngayBatDau:todayISO(),ngayKetThuc:todayISO(),trongSo:'',phuThuocId:''};const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];const projectId=t.projectId||projs[0]?.id||'';const candidates=(DB.data.tienDo||[]).filter(x=>x.projectId===projectId&&x.id!==id);openModal((id?'Sửa hạng mục':'Thêm hạng mục tiến độ'),`<div class="td-form-grid"><div class="fld"><label>Dự án</label><select class="inp" id="td_pid" onchange="tdRefreshDependencies(this.value,'${id||''}')">${projs.map(p=>`<option value="${p.id}" ${projectId===p.id?'selected':''}>${tdEsc(p.code||'')} · ${tdEsc(p.name)}</option>`).join('')}</select></div><div class="fld"><label>Tên hạng mục / công tác *</label><input class="inp" id="td_hm" list="td_task_presets" value="${tdEsc(t.hangMuc)}" placeholder="Chọn hạng mục có sẵn hoặc nhập mới"><datalist id="td_task_presets">${[...new Set((DB.data.tienDo||[]).map(x=>(x.hangMuc||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi')).map(x=>`<option value="${tdEsc(x)}"></option>`).join('')}</datalist></div><div class="fld"><label>Giai đoạn</label><select class="inp" id="td_phase">${tdPhaseOptions(t.giaiDoan||'tho')}</select></div><div class="fld"><label>Tiến độ thực tế (%)</label><select class="inp" id="td_pct">${[...new Set([tdPct(t),...Array.from({length:11},(_,i)=>i*10)])].sort((a,b)=>a-b).map(v=>`<option value="${v}" ${tdPct(t)===v?'selected':''}>${v}%</option>`).join('')}</select></div><div class="fld"><label>Ngày bắt đầu</label><input class="inp" type="date" id="td_start" value="${tdEsc(t.ngayBatDau||'')}"></div><div class="fld"><label>Ngày kết thúc kế hoạch</label><input class="inp" type="date" id="td_end" value="${tdEsc(t.ngayKetThuc||'')}"></div><div class="fld"><label>Trọng số (tùy chọn)</label><input class="inp" type="number" id="td_weight" min="0" step="0.5" value="${t.trongSo==null?'':tdEsc(t.trongSo)}" placeholder="Để trống = số ngày kế hoạch"></div><div class="fld"><label>Phụ thuộc sau hạng mục</label><select class="inp" id="td_dep"><option value="">Không phụ thuộc</option>${candidates.map(x=>`<option value="${x.id}" ${t.phuThuocId===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('')}</select></div><div class="fld td-wide"><label>Ghi chú / cập nhật hiện trường</label><textarea class="inp" id="td_note" rows="3" placeholder="Tình hình, vướng mắc, khối lượng còn lại…">${tdEsc(t.ghiChu||'')}</textarea></div></div><div id="td_form_error" style="display:none;color:#b91c1c;font-size:12px;margin-top:8px"></div>`,`<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo('${id||''}')">Lưu hạng mục</button>`);}
+function tienDoForm(pid,id){const old=id?(DB.data.tienDo||[]).find(x=>x.id===id):null;const t=old||{projectId:pid||'',hangMuc:'',phanTram:0,ghiChu:'',giaiDoan:'tho',ngayBatDau:todayISO(),ngayKetThuc:todayISO(),trongSo:'',phuThuocId:''};const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];const projectId=t.projectId||projs[0]?.id||'';const candidates=(DB.data.tienDo||[]).filter(x=>x.projectId===projectId&&x.id!==id);const allTasks=[...new Set((DB.data.tienDo||[]).map(x=>(x.hangMuc||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi'));
+openModal((id?'Sửa hạng mục':'Thêm hạng mục tiến độ'),`<div class="td-form-grid"><div class="fld"><label>Dự án</label><select class="inp" id="td_pid" onchange="tdRefreshDependencies(this.value,'${id||''}')">${projs.map(p=>`<option value="${p.id}" ${projectId===p.id?'selected':''}>${tdEsc(p.code||'')} · ${tdEsc(p.name)}</option>`).join('')}</select></div><div class="fld"><label>Giai đoạn</label><select class="inp" id="td_phase">${tdPhaseOptions(t.giaiDoan||'tho')}</select></div><div class="fld td-wide"><label>Tên hạng mục / công tác *</label><input class="inp" id="td_hm" list="td_task_presets" value="${tdEsc(t.hangMuc)}" placeholder="Chọn chip bên dưới hoặc nhập mới"><datalist id="td_task_presets">${allTasks.map(x=>`<option value="${tdEsc(x)}"></option>`).join('')}</datalist><div class="td-hm-chips">${allTasks.slice(0,14).map(x=>`<button type="button" class="td-hm-chip" onclick="tdPickTask('${tdEsc(x).replace(/'/g,"\\'")}')">${tdEsc(x)}</button>`).join('')}</div></div><div class="fld td-wide"><label>Tiến độ thực tế (%)</label><div class="td-pct-quick">${[0,10,20,30,40,50,60,70,80,90,100].map(v=>`<button type="button" class="td-pct-chip${tdPct(t)===v?' active':''}" data-v="${v}" onclick="tdPickPct(${v})">${v}%</button>`).join('')}<input type="number" class="inp" id="td_pct" min="0" max="100" step="1" value="${tdPct(t)}" oninput="tdSyncPctChips()"></div></div><div class="fld"><label>Ngày bắt đầu</label><input class="inp" type="date" id="td_start" value="${tdEsc(t.ngayBatDau||'')}"></div><div class="fld"><label>Ngày kết thúc kế hoạch</label><input class="inp" type="date" id="td_end" value="${tdEsc(t.ngayKetThuc||'')}"></div><div class="fld"><label>Trọng số (tùy chọn)</label><input class="inp" type="number" id="td_weight" min="0" step="0.5" value="${t.trongSo==null?'':tdEsc(t.trongSo)}" placeholder="Để trống = số ngày kế hoạch"></div><div class="fld"><label>Phụ thuộc sau hạng mục</label><select class="inp" id="td_dep"><option value="">Không phụ thuộc</option>${candidates.map(x=>`<option value="${x.id}" ${t.phuThuocId===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('')}</select></div><div class="fld td-wide"><label>Ghi chú / cập nhật hiện trường</label><textarea class="inp" id="td_note" rows="3" placeholder="Tình hình, vướng mắc, khối lượng còn lại…">${tdEsc(t.ghiChu||'')}</textarea></div></div><div id="td_form_error" style="display:none;color:#b91c1c;font-size:12px;margin-top:8px"></div>`,`<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="saveTienDo('${id||''}')">Lưu hạng mục</button>`);}
 function tdRefreshDependencies(pid,id){const sel=document.getElementById('td_dep');if(!sel)return;const old=sel.value;const list=(DB.data.tienDo||[]).filter(x=>x.projectId===pid&&x.id!==id);sel.innerHTML='<option value="">Không phụ thuộc</option>'+list.map(x=>`<option value="${x.id}" ${old===x.id?'selected':''}>${tdEsc(x.hangMuc)} (${tdPct(x)}%)</option>`).join('');}
 function saveTienDo(id){const get=x=>document.getElementById(x);const pid=get('td_pid').value,hangMuc=get('td_hm').value.trim(),pct=Number(get('td_pct').value),start=get('td_start').value,end=get('td_end').value,weight=get('td_weight').value.trim(),dep=get('td_dep').value;if(!hangMuc){toast('Vui lòng nhập tên hạng mục');return;}if(!Number.isFinite(pct)||pct<0||pct>100){toast('Tiến độ phải từ 0 đến 100');return;}if(start&&end&&start>end){toast('Ngày kết thúc phải bằng hoặc sau ngày bắt đầu');return;}if(dep===id){toast('Hạng mục không thể phụ thuộc vào chính nó');return;}let walk=dep,seen=new Set();while(walk){if(walk===id){toast('Quan hệ phụ thuộc tạo thành vòng lặp; hãy chọn hạng mục khác');return;}if(seen.has(walk))break;seen.add(walk);const prev=(DB.data.tienDo||[]).find(x=>x.id===walk);walk=prev?prev.phuThuocId:'';}const d={projectId:pid,hangMuc,phanTram:pct,giaiDoan:get('td_phase').value,ngayBatDau:start,ngayKetThuc:end,trongSo:weight&&+weight>0?+weight:null,phuThuocId:dep||'',ghiChu:get('td_note').value.trim(),ngayCapNhat:todayISO()};if(id){const t=(DB.data.tienDo||[]).find(x=>x.id===id);if(t)Object.assign(t,d);}else{d.id='td'+Date.now();(DB.data.tienDo=DB.data.tienDo||[]).push(d);}DB.save();closeModal();nav(false);}
-function closeModal(){document.getElementById('mback').classList.remove('open');}
-
-
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
-/* đảm bảo collection mới tồn tại khi mở bản cũ + tự động merge dự án/NCC/đội mới từ SEED */
 function ensureArrays(){
  let ch=false;
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
- // Merge tự động: nếu SEED có id mới mà DB.data chưa có thì thêm vào (không xóa cũ)
  try{
   ['users','projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
     if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
@@ -2713,7 +2348,14 @@ function ensureArrays(){
     });
   });
  }catch(e){}
- // Thuần việc: đổi các mã cũ dang_thi_cong, chuan_bi... sang tiếng Việt chuẩn
+ // Fix role cũ viết HOA (GIÁM ĐỐC → Giám đốc) + tên rỗng → tránh menu rỗng, session fail
+ try{
+  const ROLE_FIX={'GIÁM ĐỐC':'Giám đốc','KẾ TOÁN':'Kế toán','THỦ QUỸ':'Thủ Quỹ','QUẢN LÝ DỰ ÁN':'Quản Lý Dự Án','NHÂN VIÊN MUA HÀNG':'Nhân viên mua hàng','CHỈ HUY CÔNG TRÌNH':'Chỉ huy công trình'};
+  (DB.data.users||[]).forEach(u=>{
+   if(ROLE_FIX[u.role]){u.role=ROLE_FIX[u.role];ch=true;}
+   if(u.id==='u1'&&!u.name){u.name='Lê Hà';ch=true;}
+  });
+ }catch(e){}
  try{
   const MAP={'dang_thi_cong':'Đang thi công','chuan_bi':'Chuẩn bị','hoan_thanh':'Hoàn thành','tam_dung':'Tạm dừng','da_huy':'Đã hủy'};
   if(Array.isArray(DB.data.projects)){
@@ -2724,14 +2366,11 @@ function ensureArrays(){
  }catch(e){}
  if(ch){try{localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}}
 }
-/* tiền có dấu chấm khi nhập */
 document.addEventListener('input',function(e){
  const t=e.target;if(!t.classList||!t.classList.contains('money'))return;
  const d=t.value.replace(/[^\d]/g,'').slice(0,15);
  t.value=d?new Intl.NumberFormat('vi-VN').format(+d):'';
 });
-
-/* ================= INIT ================= */
 try{localStorage.removeItem('twpro_fb_cfg');}catch(e){}
 DB.load();
 try{if(!DB.data.users||!DB.data.users.length) throw 'no users';}catch(e){try{localStorage.removeItem(DBKEY);}catch(_){} DB.data=JSON.parse(JSON.stringify(SEED));}
@@ -2739,8 +2378,6 @@ ensureArrays();
 loadCfg();
 if(restoreSession()){enterApp();if(CFG.apiUrl)pullAll(true).catch(()=>{});}
 else{showLogin();}
-
-/* Auto-sync Google Sheets */
 let _pushTimer=null;
 function autoPushSheets(){
   try{
@@ -2750,7 +2387,6 @@ function autoPushSheets(){
   }catch(e){}
 }
 setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pullAll!=='undefined') await pullAll(true); }catch(e){} },5*60*1000);
-/* Universal compact dropdown UI: native select remains the source of truth. */
 (function(){
  const TARGET='select:not([multiple]):not([data-native-dropdown="true"])';
  let active=null;
@@ -2800,7 +2436,6 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
  function enhance(sel){
   if(sel.dataset.twEnhanced==='1'||!sel.parentNode||sel.multiple)return;
   sel.dataset.twEnhanced='1';
-  /* Hide the native control itself; only the custom trigger should remain visible. */
   sel.classList.add('tw-native-select');
   sel.setAttribute('aria-hidden','true');
   sel.tabIndex=-1;
@@ -2808,7 +2443,6 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
   sel.parentNode.insertBefore(wrap,sel);wrap.appendChild(sel);
   const btn=document.createElement('button');btn.type='button';btn.className='tw-select-trigger';btn.setAttribute('aria-haspopup','listbox');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label',sel.getAttribute('aria-label')||sel.name||'Select an option');
   const menu=document.createElement('div');menu.className='tw-select-menu';menu.setAttribute('role','listbox');menu.style.display='none';
-  /* Portal menu to body so it is not clipped by cards, modals, or scrolling panels. */
   document.body.appendChild(menu);
   wrap.appendChild(btn);
   const st={sel,wrap,btn,menu};sel.__twDropdown=st;
@@ -2873,53 +2507,5 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
  mo.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
-
-<style id="tw-final-readability-print-popup-fixes">
-#view .td-view-switch button{font-size:13px!important;padding:7px 5px!important}
-#view .page-head h1{font-size:22px!important}#view .page-head p{font-size:12.5px!important}
-#view .td-card{font-size:13px!important}#view .td-card b,#view .td-card .row strong{font-size:14px!important}
-#view .td-meta{font-size:12px!important;line-height:1.4!important}
-#view .td-gantt-pro .gantt-label{font-size:12px!important}#view .td-gantt-pro .gantt-label small{font-size:11px!important}
-#view .td-gantt-pro .td-month-track span{font-size:12px!important;font-weight:700!important}
-#view .cal-cell .citem.cal-task-line,#view .cal-task-line .cal-item-name{font-size:10px!important}
-#view .cal-task-line .cal-project-code,#view .cal-task-line strong{font-size:9px!important}
-.td-toolbar{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important;margin:0 0 9px!important;padding:7px!important;background:#f8fafc!important;border:1px solid #e2e8f0!important;border-radius:9px!important}
-.td-date-range{display:flex!important;align-items:center!important;gap:5px!important;flex:0 1 auto!important;min-width:0!important}
-.td-date-range label{font-size:11px!important;white-space:nowrap!important}.td-date-range input{width:112px!important;height:30px!important;font-size:12px!important}
-.td-zoom{display:flex!important;align-items:center!important;gap:5px!important;flex:0 0 auto!important;margin-left:auto!important;font-size:12px!important}.td-zoom input{width:72px!important}
-.td-actions{display:flex!important;align-items:center!important;gap:5px!important;flex:0 0 auto!important;margin-left:0!important}
-.td-toolbar .btn{min-height:30px!important;padding:6px 9px!important;font-size:12px!important;white-space:nowrap!important}
-#mback .modal{width:min(620px,94vw)!important;max-width:620px!important;max-height:88vh!important;border-radius:13px!important}
-#mback .m-head{padding:11px 14px!important}#mback .m-head h3{font-size:15px!important}
-#mback .m-body{padding:12px 14px!important;overflow-y:auto!important}#mback .m-foot{padding:9px 14px!important;gap:7px!important}
-#mback .m-body .frm-row,#mback .m-body .frm-row3{gap:7px!important;margin-bottom:7px!important;align-items:start!important}#mback .m-body .fld{margin:0 0 7px!important;min-width:0!important}#mback .m-body .fld label{font-size:11.5px!important;margin-bottom:3px!important}#mback .m-body .inp,#mback .m-body select.inp,#mback .m-body textarea.inp{font-size:13px!important;padding:6px 8px!important;min-width:0!important}#mback .m-body textarea.inp{min-height:52px!important}
-#mback .td-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px 10px!important}
-#mback .td-form-grid .fld{min-width:0!important}#mback .td-form-grid .fld label{font-size:11.5px!important;margin-bottom:3px!important;line-height:1.2!important}
-#mback .td-form-grid .inp{min-height:32px!important;height:32px!important;padding:5px 8px!important;font-size:13px!important;min-width:0!important}
-#mback .td-form-grid textarea.inp{height:52px!important;min-height:52px!important}#mback .td-form-grid .td-wide{grid-column:1/-1!important}
-@media(max-width:520px){.td-toolbar{gap:5px!important;padding:6px!important}.td-date-range{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important}.td-date-range label{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:2px!important}.td-date-range input{width:100%!important}.td-zoom{margin-left:0!important;flex:1 1 auto!important}.td-actions{margin-left:auto!important}#mback .modal{width:96vw!important;max-width:96vw!important;max-height:90vh!important}#mback .td-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}#mback .td-form-grid .td-wide{grid-column:1/-1!important}}
-@media print{
- @page{size:A4 landscape;margin:8mm}
- html,body,body.printing-tiendo,#appView,.shell,.main,#view,#tiendoScope{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;transform:none!important;zoom:1!important;position:static!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;float:none!important}
- body.printing-tiendo #loginView,body.printing-tiendo .sidebar,body.printing-tiendo #sbBackdrop,body.printing-tiendo .topbar,body.printing-tiendo .footer,body.printing-tiendo .toast,body.printing-tiendo .noprint,body.printing-tiendo .page-actions,body.printing-tiendo .td-view-switch,body.printing-tiendo .td-toolbar,body.printing-tiendo .sb-nav-tools{display:none!important}
- body.printing-tiendo .print-header{display:block!important;margin:0 0 4mm!important;padding:0 0 3mm!important;break-after:avoid!important;page-break-after:avoid!important}
- body.printing-tiendo .print-header h1{font-size:18pt!important}body.printing-tiendo .print-brand{font-size:9pt!important}body.printing-tiendo .print-project-line{font-size:11pt!important}body.printing-tiendo .print-header .meta{font-size:10pt!important}
- body.printing-tiendo #view{font-size:11pt!important;line-height:1.35!important}body.printing-tiendo #view .page-head h1{font-size:18pt!important}body.printing-tiendo #view .page-head p{font-size:11pt!important}
- body.printing-tiendo #view .td-detail-list,body.printing-tiendo #view .project-overview-grid,body.printing-tiendo #view .split-dual,body.printing-tiendo #view .split-pane-body{display:block!important;overflow:visible!important;max-height:none!important;grid-template-columns:none!important;gap:0!important}
- body.printing-tiendo #view .td-card,body.printing-tiendo #view .project-overview-card,body.printing-tiendo #view .stat,body.printing-tiendo #view .card,body.printing-tiendo #view .tbl-wrap,body.printing-tiendo #view .split-pane,body.printing-tiendo #view .kanban-col,body.printing-tiendo #view .cal-cell,body.printing-tiendo #view .gantt-row{break-inside:auto!important;page-break-inside:auto!important;break-after:auto!important;page-break-after:auto!important;max-height:none!important;overflow:visible!important;box-shadow:none!important}
- body.printing-tiendo #view .td-card,body.printing-tiendo #view .project-overview-card{display:block!important;margin:0 0 3mm!important;padding:3mm!important;border-radius:0!important}
- body.printing-tiendo #view .td-meta{font-size:10pt!important}body.printing-tiendo #view .prog{overflow:hidden!important}
- body.printing-tiendo #view table{width:100%!important;table-layout:auto!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important;font-size:10pt!important}
- body.printing-tiendo #view thead{display:table-header-group!important}body.printing-tiendo #view tfoot{display:table-footer-group!important}body.printing-tiendo #view tr{break-inside:avoid!important;page-break-inside:avoid!important}
- body.printing-tiendo #view th,body.printing-tiendo #view td{font-size:10pt!important;padding:5px 6px!important;white-space:normal!important;overflow-wrap:anywhere!important}
- body.printing-tiendo #view .gantt,body.printing-tiendo #view .gantt-track,body.printing-tiendo #view .kanban,body.printing-tiendo #view .cal-grid,body.printing-tiendo #view .split-wrap{overflow:visible!important;max-height:none!important;min-width:0!important}body.printing-tiendo #view .gantt-track{min-width:0!important}
- body.printing-tiendo #view .td-gantt-pro .gantt-label{width:42mm!important;min-width:42mm!important;font-size:9pt!important}body.printing-tiendo #view .td-gantt-pro .gantt-label small{font-size:8pt!important}body.printing-tiendo #view .td-gantt-pro .td-month-track span{font-size:8pt!important}
- body.printing-tiendo #view .kanban{display:flex!important;flex-wrap:wrap!important;gap:3mm!important}body.printing-tiendo #view .kanban-col{flex:1 1 30%!important;min-width:0!important}
- body.printing-tiendo #view .cal-grid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important}body.printing-tiendo #view .cal-cell{display:block!important;width:auto!important;min-width:0!important;min-height:22mm!important}body.printing-tiendo #view .cal-cell .citem{white-space:normal!important;overflow-wrap:anywhere!important}
- body.printing-tiendo #view .split-pane{margin:0 0 4mm!important}body.printing-tiendo #view .split-dual{display:block!important}body.printing-tiendo #view .split-kanban{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
- body.printing-tiendo #view *{orphans:2;widows:2}
-}
-</style>
-
 </body>
 </html>
