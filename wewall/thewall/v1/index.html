@@ -1111,7 +1111,7 @@ ROUTES['#/dashboard']=function(){
  const exps=scoped(DB.data.expenses);
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
- let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
+ let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
@@ -1473,6 +1473,8 @@ ROUTES['#/receivables']=function(){if(!Auth.can('conno_view')){location.hash='#/
 /* ================= REPORTS ================= */
 ROUTES['#/reports']=function(){if(!Auth.can('baocao_view')){location.hash='#/dashboard';return;}
  let h='<div class="page-head"><div><h1>Báo cáo</h1><p>Báo cáo in ấn • chọn loại và dự án</p></div></div>';
+ const reportPie=DB.data.projects.map((p,i)=>({label:p.name,value:Math.max(0,projectSpent(p.id)),color:['#d97706','#0f766e','#2563eb','#7c3aed','#dc2626','#0891b2','#65a30d','#db2777'][i%8]})).filter(x=>x.value>0);
+ h+='<div class="card" style="margin:0 0 16px"><div class="card-h"><div><h3>Biểu đồ tròn — cơ cấu chi phí theo dự án</h3><div class="sub">Tỷ trọng chi phí thực tế của các dự án</div></div></div><div class="card-b">'+(reportPie.length?donutChart(reportPie):'<div class="empty">Chưa có dữ liệu chi phí để lập biểu đồ</div>')+'</div></div>';
  h+='<div class="grid g2"><div class="card"><div class="card-h"><div><h3>Báo cáo dòng tiền</h3><div class="sub">Tổng hợp thu/chi theo dự án</div></div></div><div class="card-b">'
   +fld('Dự án',sel('rp',DB.data.projects.map(p=>({v:p.id,t:p.name})),SEL.projectId||''))
   +'<button class="btn btn-pri" onclick="reportCash()">Xem báo cáo</button></div></div>';
@@ -2369,7 +2371,7 @@ ROUTES['#/tiendo']=function(){
   const items=DB.data.tienDo||[];
   const totalPct=projs.length?Math.round(projs.reduce((s,p)=>s+tienDoProject(p.id),0)/projs.length):0;
   let h=getPrintHeader();
-  h+=`<div class="page-head"><div><h1>Tiến độ thi công - 14 dự án</h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-sec" onclick="window.print()">In</button><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
+  h+=`<div class="page-head"><div><h1>Tiến độ thi công - 14 dự án</h1><p>${projs.length} dự án • ${items.length} hạng mục • Trung bình ${totalPct}%</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tienDoForm()">+ Cập nhật</button></div></div>`;
   h+=tdViewSwitcher('#/tiendo');
   h+=tdToolbar();
   h+='<div id="tiendoScope">';
@@ -2383,8 +2385,7 @@ ROUTES['#/tiendo']=function(){
     h+=`<div class="td-card"><div class="row"><b>${esc(p.code)} - ${esc(p.name)}</b><span style="font-weight:800;color:#d97706">${pct}%</span></div><div class="prog big"><i style="width:${pct}%"></i></div><div style="margin-top:8px;font-size:12px;color:#64748b;display:flex;justify-content:space-between"><span>${gd.gdl} • ${its.length} hạng mục</span><span><a href="#/tiendo/${p.id}">Chi tiết →</a> | <a href="#/tiendo-gantt">Gantt</a> | <a href="#/tiendo-kanban">Kanban</a></span></div></div>`;
   });
   h+='</div>';
-  const donutRows=projs.map((p,i)=>({label:p.name,value:Math.max(0,tienDoProject(p.id)),color:['#d97706','#0f766e','#2563eb','#7c3aed','#dc2626','#0891b2'][i%6]})).filter(x=>x.value>0);
-  h+='<div class="card" style="margin-top:14px"><div class="card-h"><h3>Biểu đồ tròn — tỷ trọng tiến độ các dự án</h3></div><div class="card-b">'+(donutRows.length?donutChart(donutRows):'<div class="empty">Chưa có dữ liệu tiến độ để lập biểu đồ</div>')+'</div></div></div>';
+  h+='</div>';
   h+='<div class="print-footer" style="display:none">In lúc: '+new Date().toLocaleString('vi-VN')+' - The Wall PMS</div>';
   document.getElementById('view').innerHTML=h;
 };
