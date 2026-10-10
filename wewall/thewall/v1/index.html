@@ -693,6 +693,27 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .project-overview-card .phase-bar i{display:block;height:100%;background:linear-gradient(90deg,#fbbc04,#d97706)}
 .xlsx-overview-btn{margin-right:8px}
 
+
+/* DNTT: scale up to use the A4 page instead of printing tiny */
+@media print {
+  @page { size: A4 portrait; margin: 5mm; }
+  body.printing-phieu .phieu-modal-body { width:100%!important; max-height:none!important; overflow:visible!important; padding:0!important; margin:0!important; }
+  body.printing-phieu .mback { width:100%!important; max-width:none!important; }
+  body.printing-phieu .modal { width:100%!important; max-width:none!important; padding:0!important; margin:0!important; }
+  body.printing-phieu .phieu-wrap { width:200mm!important; max-width:200mm!important; margin:0 auto!important; padding:1mm 2mm!important; border:0!important; font-size:11.5px!important; line-height:1.25!important; zoom:1!important; transform:none!important; box-sizing:border-box!important; }
+  body.printing-phieu .phieu-head { gap:10px!important; padding-bottom:5px!important; margin-bottom:4px!important; }
+  body.printing-phieu .phieu-head .logo { width:56px!important; height:56px!important; }
+  body.printing-phieu .phieu-head .co { font-size:10.5px!important; line-height:1.3!important; }
+  body.printing-phieu .ptitle { font-size:17px!important; line-height:1.2!important; margin:5px 0 2px!important; }
+  body.printing-phieu .pdate { font-size:10.5px!important; margin-bottom:4px!important; }
+  body.printing-phieu .ptbl { width:100%!important; font-size:10.5px!important; margin:4px 0!important; border-collapse:collapse!important; }
+  body.printing-phieu .ptbl td, body.printing-phieu .ptbl th { padding:3px 4px!important; line-height:1.2!important; }
+  body.printing-phieu .psec { font-size:10.5px!important; margin:4px 0 1px!important; line-height:1.2!important; }
+  body.printing-phieu .pdot { height:8px!important; margin:1px 0!important; }
+  body.printing-phieu .prow { gap:7px!important; margin:4px 0!important; font-size:10.5px!important; }
+  body.printing-phieu .prow .dot { height:8px!important; }
+  body.printing-phieu .pfoot { font-size:10px!important; margin-top:5px!important; padding:4px!important; }
+}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
