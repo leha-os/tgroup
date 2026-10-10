@@ -528,7 +528,7 @@ select.inp:focus{
 /* ===== CUSTOM DROPDOWN BOTTOM-SHEET ===== */
 .csel{position:relative}
 .csel-btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
-.csel-btn:after{content:'▾';color:#999}
+.csel-btn:after{content:'▼';color:#999}
 .sheet-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9998;opacity:0;pointer-events:none;transition:opacity .2s}
 .sheet-back.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1e293b;color:#fff;border-radius:16px 16px 0 0;max-height:70vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .25s}
@@ -1128,7 +1128,7 @@ function buildSidebar(){
  h+='<div class="sb-nav-tools"><button type="button" onclick="toggleSidebarAll(false)" title="Thu gọn tất cả">− Thu gọn</button><button type="button" onclick="toggleSidebarAll(true)" title="Mở tất cả">＋ Mở tất cả</button></div>'; 
  let secOpen=true;
  NAV.forEach(it=>{
-  if(it.sec){const key='sec:'+it.sec;secOpen=navExpanded[key]!==false;h+='<button type="button" class="sb-sec sb-sec-toggle" aria-expanded="'+secOpen+'" onclick="navExpanded[\''+key+'\']='+(secOpen?'false':'true')+';buildSidebar()"><span>'+it.sec+'</span><span class="sb-sec-arrow">'+(secOpen?'⌄':'›')+'</span></button>';return;}
+  if(it.sec){const key='sec:'+it.sec;secOpen=navExpanded[key]!==false;h+='<button type="button" class="sb-sec sb-sec-toggle" aria-expanded="'+secOpen+'" onclick="navExpanded[\''+key+'\']='+(secOpen?'false':'true')+';buildSidebar()"><span>'+it.sec+'</span><span class="sb-sec-arrow">'+(secOpen?'▾':'▸')+'</span></button>';return;}
   if(!secOpen)return;
   if(it.min==='Admin'&&!Auth.canAdmin())return;
   if(it.min==='Super Admin'&&!Auth.canSuper())return;
@@ -1136,7 +1136,7 @@ function buildSidebar(){
   if(it.children){
    const open=navExpanded[it.label]!==false;
    const act=it.children.some(c=>location.hash===c.hash);
-   h+='<button class="sb-link'+(act?' active':'')+'" onclick="navExpanded[\''+it.label+'\']='+(open?'false':'true')+';buildSidebar();nav(false)"><span class="ic">'+it.icon+'</span>'+it.label+'<span style="margin-left:auto">'+(open?'▾':'▸')+'</span></button>';
+   h+='<button class="sb-link'+(act?' active':'')+'" onclick="navExpanded[\''+it.label+'\']='+(open?'false':'true')+';buildSidebar();nav(false)"><span class="ic">'+it.icon+'</span>'+it.label+'<span style="margin-left:auto">'+(open?'▼':'')+'</span></button>';
    if(open)h+='<div class="sb-sub">'+it.children.map(c=>'<button class="sb-link'+(location.hash===c.hash?' active':'')+'" data-h="'+c.hash+'"><span class="ic">·</span>'+c.label+'</button>').join('')+'</div>';
   }else{
    let cnt='';
@@ -2802,7 +2802,7 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
   if(!btn||!menu)return;
   const opts=Array.from(sel.options||[]);
   const chosen=opts.find(o=>o.value===sel.value)||opts[0];
-  btn.textContent=(chosen?chosen.textContent:'Chọn…')+'　⌄';
+  btn.textContent=(chosen?chosen.textContent:'Chọn…')+'　▾';
   btn.disabled=!!sel.disabled;
   btn.setAttribute('aria-expanded',String(menu.classList.contains('open')));
   menu.innerHTML=opts.map((o,i)=>'<button type="button" class="tw-select-option'+(o.value===sel.value?' selected':'')+'" role="option" aria-selected="'+(o.value===sel.value)+'" '+(o.disabled?'disabled':'')+' data-index="'+i+'">'+o.textContent+'</button>').join('');
