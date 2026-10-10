@@ -267,9 +267,8 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
   body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
   body.printing-phieu{font-family:Arial,sans-serif!important}
-  /* GOM GỌN 1 TRANG A4 */
-  @page{size:A4 portrait;margin:8mm 10mm 10mm 10mm}
-  body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:6px 10px!important;font-size:9.5px!important;line-height:1.25!important;font-family:Arial,sans-serif!important;max-height:277mm!important;overflow:hidden!important}
+  @page{size:A4 portrait;margin:8mm 10mm}
+  body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:6px 10px!important;font-size:9.5px!important;line-height:1.25!important;font-family:Arial,sans-serif!important}
   body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important}
   body.printing-phieu .phieu-head{padding-bottom:4px!important;margin-bottom:3px!important}
   body.printing-phieu .phieu-head .logo{width:48px!important;height:48px!important}
@@ -282,12 +281,8 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   body.printing-phieu .psec{margin:3px 0 1px!important;font-size:9px!important;font-weight:700!important}
   body.printing-phieu .pdot{height:10px!important;margin:1px 0!important;border-bottom:1px dotted #999!important}
   body.printing-phieu .prow{margin:3px 0!important}
-  body.printing-phieu .prow .lab{font-size:9px!important}
-  body.printing-phieu .pfoot{font-size:7px!important;margin-top:4px!important;text-align:center!important}
-  body.printing-phieu .ptbl tr{page-break-inside:avoid!important}
-  body.printing-phieu .phieu-wrap{page-break-after:avoid!important;page-break-before:avoid!important}
+  body.printing-phieu .pfoot{font-size:7px!important;margin-top:4px!important}
 }
-  body.printing-phieu .ptitle{font-size:16px!important;margin:6px 0 2px!important}
   body.printing-phieu .psec{margin:5px 0 1px!important}
   body.printing-phieu .pdot{height:10px!important}
   body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
@@ -566,7 +561,7 @@ select.inp:focus{
 input[type=range].td-range{width:100%;accent-color:#f59e0b}
 
 /* GANTT PRO */
-.gantt{overflow-x:auto;overflow-y:visible;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative;max-width:100%}
+.gantt{overflow:auto;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
 .gantt::-webkit-scrollbar{height:8px;width:8px}
 .gantt::-webkit-scrollbar-thumb{background:#d8cbb7;border-radius:20px}
 .gantt-scale{display:flex;position:sticky;top:0;z-index:5;border-bottom:2px solid #e8ddd0;background:linear-gradient(180deg,#fffdf6,#fbf9f5)}
@@ -622,7 +617,7 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
   .print-header .meta b{color:#000}
   .print-footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10px;color:#666;border-top:1px solid #ccc;padding:6px}
   .gantt,.kanban,.cal-grid{box-shadow:none!important;border:1px solid #000!important}
-  
+  .gantt{overflow:visible!important}
   .kanban{overflow:visible!important;flex-wrap:wrap}
   .kanban-col{break-inside:avoid;max-height:none!important}
   #view{overflow:visible!important;padding:0!important}
@@ -2612,7 +2607,7 @@ function saveTienDo(id){
   DB.log(id?'Sửa tiến độ':'Thêm tiến độ',o.hangMuc+' '+o.phanTram+'%');DB.save();closeModal();nav(false);toast('Đã lưu tiến độ');
 }
 
-
+function closeModal(){document.getElementById('mback').classList.remove('open');}
 
 
 function fillFbForm(){
