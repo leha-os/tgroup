@@ -2430,7 +2430,7 @@ function getPrintHeader(pid){
   const now = new Date().toLocaleString('vi-VN');
   const projName = p ? `${esc(p.code)} - ${esc(p.name)}` : 'TẤT CẢ DỰ ÁN (14 DỰ ÁN)';
   const projInfo = p ? `Chủ đầu tư: ${esc(p.client||'—')} | Địa điểm: ${esc(p.location||'—')} | Thời gian: ${fmtDate(p.start)} → ${fmtDate(p.end)} | Ngân sách: ${fmtVND(p.budget)}` : `Tổng ngân sách: ${fmtVND((DB.data.projects||[]).reduce((s,x)=>s+(+x.budget||0),0))} | Số hạng mục: ${(DB.data.tienDo||[]).length}`;
-  return `<div class="print-header"><h1>📋 BÁO CÁO TIẾN ĐỘ THI CÔNG - ${projName}</h1><div class="meta"><span><b>Dự án:</b> ${projName}</span><span><b>${projInfo}</b></span><span><b>Ngày in:</b> ${now}</span><span><b>Người in:</b> ${esc(Auth.user?Auth.user.name:'')}</span></div></div>`;
+  return `<div class="print-header"><h1>BÁO CÁO TIẾN ĐỘ THI CÔNG - ${projName}</h1><div class="meta"><span><b>Dự án:</b> ${projName}</span><span><b>${projInfo}</b></span><span><b>Ngày in:</b> ${now}</span><span><b>Người in:</b> ${esc(Auth.user?Auth.user.name:'')}</span></div></div>`;
 }
 function tdViewSwitcher(cur){
   const views=[['#/tiendo','Dashboard'],['#/tiendo-list','Table'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Timeline'],['#/tiendo-calendar','Calendar'],['#/tiendo-split','Split']];
