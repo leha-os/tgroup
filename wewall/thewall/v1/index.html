@@ -1082,7 +1082,7 @@ const NAV=[
  {sec:'TỔNG QUAN'},
  {label:'Tổng quan',icon:'',hash:'#/dashboard'},
  {sec:'DỰ ÁN'},
- {label:'Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
+ {label:'Xem tất cả Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {label:'Tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
@@ -1205,7 +1205,7 @@ ROUTES['#/dashboard']=function(){
  const exps=scoped(DB.data.expenses);
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
- let h='<div class="page-head"><div><h1>Tổng quan</h1><p>Toàn cảnh công ty — các dự án đang thi công</p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
+ let h='<div class="page-head"><div><h1>Tổng quan</h1><p> </p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
@@ -1247,7 +1247,7 @@ function tienDoCell(pid){
 /* ================= PROJECTS ================= */
 ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/dashboard';return;}
  const projs=scoped(DB.data.projects);
- let h='<div class="page-head"><div><h1>Dự án</h1><p>'+projs.length+' dự án • ngân sách, chi tiêu, công nợ theo từng công trình</p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
+ let h='<div class="page-head"><div><h1>Xem tất cả Dự án</h1><p></p></div><div class="page-actions">'+(Auth.can('projects_create')?'<button class="btn btn-pri" onclick="projectForm()">+ Thêm dự án</button>':'')+'</div></div>';
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
