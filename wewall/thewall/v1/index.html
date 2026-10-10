@@ -2280,7 +2280,6 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  xlsxDownload([{name:'DuAn',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
-}
 
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
@@ -2768,7 +2767,7 @@ function ensureArrays(){
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
  // Merge tự động: nếu SEED có id mới mà DB.data chưa có thì thêm vào (không xóa cũ)
  try{
-  ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
+  ['projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx','dutru','tienDo','danhmuc'].forEach(col=>{
     if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
     const existing = new Set(DB.data[col].map(x=>x.id));
     SEED[col].forEach(item=>{
