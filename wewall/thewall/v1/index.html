@@ -259,30 +259,22 @@ body.printing-phieu .phieu-wrap{border:none;margin:0;max-width:100%}
   .stat{flex-direction:column;gap:6px}
 }
 @media print{
-  .sidebar,.topbar,.page-actions,.toolbar,.toast,.noprint{display:none!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
+  .sidebar,.topbar,.page-actions,.toolbar,.toast,.noprint,.burger,#sbBackdrop,#swipeZone{display:none!important}
+  .prog,.prog i,.k-bar i,.gantt-bar{background:#f0ad1f!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   .mback{display:none!important}
   body.printing-phieu #appView,body.printing-phieu #loginView{display:none!important}
   body.printing-phieu .mback{display:block!important;position:static!important;padding:0!important;background:none!important}
-  body.printing-phieu .modal{box-shadow:none!important;width:100%!important;max-width:100%!important;margin:0!important;max-height:none!important}
+  body.printing-phieu .modal{box-shadow:none!important;width:100%!important;max-width:100%!important;margin:0!important;max-height:none!important;overflow:visible!important}
   body.printing-phieu .m-head,body.printing-phieu .m-foot{display:none!important}
-  body.printing-phieu .phieu-modal-body{max-height:none!important;overflow:visible!important}
-  body.printing-phieu{font-family:Arial,sans-serif!important}
-  body.printing-phieu .phieu-wrap{max-width:100%!important;margin:0!important;padding:8px 12px!important;font-size:10.5px!important;line-height:1.3!important;font-family:Arial,sans-serif!important}
-  body.printing-phieu .phieu-wrap *{font-family:Arial,sans-serif!important}
-  body.printing-phieu .ptbl{font-size:11px!important}
-  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th{padding:3px 5px!important}
-  body.printing-phieu .psig td{height:44px!important}
-  body.printing-phieu .ptitle{font-size:16px!important;margin:6px 0 2px!important}
-  body.printing-phieu .psec{margin:5px 0 1px!important}
-  body.printing-phieu .pdot{height:10px!important}
-  body.printing-phieu .pfoot{margin-top:8px!important;padding:6px!important;font-size:11px!important}
-  @page{size:A4;margin:8mm}
-  body.printing-phieu .phieu-wrap{page-break-inside:avoid}
-  #view{padding:0;overflow:visible}
-  .main{overflow:visible}
-  .card{box-shadow:none;break-inside:avoid}
-  body{background:#fff}
+  @page{size:A4 portrait;margin:5mm 6mm}
+  body.printing-phieu .phieu-wrap{max-width:100%!important;width:100%!important;margin:0!important;padding:2px 4px!important;font-size:7.5px!important;line-height:1.15!important;font-family:Arial,sans-serif!important;transform:scale(0.92);transform-origin:top left;width:108%!important;}
+  body.printing-phieu .phieu-head .logo{width:36px!important;height:36px!important}
+  body.printing-phieu .ptitle{font-size:11px!important;margin:2px 0!important}
+  body.printing-phieu .ptbl{font-size:7px!important}
+  body.printing-phieu .ptbl td{padding:1px 2px!important}
 }
+
 
 /* ===== UPGRADE: DROPDOWN & POPUP PREMIUM – KHÔNG ĐỤNG LOGIC ===== */
 select.inp{
@@ -624,6 +616,15 @@ input[type=range].td-range{width:100%;accent-color:#f59e0b}
 .sb-brand img{width:44px;height:44px;object-fit:contain;background:#fff;border-radius:8px;padding:2px;flex-shrink:0}
 
 @media print{*{ -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important;} .sidebar,.topbar,.page-actions,.toolbar,.toast,.noprint,.burger,#sbBackdrop{display:none!important} .prog,.prog i,.k-bar i,.gantt-bar{background:#f0ad1f!important;}} 
+
+@media print{
+  #view{overflow:visible!important;height:auto!important;max-height:none!important;}
+  .card{break-inside:avoid;page-break-inside:avoid;}
+  body{overflow:visible!important;height:auto!important;}
+  .main{overflow:visible!important;height:auto!important;}
+  .phieu-wrap{break-inside:avoid;page-break-inside:avoid;page-break-after:avoid;page-break-before:avoid;}
+}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
@@ -1147,8 +1148,8 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
  const over=projs.filter(p=>projectSpent(p.id)>p.budget);
  if(over.length)h+='<div class="alert alert-red"><b>'+over.length+' dự án vượt ngân sách:</b> '+over.map(p=>esc(p.code)).join(', ')+'</div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mã/Tên dự án</th><th>Chủ đầu tư</th><th>Thời gian</th><th>Trạng thái</th><th class="num">Ngân sách</th><th class="num">Đã chi</th><th>Tiến độ chi</th><th>Tiến độ thi công</th><th class="num">Còn lại</th><th></th></tr></thead><tbody>';
- projs.forEach(p=>{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
-  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">'+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
+ projs.forEach(p=>{try{const bd=+p.budget||0,s=projectSpent(p.id),pct=bd?Math.min(100,Math.round(100*s/bd)):0,bal=bd-s;
+  h+='<tr><td><a class="linklike" href="#/projects/'+p.id+'">'+esc(p.name)+'</a><div style="font-size:11px;color:#999">'+esc(p.code)+'</div></td><td>'+esc(p.client||'')+'</td><td style="white-space:nowrap;font-size:12.5px">'+fmtDate(p.start)+'<br>→ '+fmtDate(p.end)+'</td><td>'+statusBadge(p.status)+'</td><td class="num">'+fmtVND(bd)+'</td><td class="num">'+fmtVND(s)+'</td><td style="min-width:110px"><div class="prog'+(s>bd?' over':'')+'"><i style="width:'+pct+'%"></i></div><div style="font-size:11px;color:var(--mut)">'+pct+'%</div></td><td>'+tienDoCell(p.id)+'</td><td class="num" style="font-weight:700;color:'+(bal<0?'var(--bad)':'var(--ok)')+'">'+fmtVND(bal)+'</td><td><div class="rowbtns">''+(Auth.can('projects_edit')?'<button class="iconbtn" onclick="projectForm(\''+p.id+'\')" title="Sửa">Sửa</button>':'')+(Auth.can('projects_delete')?'<button class="iconbtn" onclick="if(confirm(\'Xóa dự án '+esc(p.code)+'?\'))delObj(\'projects\',\''+p.id+'\')" title="Xóa" style="color:#dc2626">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';
  $('#view').innerHTML=h;
 };
@@ -1765,11 +1766,13 @@ function xlsxMake(sheets,logoB64){
   for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);CT[n]=c;}
   function crc(b){let c=-1;for(let i=0;i<b.length;i++)c=CT[(c^b[i])&255]^(c>>>8);return (c^-1)>>>0;}
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-  function b64ToBytes(b64){try{const s=String(b64);const raw=s.indexOf(',')>=0?s.slice(s.indexOf(',')+1):s;const bin=atob(raw.replace(/\s/g,''));const b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b;}catch(e){return null;}}
+  function buildFreeze(f){if(!f) return ''; const xs=f.xSplit||0, ys=f.ySplit||0; const tl=f.topLeftCell|| (xs&&ys? 'B2' : xs?'B1':'A2'); const ap=f.activePane||'bottomRight'; if(xs&&ys) return `<pane xSplit="${xs}" ySplit="${ys}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/><selection pane="${ap}" activeCell="${tl}" sqref="${tl}"/>`; if(xs) return `<pane xSplit="${xs}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/>`; if(ys) return `<pane ySplit="${ys}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/>`; return '';}
+function b64ToBytes(b64){try{const s=String(b64);const raw=s.indexOf(',')>=0?s.slice(s.indexOf(',')+1):s;const bin=atob(raw.replace(/\s/g,''));const b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b;}catch(e){return null;}}
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
-  function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
+  function buildFreeze(f){if(!f) return ''; const xs=f.xSplit||0, ys=f.ySplit||0; const tl=f.topLeftCell|| (xs&&ys? 'B2' : xs?'B1':'A2'); const ap=f.activePane||'bottomRight'; let s=''; if(xs&&ys) s+=`<pane xSplit="${xs}" ySplit="${ys}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/><selection pane="${ap}"/>`; else if(xs) s+=`<pane xSplit="${xs}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/>`; else if(ys) s+=`<pane ySplit="${ys}" topLeftCell="${tl}" activePane="${ap}" state="frozen"/>`; return s;}
+function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
 
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="12"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="9"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF000000"/></left><right style="thin"><color rgb="FF000000"/></right><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="1" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="3" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="6"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="16"/><name val="Calibri"/></font><font><b/><sz val="13"/><name val="Calibri"/></font><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF0AD1F"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFBFBFBF"/></left><right style="thin"><color rgb="FFBFBFBF"/></right><top style="thin"><color rgb="FFBFBFBF"/></top><bottom style="thin"><color rgb="FFBFBFBF"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="14"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="3" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="4" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   /* style index: 0=mặc định 1=tiêu đề 16 đậm giữa 2=đậm 12 trái 3=thường 12 trái
      4=thường 12 giữa viền 5=đậm 12 giữa 6=thường 12 trái viền 7=tiền đậm viền 8=tiền thường viền 9=thường 12 phải */
 
@@ -2069,27 +2072,48 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
- // R1-4: thông tin công ty (cột B)
  const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH TƯ VẤN THIẾT KẾ KIẾN TRÚC XÂY DỰNG BỨC TƯỜNG',s:2};R.push(rc);
  const ra=new Array(n).fill(null);ra[1]={v:'Add: 15 Đường số 14, KDC Nam Long, Phường Tân Thuận, TP HCM',s:3};R.push(ra);
  const rt=new Array(n).fill(null);rt[1]={v:'Tel: (84) 8 5410 4013 - (84) 903 865 240',s:3};R.push(rt);
  const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
- // R5-7: trống 3 dòng
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
- // R8: tiêu đề
- const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
- // R9: ngày xuất
+ const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:1};R.push(rti);
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
- // R10: header vàng
- const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
- // Dữ liệu
- rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:'Tổng cộng',s:11};rf[n-1]={v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:4};rf[n-2]={v:parts[0].trim(),s:11};rf[n-1]={v:parts.slice(1).join(':').trim(),s:8};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:9};});R.push(rh);
+ rows.forEach(row=>{
+   const r=new Array(n).fill(null);
+   row.forEach((v,i)=>{
+     if(v==null||v==='') return;
+     if(typeof v==='number'){r[i]={v:v,s:7};}
+     else {r[i]={v:String(v),s:5};}
+   });
+   R.push(r);
+ });
+ if(foot){
+   const rf=new Array(n).fill(null);
+   if(typeof foot==='object'&&foot.total!=null){
+     for(let i=0;i<n;i++) rf[i]={v:'',s:5};
+     rf[n-2]={v:'Tổng cộng',s:9};rf[n-1]={v:foot.total,s:7};
+   } else {
+     const clean=String(foot).replace(/<[^>]*>/g,' ').trim();
+     const parts=clean.split(':');
+     if(parts.length>1){
+       for(let i=0;i<n;i++) rf[i]={v:'',s:5};
+       rf[n-2]={v:parts[0].trim(),s:9};rf[n-1]={v:parts.slice(1).join(':').trim(),s:7};
+     } else {
+       rf[0]={v:clean,s:9};
+     }
+   }
+   R.push(rf);
+ }
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
+ // Freeze column B (xSplit=1, ySplit=9 for header row) + topLeft C10
+ xlsxDownload([{name:'DuAn',widths:[14,12,26,22,20,14,14,16,16,26].slice(0,n),rows:R,merges:merges,freeze:{xSplit:1,ySplit:9,topLeftCell:'B10',activePane:'bottomRight'}}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
+}
+
 
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
