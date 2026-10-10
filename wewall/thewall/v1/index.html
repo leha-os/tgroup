@@ -1252,7 +1252,7 @@ const NAV=[
  {label:'Người dùng',icon:'',hash:'#/users',perm:'users_manage'},
  {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
-let navExpanded={};
+let navExpanded={'Project Progress':false};
 function toggleSidebarAll(open){
  NAV.forEach(it=>{if(it.sec)navExpanded['sec:'+it.sec]=open; if(it.children)navExpanded[it.label]=open;});
  buildSidebar();
@@ -2236,7 +2236,36 @@ function dlXls(html,filename){
  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
 }
 function xlsTable(title,headers,rows,foot){
- let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
+ let h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8">
+<style id="tw-final-ui-fixes">
+/* Sidebar hierarchy: make child routes visibly subordinate to their parent. */
+.sb-sub{margin:5px 0 8px 30px!important;padding:4px 0 4px 12px!important;border-left:2px solid rgba(240,173,31,.45)!important;background:rgba(255,255,255,.025);border-radius:0 8px 8px 0}
+.sb-sub .sb-link{padding:8px 10px 8px 18px!important;margin:2px 0!important;font-size:12.5px!important;min-height:34px;color:#c8c0b5!important}
+.sb-sub .sb-link .ic{display:inline-block!important;opacity:.8;margin-left:0!important;margin-right:2px!important}
+.sb-sub .sb-link.active{background:rgba(240,173,31,.18)!important;color:#ffd36b!important;border-left:2px solid #f0ad1f!important}
+/* Larger, responsive report workspace and controls. */
+.td-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 14px!important;border:1px solid #e0e6ef!important;border-radius:12px!important;background:#fff!important;box-shadow:0 2px 8px rgba(15,23,42,.05)!important;margin:12px 0 16px!important}
+.td-date-range,.td-zoom,.td-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px!important}
+.td-date-range{flex:1 1 420px}.td-zoom{flex:0 1 190px}.td-actions{flex:1 1 220px;justify-content:flex-end}
+.td-toolbar input[type=date]{min-height:38px;padding:7px 9px!important;font-size:14px!important;max-width:100%}
+.td-toolbar .btn{min-height:38px;padding:8px 13px!important;font-size:13px!important}
+#tiendoScope{font-size:14px}
+#tiendoScope .stat,#tiendoScope .project-overview-card,#tiendoScope .td-card{padding:18px!important}
+#tiendoScope .project-overview-card h3{font-size:16px!important;line-height:1.4}
+@media(max-width:760px){.td-toolbar{align-items:stretch;padding:10px!important}.td-date-range{display:grid;grid-template-columns:1fr 1fr;flex-basis:100%}.td-date-range label{min-width:0;display:flex;flex-direction:column;gap:4px}.td-date-range button{width:100%}.td-zoom{flex:1 1 100%;display:grid;grid-template-columns:auto 1fr auto}.td-actions{justify-content:stretch;display:grid;grid-template-columns:1fr 1fr}.td-actions .btn{width:100%;white-space:normal}.td-toolbar input[type=date]{width:100%;min-width:0;box-sizing:border-box}.sb-sub{margin-left:24px!important}}
+/* Printing a payment request must print only the payment form, never the app shell/page. */
+@media print{
+  body.printing-phieu{background:#fff!important;margin:0!important;padding:0!important;overflow:visible!important}
+  body.printing-phieu body,body.printing-phieu #appView,body.printing-phieu .shell,body.printing-phieu .main,body.printing-phieu #view,body.printing-phieu .sidebar,body.printing-phieu .topbar,body.printing-phieu .footer,body.printing-phieu .toast,body.printing-phieu .page-head,body.printing-phieu .noprint{display:none!important}
+  body.printing-phieu #mback{display:block!important;position:static!important;inset:auto!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important;opacity:1!important;visibility:visible!important}
+  body.printing-phieu #mback .modal{display:block!important;position:static!important;width:100%!important;max-width:none!important;height:auto!important;max-height:none!important;margin:0!important;padding:0!important;overflow:visible!important;box-shadow:none!important;border:0!important;transform:none!important}
+  body.printing-phieu #mback .m-head,body.printing-phieu #mback .m-foot{display:none!important}
+  body.printing-phieu #mback .phieu-modal-body{display:block!important;max-height:none!important;height:auto!important;overflow:visible!important;padding:0!important;margin:0!important}
+  body.printing-phieu #phieuPrintArea{display:block!important;visibility:visible!important;width:190mm!important;max-width:190mm!important;margin:0 auto!important;box-sizing:border-box!important;box-shadow:none!important}
+  body.printing-tiendo .td-toolbar,body.printing-tiendo .td-view-switch,body.printing-tiendo .page-actions,body.printing-tiendo .noprint,body.printing-tiendo button,body.printing-tiendo input,body.printing-tiendo select{display:none!important;visibility:hidden!important}
+}
+</style>
+</head><body>';
  h+='<h3>'+esc(title)+'</h3><table border="1"><thead><tr>'+headers.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>';
  rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+esc(c==null?'':c)+'</td>').join('')+'</tr>';});
  h+='</tbody></table>'+(foot?'<p>'+foot+'</p>':'')+'</body></html>';return h;
