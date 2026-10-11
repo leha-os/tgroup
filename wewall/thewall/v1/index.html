@@ -672,7 +672,7 @@ button,.btn{min-width:0}
  .page-head h1{font-size:18px!important;line-height:1.25!important}
  .page-head p{font-size:11.5px!important}
  .page-actions{width:100%!important;display:flex!important;flex-wrap:wrap!important;gap:5px!important}
- .page-actions .btn{flex:1 1 auto!important;min-width:0!important;font-size:12px!important;padding:8px 10px!important;min-height:38px!important;justify-content:center!important}
+ .page-actions .btn{flex:1 1 0!important;min-width:0!important;font-size:12px!important;padding:8px 10px!important;min-height:38px!important;justify-content:center!important;align-items:center!important}
  .page-actions .tw-select-wrap{flex:1 1 100%!important;min-width:0!important}
  .rowbtns{flex-wrap:wrap!important;gap:5px!important;justify-content:flex-end!important}
  .rowbtns .btn,.rowbtns .iconbtn{font-size:11.5px!important;padding:5px 8px!important;min-height:30px!important;white-space:nowrap!important}
@@ -946,6 +946,7 @@ table.tbl{border-color:#c9c9c9!important}
  #view .print-tbl tbody tr:last-child td:last-child{border-bottom-right-radius:8px!important}
  /* Bang thuong: giu collapse de phan trang tu nhien, bo overflow cuon khi in */
  #view .tbl-wrap{overflow:visible!important}
+ #view thead{display:table-header-group!important}
  #view .split-dual{display:none!important}
  #view .print-tbl tr.phaserow td{background:#f3ecdd!important}
 }
@@ -1492,7 +1493,7 @@ ROUTES['#/dashboard']=function(){
  const exps=scoped(DB.data.expenses);
  const byCat={};exps.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
  const stat=(lb,vl,ic,cls)=>'<div class="stat '+cls+'"><div class="ic">'+ic+'</div><div><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div></div></div>';
- let h='<div class="page-head"><div><h1>Tổng quan</h1><p> </p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button><button class="btn btn-sec" onclick="window.print()">🖨️ In</button></div></div>';
+ let h='<div class="page-head"><div><h1>Tổng quan</h1><p> </p></div><div class="page-actions"><button class="btn btn-pri" onclick="location.hash=\'#/quick\'">Nhập nhanh</button><button class="btn btn-sec" onclick="window.print()">In</button></div></div>';
  h+='<div class="grid g5" style="margin-bottom:16px">'
   +stat('Dự án đang làm',actives.length,'','st-info')
   +stat('Đã chi',fmtVND(spent),'','st-warn')
@@ -2549,7 +2550,7 @@ function tdPrintReport(){document.body.classList.add('printing-tiendo');window.p
 window.addEventListener('afterprint',()=>document.body.classList.remove('printing-tiendo'));
 function tdToolbar(extra=''){return `<div class="td-toolbar noprint">
 <div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc ngày</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa lọc</button></div>
-<div class="td-tools"><div class="td-zoom"><span>🔍 Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)" aria-label="Thu phóng"><span id="tdZoomLb">${window._tdZoom||100}%</span><button class="btn btn-sec btn-sm" onclick="tdPrintReport()">🖨 In báo cáo</button></div><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Hạng mục</button>${extra}</div>
+<div class="td-tools"><div class="td-zoom"><span>Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)" aria-label="Thu phóng"><span id="tdZoomLb">${window._tdZoom||100}%</span><button class="btn btn-sec btn-sm" onclick="tdPrintReport()">In báo cáo</button></div><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Hạng mục</button>${extra}</div>
 </div>`;}
 function tdApplyRange(){const a=document.getElementById('tdFrom')?.value||'',b=document.getElementById('tdTo')?.value||'';if(a&&b&&a>b){toast('Ngày bắt đầu phải trước hoặc bằng ngày kết thúc');return;}window._tdFrom=a;window._tdTo=b;const r=ROUTES[location.hash.split('/').length>2&&location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash)?'#/tiendo/:id':location.hash];if(r){if(location.hash.startsWith('#/tiendo/')&&!['#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'].includes(location.hash))r(location.hash.split('/')[2]);else r();}}
 function tdClearRange(){window._tdFrom='';window._tdTo='';const a=document.getElementById('tdFrom'),b=document.getElementById('tdTo');if(a)a.value='';if(b)b.value='';tdApplyRange();}
