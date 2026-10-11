@@ -935,15 +935,17 @@ button,.btn{min-width:0}
 table.tbl{border-color:#c9c9c9!important}
 .tbl th,.tbl td{border-color:#c9c9c9!important}
 @media print{
- /* Bang in: chu nho vua kho, header vang nhat + bo goc + vien vang */
- #view .tbl{border-collapse:separate!important;border-spacing:0!important}
- #view .tbl th{background:#fef3c7!important;color:#92400e!important;border:1px solid #e3cd8e!important;border-left-width:0!important;font-size:10pt!important;padding:1.2mm 2mm!important;white-space:nowrap!important}
- #view .tbl thead th:first-child{border-left-width:1px!important;border-top-left-radius:8px!important}
- #view .tbl thead th:last-child{border-top-right-radius:8px!important}
- #view .tbl td{border:1px solid #ece4cd!important;border-left-width:0!important;border-top-width:0!important;font-size:10pt!important;padding:1.2mm 2mm!important}
- #view .tbl td:first-child{border-left-width:1px!important}
- #view .tbl tbody tr:last-child td:first-child{border-bottom-left-radius:8px!important}
- #view .tbl tbody tr:last-child td:last-child{border-bottom-right-radius:8px!important}
+ /* Bang in tong quan (print-tbl): header vang nhat + bo goc + vien cung tong */
+ #view .print-tbl{border-collapse:separate!important;border-spacing:0!important}
+ #view .print-tbl th{background:#fef3c7!important;color:#92400e!important;border:1px solid #e3cd8e!important;border-left-width:0!important;font-size:10pt!important;padding:1.2mm 2mm!important;white-space:nowrap!important}
+ #view .print-tbl thead th:first-child{border-left-width:1px!important;border-top-left-radius:8px!important}
+ #view .print-tbl thead th:last-child{border-top-right-radius:8px!important}
+ #view .print-tbl td{border:1px solid #ece4cd!important;border-left-width:0!important;border-top-width:0!important;font-size:10pt!important;padding:1.2mm 2mm!important}
+ #view .print-tbl td:first-child{border-left-width:1px!important}
+ #view .print-tbl tbody tr:last-child td:first-child{border-bottom-left-radius:8px!important}
+ #view .print-tbl tbody tr:last-child td:last-child{border-bottom-right-radius:8px!important}
+ /* Bang thuong: giu collapse de phan trang tu nhien, bo overflow cuon khi in */
+ #view .tbl-wrap{overflow:visible!important}
 }
 </style>
 <style id="tw-final-20261011e">
