@@ -1008,6 +1008,20 @@ table.tbl{border-color:#c9c9c9!important}
 .m-x{border-radius:6px!important}
 .m-x:hover{transform:none!important;background:#efe7d8!important;color:#57534e!important;border-color:#e0d5c0!important}
 </style>
+<style id="tw-print-polish-v2">
+@page { size: A4 portrait; margin: 13mm 12mm 17mm; @bottom-left { content: "THE WALL · Tài liệu nội bộ"; font: 8pt Arial,sans-serif; color: #76664b; } @bottom-right { content: "Trang " counter(page); font: 8pt Arial,sans-serif; color: #76664b; } }
+@media print {
+ *,*::before,*::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+ #view table.tbl, .ptbl, .phieu-wrap table, body.printing-phieu table, .print-sheet table { border-collapse: collapse !important; border-color: #b6a887 !important; }
+ #view table.tbl th, #view table.tbl thead th, .ptbl th, .phieu-wrap th, body.printing-phieu th, .print-sheet th { background: #fff2c9 !important; color: #30291e !important; border: .7pt solid #b6a887 !important; text-align: center !important; vertical-align: middle !important; font-weight: 700 !important; }
+ #view table.tbl td, #view table.tbl th, .ptbl td, .ptbl th, .phieu-wrap td, .phieu-wrap th, body.printing-phieu td, body.printing-phieu th, .print-sheet td, .print-sheet th { border: .65pt solid #b6a887 !important; }
+ #view table.tbl td, #view table.tbl th, .ptbl td, .ptbl th, .phieu-wrap td, .phieu-wrap th, .print-sheet td, .print-sheet th { padding: 4pt 5pt !important; }
+ #view table.tbl thead, .ptbl thead, .phieu-wrap thead, .print-sheet thead { display: table-header-group !important; }
+ #view table.tbl tr, .ptbl tr, .phieu-wrap tr, .print-sheet tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+ h1,h2,h3,.page-head,.print-header,.tw-company-print-header { break-after: avoid !important; page-break-after: avoid !important; } a[href]::after { content: none !important; }
+}
+@page payment { size: A4 portrait; margin: 13mm 12mm 17mm; }
+</style>
 </head>
 <body>
 <div id="loginView">
@@ -1018,6 +1032,7 @@ table.tbl{border-color:#c9c9c9!important}
     <div class="fld"><label>Mật khẩu</label><input class="inp" id="lgPass" type="password" placeholder="Mật khẩu"></div>
     <div id="lgErr" class="alert alert-red" style="display:none"></div>
     <button class="btn btn-pri btn-block" onclick="doLogin()">Đăng nhập</button>
+    <details style="margin-top:12px;font-size:12px;color:#655744"><summary style="cursor:pointer;font-weight:700">Tài khoản demo theo vai trò</summary><div style="line-height:1.7;margin-top:8px">Giám đốc: <b>nbatam / admin123</b><br>Kế toán: <b>ketoan / ketoan123</b><br>Chỉ huy công trình: <b>congtruong / ctr123</b><br>Quản lý dự án: <b>qldp / qldp123</b><br>Thủ quỹ: <b>thuquy / tq123</b><br>Mua hàng: <b>muahang / mh123</b><br>Thầu phụ (demo): <b>thauphu / tp123</b><p style="margin:6px 0 0;color:#8a6a37">Tài khoản/mật khẩu chỉ dùng để thử nghiệm; hãy đổi trước khi dùng thật.</p></div></details>
   </div>
 </div>
 <div id="appView">
@@ -1053,14 +1068,15 @@ const todayVN=()=>fmtDate(todayISO());
 function toast(m){const t=document.createElement('div');t.className='t';t.textContent=m;$('#toast').appendChild(t);setTimeout(()=>t.remove(),2600);}
 const SEED={
 users:[
- {id:'u1',name:'Lê Hà',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
- {id:'u2',name:'Kế toán (test)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
- {id:'u3',name:'Anh Dương Chỉ huy (test)',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1']},
- {id:'u4',name:'Quản lý Dự án (test)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:[]},
- {id:'u5',name:'Thủ Quỹ (test)',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:[]},
- {id:'u6',name:'NV Mua hàng (test)',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:[]}],
+ {id:'u1',name:'Lê Hà – Giám đốc công ty',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
+ {id:'u2',name:'Nguyễn Thị Mai – Kế toán',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
+ {id:'u3',name:'Anh Dương – Chỉ huy công trình',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1','p2','p9']},
+ {id:'u4',name:'Phạm Quốc Huy – Quản lý dự án',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:[]},
+ {id:'u5',name:'Võ Thị Thu Hạnh – Thủ quỹ',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:[]},
+ {id:'u6',name:'Nguyễn Hoàng Nam – Nhân viên mua hàng',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:[]},
+ {id:'u7',name:'Lê Văn Thành – Đại diện thầu phụ (DEMO)',username:'thauphu',pass:'tp123',role:'Đại diện thầu phụ',projectIds:['p1'],perms:{projects_view:true,denghi_view:true,denghi_create:true}}],
 projects:[
- {id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
+{id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
  {id:'p2',code:'BT-2026-02',name:'Biệt thự Nam Long',client:'Ông Trần Minh Đức',location:'KDC Nam Long, TP.HCM',start:'2026-03-05',end:'2026-11-30',budget:3200000000,status:'Đang thi công',note:'Xây dựng + nội thất cơ bản'},
  {id:'p3',code:'BT-2026-03',name:'Nhà xưởng Tân Thuận',client:'Cty TNHH Cơ khí Đông Nam',location:'KCN Tân Thuận, TP.HCM',start:'2026-04-15',end:'2027-02-15',budget:12500000000,status:'Đang thi công',note:'Nhà thép tiền chế 5000m2'},
  {id:'p4',code:'BT-2026-04',name:'Cao ốc văn phòng Phú Mỹ Hưng',client:'CĐT Phú Mỹ Hưng Corp',location:'Quận 7, TP.HCM',start:'2026-06-01',end:'2027-06-30',budget:28000000000,status:'Chuẩn bị',note:'Phần móng + hầm'},
@@ -1069,7 +1085,19 @@ projects:[
  {id:'p7',code:'BT-2026-07',name:'Khách sạn Grand Sài Gòn',location:'Quận 1, TP.HCM',client:'CĐT Grand Hotel Group',start:'2026-04-15',end:'2027-02-28',status:'Đang thi công',budget:68000000000},
  {id:'p8',code:'BT-2026-08',name:'Bệnh viện Đa khoa Miền Đông',location:'TP.Thủ Đức, TP.HCM',client:'CĐT MediCare VN',start:'2026-06-01',end:'2027-06-30',status:'Đang thi công',budget:95000000000},
  {id:'p9',code:'BT-2026-09',name:'Biệt thự đảo Thảo Điền – Villa Riverside',client:'Ông Nguyễn Quốc Hưng',location:'Thảo Điền, TP.Thủ Đức, TP.HCM',start:'2026-02-15',end:'2026-10-30',budget:18500000000,status:'Đang thi công',note:'Biệt thự 3 tầng + hồ bơi vô cực + hầm rượu, hoàn thiện cao cấp'},
- {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'}],
+ {id:'p10',code:'BT-2026-10',name:'Sân Golf Long Thành – Clubhouse 2500m2',client:'CĐT Golf Long Thành',location:'Long Thành, Đồng Nai',start:'2026-03-10',end:'2027-03-10',budget:125000000000,status:'Đang thi công',note:'Clubhouse, nhà hàng, proshop, khu changing, cảnh quan sân golf 18 lỗ'},
+ {id:'p11',code:'BT-2026-11',name:'Biệt thự sân Golf Hồ Tràm – 10 căn',client:'CĐT Hồ Tràm Resort',location:'Hồ Tràm, Bà Rịa-Vũng Tàu',start:'2026-04-01',end:'2026-12-15',budget:68000000000,status:'Chuẩn bị',note:'10 biệt thự nghỉ dưỡng view sân golf, nội thất full, hồ bơi riêng'},
+ {id:'p12',code:'BT-2026-12',name:'Biệt thự song lập Vinhomes Grand Park',client:'Bà Lê Thị Mai',location:'Vinhomes Grand Park, Q9, TP.HCM',start:'2026-05-20',end:'2026-11-20',budget:9800000000,status:'Đang thi công',note:'Song lập 2 tầng + sân vườn, hàng rào, cổng, hoàn thiện thô + cơ bản'},
+ {id:'p13',code:'BT-2026-13',name:'Sân Golf & Resort Đà Lạt – GĐ1 (18 lỗ)',client:'CĐT Đà Lạt Hills',location:'Lạc Dương, Lâm Đồng',start:'2026-06-15',end:'2027-08-30',budget:210000000000,status:'Tạm dừng',note:'18 lỗ par 72, khu resort 30 bungalow, hạ tầng, hồ điều hoà, chờ duyệt PCCC'},
+ {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'}
+ ,{id:'p15',code:'BT-2026-15',name:'Nhà phố thương mại The Riverside – 12 căn',client:'Công ty Địa ốc Riverside',location:'Bình Thạnh, TP.HCM',start:'2026-05-01',end:'2027-01-31',budget:42600000000,status:'Đang thi công',note:'12 căn shophouse 5 tầng; kết cấu, mặt dựng, MEP, hoàn thiện; nghiệm thu theo từng căn.'}
+ ,{id:'p16',code:'BT-2026-16',name:'Nhà máy thực phẩm sạch GreenFarm',client:'Công ty CP Thực phẩm GreenFarm',location:'KCN Hiệp Phước, Nhà Bè, TP.HCM',start:'2026-07-01',end:'2027-05-31',budget:78500000000,status:'Chuẩn bị',note:'Nhà xưởng chế biến, kho lạnh, nền epoxy, xử lý nước thải, hệ thống PCCC và điện dự phòng.'}
+ ,{id:'p17',code:'BT-2026-17',name:'Cải tạo trụ sở văn phòng Tân Bình',client:'Công ty Dịch vụ Hàng không Nam Việt',location:'Tân Bình, TP.HCM',start:'2026-08-15',end:'2026-12-20',budget:12600000000,status:'Đang thi công',note:'Cải tạo trong khi vẫn vận hành; chia khu vực thi công, kiểm soát bụi/ồn, MEP và nghiệm thu từng tầng.'}
+ ,{id:'p18',code:'BT-2026-18',name:'Hạ tầng khu dân cư Bình Chánh – Giai đoạn 1',client:'Công ty Phát triển Đô thị An Gia',location:'Bình Chánh, TP.HCM',start:'2026-04-01',end:'2027-03-31',budget:112000000000,status:'Đang thi công',note:'San nền, đường nội bộ, thoát nước mưa/nước thải, chiếu sáng, cấp nước và cây xanh.'}
+ ,{id:'p19',code:'BT-2026-19',name:'Trung tâm logistics Sóng Thần – Kho B2',client:'Công ty Logistics Đông Dương',location:'Dĩ An, Bình Dương',start:'2026-09-01',end:'2027-07-31',budget:64200000000,status:'Chuẩn bị',note:'Kho logistics 12.000m², sàn chịu tải, dock leveler, hệ thống sprinkler, văn phòng vận hành.'}
+ ,{id:'p20',code:'BT-2026-20',name:'Cụm 3 biệt thự nghỉ dưỡng Bảo Lộc',client:'Công ty Đầu tư Lâm Viên',location:'Bảo Lộc, Lâm Đồng',start:'2026-06-10',end:'2027-04-30',budget:23800000000,status:'Đang thi công',note:'3 villa nghỉ dưỡng, đường nội bộ, kè taluy, thoát nước mưa, cảnh quan và nội thất.'}
+
+],
 vendors:[
  {id:'v1',name:'VLXD Hoàng Phát',phone:'0909123456',address:'QL1A, Thủ Đức',projectId:'p1'},
  {id:'v2',name:'Sắt thép Miền Nam',phone:'0918234567',address:'KCN Sóng Thần',projectId:'p1'},
@@ -1081,7 +1109,13 @@ vendors:[
  {id:'v8',name:'Thiết bị sân golf Đà Lạt',phone:'0909988776',address:'Lạc Dương, Lâm Đồng',projectId:'p13'},
  {id:'v9',name:'Thép Hòa Phát',phone:'18002828',address:'KCN Phố Nối A, Hưng Yên',projectId:'p14'},
  {id:'v10',name:'Bê tông Sông Đà',phone:'0904111222',address:'Long Thành, Đồng Nai',projectId:'p14'},
- {id:'v11',name:'Thiết bị điện LS',phone:'02838223344',address:'KCN Long Thành, Đồng Nai',projectId:'p14'}],
+ {id:'v11',name:'Thiết bị điện LS',phone:'02838223344',address:'KCN Long Thành, Đồng Nai',projectId:'p14'},
+ {id:'v12',name:'Bê tông tươi Bình Triệu',phone:'02837281234',address:'Bình Thạnh, TP.HCM',projectId:'p15'},
+ {id:'v13',name:'Panel kho lạnh Nam Phát',phone:'0908123001',address:'KCN Hiệp Phước, TP.HCM',projectId:'p16'},
+ {id:'v14',name:'Cáp điện và ống luồn Minh Khang',phone:'0908123002',address:'Tân Bình, TP.HCM',projectId:'p17'},
+ {id:'v15',name:'Cống bê tông An Gia',phone:'0908123003',address:'Bình Chánh, TP.HCM',projectId:'p18'},
+ {id:'v16',name:'Thép kết cấu Đông Dương',phone:'0908123004',address:'Dĩ An, Bình Dương',projectId:'p19'},
+ {id:'v17',name:'Đá xây dựng Lâm Viên',phone:'0908123005',address:'Bảo Lộc, Lâm Đồng',projectId:'p20'}],
 vendorTx:[
  {id:'vt1',vendorId:'v1',projectId:'p1',date:'2026-08-02',type:'purchase',amount:385000000,note:'Xi măng PCB40 – 1.200 bao'},
  {id:'vt2',vendorId:'v1',projectId:'p1',date:'2026-08-20',type:'payment',amount:200000000,note:'Thanh toán đợt 1'},
@@ -1097,7 +1131,13 @@ vendorTx:[
  {id:'vt12',vendorId:'v8',projectId:'p13',date:'2026-09-25',type:'purchase',amount:5200000000,note:'Xe điện, máy cắt cỏ, thiết bị bảo dưỡng golf Đà Lạt'},
  {id:'vt13',vendorId:'v9',projectId:'p14',date:'2026-09-26',type:'purchase',amount:18500000000,note:'Thép hình + thép tấm kết cấu mái nhà ga'},
  {id:'vt14',vendorId:'v10',projectId:'p14',date:'2026-09-26',type:'purchase',amount:8200000000,note:'Bê tông tươi mác 350 đường lăn E1'},
- {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'}],
+ {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'},
+ {id:'vt16',vendorId:'v12',projectId:'p15',date:'2026-09-28',type:'purchase',amount:680000000,note:'Bê tông thương phẩm cho sàn tầng 4'},
+ {id:'vt17',vendorId:'v13',projectId:'p16',date:'2026-10-02',type:'purchase',amount:1250000000,note:'Panel cách nhiệt và cửa kho lạnh – đặt hàng'},
+ {id:'vt18',vendorId:'v14',projectId:'p17',date:'2026-09-25',type:'purchase',amount:185000000,note:'Cáp điện, máng cáp và ống luồn MEP'},
+ {id:'vt19',vendorId:'v15',projectId:'p18',date:'2026-09-30',type:'purchase',amount:920000000,note:'Cống D800-D1200 và hố ga đúc sẵn'},
+ {id:'vt20',vendorId:'v16',projectId:'p19',date:'2026-10-01',type:'purchase',amount:2350000000,note:'Thép hình cho khung kho B2 – đơn đặt hàng'},
+ {id:'vt21',vendorId:'v17',projectId:'p20',date:'2026-09-26',type:'purchase',amount:265000000,note:'Đá hộc và đá 1x2 phục vụ kè taluy'}],
 contractors:[
  {id:'k1',name:'Đội khoán Anh Ba (cốp pha)',phone:'0978111222',projectId:'p1',note:'Khoán cốp pha dầm sàn'},
  {id:'k2',name:'Tổ điện nước Hùng',phone:'0988222333',projectId:'p2',note:'Khoán điện nước biệt thự'},
@@ -1106,7 +1146,13 @@ contractors:[
  {id:'k5',name:'Đội hoàn thiện Hồ Tràm',phone:'0934123456',projectId:'p11',note:'Sơn + trần thạch cao 10 villa'},
  {id:'k6',name:'Tổ cơ khí Đà Lạt',phone:'0977888999',projectId:'p13',note:'Kết cấu thép clubhouse'},
  {id:'k7',name:'Đội kết cấu thép mái nhà ga',phone:'0906555444',projectId:'p14',note:'Lắp dựng kết cấu thép mái nhà ga 4000m2'},
- {id:'k8',name:'Đội điện PCCC Long Thành',phone:'0909777666',projectId:'p14',note:'Thi công điện trung thế + PCCC nhà ga & đường lăn'}],
+ {id:'k8',name:'Đội điện PCCC Long Thành',phone:'0909777666',projectId:'p14',note:'Thi công điện trung thế + PCCC nhà ga & đường lăn'},
+ {id:'k9',name:'Đội xây tô Riverside',phone:'0908000015',projectId:'p15',note:'Xây tô và hoàn thiện 12 căn shophouse'},
+ {id:'k10',name:'Đội nền epoxy An Phú',phone:'0908000016',projectId:'p16',note:'Thi công nền công nghiệp và khu vệ sinh thực phẩm'},
+ {id:'k11',name:'Tổ MEP Tân Bình',phone:'0908000017',projectId:'p17',note:'Cải tạo điện, cấp thoát nước và điều hòa'},
+ {id:'k12',name:'Đội cống thoát nước An Gia',phone:'0908000018',projectId:'p18',note:'Lắp đặt cống, hố ga và đấu nối tuyến chính'},
+ {id:'k13',name:'Đội lắp dựng thép Đông Dương',phone:'0908000019',projectId:'p19',note:'Lắp dựng khung thép kho B2'},
+ {id:'k14',name:'Đội xây dựng Lâm Viên',phone:'0908000020',projectId:'p20',note:'Kết cấu và xây tô 3 biệt thự nghỉ dưỡng'}],
 contractorTx:[
  {id:'kt1',contractorId:'k1',projectId:'p1',date:'2026-08-15',type:'entry',amount:420000000,note:'Khối lượng cốp pha tầng 5-8'},
  {id:'kt2',contractorId:'k1',projectId:'p1',date:'2026-09-02',type:'payment',amount:250000000,note:'Tạm ứng 60%'},
@@ -1116,7 +1162,13 @@ contractorTx:[
  {id:'kt6',contractorId:'k5',projectId:'p11',date:'2026-09-20',type:'entry',amount:1200000000,note:'Hoàn thiện 3 villa đầu'},
  {id:'kt7',contractorId:'k6',projectId:'p13',date:'2026-09-22',type:'entry',amount:2800000000,note:'Lắp khung thép clubhouse Đà Lạt'},
  {id:'kt8',contractorId:'k7',projectId:'p14',date:'2026-09-28',type:'entry',amount:12500000000,note:'Khối lượng kết cấu thép mái nhà ga đợt 1'},
- {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'}],
+ {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'},
+ {id:'kt10',contractorId:'k9',projectId:'p15',date:'2026-10-02',type:'entry',amount:780000000,note:'Khối lượng xây tô 4 căn đợt 1'},
+ {id:'kt11',contractorId:'k10',projectId:'p16',date:'2026-10-03',type:'entry',amount:0,note:'Chưa nghiệm thu khối lượng'},
+ {id:'kt12',contractorId:'k11',projectId:'p17',date:'2026-09-29',type:'entry',amount:320000000,note:'Khối lượng MEP tầng 2-3'},
+ {id:'kt13',contractorId:'k12',projectId:'p18',date:'2026-10-01',type:'entry',amount:560000000,note:'Lắp đặt cống tuyến N2'},
+ {id:'kt14',contractorId:'k13',projectId:'p19',date:'2026-10-04',type:'entry',amount:0,note:'Chưa khởi công'},
+ {id:'kt15',contractorId:'k14',projectId:'p20',date:'2026-09-30',type:'entry',amount:410000000,note:'Kè taluy và thoát nước đợt 1'}],
 bankAccounts:[
  {id:'b1',name:'Vietcombank',number:'0071001234567',note:'TK chính công ty'},
  {id:'b2',name:'Tiền mặt công trình',number:'TM-01',note:'Quỹ tiền mặt tại công trình'}],
@@ -1139,6 +1191,12 @@ expenses:[
  {id:'x5',projectId:'p2',date:'2026-09-19',category:'Thiết kế',amount:25000000,note:'Chỉnh sửa bản vẽ hoàn công',by:'Kế toán Mai'},
  {id:'x9',projectId:'p9',date:'2026-09-06',category:'Vật tư',amount:850000000,note:'Đá + gỗ villa Thảo Điền',by:'Anh Ba'},
  {id:'x10',projectId:'p10',date:'2026-09-16',category:'Vật tư',amount:2200000000,note:'Cỏ + phân + tưới Long Thành',by:'Kế toán Mai'},
+ {id:'x11',projectId:'p15',date:'2026-10-02',category:'Nhân công',amount:78000000,note:'Nhân công xây tô shophouse đợt 1',by:'Trần Minh Dương'},
+ {id:'x12',projectId:'p16',date:'2026-10-03',category:'Hồ sơ',amount:18500000,note:'Thí nghiệm mẫu đất và kiểm định vật liệu',by:'Phạm Quốc Huy'},
+ {id:'x13',projectId:'p17',date:'2026-09-29',category:'Vật tư',amount:42000000,note:'Vật tư phụ thi công MEP',by:'Nguyễn Hoàng Nam'},
+ {id:'x14',projectId:'p18',date:'2026-10-01',category:'Vận chuyển',amount:26500000,note:'Vận chuyển cống và hố ga',by:'Trần Minh Dương'},
+ {id:'x15',projectId:'p19',date:'2026-10-04',category:'An toàn',amount:12000000,note:'Hàng rào và biển báo công trường',by:'Phạm Quốc Huy'},
+ {id:'x16',projectId:'p20',date:'2026-09-30',category:'Thuê máy',amount:38000000,note:'Thuê máy đào phục vụ kè taluy',by:'Trần Minh Dương'},
  {id:'x6',projectId:'p11',date:'2026-09-19',category:'Nhân công',amount:950000000,note:'Nhân công hoàn thiện 3 villa Hồ Tràm',by:'Quản lý'},
  {id:'x7',projectId:'p12',date:'2026-09-23',category:'Vật tư',amount:380000000,note:'Gạch + sơn song lập Vinhomes',by:'Anh Ba'},
  {id:'x8',projectId:'p13',date:'2026-09-26',category:'Thuê máy',amount:1250000000,note:'Máy ủi + lu lèn sân golf Đà Lạt',by:'Chỉ huy'}],
@@ -1215,11 +1273,29 @@ danhmuc:[
   {id:'td47',projectId:'p13',hangMuc:'Clubhouse',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-14',ghiChu:'Móng xong'},
   {id:'td46',projectId:'p13',hangMuc:'Hệ thống tưới',giaiDoan:'mep',phanTram:60,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp'},
   {id:'td48',projectId:'p14',hangMuc:'Cọc nhà ga',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-15',ghiChu:'70% cọc'},
-  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'}
+  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'},
+  {id:'td50',projectId:'p15',hangMuc:'Móng và kết cấu tầng trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-07-15',ngayCapNhat:'2026-07-15',ghiChu:'Nghiệm thu kết cấu phần ngầm'},
+  {id:'td51',projectId:'p15',hangMuc:'Khung bê tông 12 căn',giaiDoan:'tho',phanTram:65,ngayBatDau:'2026-07-16',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-10-05',ghiChu:'Đang thi công tầng 4-5'},
+  {id:'td52',projectId:'p15',hangMuc:'Mặt dựng và MEP',giaiDoan:'mep',phanTram:20,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-10-05',ghiChu:'Chốt mẫu mặt dựng'},
+  {id:'td53',projectId:'p16',hangMuc:'Thiết kế shopdrawing và hồ sơ PCCC',giaiDoan:'chuanbi',phanTram:75,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-10-05',ghiChu:'Chờ phê duyệt hồ sơ PCCC'},
+  {id:'td54',projectId:'p16',hangMuc:'San nền và móng nhà xưởng',giaiDoan:'ngam',phanTram:10,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-10-05',ghiChu:'Định vị tim trục'},
+  {id:'td55',projectId:'p16',hangMuc:'Kho lạnh và nền epoxy',giaiDoan:'hoanthien',phanTram:0,ngayBatDau:'2027-02-01',ngayKetThuc:'2027-04-30',ngayCapNhat:'2026-10-05',ghiChu:'Chưa đến thời điểm triển khai'},
+  {id:'td56',projectId:'p17',hangMuc:'Khảo sát hiện trạng và tháo dỡ',giaiDoan:'chuanbi',phanTram:100,ngayBatDau:'2026-08-15',ngayKetThuc:'2026-09-05',ngayCapNhat:'2026-09-05',ghiChu:'Đã bàn giao mặt bằng theo tầng'},
+  {id:'td57',projectId:'p17',hangMuc:'Cải tạo MEP tầng 2-4',giaiDoan:'mep',phanTram:55,ngayBatDau:'2026-09-06',ngayKetThuc:'2026-11-10',ngayCapNhat:'2026-10-05',ghiChu:'Thi công ngoài giờ hành chính'},
+  {id:'td58',projectId:'p17',hangMuc:'Hoàn thiện và nghiệm thu từng tầng',giaiDoan:'hoanthien',phanTram:15,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-10-05',ghiChu:'Tầng 2 đang xử lý trần'},
+  {id:'td59',projectId:'p18',hangMuc:'San nền và thoát nước mưa',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-10-05',ghiChu:'Đang thi công tuyến cống chính'},
+  {id:'td60',projectId:'p18',hangMuc:'Đường nội bộ và bó vỉa',giaiDoan:'tho',phanTram:35,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-10-05',ghiChu:'Đã cấp phối một phần tuyến N2'},
+  {id:'td61',projectId:'p18',hangMuc:'Chiếu sáng và cây xanh',giaiDoan:'mep',phanTram:0,ngayBatDau:'2027-01-01',ngayKetThuc:'2027-03-15',ngayCapNhat:'2026-10-05',ghiChu:'Chờ hoàn tất hạ tầng ngầm'},
+  {id:'td62',projectId:'p19',hangMuc:'Thiết kế và phê duyệt tải trọng sàn',giaiDoan:'chuanbi',phanTram:60,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-15',ngayCapNhat:'2026-10-05',ghiChu:'Đang chốt thông số xe nâng'},
+  {id:'td63',projectId:'p19',hangMuc:'Móng và nền kho B2',giaiDoan:'ngam',phanTram:0,ngayBatDau:'2026-11-16',ngayKetThuc:'2027-02-15',ngayCapNhat:'2026-10-05',ghiChu:'Chưa khởi công'},
+  {id:'td64',projectId:'p19',hangMuc:'Khung thép, mái và sprinkler',giaiDoan:'tho',phanTram:0,ngayBatDau:'2027-02-16',ngayKetThuc:'2027-06-30',ngayCapNhat:'2026-10-05',ghiChu:'Phụ thuộc nghiệm thu móng'},
+  {id:'td65',projectId:'p20',hangMuc:'Kè taluy và thoát nước',giaiDoan:'ngam',phanTram:80,ngayBatDau:'2026-06-10',ngayKetThuc:'2026-10-20',ngayCapNhat:'2026-10-05',ghiChu:'Hoàn thiện tuyến kè phía Đông'},
+  {id:'td66',projectId:'p20',hangMuc:'Kết cấu 3 biệt thự',giaiDoan:'tho',phanTram:45,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-10-05',ghiChu:'Hai căn đang xây tường tầng 1'},
+  {id:'td67',projectId:'p20',hangMuc:'Cảnh quan và nội thất',giaiDoan:'hoanthien',phanTram:0,ngayBatDau:'2027-01-01',ngayKetThuc:'2027-04-15',ngayCapNhat:'2026-10-05',ghiChu:'Chờ hoàn thiện phần thô'}
 ]
 };
-// Demo seed scope: keep 10 diverse sample projects only. Seed records tied to removed samples are excluded.
-const TW_SAMPLE_PROJECT_IDS=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p14'];
+// Demo seed scope: 20 diverse construction projects with linked sample records.
+const TW_SAMPLE_PROJECT_IDS=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20'];
 SEED.projects=SEED.projects.filter(p=>TW_SAMPLE_PROJECT_IDS.includes(p.id));
 Object.keys(SEED).forEach(k=>{if(Array.isArray(SEED[k])&&k!=='projects')SEED[k]=SEED[k].filter(x=>{
  const pid=x.projectId||x.currentProjectId;
@@ -1293,6 +1369,7 @@ const ROLE_PERMS={
  'Thủ Quỹ':['quy_view','quy_create','thuchi_view','thuchi_create','denghi_view','caidat_view','caidat_sync'],
  'Nhân viên mua hàng':['denghi_view','denghi_create','projects_view','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
  'Nhân viên Dự án':['denghi_view','denghi_create','projects_view','baocao_export'],
+ 'Đại diện thầu phụ':['projects_view','denghi_view','denghi_create'],
  'Chỉ huy công trình':['projects_view','denghi_view','denghi_create','dutru_view','phatsinh_view','caidat_view','caidat_sync']
 };
 Auth.can=function(perm){
@@ -1320,13 +1397,7 @@ function resetSampleDataIfDue(){
  const interval=30*24*60*60*1000,now=Date.now();let last=0;try{last=+(localStorage.getItem(TW_SAMPLE_RESET_KEY)||0);}catch(e){}
  if(last&&now-last<interval)return false;
  const sampleIds=new Set(TW_SAMPLE_PROJECT_IDS),seedProjectIds=new Set((SEED.projects||[]).map(p=>p.id));
- // Remove obsolete sample projects p10-p13 and their dependent records from older app versions.
- DB.data.projects=(DB.data.projects||[]).filter(p=>!['p10','p11','p12','p13'].includes(p.id));
- Object.keys(DB.data).forEach(k=>{const a=DB.data[k];if(!Array.isArray(a))return;DB.data[k]=a.filter(x=>{
-   const pid=x.projectId||x.currentProjectId;
-   if(pid&&['p10','p11','p12','p13'].includes(pid))return false;
-   return true;
- });});
+ // All 20 sample projects are current; keep them and their linked records.
  // Refresh only known demo rows by their stable seed IDs; keep user-created records and projects intact.
  const resetCols=['projects','vendors','vendorTx','contractors','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo'];
  resetCols.forEach(k=>{
@@ -1335,7 +1406,7 @@ function resetSampleDataIfDue(){
    const keep=current.filter(x=>!seedIds.has(String(x.id)) && !(x.projectId&&sampleIds.has(x.projectId)&&String(x.id).startsWith('demo_')));
    DB.data[k]=keep.concat(JSON.parse(JSON.stringify(seed)));
  });
- try{(DB.data.users||[]).forEach(u=>{if(Array.isArray(u.projectIds))u.projectIds=u.projectIds.filter(id=>!['p10','p11','p12','p13'].includes(id));});}catch(e){}
+
  try{localStorage.setItem(TW_SAMPLE_RESET_KEY,String(now));localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}
  return true;
 }
@@ -1737,7 +1808,7 @@ function workPrint(hash,id){
  let rows='';fs.forEach(f=>{const v=x[f[0]];if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
  const c=CFG||{},details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
  const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+details+'</small></div></header>';
- win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:15mm 16mm}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;align-items:center;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:18px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:14pt}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:17pt;text-transform:uppercase;margin:14px 0 6px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #777;padding:7px;vertical-align:top;overflow-wrap:anywhere}th{width:32%;text-align:left;background:#f4f0e7}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In biểu mẫu</button></div>'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></body></html>');win.document.close();
+ win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;align-items:center;gap:12px;border-bottom:1.5pt solid #b6a887;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:14pt}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:17pt;text-transform:uppercase;margin:14px 0 6px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #b6a887;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:32%;text-align:left;background:#fff2c9}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In biểu mẫu</button></div>'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></body></html>');win.document.close();
 }
 function workPrintRecord(kind,id){
  const x=workArray(kind).find(r=>r.id===id);if(!x){toast('Không tìm thấy bản ghi');return;}
@@ -2028,14 +2099,14 @@ function firstId(coll){const l=scoped(DB.data[coll]);return l.length?l[0].id:'';
 function projBadges(u){const ids=u.projectIds||[];if(!ids.length||ids.includes('*'))return '<span class="badge b-gray">Tất cả</span>';return ids.map(pid=>{const pr=DB.data.projects.find(x=>x.id===pid);return pr?'<span class="badge b-green">'+esc(pr.code)+'</span>':'';}).join(' ');}
 ROUTES['#/users']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
- const roleBadge=r=>r==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':r==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':r==='Quản Lý Dự Án'?'<span class="badge b-green">Quản Lý Dự Án</span>':r==='Thủ Quỹ'?'<span class="badge b-purple">Thủ Quỹ</span>':r==='Nhân viên mua hàng'?'<span class="badge b-amber">NV mua hàng</span>':'<span class="badge b-gray">'+esc(r)+'</span>';
+ const roleBadge=r=>r==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':r==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':r==='Quản Lý Dự Án'?'<span class="badge b-green">Quản Lý Dự Án</span>':r==='Thủ Quỹ'?'<span class="badge b-purple">Thủ Quỹ</span>':r==='Nhân viên mua hàng'?'<span class="badge b-amber">NV mua hàng</span>':r==='Đại diện thầu phụ'?'<span class="badge b-gray">Thầu phụ</span>':'<span class="badge b-gray">'+esc(r)+'</span>';
  let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Bấm vào tên để phân quyền chi tiết từng người • Giám đốc có toàn quyền</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Tạo user</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th>Số quyền</th><th></th></tr></thead><tbody>';
  DB.data.users.forEach(u=>{const np=u.perms?Object.keys(u.perms).filter(k=>u.perms[k]).length:(ROLE_PERMS[u.role]==='*'? 'all' : (ROLE_PERMS[u.role]||[]).length);
  h+='<tr><td><a class="linklike" href="javascript:permForm(\''+u.id+'\')"><b>'+esc(u.name)+'</b></a></td><td>'+esc(u.username)+'</td><td>'+roleBadge(u.role)+'</td><td>'+projBadges(u)+'</td><td>'+(np==='all'?'Tất cả':np+' quyền')+(u.perms?' <span class="badge b-blue">tùy chỉnh</span>':'')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="permForm(\''+u.id+'\')" title="Phân quyền">Quyền</button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="if(confirm(\'Xóa user '+esc(u.username)+'?\'))delObj(\'users\',\''+u.id+'\')" style="color:#dc2626" title="Xóa">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
-const ROLES=[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Quản Lý Dự Án',t:'Quản Lý Dự Án'},{v:'Kế toán',t:'Kế toán'},{v:'Thủ Quỹ',t:'Thủ Quỹ'},{v:'Nhân viên mua hàng',t:'Nhân viên mua hàng'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'}];
+const ROLES=[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Quản Lý Dự Án',t:'Quản Lý Dự Án'},{v:'Kế toán',t:'Kế toán'},{v:'Thủ Quỹ',t:'Thủ Quỹ'},{v:'Nhân viên mua hàng',t:'Nhân viên mua hàng'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'},{v:'Đại diện thầu phụ',t:'Đại diện thầu phụ (chỉ xem/gửi đề nghị)'}];
 function userForm(id){
  const u=id?DB.data.users.find(x=>x.id===id):{name:'',username:'',pass:'',role:'Nhân viên mua hàng',projectIds:[]};
  const projChk='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:170px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px">'+DB.data.projects.map(p=>'<label style="display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer"><input type="checkbox" data-proj="'+p.id+'"'+((u.projectIds||[]).includes(p.id)?' checked':'')+' style="width:16px;height:16px">'+esc(p.code)+'</label>').join('')+'</div>';
@@ -2787,12 +2858,22 @@ function twPrintModalCurrent(){
  const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim();let rows='';
  modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;let value=el.value||'';if(el.tagName==='SELECT'&&el.selectedOptions?.length)value=el.selectedOptions[0].textContent;if(!String(value).trim())return;rows+='<tr><th>'+esc(label)+'</th><td>'+esc(String(value)).replace(/\n/g,'<br>')+'</td></tr>';});
  const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4;margin:15mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;align-items:center;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:20px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #777;padding:8px;vertical-align:top;overflow-wrap:anywhere}th{width:34%;text-align:left;background:#f4f0e7}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:10.5pt Arial;margin:0;color:#111}.brand{display:flex;align-items:center;gap:12px;border-bottom:1.5pt solid #b6a887;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:16px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #b6a887;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:34%;text-align:left;background:#fff2c9}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+}
+function twPrintModalBlank(){
+ const modal=document.getElementById('modal');if(!modal)return;
+ const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim();let rows='';
+ modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;rows+='<tr><th>'+esc(label)+'</th><td><div class="write-line">&nbsp;</div></td></tr>';});
+ const c=CFG||{},details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
+ const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+details+'</small></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}
+ w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:10.5pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;align-items:center;gap:12px;border-bottom:1.5pt solid #b6a887;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:13pt}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:15pt;text-transform:uppercase;margin:12px 0 15px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #b6a887;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff2c9;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
 }
 function twEnsureModalPrintButton(){
  const foot=document.getElementById('mFoot');if(!foot||!foot.children.length)return;
- const has=[...foot.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||/^In\\b/i.test((b.textContent||'').trim()));
- if(!has){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In biểu mẫu';b.type='button';b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
+ const hasSpecialPrint=[...foot.querySelectorAll('button')].some(b=>/print|window\.print/i.test(b.getAttribute('onclick')||'')||/^In\b/i.test((b.textContent||'').trim()));
+ if(!hasSpecialPrint&&!foot.querySelector('[data-tw-print-filled]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In biểu mẫu';b.type='button';b.setAttribute('data-tw-print-filled','1');b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
+ if(!foot.querySelector('[data-tw-print-blank]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In mẫu trống';b.type='button';b.setAttribute('data-tw-print-blank','1');b.onclick=twPrintModalBlank;foot.insertBefore(b,foot.firstChild);}
 }
 function twEnsurePrintButton(){
  const view=document.getElementById('view');if(!view||!Auth.user)return;
@@ -2802,13 +2883,14 @@ function twEnsurePrintButton(){
 }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
 function ensureArrays(){
- try{DB.data.projects=(DB.data.projects||[]).filter(p=>!['p10','p11','p12','p13'].includes(p.id));Object.keys(DB.data).forEach(k=>{if(Array.isArray(DB.data[k]))DB.data[k]=DB.data[k].filter(x=>!['p10','p11','p12','p13'].includes(x.projectId||x.currentProjectId));});}catch(e){}
  try{Object.keys(DB.data).forEach(k=>{if(!Array.isArray(DB.data[k]))return;const seen=new Set();DB.data[k]=DB.data[k].filter(x=>{if(!x||x.id==null)return true;const id=String(x.id);if(seen.has(id))return false;seen.add(id);return true;});});}catch(e){}
  ['resources','resourceTeams','resourceEquipment','resourceAssignments','projectForms','attendanceRecords','payrollRecords'].forEach(k=>{if(!Array.isArray(DB.data[k]))DB.data[k]=[];});
  let ch=false;
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
  try{
-  ['users','projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
+  // One-time upgrade migration: add newly introduced sample records once, not on every refresh.
+  if(localStorage.getItem('twpro_seed_v3')!=='1'){
+   ['users','projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo'].forEach(col=>{
     if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
     const existing = new Set(DB.data[col].map(x=>x.id));
     SEED[col].forEach(item=>{
@@ -2817,8 +2899,15 @@ function ensureArrays(){
         ch=true;
       }
     });
-  });
+   });
+   try{localStorage.setItem('twpro_seed_v3','1');}catch(e){}
+  }
  }catch(e){}
+ // Migrate demo display names/roles once; do not overwrite passwords users may have changed.
+ try{if(localStorage.getItem('twpro_demo_users_v2')!=='1'){
+  (SEED.users||[]).forEach(seed=>{const u=(DB.data.users||[]).find(x=>String(x.id)===String(seed.id));if(u){u.name=seed.name;u.role=seed.role;u.username=u.username||seed.username;u.projectIds=JSON.parse(JSON.stringify(seed.projectIds||[]));if(seed.perms)u.perms=JSON.parse(JSON.stringify(seed.perms));}});
+  try{localStorage.setItem('twpro_demo_users_v2','1');}catch(e){} ch=true;
+ }}catch(e){}
  // Fix role cũ viết HOA (GIÁM ĐỐC → Giám đốc) + tên rỗng → tránh menu rỗng, session fail
  try{
   const ROLE_FIX={'GIÁM ĐỐC':'Giám đốc','KẾ TOÁN':'Kế toán','THỦ QUỸ':'Thủ Quỹ','QUẢN LÝ DỰ ÁN':'Quản Lý Dự Án','NHÂN VIÊN MUA HÀNG':'Nhân viên mua hàng','CHỈ HUY CÔNG TRÌNH':'Chỉ huy công trình'};
