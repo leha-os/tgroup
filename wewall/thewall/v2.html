@@ -1080,7 +1080,7 @@ const todayVN=()=>fmtDate(todayISO());
 function toast(m){const t=document.createElement('div');t.className='t';t.textContent=m;$('#toast').appendChild(t);setTimeout(()=>t.remove(),2600);}
 const SEED={
 users:[
- {id:'u1',name:'Nguyễn Minh Quân – Giám đốc công ty (DEMO)',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
+ {id:'u1',name:'Nguyễn Bình An Tâm',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
  {id:'u2',name:'Nguyễn Thị Mai – Kế toán trưởng (DEMO)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20']},
  {id:'u3',name:'Trần Minh Dương – Chỉ huy công trình (DEMO)',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1','p2','p9']},
  {id:'u4',name:'Phạm Quốc Huy – Quản lý dự án (DEMO)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:['p1','p2','p3','p4','p5','p6','p7','p8']},
@@ -1574,7 +1574,7 @@ function openModal(title,bodyHTML,footHTML,wide){
 function closeModal(){$('#mback').classList.remove('open');modalCb=null;}
 $('#mback').addEventListener('mousedown',e=>{if(e.target.id==='mback')closeModal();});
 function fld(label,inner){return '<div class="fld"><label>'+label+'</label>'+inner+'</div>';}
-function inp(name,val,type,attrs){const money=/^(amount|sotien|dongia|thanhtien|budget|salary|rate|price)$/.test(name);const cls=money?' money':'';const tp=money?'text':(type||'text');const im=money?' inputmode="numeric"':'';const vv=money&&!val?'000':(val==null?'':val);return '<input class="inp'+cls+'" name="'+name+'" value="'+esc(vv)+'" type="'+tp+'"'+im+' '+(attrs||'')+'>';}
+function inp(name,val,type,attrs){const money=/^(amount|sotien|dongia|thanhtien|budget|salary|rate|price)$/.test(name);const cls=money?' money':'';const tp=money?'text':(type||'text');const im=money?' inputmode="numeric"':'';const vv=money&&!val?'000':(money&&val!==''&&val!=null?new Intl.NumberFormat('vi-VN').format(Number(String(val).replace(/[^\d-]/g,''))||0):(val==null?'':val));return '<input class="inp'+cls+'" name="'+name+'" value="'+esc(vv)+'" type="'+tp+'"'+im+' '+(attrs||'')+'>';}
 function sel(name,opts,val,attrs){return '<select class="inp" name="'+name+'" '+(attrs||'')+'>'+opts.map(o=>'<option value="'+esc(o.v)+'"'+(String(o.v)===String(val)?' selected':'')+'>'+esc(o.t)+'</option>').join('')+'</select>';}
 function txa(name,val,attrs){return '<textarea class="inp" name="'+name+'" '+(attrs||'')+'>'+esc(val||'')+'</textarea>';}
 function formVal(name){const el=document.querySelector('#mBody [name="'+name+'"]')||document.querySelector('#view [name="'+name+'"]');if(!el)return '';let v=el.value.trim();if(el.classList.contains('money'))v=v.replace(/[^\d]/g,'');return v;}
@@ -1786,8 +1786,8 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
 function printProjectRecord(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p)return;
  const rows=[['Mã dự án',p.code],['Tên dự án',p.name],['Chủ đầu tư',p.client],['Địa điểm',p.location],['Ngày bắt đầu',fmtDate(p.start)],['Ngày kết thúc',fmtDate(p.end)],['Trạng thái',p.status],['Quản lý dự án',workPersonName(p.managerId)],['Người phụ trách chính',workPersonName(p.responsibleId)],['Ngân sách',fmtVND(p.budget)],['Ghi chú',p.note]];
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;margin:18px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#fff7dc}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button onclick="window.print()">In</button></body></html>');w.document.close();
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;margin:10px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#fff7dc}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button onclick="window.print()">In</button></body></html>');w.document.close();
 }
 function openProjectProfile(pid){SEL.projectId=pid||null;location.hash='#/project-profile';}
 function projectForm(id){
@@ -1914,23 +1914,23 @@ function workDelete(kind,id,title,hash){hash=hash||location.hash.split('?')[0];c
 function workPrint(hash,id){
  const x=workArray('form').find(r=>r.id===id&&r.kind===hash);if(!x){toast('Không tìm thấy hồ sơ để in');return;}
  const fs=workFields('form',hash),win=window.open('','_blank');if(!win){toast('Trình duyệt đang chặn cửa sổ in. Hãy cho phép mở cửa sổ bật lên.');return;}
- let rows='';fs.forEach(f=>{const v=x[f[0]];if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
- const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+details+'</small></div></header>';
- win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:14pt}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:17pt;text-transform:uppercase;margin:14px 0 6px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:32%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In biểu mẫu</button></div>'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></body></html>');win.document.close();
+ let rows='';fs.forEach(f=>{let v=x[f[0]];if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&v!==undefined&&v!==null&&v!==''&&Number.isFinite(Number(v)))v=fmtVND(v);if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
+ const c=CFG||{};
+ const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:8px 0 5px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:32%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In biểu mẫu</button></div>'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></body></html>');win.document.close();
 }
 function workPrintRecord(kind,id){
  const x=workArray(kind).find(r=>r.id===id);if(!x){toast('Không tìm thấy bản ghi');return;}
  const labels=kind==='resources'?WORK_FIELDS.resources:kind==='teams'?WORK_FIELDS.teams:kind==='equipment'?WORK_FIELDS.equipment:kind==='attendance'?WORK_FIELDS.attendance:kind==='payroll'?WORK_FIELDS.payroll:WORK_FIELDS.assignments;
  const title=WORK_MODULES[kind==='resources'?'#/resources-staff':kind==='teams'?'#/resources-teams':kind==='equipment'?'#/resources-equipment':kind==='attendance'?'#/attendance':kind==='payroll'?'#/payroll':'#/resources-assign']?.title||'HỒ SƠ';
  if(kind==='payroll'){labels.push(['calculatedGross','Tổng lương dự kiến (VND)','number'],['calculatedNet','Thực nhận dự kiến (VND)','number']);}
- let rows='';labels.forEach(f=>{let v=x[f[0]];if(v==null||v==='')return;if(f[2]==='project'||f[0]==='projectId'||f[0]==='currentProjectId')v=workProjectName(v);rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:20px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+ let rows='';labels.forEach(f=>{let v=x[f[0]];if(v==null||v==='')return;if(f[2]==='project'||f[0]==='projectId'||f[0]==='currentProjectId')v=workProjectName(v);else if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&Number.isFinite(Number(v)))v=fmtVND(v);rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
 }
 function workListPage(hash){const m=WORK_MODULES[hash],kind=m.type;if(kind==='profile')return renderProjectProfile();if(hash==='#/todo-me')return renderMyWork();const arr=workArray(kind),rows=kind==='form'?arr.filter(x=>x.kind===hash):arr;let h='<div class="page-head"><div><h1>'+esc(m.title)+'</h1><p>'+esc(m.desc)+' · '+rows.length+' bản ghi</p></div><div class="page-actions"><button class="btn btn-pri" onclick="workForm(\''+kind+'\',\''+hash+'\')">+ '+(kind==='form'?'Tạo biểu mẫu':kind==='resources'?'Thêm nhân sự':kind==='teams'?'Thêm tổ đội':kind==='equipment'?'Thêm thiết bị':kind==='attendance'?'Thêm chấm công':kind==='payroll'?'Tạo bảng lương':'Tạo phân công')+'</button></div></div>';
 if(kind==='assignments')h+='<div class="planned-banner" style="background:#eff6ff;border-color:#93c5fd;color:#1e3a8a"><b>Phân biệt vai trò:</b> người phụ trách chịu trách nhiệm đầu ra; người thực hiện làm việc; người phê duyệt ra quyết định.</div>';
-if(kind==='form')h+='<div class="planned-banner" style="background:#f8fafc;border-color:#cbd5e1;color:#334155">Mẫu tham khảo theo thông lệ quản lý dự án/công trường. Bạn có thể điều chỉnh trường sau. File đính kèm hiện lưu tên hoặc đường dẫn, chưa tải lên máy chủ.</div>';
+
 const heads=kind==='form'?['Số / ngày','Dự án','Hạng mục / nội dung','Người phụ trách','Trạng thái']:kind==='attendance'?['Ngày','Dự án','Nhân sự','Công','Tăng ca','Trạng thái']:kind==='payroll'?['Kỳ lương','Dự án','Nhân sự','Lương thực nhận dự kiến','Trạng thái']:kind==='resources'?['Mã','Họ tên','Chức danh','Tổ đội / đơn vị','Liên hệ','Trạng thái']:kind==='teams'?['Mã','Tổ đội','Loại','Đầu mối','Chuyên môn','Trạng thái']:kind==='equipment'?['Mã','Thiết bị','Nguồn','Dự án','Tình trạng','Bảo trì đến']:['Dự án','Hạng mục / công việc','Người chịu trách nhiệm','Người thực hiện','Hạn','Ưu tiên','Trạng thái'];
 h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr>'+heads.map(x=>'<th>'+x+'</th>').join('')+'<th>Thao tác</th></tr></thead><tbody>';if(!rows.length)h+='<tr><td colspan="'+(heads.length+1)+'"><div class="empty">Chưa có dữ liệu. Nhấn nút tạo mới để bắt đầu.</div></td></tr>';
 rows.forEach(x=>{let c;if(kind==='form')c=[(x.number||'Chưa có số')+(x.date?' · '+fmtDate(x.date):''),workProjectName(x.projectId),x.scope||x.work||x.issue||x.item||x.title||'—',workPersonName(x.responsible||x.recorder||x.requester||x.createdBy),x.status||'Bản nháp'];else if(kind==='attendance')c=[fmtDate(x.date),workProjectName(x.projectId),x.employee,x.workDays,x.overtimeHours||0,x.status];else if(kind==='payroll')c=[x.period,workProjectName(x.projectId),x.employee,fmtVND(x.calculatedNet||0),x.status];else if(kind==='resources')c=[x.code,x.name,x.title,x.team,x.phone,x.status];else if(kind==='teams')c=[x.code,x.name,x.type,x.leader,x.specialty,x.status];else if(kind==='equipment')c=[x.code,x.name,x.ownership,workProjectName(x.currentProjectId),x.status,fmtDate(x.maintenance)];else c=[workProjectName(x.projectId),x.scope,workPersonName(x.responsible),x.assignees,fmtDate(x.due),x.priority,x.status];h+='<tr>'+c.map(v=>'<td>'+esc(v||'—')+'</td>').join('')+'<td><div class="rowbtns"><button class="btn btn-sm btn-sec" onclick="workForm(\''+kind+'\',\''+hash+'\',\''+x.id+'\')">Mở / sửa</button>'+(kind==='form'?'<button class="btn btn-sm btn-sec" onclick="workPrint(\''+hash+'\',\''+x.id+'\')">In</button>':'<button class="btn btn-sm btn-sec" onclick="workPrintRecord(\''+kind+'\',\''+x.id+'\')">In</button>')+'<button class="btn btn-sm btn-bad" onclick="workDelete(\''+kind+'\',\''+x.id+'\',\''+esc(m.title)+'\')">Xóa</button></div></td></tr>';});h+='</tbody></table></div></div>';$('#view').innerHTML=h;}
@@ -2415,6 +2415,15 @@ function printPhieu(){
   setTimeout(()=>window.print(),80);
   setTimeout(cleanup,3000);
 }
+function twPrintDNTTBlank(){
+ const src=document.getElementById('phieuPrintArea');if(!src){toast('Mở phiếu DNTT trước khi in mẫu trống');return;}
+ const clone=src.cloneNode(true);clone.querySelectorAll('.dntt-value').forEach(el=>{el.textContent='';});
+ const date=clone.querySelector('.pdate');if(date)date.innerHTML='Ngày: __________________';
+ const win=window.open('','_blank');if(!win){toast('Hãy cho phép cửa sổ in');return;}
+ const styles=[...document.querySelectorAll('style')].map(el=>el.outerHTML).join('');
+ win.document.open();win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phiếu đề nghị thanh toán - Mẫu trống</title>'+styles+'</head><body class="printing-phieu"><div class="noprint" style="text-align:right;margin:8px"><button onclick="window.print()">In mẫu trống</button></div>'+clone.outerHTML+'</body></html>');win.document.close();
+ setTimeout(()=>{try{win.focus();win.print();}catch(e){}},350);
+}
 function xuatPhieuDNTT_XLSX(id){
  const c=dnttCalc(id);if(!c)return;
  const t=c.t,dn=c.dn,p=c.p;
@@ -2424,10 +2433,10 @@ function xuatPhieuDNTT_XLSX(id){
  const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
  const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
- let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',2);
- r=mk();C(r,1,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',3);
- r=mk();C(r,1,'Điện thoại: +848 3535 1905 - 0903 865 240',3);
- r=mk();C(r,1,'Website: www.thewall.com.vn',3);
+ let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',1);
+ r=mk();C(r,1,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',5);
+ r=mk();C(r,1,'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',5);
+ r=mk();C(r,1,'Website: www.thewall.com.vn',5);
  mk();mk();mk();
  r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',11);
  r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
@@ -2460,9 +2469,9 @@ function xuatPhieuDNTT_XLSX(id){
  mk();mk();
  r=mk();C(r,0,'VUI LÒNG KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI PHÒNG KẾ TOÁN. XIN CẢM ƠN!',5);
  mk();
- r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',2);
+ r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',2);
  const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
- xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
+ xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:10,freezeCols:2}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
 function xlsxMake(sheets,logoB64){
@@ -2479,6 +2488,7 @@ function xlsxMake(sheets,logoB64){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
       +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
       +'<sheetPr><pageSetUpPr fitToPage="1" autoPageBreaks="0"/></sheetPr>';
+    if(sh.freezeRows||sh.freezeCols){const fr=sh.freezeRows||0,fc=sh.freezeCols||0,top=colName(fc)+ (fr+1);s+='<sheetViews><sheetView workbookViewId="0"><pane xSplit="'+fc+'" ySplit="'+fr+'" topLeftCell="'+top+'" activePane="bottomRight" state="frozen"/><selection pane="bottomRight" activeCell="'+top+'" sqref="'+top+'"/></sheetView></sheetViews>'; }
     if(sh.widths&&sh.widths.length){
       s+='<cols>';
       sh.widths.forEach((w,i)=>{s+='<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';});
@@ -2493,7 +2503,9 @@ function xlsxMake(sheets,logoB64){
         if(cell==null||cell.v==null)return;
         const ref=colName(c)+rn;
         const st=(cell.s!=null)?(' s="'+cell.s+'"'):'';
-        if(typeof cell.v==='number'){
+        if(cell.f){
+          s+='<c r="'+ref+'"'+st+'><f>'+esc(cell.f)+'</f>'+(cell.v!=null?'<v>'+esc(cell.v)+'</v>':'<v>0</v>')+'</c>';
+        }else if(typeof cell.v==='number'){
           s+='<c r="'+ref+'"'+st+'><v>'+cell.v+'</v></c>';
         }else{
           s+='<c r="'+ref+'"'+st+' t="inlineStr"><is><t>'+esc(cell.v)+'</t></is></c>';
@@ -2628,14 +2640,14 @@ function inPhieuDNTT(id){
  const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
  const nguoide=esc(dn.nguoitao||Auth.user.name||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+esc(CFG.companyLogo||TW_LOGO)+'" alt="logo"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'+848 3535 1905 - 0903 865 240')+'<br>Email: '+esc(CFG.companyEmail||'')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
+  +'<div class="phieu-head"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="ptbl ptbl-seg">'
-  +'<tr><td>Người đề nghị:</td><td colspan="2"><b>'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
-  +'<tr><td>Hạng mục:</td><td colspan="5"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="5"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr><td>Người đề nghị:</td><td colspan="2"><b class="dntt-value">'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b class="dntt-value">'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
+  +'<tr><td>Hạng mục:</td><td colspan="5"><b class="dntt-value">'+esc(dn.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="5"><b class="dntt-value">'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
   +'</table>'
   +'<table class="ptbl ptbl-seg">'
   +'<tr class="ctr"><td class="ul">Người Đề Nghị</td><td class="ul">Trưởng Bộ Phận</td><td class="ul">Phụ Trách DA</td><td class="ul">Trưởng Phòng DA</td><td class="ul">Kế Toán</td><td class="ul">Giám Đốc</td></tr>'
@@ -2646,8 +2658,8 @@ function inPhieuDNTT(id){
   +'<tr><td colspan="2" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="2" class="gray">Số tài khoản:</td></tr>'
   +'<tr class="ctr"><td colspan="2" class="gray">Số CCCD/CMND</td><td colspan="2" class="gray">Nơi cấp</td></tr>'
   +'<tr class="ctr"><td>Số tiền thanh toán</td><td>Thanh toán lũy kế</td><td>Tổng giá trị hợp đồng</td><td>Giá trị còn lại</td></tr>'
-  +'<tr class="ctr"><td class="nw"><b>'+fmtVND(t.sotien)+'</b></td><td class="nw">'+fmtVND(c.lk)+'</td><td class="nw">'+fmtVND(p.budget||0)+'</td><td class="nw">'+fmtVND(c.conlai)+'</td></tr>'
-  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i>'+esc(docSoTien(t.sotien))+'</i></td></tr>'
+  +'<tr class="ctr"><td class="nw dntt-value"><b>'+fmtVND(t.sotien)+'</b></td><td class="nw dntt-value">'+fmtVND(c.lk)+'</td><td class="nw dntt-value">'+fmtVND(p.budget||0)+'</td><td class="nw dntt-value">'+fmtVND(c.conlai)+'</td></tr>'
+  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i class="dntt-value">'+esc(docSoTien(t.sotien))+'</i></td></tr>'
   +'</table>'
   +'<div class="psec">A. Người nhận thanh toán:</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ tạm ứng &nbsp;&nbsp; '+ckTH+' Thu hồi</div><div class="pdot"></div><div class="pdot"></div>'
@@ -2676,14 +2688,14 @@ function inPhieuDeNghi(id){
  const luyKe=lk+sotien, tongHD=+p.budget||0, conLai=tongHD-luyKe;
  const nguoide=esc(d.nguoitao||(Auth.user&&Auth.user.name)||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+esc(CFG.companyLogo||TW_LOGO)+'" alt="logo"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'+848 3535 1905 - 0903 865 240')+'<br>Email: '+esc(CFG.companyEmail||'')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
+  +'<div class="phieu-head"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(d.date)+'</b></div>'
   +'<table class="ptbl ptbl-dntt ptbl-seg">'
-  +'<tr><td>Người đề nghị:</td><td colspan="2"><b>'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b>'+esc(d.noidung||'')+'</b></td></tr>'
-  +'<tr><td>Hạng mục:</td><td colspan="5"><b>'+esc(d.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="5"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr><td>Người đề nghị:</td><td colspan="2"><b class="dntt-value">'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b class="dntt-value">'+esc(d.noidung||'')+'</b></td></tr>'
+  +'<tr><td>Hạng mục:</td><td colspan="5"><b class="dntt-value">'+esc(d.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="5"><b class="dntt-value">'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
   +'</table>'
   +'<table class="ptbl ptbl-dntt ptbl-seg">'
   +'<tr class="sig-h"><td><u>Người Đề Nghị</u></td><td><u>Trưởng Bộ Phận</u></td><td><u>Phụ Trách DA</u></td><td><u>Trưởng Phòng DA</u></td><td><u>Kế Toán</u></td><td><u>Giám Đốc</u></td></tr>'
@@ -2694,8 +2706,8 @@ function inPhieuDeNghi(id){
   +'<tr><td colspan="2" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="2" class="gray"><b>Số tài khoản:</b></td></tr>'
   +'<tr><td colspan="2" class="gray">Số CCCD/CMND</td><td colspan="2" class="gray ctr"><b>Nơi cấp</b></td></tr>'
   +'<tr class="money-h"><td><b>Số tiền thanh toán</b></td><td><b>Thanh toán lũy kế</b></td><td><b>Tổng giá trị hợp đồng</b></td><td><b>Giá trị còn lại</b></td></tr>'
-  +'<tr class="money-v"><td class="nw"><b>'+fmtVND(sotien)+'</b></td><td class="nw">'+fmtVND(luyKe)+'</td><td class="nw">'+fmtVND(tongHD)+'</td><td class="nw">'+fmtVND(conLai)+'</td></tr>'
-  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i>'+esc(docSoTien(sotien))+'</i></td></tr>'
+  +'<tr class="money-v"><td class="nw dntt-value"><b>'+fmtVND(sotien)+'</b></td><td class="nw dntt-value">'+fmtVND(luyKe)+'</td><td class="nw dntt-value">'+fmtVND(tongHD)+'</td><td class="nw dntt-value">'+fmtVND(conLai)+'</td></tr>'
+  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i class="dntt-value">'+esc(docSoTien(sotien))+'</i></td></tr>'
   +'</table>'
   +'<div class="psec">A. Người nhận thanh toán</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ tạm ứng &nbsp;&nbsp; '+ckTH+' Thu hồi</div><div class="pdot"></div>'
@@ -2764,28 +2776,28 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
- const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:2};R.push(rc);
- const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',s:3};R.push(ra);
- const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: +848 3535 1905 - 0903 865 240',s:3};R.push(rt);
- const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
+ const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:1};R.push(rc);
+ const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',s:5};R.push(ra);
+ const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',s:5};R.push(rt);
+ const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:5};R.push(rw);
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
  const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:'Tổng cộng',s:10};rf[n-1]={v:foot.total,s:10};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};const lc=Number.isInteger(foot.labelCol)?foot.labelCol:n-2,vc=Number.isInteger(foot.valueCol)?foot.valueCol:n-1;rf[lc]={v:foot.label||'Tổng cộng',s:10};rf[vc]=foot.formula?{f:foot.formula,v:foot.total,s:8}:{v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
+ xlsxDownload([{name:'DeNghi',widths:[13,13,13,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:2}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
- const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien]);
+ const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien,(TT_DN[d.trangthai]||[''])[0]]);
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
  dlXlsxTable('Danh sách đề nghị',
-  ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN'],rows,
-  {total:tong},fname('baocao_denghi'));
+  ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN','TRẠNG THÁI'],rows,
+  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:'SUMIF(J11:J'+Math.max(11,10+rows.length)+',"<>Từ chối",I11:I'+Math.max(11,10+rows.length)+')'},fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -2793,19 +2805,19 @@ function exportDuTru(){
  const p=DB.data.projects.find(x=>x.id===DT_P)||{};
  const rows=list.map(d=>[d.hangmuc,d.diengiai,d.soluong,d.dongia,d.thanhtien,(TT_DN[d.trangthai]||[''])[0]]);
  dlXlsxTable('Dự trù — '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
-  '<b>Tổng dự trù:</b> '+fmtVND(list.reduce((s,d)=>s+d.thanhtien,0)),fname('dutru_'+(p.code||'all')));
+  {total:list.reduce((s,d)=>s+(+d.thanhtien||0),0),label:'TỔNG DỰ TRÙ',labelCol:3,valueCol:4,formula:'SUM(E11:E'+Math.max(11,10+rows.length)+')'},fname('dutru_'+(p.code||'all')));
  toast('Đã xuất Excel');
 }
 function exportPhatSinh(){
  const list=scoped(DB.data.phatsinh);
  const rows=list.map(d=>[fmtDate(d.date),projCode(d.projectId),d.noidung,d.sotien,(TT_DN[d.trangthai]||[''])[0],d.nguoitao]);
  dlXlsxTable('Báo cáo phát sinh',['Ngày','Dự án','Nội dung','Số tiền','Trạng thái','Người tạo'],rows,
-  '<b>Tổng:</b> '+fmtVND(list.reduce((s,d)=>s+d.sotien,0)),fname('baocao_phatsinh'));
+  {total:list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+(+d.sotien||0),0),label:'TỔNG PHÁT SINH',labelCol:2,valueCol:3,formula:'SUMIF(E11:E'+Math.max(11,10+rows.length)+',"<>Từ chối",D11:D'+Math.max(11,10+rows.length)+')'},fname('baocao_phatsinh'));
  toast('Đã xuất Excel');
 }
 const CFG_KEY='twpro_cfg';
-let CFG={apiUrl:'',key:'',companyName:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',companyLogo:'',companyAddress:'',companyPhone:'',companyEmail:'',companyWebsite:'',companyTaxCode:'',companyRepresentative:'',companyTagline:'Quản lý dự án chuyên nghiệp'};
-function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
+let CFG={apiUrl:'',key:'',companyName:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',companyLogo:'',companyAddress:'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',companyPhone:'(84) 8 3535 1905 - (84) 903 865 240',companyEmail:'',companyWebsite:'www.thewall.com.vn',companyTaxCode:'',companyRepresentative:'Nguyễn Bình An Tâm',companyTagline:''};
+function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){} CFG.companyName='CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL';CFG.companyAddress='1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam';CFG.companyPhone='(84) 8 3535 1905 - (84) 903 865 240';CFG.companyWebsite='www.thewall.com.vn';CFG.companyRepresentative='Nguyễn Bình An Tâm';}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
 function syncCfgForm(){
  const a=document.querySelector('#mBody [name="apiUrl"]')||document.querySelector('#view [name="apiUrl"]');
@@ -2953,8 +2965,8 @@ function saveCompanyCfg(){
 }
 function companyPrintHeader(title){
  const c=CFG||{};const logo=c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'';
- const details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
- return '<div class="tw-company-print-header">'+logo+'<div><div class="tw-brand-name">'+esc(c.companyName||'THE WALL')+'</div><div class="tw-brand-meta">'+esc(c.companyTagline||'')+'</div><div class="tw-brand-meta">'+details+'</div></div></div>';
+ const details=[c.companyAddress?'Địa chỉ: '+c.companyAddress:'',c.companyPhone?'Điện thoại: '+c.companyPhone:'',c.companyWebsite?'Website: '+c.companyWebsite:''].filter(Boolean).map(esc).join('<br>');
+ return '<div class="tw-company-print-header">'+logo+'<div class="tw-company-print-lines"><div class="tw-brand-name">'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</div><div class="tw-brand-meta">'+details+'</div></div></div>';
 }
 function twPrintCurrent(){
  const view=document.getElementById('view');if(!view)return window.print();
@@ -2966,26 +2978,27 @@ function twPrintModalCurrent(){
  const modal=document.getElementById('modal');if(!modal)return;
  const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim();let rows='';
  modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;let value=el.value||'';if(el.tagName==='SELECT'&&el.selectedOptions?.length)value=el.selectedOptions[0].textContent;if(!String(value).trim())return;rows+='<tr><th>'+esc(label)+'</th><td>'+esc(String(value)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:10.5pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:16px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:34%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:10.5pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:anywhere}th{width:34%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
 }
 function twPrintModalBlank(){
  const modal=document.getElementById('modal');if(!modal)return;
  const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim();let rows='';
  modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;rows+='<tr><th>'+esc(label)+'</th><td><div class="write-line">&nbsp;</div></td></tr>';});
- const c=CFG||{},details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
- const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+details+'</small></div></header>';
+ const c=CFG||{};
+ const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
  const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}
- w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:10.5pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:13pt}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:15pt;text-transform:uppercase;margin:12px 0 15px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff7dc;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
+ w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:13mm 12mm 17mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:10.5pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:8px 0 10px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff7dc;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
 }
 function twEnsureModalPrintButton(){
  const foot=document.getElementById('mFoot');if(!foot||!foot.children.length)return;
  const hasSpecialPrint=[...foot.querySelectorAll('button')].some(b=>/print|window\.print/i.test(b.getAttribute('onclick')||'')||/^In\b/i.test((b.textContent||'').trim()));
  if(!hasSpecialPrint&&!foot.querySelector('[data-tw-print-filled]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In biểu mẫu';b.type='button';b.setAttribute('data-tw-print-filled','1');b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
- if(!foot.querySelector('[data-tw-print-blank]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In mẫu trống';b.type='button';b.setAttribute('data-tw-print-blank','1');b.onclick=twPrintModalBlank;foot.insertBefore(b,foot.firstChild);}
+ if(!foot.querySelector('[data-tw-print-blank]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In mẫu trống';b.type='button';b.setAttribute('data-tw-print-blank','1');b.onclick=document.getElementById('phieuPrintArea')?twPrintDNTTBlank:twPrintModalBlank;foot.insertBefore(b,foot.firstChild);}
 }
 function twEnsurePrintButton(){
  const view=document.getElementById('view');if(!view||!Auth.user)return;
+ if(String(location.hash||'').includes('form-warranty'))return;
  const ph=view.querySelector('.page-head');if(!ph)return;
  let actions=ph.querySelector('.page-actions');if(!actions){actions=document.createElement('div');actions.className='page-actions';ph.appendChild(actions);}
  if(!actions.querySelector('[data-tw-global-print]')&&![...actions.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||(b.textContent||'').trim().toLowerCase().startsWith('in '))){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In';b.title='In nội dung đang mở theo bố cục in';b.setAttribute('data-tw-global-print','1');b.onclick=twPrintCurrent;actions.appendChild(b);}
@@ -3019,6 +3032,8 @@ function ensureArrays(){
   (DB.data.projects||[]).forEach(p=>{const seed=(SEED.projects||[]).find(x=>x.id===p.id);if(seed){p.managerId=seed.managerId;p.responsibleId=seed.responsibleId;}});
   try{localStorage.setItem('twpro_realistic_seed_v1','1');}catch(e){} ch=true;
  }}catch(e){}
+ // Keep the director's approved display name in existing local data; never overwrite credentials.
+ try{const director=(DB.data.users||[]).find(u=>u.username==='nbatam');if(director)director.name='Nguyễn Bình An Tâm';}catch(e){}
  // Migrate demo display names/roles once; do not overwrite passwords users may have changed.
  try{if(localStorage.getItem('twpro_demo_users_v3')!=='1'){
   (SEED.users||[]).forEach(seed=>{const u=(DB.data.users||[]).find(x=>String(x.id)===String(seed.id));if(u){u.name=seed.name;u.role=seed.role;u.username=u.username||seed.username;u.projectIds=JSON.parse(JSON.stringify(seed.projectIds||[]));if(seed.perms)u.perms=JSON.parse(JSON.stringify(seed.perms));}});
@@ -3193,5 +3208,34 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
  mo.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
+
+<style id="tw-company-and-payment-final-fix">
+@media print {
+  @page payment { size:A4 portrait; margin:5mm 7mm 7mm 7mm; @bottom-right { content:'Trang ' counter(page); font:7pt Arial,sans-serif; color:#76664b; } }
+  body.printing-phieu { page:payment!important; }
+  body.printing-phieu .phieu-wrap { width:196mm!important; max-width:196mm!important; min-width:0!important; margin:0 auto!important; padding:0!important; font-family:Arial,Helvetica,sans-serif!important; font-size:8.4pt!important; line-height:1.12!important; border:0!important; break-inside:auto!important; page-break-inside:auto!important; }
+  body.printing-phieu .phieu-head { display:block!important; text-align:center!important; border:0!important; border-bottom:.7pt solid #b6a887!important; padding:0 0 1.2mm!important; margin:0 0 1.5mm!important; overflow:visible!important; }
+  body.printing-phieu .phieu-head .co { display:block!important; width:100%!important; min-width:0!important; flex:none!important; font-size:8.2pt!important; line-height:1.15!important; text-align:center!important; overflow-wrap:anywhere!important; }
+  body.printing-phieu .phieu-head .co b { display:block!important; text-align:center!important; font-size:10pt!important; line-height:1.15!important; margin-bottom:.6mm!important; }
+  body.printing-phieu .ptitle { font-size:12pt!important; line-height:1.1!important; margin:1.5mm 0 .5mm!important; text-align:center!important; text-decoration:none!important; }
+  body.printing-phieu .pdate { font-size:8.5pt!important; margin:0 0 1mm!important; }
+  body.printing-phieu .ptbl { font-size:7.7pt!important; margin:1mm 0!important; width:100%!important; table-layout:fixed!important; }
+  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th { padding:.7mm 1mm!important; line-height:1.1!important; border:.55pt solid #b6a887!important; overflow-wrap:anywhere!important; word-break:normal!important; }
+  body.printing-phieu .ptbl .gray { background:#fff5d9!important; -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important; }
+  body.printing-phieu .ptbl .sig-b td { height:9mm!important; }
+  body.printing-phieu .ptbl .money-h td { font-size:7.2pt!important; padding:.8mm .5mm!important; }
+  body.printing-phieu .ptbl .money-v td { font-size:7.8pt!important; padding:.8mm .5mm!important; }
+  body.printing-phieu .psec { font-size:7.8pt!important; margin:.65mm 0 .3mm!important; line-height:1.08!important; }
+  body.printing-phieu .pdot { height:2.3mm!important; margin:0 0 .4mm!important; }
+  body.printing-phieu .prow { font-size:7.8pt!important; gap:2mm!important; margin:.6mm 0!important; }
+  body.printing-phieu .prow .dot { height:2.2mm!important; }
+  body.printing-phieu .pfoot { font-size:7.4pt!important; padding:.8mm!important; margin-top:1mm!important; line-height:1.1!important; }
+  .tw-company-print-header { display:flex!important; flex-direction:column!important; align-items:center!important; justify-content:center!important; text-align:center!important; width:100%!important; }
+  .tw-company-print-lines,.tw-company-print-header .tw-brand-meta { width:100%!important; text-align:center!important; line-height:1.35!important; }
+  .tw-company-print-header .tw-brand-meta br { display:block!important; content:''!important; margin:1px 0!important; }
+  .tw-company-print-header .tw-brand-name { font-size:12pt!important; text-align:center!important; }
+}
+@media print { #view .planned-banner { display:none!important; } }
+</style>
 </body>
 </html>
