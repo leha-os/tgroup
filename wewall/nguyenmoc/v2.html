@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>NGUYỄN MỘC - CHẤM CÔNG THỢ</title>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <style>
 :root{--bg:#FDF8F3;--text:#4E342E;--accent:#FF6F00;--light:#8D6E63;--border:#EDE2D8;--dark:#3E2723;--card:#fff;--radius:20px}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
 body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;line-height:1.5}
-button,input{font-family:inherit}
+button,input{font-family:Arial,Helvetica,sans-serif}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 12px rgba(78,52,46,.07);padding:16px}
 .btn{border:none;border-radius:999px;padding:11px 18px;font-weight:700;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .btn:active{transform:scale(.97)}
@@ -18,15 +19,16 @@ button,input{font-family:inherit}
 .b-daduyet{background:#E8F5E9;color:#2E7D32;border-color:#C8E6C9}
 .b-choduyet{background:#FFF8E1;color:#EF6C00;border-color:#FFECB3}
 .b-tuchoi{background:#FFEBEE;color:#C62828;border-color:#FFCDD2}
+.top-brand{text-align:center;padding:18px 12px}
+.top-brand h1{font-size:22px;letter-spacing:1px}
+.top-brand p{font-size:12px;color:var(--light)}
 #app-layout{display:flex;min-height:100vh;background:var(--bg)}
 #sidebar{width:150px;min-width:150px;background:#fff;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:2px}
 #sidebar .side-btn{width:100%;text-align:left;padding:11px 14px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--text);font-size:13px;font-weight:650;margin-bottom:6px;cursor:pointer;transition:.18s}
 #sidebar .side-btn.active{background:#FFE0B2;color:var(--dark);border-color:#FFCC80;box-shadow:0 2px 8px rgba(255,111,0,.15);font-weight:800}
-#sidebar .side-btn:hover:not(.active){background:#FFF3E0}
-#main{flex:1;padding:0;max-width:1200px;overflow:hidden}
+#main{flex:1;padding:0;max-width:1400px;overflow:hidden}
 #main-inner{padding:16px}
-.app-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
-.app-header b{letter-spacing:.3px}
+.app-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
 footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);text-align:center;font-size:11px;line-height:1.4;padding:8px 4px;z-index:50;color:var(--light)}
 .login-wrap{max-width:420px;margin:24px auto}
 .login-brand{text-align:center;padding:18px 12px}
@@ -46,7 +48,7 @@ footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;bord
 .stat .label{font-size:12px;color:var(--light)}
 .stat .value{font-size:20px;font-weight:900;margin-top:4px}
 .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:#fff}
-table{border-collapse:collapse;width:100%;min-width:500px}
+table{border-collapse:collapse;width:100%;min-width:600px}
 th,td{border:1px solid var(--border);padding:8px 6px;text-align:center;font-size:12px;white-space:nowrap}
 thead th{background:var(--dark);color:#fff;position:sticky;top:0;z-index:2}
 .sticky-left{position:sticky;left:0;z-index:3;background:#fff}
@@ -61,7 +63,7 @@ td.cell-co{background:#E8F5E9}
 td.cell-cho{background:#FFF8E1}
 td.cell-khong{background:#FFEBEE}
 .row-alt{background:#FFFBF7}
-.bottom-sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.18);z-index:100;max-height:72vh;overflow:auto;padding:16px;transform:translateY(100%);transition:.28s cubic-bezier(.32,.72,0,1)}
+.bottom-sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.18);z-index:100;max-height:72vh;overflow:auto;padding:16px;transform:translateY(100%);transition:.28s}
 .bottom-sheet.open{transform:translateY(0)}
 .sheet-backdrop{position:fixed;inset:0;background:rgba(60,40,30,.35);backdrop-filter:blur(3px);z-index:99;display:none}
 .sheet-backdrop.open{display:block}
@@ -89,8 +91,8 @@ function nowStr(){return new Date().toISOString();}
 function todayYMD(){const d=new Date();return d.toISOString().slice(0,10);}
 function monthKey(d=new Date()){return d.toISOString().slice(0,7);}
 function genId(p){return p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);}
-function seedIfNeeded(){
- if(LocalDB.load(KEYS.users))return;
+function seedIfNeeded(force=false){
+ if(!force && LocalDB.load(KEYS.users)) return;
  const users=[
   {maTho:'nbatam',hoTen:'NBA Tâm',sdt:'0784944886',vaiTro:'GiamDoc',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat'],anhDataUrl:'',matKhau:'admin123',ngayVaoLam:'2024-01-15'},
   {maTho:'QL001',hoTen:'Nguyễn Văn Quản',sdt:'0901234567',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-01'},
@@ -131,16 +133,19 @@ function seedIfNeeded(){
  LocalDB.save(KEYS.users,users);
  LocalDB.save(KEYS.cauhinh,{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1});
  const curM=monthKey();const records=[];
- for(let i=0;i<80;i++){
-  const tho=users[3+(i%users.length-3)];
+ for(let i=0;i<120;i++){
+  const tho=users[3+(i% (users.length-3))];
   const day=String(1+(i%28)).padStart(2,'0');
   const ngayCong=`${curM}-${day}`;
-  const st=i%5===0?'cho_duyet':(i%7===0?'tu_choi':'da_duyet');
+  const st=i%4===0?'cho_duyet':(i%9===0?'tu_choi':'da_duyet');
   records.push({maBanGhi:genId('BG')+'_'+i,maTho:tho.maTho,ngayCong,thoiDiemGui:new Date(Date.now()-Math.random()*86400000*3).toISOString(),trangThai:st,nguoiDuyet:st!=='cho_duyet'?'QL001':'',thoiDiemDuyet:st!=='cho_duyet'?new Date().toISOString():'',lyDoTuChoi:st==='tu_choi'?'Sai vị trí':'',viDo:10.762622+Math.random()*0.02,kinhDo:106.660172+Math.random()*0.02,doChinhXac:5+Math.random()*40});
  }
  LocalDB.save(KEYS.records,records);LocalDB.save(KEYS.chot,[]);LocalDB.save(KEYS.audit,[]);
 }
 seedIfNeeded();
+// For demo button to reset to 35 people
+window.resetData35 = function(){localStorage.clear();seedIfNeeded(true);location.reload();};
+
 function getUsers(){return LocalDB.load(KEYS.users)||[]}
 function getRecords(){return LocalDB.load(KEYS.records)||[]}
 function getCauHinh(){return LocalDB.load(KEYS.cauhinh)||{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1}}
@@ -153,8 +158,7 @@ function toast(m){const t=document.getElementById('toast');t.textContent=m;t.cla
 let loginMode='maTho',demoBanner=false,currentView='duyet',thoTab='chamcong';
 function render(){const s=getSession();if(!s){renderLogin();return}const u=s.user;if(u.vaiTro==='Tho'&&(!u.quyen||u.quyen.length===0)){renderTho(u);}else{renderQuanLy(u);}}
 function renderLogin(){
- const app=document.getElementById('app');
- app.innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px">CHẤM CÔNG THỢ</div><div class="tabs"><div class="tab ${loginMode==='maTho'?'active':''}" onclick="setLoginMode('maTho')">Mã thợ</div><div class="tab ${loginMode==='sdt'?'active':''}" onclick="setLoginMode('sdt')">Số điện thoại</div></div><div class="field"><input id="loginId" class="input" placeholder="${loginMode==='maTho'?'Nhập mã thợ (vd nbatam)':'Nhập SĐT'}"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button><div style="margin-top:16px;border-top:1px dashed var(--border);padding-top:12px"><div style="font-size:12px;color:var(--light);margin-bottom:8px">Xem thử nhanh</div><div class="grid2"><button class="btn btn-ghost" onclick="demoLogin('Tho')">Thợ</button><button class="btn btn-ghost" onclick="demoLogin('QuanLy')">Quản Lý</button><button class="btn btn-ghost" onclick="demoLogin('KeToan')">Kế Toán</button><button class="btn btn-ghost" onclick="demoLogin('GiamDoc')">Giám đốc</button></div></div></div></div>`;
+ document.getElementById('app').innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px;font-size:18px">CHẤM CÔNG THỢ</div><div class="tabs"><div class="tab ${loginMode==='maTho'?'active':''}" onclick="setLoginMode('maTho')">Mã thợ</div><div class="tab ${loginMode==='sdt'?'active':''}" onclick="setLoginMode('sdt')">Số điện thoại</div></div><div class="field"><input id="loginId" class="input" placeholder="${loginMode==='maTho'?'Nhập mã thợ (vd nbatam)':'Nhập SĐT'}"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button><div style="margin-top:16px;border-top:1px dashed var(--border);padding-top:12px"><div style="font-size:12px;color:var(--light);margin-bottom:8px">Xem thử nhanh (35 người mẫu)</div><div class="grid2"><button class="btn btn-ghost" onclick="demoLogin('Tho')">Thợ</button><button class="btn btn-ghost" onclick="demoLogin('QuanLy')">Quản Lý</button><button class="btn btn-ghost" onclick="demoLogin('KeToan')">Kế Toán</button><button class="btn btn-ghost" onclick="demoLogin('GiamDoc')">Giám đốc</button></div><button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="resetData35()">🔄 Reset đủ 35 người mẫu</button></div></div></div>`;
 }
 function setLoginMode(m){loginMode=m;renderLogin();}
 function doLogin(){
@@ -167,9 +171,8 @@ function doLogin(){
 function demoLogin(r){const users=getUsers();let u;if(r==='Tho')u=users.find(x=>x.vaiTro==='Tho');else if(r==='QuanLy')u=users.find(x=>x.vaiTro==='QuanLy');else if(r==='KeToan')u=users.find(x=>x.vaiTro==='KeToan');else u=users.find(x=>x.vaiTro==='GiamDoc');demoBanner=true;setSession(u);render();}
 function renderTho(user){
  const records=getRecords().filter(r=>r.maTho===user.maTho);const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));const choDuyet=records.filter(r=>r.trangThai==='cho_duyet'&&r.ngayCong.startsWith(curM));const tongCong=daDuyet.length;const tien=(user.donGia||0)*tongCong;const today=todayYMD();const daChamHomNay=records.some(r=>r.ngayCong===today);const cauhinh=getCauHinh();const gioMo=cauhinh.GIO_MO_CHAM_CONG||'05:00';const now=new Date();const[hM,mM]=gioMo.split(':').map(Number);const moPhut=hM*60+mM;const nowPhut=now.getHours()*60+now.getMinutes();const chuaDenGio=nowPhut<moPhut;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" style="padding:6px 12px" onclick="logout()">Thoát</button></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - Tài khoản Thợ</div>':''}<div class="card" style="margin-bottom:12px"><div style="font-weight:900">Xin chào, ${user.hoTen}</div><div style="font-size:12px;color:var(--light)">${user.maTho} · ${fmtPhone(user.sdt)} · ${user.phanLoai}</div></div><div class="tabs"><div class="tab ${thoTab==='chamcong'?'active':''}" onclick="thoTab='chamcong';render()">Chấm công</div><div class="tab ${thoTab==='thongtin'?'active':''}" onclick="thoTab='thongtin';render()">Thông tin</div></div>${thoTab==='chamcong'?`<div class="card" style="margin-top:10px"><button class="big-btn" ${daChamHomNay||chuaDenGio?'disabled':''} onclick="chamCong()">${daChamHomNay?'Đã chấm công':'CHẤM CÔNG HÔM NAY'}</button>${chuaDenGio?`<div style="color:#C62828;text-align:center;margin-top:8px;font-size:13px">Chưa đến giờ chấm công (sau ${gioMo})</div>`:''}${daChamHomNay?'<div style="text-align:center;color:#2E7D32;margin-top:8px;font-size:13px">Cảm ơn đã chấm công, vui lòng chờ quản lý duyệt</div>':''}</div><div class="grid2" style="margin-top:10px"><div class="card stat"><div class="label">1. Số công hiện tại</div><div class="value">${tongCong}</div><div style="font-size:11px;color:var(--light)">đã duyệt tháng này</div></div><div class="card stat"><div class="label">2. Số tiền dự kiến</div><div class="value">${fmtMoney(tien)}</div><div style="font-size:11px;color:var(--light)">tạm tính</div></div></div><div class="card" style="margin-top:10px;cursor:pointer" onclick="toggleChoDuyet()"><div style="display:flex;justify-content:space-between"><b>3. Số công chờ duyệt</b><b>${choDuyet.length}</b></div><div id="choDuyetList" style="display:none;margin-top:10px">${choDuyet.length===0?'<div style="font-size:13px;color:var(--light)">Không có</div>':choDuyet.map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>${r.ngayCong}</span><span class="badge b-choduyet">Chờ duyệt</span></div>`).join('')}</div></div><div class="card" style="margin-top:10px"><div style="font-size:12px;color:var(--light)">Lịch sử gần đây</div>${records.slice(0,8).map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0eb"><span>${r.ngayCong}</span><span class="badge ${r.trangThai==='da_duyet'?'b-daduyet':r.trangThai==='cho_duyet'?'b-choduyet':'b-tuchoi'}">${r.trangThai==='da_duyet'?'Đã duyệt':r.trangThai==='cho_duyet'?'Chờ duyệt':'Từ chối'}</span></div>`).join('')}</div>`:`<div class="card" style="margin-top:12px;padding:0;overflow:hidden;border-radius:20px"><div style="padding:16px 18px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#FFFBF7,#FFF3E0);border-bottom:1px solid var(--border)"><img src="${user.anhDataUrl||''}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#eee" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:900;font-size:16px">${user.hoTen}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge" style="background:#fff">${user.maTho}</span><span class="badge" style="background:#3E2723;color:#fff">${user.phanLoai}</span><span class="badge" style="background:#fff">${fmtPhone(user.sdt)}</span></div></div></div><div style="padding:4px 0"><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">5. HỌ TÊN / MÃ / SĐT</span><span style="font-weight:800;text-align:right">${user.hoTen}<br><small style="font-weight:400;color:var(--light)">${user.maTho} • ${fmtPhone(user.sdt)}</small></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">6. NGÀY VÀO LÀM</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${user.ngayVaoLam||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px"><span style="font-size:12px;color:var(--light);font-weight:700">7. LƯƠNG NGÀY / PHÂN LOẠI</span><span style="text-align:right"><b style="font-size:15px">${fmtMoney(user.donGia)}</b><br><small class="badge" style="background:#FFE0B2;margin-top:4px">${user.phanLoai}</small></span></div></div></div>`}</div></div></div>`;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" style="padding:6px 12px" onclick="logout()">Thoát</button></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - Tài khoản Thợ</div>':''}<div class="card" style="margin-bottom:12px"><div style="font-weight:900">Xin chào, ${user.hoTen}</div><div style="font-size:12px;color:var(--light)">${user.maTho} · ${fmtPhone(user.sdt)} · ${user.phanLoai}</div></div><div class="tabs"><div class="tab ${thoTab==='chamcong'?'active':''}" onclick="thoTab='chamcong';render()">Chấm công</div><div class="tab ${thoTab==='thongtin'?'active':''}" onclick="thoTab='thongtin';render()">Thông tin</div></div>${thoTab==='chamcong'?`<div class="card" style="margin-top:10px"><button class="big-btn" ${daChamHomNay||chuaDenGio?'disabled':''} onclick="chamCong()">${daChamHomNay?'Đã chấm công':'CHẤM CÔNG HÔM NAY'}</button>${chuaDenGio?`<div style="color:#C62828;text-align:center;margin-top:8px;font-size:13px">Chưa đến giờ chấm công (sau ${gioMo})</div>`:''}</div><div class="grid2" style="margin-top:10px"><div class="card stat"><div class="label">1. Số công hiện tại</div><div class="value">${tongCong}</div></div><div class="card stat"><div class="label">2. Số tiền dự kiến</div><div class="value">${fmtMoney(tien)}</div></div></div><div class="card" style="margin-top:10px"><div style="font-size:12px;color:var(--light)">Lịch sử gần đây</div>${records.slice(0,8).map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0eb"><span>${r.ngayCong}</span><span class="badge ${r.trangThai==='da_duyet'?'b-daduyet':r.trangThai==='cho_duyet'?'b-choduyet':'b-tuchoi'}">${r.trangThai}</span></div>`).join('')}</div>`:`<div class="card" style="margin-top:12px;padding:0;overflow:hidden;border-radius:20px"><div style="padding:16px 18px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#FFFBF7,#FFF3E0);border-bottom:1px solid var(--border)"><img src="${user.anhDataUrl||''}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#eee" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:900;font-size:16px">${user.hoTen}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge" style="background:#fff">${user.maTho}</span><span class="badge" style="background:#3E2723;color:#fff">${user.phanLoai}</span><span class="badge" style="background:#fff">${fmtPhone(user.sdt)}</span></div></div></div><div style="padding:4px 0"><div style="display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">5. HỌ TÊN / MÃ / SĐT</span><span style="font-weight:800;text-align:right">${user.hoTen}<br><small style="font-weight:400;color:var(--light)">${user.maTho} • ${fmtPhone(user.sdt)}</small></span></div><div style="display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">6. NGÀY VÀO LÀM</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;padding:6px 12px">${user.ngayVaoLam||'—'}</span></div><div style="display:flex;justify-content:space-between;padding:12px 18px"><span style="font-size:12px;color:var(--light);font-weight:700">7. LƯƠNG NGÀY</span><span style="text-align:right"><b style="font-size:15px">${fmtMoney(user.donGia)}</b><br><small class="badge" style="background:#FFE0B2;margin-top:4px">${user.phanLoai}</small></span></div></div></div>`}</div></div></div>`;
 }
-function toggleChoDuyet(){const el=document.getElementById('choDuyetList');el.style.display=el.style.display==='none'?'block':'none';}
 function chamCong(){
  const sess=getSession();if(!sess)return;const user=sess.user;const today=todayYMD();const recs=getRecords();if(recs.some(r=>r.maTho===user.maTho&&r.ngayCong===today)){toast('Đã chấm công hôm nay');return;}
  const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),maTho:user.maTho,ngayCong:today,thoiDiemGui:nowStr(),trangThai:'cho_duyet',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc};recs.unshift(nr);LocalDB.save(KEYS.records,recs);toast('Cảm ơn đã chấm công');render();};
@@ -178,7 +181,7 @@ function chamCong(){
 const MENU=[{id:'duyet',label:'Duyệt công',perm:'duyet_cong'},{id:'dashboard',label:'Dashboard',perm:'dashboard'},{id:'bangcong',label:'Bảng công',perm:'bang_cong'},{id:'dstho',label:'Danh sách thợ',perm:'nhan_su'},{id:'dukien',label:'Dự kiến trả thợ',perm:'thong_ke'}];
 function renderQuanLy(user){
  const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">Đăng xuất</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">Đăng xuất</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><span style="font-size:11px;color:var(--light)">${user.hoTen}</span></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
  renderView(user,cur);
 }
 function switchView(id){currentView=id;renderQuanLy(getSession().user);}
@@ -197,10 +200,7 @@ function renderDashboard(el,user){
 }
 function renderDuyet(el,user){
  let recs=getRecords().filter(r=>r.trangThai==='cho_duyet');recs.sort((a,b)=>new Date(b.thoiDiemGui)-new Date(a.thoiDiemGui));
- el.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h3>📍 Duyệt công (${recs.length})</h3><button class="btn btn-primary" onclick="duyetAll()">Duyệt hết (${recs.length})</button></div><div style="margin-top:12px;display:grid;gap:12px">${recs.map(r=>{
-   const u=getUsers().find(x=>x.maTho===r.maTho);const hasGPS=r.viDo&&r.kinhDo;
-   return `<div class="card" style="border-left:4px solid var(--accent);padding:12px"><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge" style="background:#E3F2FD;color:#1565C0">📍 ${hasGPS? r.viDo.toFixed(5)+', '+r.kinhDo.toFixed(5) : 'Không GPS'}</span>${hasGPS?`<a href="https://maps.google.com/?q=${r.viDo},${r.kinhDo}" target="_blank" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">Bản đồ</a>`:''}</div><div style="margin-top:8px;font-weight:800">${u?.hoTen||r.maTho} <small style="color:var(--light)">${u?.phanLoai||''}</small></div><div style="font-size:12px;color:var(--light)">${r.maTho} · ${fmtPhone(u?.sdt||'')} · ${r.ngayCong}</div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-primary" style="flex:1" onclick="duyetOne('${r.maBanGhi}',true)">✓ Duyệt</button><button class="btn btn-ghost" style="flex:1" onclick="duyetOne('${r.maBanGhi}',false)">✕ Từ chối</button></div></div>`;
- }).join('') || '<div style="text-align:center;padding:20px;color:var(--light)">Không có bản ghi chờ duyệt ✅</div>'}</div></div>`;
+ el.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h3>📍 Duyệt công (${recs.length})</h3><button class="btn btn-primary" onclick="duyetAll()">Duyệt hết (${recs.length})</button></div><div style="margin-top:12px;display:grid;gap:12px">${recs.map(r=>{const u=getUsers().find(x=>x.maTho===r.maTho);const hasGPS=r.viDo&&r.kinhDo;return `<div class="card" style="border-left:4px solid var(--accent);padding:12px"><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge" style="background:#E3F2FD;color:#1565C0">📍 ${hasGPS? r.viDo.toFixed(5)+', '+r.kinhDo.toFixed(5) : 'Không GPS'}</span>${hasGPS?`<a href="https://maps.google.com/?q=${r.viDo},${r.kinhDo}" target="_blank" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">Bản đồ</a>`:''}</div><div style="margin-top:8px;font-weight:800">${u?.hoTen||r.maTho} <small style="color:var(--light)">${u?.phanLoai||''}</small></div><div style="font-size:12px;color:var(--light)">${r.maTho} · ${fmtPhone(u?.sdt||'')} · ${r.ngayCong}</div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-primary" style="flex:1" onclick="duyetOne('${r.maBanGhi}',true)">✓ Duyệt</button><button class="btn btn-ghost" style="flex:1" onclick="duyetOne('${r.maBanGhi}',false)">✕ Từ chối</button></div></div>`;}).join('') || '<div style="text-align:center;padding:20px;color:var(--light)">Không có bản ghi chờ duyệt ✅</div>'}</div></div>`;
 }
 function duyetOne(id,ok){if(!ok){const re=prompt('Lý do từ chối:');if(!re)return;updateStatus(id,'tu_choi',re);}else updateStatus(id,'da_duyet','');}
 function duyetAll(){const recs=getRecords().filter(r=>r.trangThai==='cho_duyet');if(!recs.length)return;if(!confirm(`Duyệt ${recs.length} bản ghi?`))return;recs.forEach(r=>updateStatus(r.maBanGhi,'da_duyet','',true));toast(`Đã duyệt ${recs.length}`);render();}
@@ -208,18 +208,93 @@ function updateStatus(ma,tt,ly,silent){const recs=getRecords();const i=recs.find
 let bangThang=monthKey();
 function renderBangCong(el,user){
  const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');const records=getRecords();const[y,m]=bangThang.split('-').map(Number);const dim=new Date(y,m,0).getDate();
- el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="month" class="input" style="width:160px" value="${bangThang}" onchange="bangThang=this.value;renderBangCong(document.getElementById('viewContent'), getSession().user)"><button class="btn btn-primary" onclick="exportBangCSV()">Xuất CSV</button></div><div class="table-wrap" style="margin-top:10px"><table><thead><tr><th class="sticky-left head" style="min-width:180px;left:0">Thợ</th>${Array.from({length:dim},(_,i)=>`<th>${i+1}</th>`).join('')}<th class="sticky-right col-tong">Tổng</th><th class="sticky-right col-dongia">Đơn giá</th><th class="sticky-right col-thanhtien">Thành tiền</th></tr></thead><tbody>${usersTho.map((u,ui)=>{const byDay={};records.forEach(r=>{if(r.maTho===u.maTho&&r.ngayCong.startsWith(bangThang)){byDay[Number(r.ngayCong.slice(8,10))]=r;}});let tong=0;Object.values(byDay).forEach(r=>{if(r.trangThai==='da_duyet')tong++;});return `<tr class="${ui%2===0?'row-alt':''}"><td class="sticky-left" style="text-align:left"><b>${u.hoTen}</b><br><small>${u.maTho} - ${u.phanLoai}</small></td>${Array.from({length:dim},(_,i)=>{const r=byDay[i+1];let cls='',txt='';if(r){if(r.trangThai==='da_duyet'){cls='cell-co';txt='✓';}else if(r.trangThai==='cho_duyet'){cls='cell-cho';txt='C';}else{cls='cell-khong';txt='X';}}return `<td class="${cls}">${txt}</td>`;}).join('')}<td class="sticky-right col-tong">${tong}</td><td class="sticky-right col-dongia">${fmtMoney(u.donGia)}</td><td class="sticky-right col-thanhtien">${fmtMoney(tong*(u.donGia||0))}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+ el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="month" class="input" style="width:160px" value="${bangThang}" onchange="bangThang=this.value;renderBangCong(document.getElementById('viewContent'), getSession().user)"><button class="btn btn-primary" onclick="exportExcelDep()">📊 Xuất Excel Đẹp</button><button class="btn btn-ghost" onclick="exportBangCSV()">CSV nhanh</button></div><div class="table-wrap" style="margin-top:10px"><table><thead><tr><th class="sticky-left head" style="min-width:180px;left:0">Thợ</th>${Array.from({length:dim},(_,i)=>`<th>${i+1}</th>`).join('')}<th class="sticky-right col-tong">Tổng</th><th class="sticky-right col-dongia">Đơn giá</th><th class="sticky-right col-thanhtien">Thành tiền</th></tr></thead><tbody>${usersTho.map((u,ui)=>{const byDay={};records.forEach(r=>{if(r.maTho===u.maTho&&r.ngayCong.startsWith(bangThang)){byDay[Number(r.ngayCong.slice(8,10))]=r;}});let tong=0;Object.values(byDay).forEach(r=>{if(r.trangThai==='da_duyet')tong++;});return `<tr class="${ui%2===0?'row-alt':''}"><td class="sticky-left" style="text-align:left"><b>${u.hoTen}</b><br><small>${u.maTho} - ${u.phanLoai}</small></td>${Array.from({length:dim},(_,i)=>{const r=byDay[i+1];let cls='',txt='';if(r){if(r.trangThai==='da_duyet'){cls='cell-co';txt='✓';}else if(r.trangThai==='cho_duyet'){cls='cell-cho';txt='C';}else{cls='cell-khong';txt='X';}}return `<td class="${cls}">${txt}</td>`;}).join('')}<td class="sticky-right col-tong">${tong}</td><td class="sticky-right col-dongia">${fmtMoney(u.donGia)}</td><td class="sticky-right col-thanhtien">${fmtMoney(tong*(u.donGia||0))}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+}
+async function exportExcelDep(){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const records=getRecords();
+ const [y,m]=bangThang.split('-').map(Number);
+ const dim=new Date(y,m,0).getDate();
+ const wb=new ExcelJS.Workbook();
+ const ws=wb.addWorksheet('Bang cong',{properties:{defaultColWidth:10}});
+ // Set Arial default
+ ws.eachRow = function(){};
+ const colCount = 3 + dim + 3; // STT, Ho ten, Phan loai + days + Tong, Don gia, Thanh tien
+ // Row 1
+ ws.mergeCells(1,1,1,colCount);
+ const r1=ws.getCell(1,1); r1.value='CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC'; r1.font={name:'Arial',size:14,bold:true,color:{argb:'FF000000'}}; r1.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(1).height=22;
+ // Row2
+ ws.mergeCells(2,1,2,colCount);
+ const r2=ws.getCell(2,1); r2.value='Add: 62/7 Đường Long Thuận, Phường Trường Thạnh, TP.Thủ Đức'; r2.font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; r2.alignment={horizontal:'center'};
+ // Row3
+ ws.mergeCells(3,1,3,colCount);
+ const r3=ws.getCell(3,1); r3.value='Tel: 028 36201795 - 0906 933199'; r3.font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; r3.alignment={horizontal:'center'};
+ // Row4
+ ws.mergeCells(4,1,4,colCount);
+ const r4=ws.getCell(4,1); r4.value='Website: www.nguyenmoc.com.vn'; r4.font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; r4.alignment={horizontal:'center'};
+ // Row5,6 blank
+ ws.getRow(5).height=8; ws.getRow(6).height=8;
+ // Row7 ngay xuat
+ ws.mergeCells(7,1,7,colCount);
+ const nowStr=new Date().toLocaleDateString('vi-VN');
+ const r7=ws.getCell(7,1); r7.value='Ngày xuất: '+nowStr; r7.font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; r7.alignment={horizontal:'right'};
+ // Row8 title
+ ws.mergeCells(8,1,8,colCount);
+ const r8=ws.getCell(8,1); r8.value='BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(8).height=28;
+ // Row9 header
+ const header=['STT','Họ tên','Phân loại',...Array.from({length:dim},(_,i)=>String(i+1)),'Tổng','Đơn giá','Thành tiền'];
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true,color:{argb:'FF000000'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ // Data rows from 10
+ let rIdx=10;
+ usersTho.forEach((u,idx)=>{
+   const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}});
+   let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;});
+   const row=ws.getRow(rIdx);
+   const values=[idx+1,u.hoTen,u.phanLoai,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,tong*(u.donGia||0)];
+   values.forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i>=3 && i<3+dim?'center':(i===1?'left':'center'),vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}}; if(rIdx%2===0){c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};} else {c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFFFFF'}};} });
+   // format money columns
+   row.getCell(3+dim+2).numFmt='#,##0'; row.getCell(3+dim+3).numFmt='#,##0';
+   rIdx++;
+ });
+ // Last row total
+ const rowTotal=ws.getRow(rIdx);
+ rowTotal.getCell(1).value='TỔNG CỘNG'; ws.mergeCells(rIdx,1,rIdx,3+dim); // merge first part
+ for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
+ const totalCong=ws.getRow(rIdx-1) ? null : null; // placeholder
+ // compute sums
+ let sumTong=0,sumTien=0;
+ usersTho.forEach(u=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0);});
+ rowTotal.getCell(3+dim+1).value=sumTong;
+ rowTotal.getCell(3+dim+3).value=sumTien; rowTotal.getCell(3+dim+3).numFmt='#,##0';
+ // column widths
+ ws.getColumn(1).width=6; ws.getColumn(2).width=22; ws.getColumn(3).width=18; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=8; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
+ const buf=await wb.xlsx.writeBuffer();
+ const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Bang_cham_cong_${bangThang}_dep.xlsx`; a.click(); URL.revokeObjectURL(url);
+ toast('Đã xuất Excel đẹp');
 }
 function exportBangCSV(){const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');const records=getRecords();const[y,m]=bangThang.split('-').map(Number);const dim=new Date(y,m,0).getDate();let csv='\uFEFFThợ,Mã,Phân loại,'+Array.from({length:dim},(_,i)=>i+1).join(',')+',Tổng,Đơn giá,Thành tiền\n';usersTho.forEach(u=>{const byDay={};records.forEach(r=>{if(r.maTho===u.maTho&&r.ngayCong.startsWith(bangThang)){byDay[Number(r.ngayCong.slice(8,10))]=r;}});let tong=0;Object.values(byDay).forEach(r=>{if(r.trangThai==='da_duyet')tong++;});const row=[`"${u.hoTen}"`,u.maTho,u.phanLoai];for(let d=1;d<=dim;d++){const r=byDay[d];row.push(r?(r.trangThai==='da_duyet'?'1':r.trangThai==='cho_duyet'?'C':'X'):'');}row.push(tong,u.donGia,tong*(u.donGia||0));csv+=row.join(',')+'\n';});downloadFile(csv,`bang_cong_${bangThang}.csv`,'text/csv;');}
 function downloadFile(c,n,t){const b=new Blob([c],{type:t});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=n;a.click();URL.revokeObjectURL(u);}
-function chotThang(){}
-function dieuChinhSauChot(){}
 let filterLoai='all';
 function renderDsTho(el,user){
  let list=getUsers().filter(u=>u.vaiTro==='Tho');if(filterLoai!=='all')list=list.filter(u=>u.phanLoai===filterLoai);
- el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="openThoForm()">+ Thêm thợ</button><button class="btn btn-ghost" onclick="exportThoCSV()">Xuất CSV</button><button class="btn btn-ghost" onclick="openBottomSheetLoai()">Lọc: ${filterLoai==='all'?'Tất cả ('+getUsers().filter(u=>u.vaiTro==='Tho').length+')':filterLoai}</button></div><div style="margin-top:12px;display:grid;gap:10px">${list.map(u=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${u.anhDataUrl||''}" class="avatar" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:800">${u.hoTen} - ${u.maTho}</div><div style="font-size:12px">${fmtPhone(u.sdt)} · ${u.phanLoai} · ${fmtMoney(u.donGia)}</div></div><div style="display:flex;gap:6px"><button class="btn btn-ghost" style="padding:6px 10px" onclick="openThoForm('${u.maTho}')">Sửa</button><button class="btn btn-ghost" style="padding:6px 10px" onclick="toggleKhoa('${u.maTho}')">${u.trangThai==='hoat_dong'?'Khóa':'Mở'}</button></div></div>`).join('')}</div></div>`;
+ el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="openThoForm()">+ Thêm thợ</button><button class="btn btn-ghost" onclick="exportThoExcelDep()">📊 Xuất Excel Đẹp</button><button class="btn btn-ghost" onclick="openBottomSheetLoai()">Lọc: ${filterLoai==='all'?'Tất cả ('+getUsers().filter(u=>u.vaiTro==='Tho').length+')':filterLoai}</button></div><div style="margin-top:12px;display:grid;gap:10px">${list.map(u=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${u.anhDataUrl||''}" class="avatar" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:800">${u.hoTen} - ${u.maTho}</div><div style="font-size:12px">${fmtPhone(u.sdt)} · ${u.phanLoai} · ${fmtMoney(u.donGia)}</div></div><div style="display:flex;gap:6px"><button class="btn btn-ghost" style="padding:6px 10px" onclick="openThoForm('${u.maTho}')">Sửa</button><button class="btn btn-ghost" style="padding:6px 10px" onclick="toggleKhoa('${u.maTho}')">${u.trangThai==='hoat_dong'?'Khóa':'Mở'}</button></div></div>`).join('')}</div></div>`;
 }
-function exportThoCSV(){let csv='\uFEFFMã thợ,Họ tên,SĐT,Phân loại,Đơn giá,Ngày vào làm\n';getUsers().filter(u=>u.vaiTro==='Tho').forEach(u=>{csv+=`${u.maTho},"${u.hoTen}",${u.sdt},${u.phanLoai},${u.donGia},${u.ngayVaoLam}\n`;});downloadFile(csv,'danh_sach_tho.csv','text/csv;');}
+async function exportThoExcelDep(){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const wb=new ExcelJS.Workbook(); const ws=wb.addWorksheet('Danh sach tho');
+ const colCount=6;
+ ws.mergeCells(1,1,1,colCount); const r1=ws.getCell(1,1); r1.value='CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC'; r1.font={name:'Arial',size:14,bold:true}; r1.alignment={horizontal:'center'};
+ ws.mergeCells(2,1,2,colCount); ws.getCell(2,1).value='Add: 62/7 Đường Long Thuận, Phường Trường Thạnh, TP.Thủ Đức'; ws.getCell(2,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(2,1).alignment={horizontal:'center'};
+ ws.mergeCells(3,1,3,colCount); ws.getCell(3,1).value='Tel: 028 36201795 - 0906 933199'; ws.getCell(3,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(3,1).alignment={horizontal:'center'};
+ ws.mergeCells(4,1,4,colCount); ws.getCell(4,1).value='Website: www.nguyenmoc.com.vn'; ws.getCell(4,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(4,1).alignment={horizontal:'center'};
+ ws.getRow(7).getCell(1).value='Ngày xuất: '+new Date().toLocaleDateString('vi-VN'); ws.mergeCells(7,1,7,colCount); ws.getCell(7,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(7,1).alignment={horizontal:'right'};
+ ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value='DANH SÁCH THỢ'; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center'};
+ const header=['STT','Mã thợ','Họ tên','SĐT','Phân loại','Đơn giá']; const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};});
+ usersTho.forEach((u,idx)=>{const row=ws.getRow(10+idx); const vals=[idx+1,u.maTho,u.hoTen,fmtPhone(u.sdt),u.phanLoai,u.donGia]; vals.forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}}; if((10+idx)%2===0) c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}); row.getCell(6).numFmt='#,##0';});
+ ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=16; ws.getColumn(5).width=18; ws.getColumn(6).width=14;
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='Danh_sach_tho_dep.xlsx'; a.click(); URL.revokeObjectURL(url); toast('Đã xuất Excel đẹp');
+}
 function openBottomSheetLoai(){const loais=['all','Thợ sơn','Thợ gỗ','Thợ nề','Thợ hàn sắt','Thợ quảng cáo','Thợ alu','Thợ dán decal','Thợ in bạt','Thợ led điện','Thợ CNC','Thợ thiết kế','Lái xe','Khối văn phòng'];const s=document.getElementById('bottomSheet');s.innerHTML=`<h4>Chọn phân loại</h4>${loais.map(l=>`<div style="padding:12px;border-bottom:1px solid var(--border);cursor:pointer" onclick="chonLoai('${l}')">${l==='all'?'Tất cả':l}</div>`).join('')}`;openSheet();}
 function chonLoai(l){filterLoai=l;closeSheet();render();}
 function openSheet(){document.getElementById('bottomSheet').classList.add('open');document.getElementById('sheetBackdrop').classList.add('open');}
@@ -227,14 +302,14 @@ function closeSheet(){document.getElementById('bottomSheet').classList.remove('o
 let editingMaTho=null;
 function openThoForm(maTho){
  editingMaTho=maTho||null;const users=getUsers();const u=maTho?users.find(x=>x.maTho===maTho):null;
- document.getElementById('bottomSheet').innerHTML=`<div style="max-height:70vh;overflow:auto"><h3>${u?'Sửa thợ':'Thêm thợ'}</h3><div class="field"><label>Mã thợ *</label><input id="f_maTho" class="input" value="${u?.maTho||''}" ${u?'disabled':''}></div><div class="field"><label>Họ tên *</label><input id="f_hoTen" class="input" value="${u?.hoTen||''}"></div><div class="field"><label>SĐT *</label><input id="f_sdt" class="input" value="${u?fmtPhone(u.sdt):''}"></div><div class="field"><label>Phân loại</label><select id="f_phanLoai" class="input"><option ${u?.phanLoai==='Thợ sơn'?'selected':''}>Thợ sơn</option><option ${u?.phanLoai==='Thợ quảng cáo'?'selected':''}>Thợ quảng cáo</option><option ${u?.phanLoai==='Thợ hàn sắt'?'selected':''}>Thợ hàn sắt</option><option ${u?.phanLoai==='Thợ gỗ'?'selected':''}>Thợ gỗ</option><option ${u?.phanLoai==='Thợ nề'?'selected':''}>Thợ nề</option><option ${u?.phanLoai==='Thợ alu'?'selected':''}>Thợ alu</option><option ${u?.phanLoai==='Thợ dán decal'?'selected':''}>Thợ dán decal</option><option ${u?.phanLoai==='Thợ in bạt'?'selected':''}>Thợ in bạt</option><option ${u?.phanLoai==='Thợ led điện'?'selected':''}>Thợ led điện</option><option ${u?.phanLoai==='Thợ CNC'?'selected':''}>Thợ CNC</option><option ${u?.phanLoai==='Thợ thiết kế'?'selected':''}>Thợ thiết kế</option><option ${u?.phanLoai==='Lái xe'?'selected':''}>Lái xe</option><option ${u?.phanLoai==='Khối văn phòng'?'selected':''}>Khối văn phòng</option></select></div><div class="field"><label>Đơn giá</label><input id="f_donGia" class="input" type="number" value="${u?.donGia||''}"></div><div class="field"><label>Ngày vào làm</label><input id="f_ngayVao" type="date" class="input" value="${u?.ngayVaoLam||todayYMD()}"></div><button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveTho()">Lưu</button></div>`;openSheet();
+ document.getElementById('bottomSheet').innerHTML=`<div style="max-height:70vh;overflow:auto"><h3>${u?'Sửa thợ':'Thêm thợ'}</h3><div class="field"><label>Mã thợ *</label><input id="f_maTho" class="input" value="${u?.maTho||''}" ${u?'disabled':''}></div><div class="field"><label>Họ tên *</label><input id="f_hoTen" class="input" value="${u?.hoTen||''}"></div><div class="field"><label>SĐT *</label><input id="f_sdt" class="input" value="${u?fmtPhone(u.sdt):''}"></div><div class="field"><label>Phân loại</label><select id="f_phanLoai" class="input"><option>Thợ sơn</option><option>Thợ quảng cáo</option><option>Thợ hàn sắt</option><option>Thợ gỗ</option><option>Thợ nề</option><option>Thợ alu</option><option>Thợ dán decal</option><option>Thợ in bạt</option><option>Thợ led điện</option><option>Thợ CNC</option><option>Thợ thiết kế</option><option>Lái xe</option><option>Khối văn phòng</option></select></div><div class="field"><label>Đơn giá</label><input id="f_donGia" class="input" type="number" value="${u?.donGia||''}"></div><div class="field"><label>Ngày vào làm</label><input id="f_ngayVao" type="date" class="input" value="${u?.ngayVaoLam||todayYMD()}"></div><button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveTho()">Lưu</button></div>`; if(u) document.getElementById('f_phanLoai').value=u.phanLoai; openSheet();
 }
 function saveTho(){const maTho=document.getElementById('f_maTho').value.trim();const hoTen=document.getElementById('f_hoTen').value.trim();const sdt=normalizePhone(document.getElementById('f_sdt').value);const phanLoai=document.getElementById('f_phanLoai').value;const donGia=parseInt(document.getElementById('f_donGia').value||'0');const ngayVao=document.getElementById('f_ngayVao').value;const users=getUsers();let user;if(editingMaTho){user=users.find(u=>u.maTho===editingMaTho);user.hoTen=hoTen;user.sdt=sdt;user.phanLoai=phanLoai;user.donGia=donGia;user.ngayVaoLam=ngayVao;}else{user={maTho,hoTen,sdt,vaiTro:'Tho',trangThai:'hoat_dong',donGia,phanLoai,quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:ngayVao};users.push(user);}LocalDB.save(KEYS.users,users);closeSheet();toast('Lưu thành công');render();}
 function toggleKhoa(ma){const users=getUsers();const u=users.find(x=>x.maTho===ma);u.trangThai=u.trangThai==='hoat_dong'?'khoa':'hoat_dong';LocalDB.save(KEYS.users,users);render();}
 let duKienNgay=todayYMD();
 function renderDuKien(el,user){
   const records=getRecords(); const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
-  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-weight:900;font-size:15px">Dự kiến trả thợ</span><input type="date" id="duKienDate" class="input" style="width:168px;height:38px" value="${duKienNgay}" onchange="duKienNgay=this.value;renderDuKien(document.getElementById('viewContent'), getSession().user)"></div><div id="duKienContent"></div></div>`;
+  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-weight:900;font-size:15px">Dự kiến trả thợ</span><input type="date" id="duKienDate" class="input" style="width:168px;height:38px" value="${duKienNgay}" onchange="duKienNgay=this.value;renderDuKien(document.getElementById('viewContent'), getSession().user)"><button class="btn btn-primary" onclick="exportDuKienExcelDep()">📊 Xuất Excel Đẹp</button></div><div id="duKienContent"></div></div>`;
   const targetMonth=duKienNgay.slice(0,7);
   const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
   const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
@@ -249,7 +324,31 @@ function renderDuKien(el,user){
   if(!Object.keys(groups).length)html+=`<div class="card" style="text-align:center;color:var(--light)">Chưa có công đã duyệt trong tháng ${targetMonth}</div>`;
   content.innerHTML=html;
 }
-window.setLoginMode=setLoginMode;window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.chamCong=chamCong;window.toggleChoDuyet=toggleChoDuyet;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.exportBangCSV=exportBangCSV;window.exportThoCSV=exportThoCSV;
+async function exportDuKienExcelDep(){
+ const records=getRecords(); const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const targetMonth=duKienNgay.slice(0,7);
+ const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
+ const byTho={}; recs.forEach(r=>{byTho[r.maTho]=(byTho[r.maTho]||0)+1;});
+ const wb=new ExcelJS.Workbook(); const ws=wb.addWorksheet('Du kien tra tho');
+ const colCount=5;
+ ws.mergeCells(1,1,1,colCount); ws.getCell(1,1).value='CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC'; ws.getCell(1,1).font={name:'Arial',size:14,bold:true}; ws.getCell(1,1).alignment={horizontal:'center'};
+ ws.mergeCells(2,1,2,colCount); ws.getCell(2,1).value='Add: 62/7 Đường Long Thuận, Phường Trường Thạnh, TP.Thủ Đức'; ws.getCell(2,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(2,1).alignment={horizontal:'center'};
+ ws.mergeCells(3,1,3,colCount); ws.getCell(3,1).value='Tel: 028 36201795 - 0906 933199'; ws.getCell(3,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(3,1).alignment={horizontal:'center'};
+ ws.mergeCells(4,1,4,colCount); ws.getCell(4,1).value='Website: www.nguyenmoc.com.vn'; ws.getCell(4,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(4,1).alignment={horizontal:'center'};
+ ws.mergeCells(7,1,7,colCount); ws.getCell(7,1).value='Ngày xuất: '+new Date().toLocaleDateString('vi-VN'); ws.getCell(7,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(7,1).alignment={horizontal:'right'};
+ ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value='DỰ KIẾN TRẢ THỢ ĐẾN '+duKienNgay; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center'};
+ const header=['STT','Họ tên','Tổng công','Đơn giá','Thành tiền']; const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};});
+ let rIdx=10; let stt=1;
+ const groups={}; usersTho.forEach(u=>{const cong=byTho[u.maTho]||0; if(cong===0) return; if(!groups[u.phanLoai]) groups[u.phanLoai]=[]; groups[u.phanLoai].push({u,cong});});
+ Object.entries(groups).forEach(([loai,list])=>{
+   // group header
+   const gr=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,5); gr.getCell(1).value=loai+' ('+list.length+' thợ)'; gr.getCell(1).font={name:'Arial',size:11,bold:true}; gr.getCell(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF8E1'}}; gr.getCell(1).alignment={horizontal:'left'}; rIdx++;
+   list.forEach(({u,cong})=>{const row=ws.getRow(rIdx); const vals=[stt++,u.hoTen,cong,u.donGia,cong*(u.donGia||0)]; vals.forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}}; if(rIdx%2===0) c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}); row.getCell(4).numFmt='#,##0'; row.getCell(5).numFmt='#,##0'; rIdx++;});
+ });
+ ws.getColumn(1).width=6; ws.getColumn(2).width=22; ws.getColumn(3).width=10; ws.getColumn(4).width=14; ws.getColumn(5).width=16;
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Du_kien_tra_tho_${duKienNgay}.xlsx`; a.click(); URL.revokeObjectURL(url); toast('Đã xuất Excel đẹp');
+}
+window.setLoginMode=setLoginMode;window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.chamCong=chamCong;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.exportBangCSV=exportBangCSV;window.exportExcelDep=exportExcelDep;window.exportThoExcelDep=exportThoExcelDep;window.exportDuKienExcelDep=exportDuKienExcelDep;
 render();
 </script>
 </body>
