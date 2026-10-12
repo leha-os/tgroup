@@ -756,6 +756,16 @@ button,.btn{min-width:0}
   body.printing-phieu #appView,body.printing-phieu #loginView{display:none!important}
   #tiendoScope > .grid,#tiendoScope > .card,#tiendoScope > .project-overview-grid,#tiendoScope > .td-detail-list{margin-bottom:5mm!important}
 }
+
+/* Planned modules are intentionally marked, so missing forms are explicit and not mistaken for broken links. */
+.sb-link.sb-planned{color:#e6d6b9;border:1px dashed rgba(240,173,31,.22)}
+.sb-link.sb-planned:hover{background:rgba(240,173,31,.12);color:#fff}
+.sb-plan-tag{margin-left:auto!important;flex-shrink:0;background:rgba(240,173,31,.13);border:1px solid rgba(240,173,31,.35);color:#f0ad1f;border-radius:4px;padding:1px 4px;font-size:9px;font-weight:800;letter-spacing:.3px}
+.sb-link span{min-width:0}
+.planned-banner{border:1px dashed #d6a243;background:#fffbeb;border-radius:12px;padding:14px 16px;color:#78350f;margin-bottom:16px}
+.planned-banner h3{font-size:15px;margin-bottom:6px}
+.planned-banner ul{margin:8px 0 0 18px;padding:0}
+.planned-banner li{margin:4px 0;font-size:13px}
 </style>
 
 <style id="tw-phieu-a4-print">
@@ -1371,40 +1381,57 @@ function fixedSelect(name,cur,list,emptyLabel,newLabel){
 function fixedVal(name){const v=formVal(name);return v==='__new'?(formVal(name+'_new')||'').trim():v;}
 function uniqNames(arr,key){return[...new Set((arr||[]).map(x=>x[key]).filter(Boolean))];}
 const NAV=[
- {sec:'TỔNG QUAN'},
- {label:'Tổng quan',icon:'',hash:'#/dashboard'},
- {sec:'DỰ ÁN'},
- {label:'Xem tất cả Dự án',icon:'',hash:'#/projects',perm:'projects_view'},
- {label:'Dự trù/Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
- {label:'Phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
- {label:'Project Progress',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
-    {label:'— Dashboard',hash:'#/tiendo'},
-   {label:'— Table',hash:'#/tiendo-list'},
-   {label:'— Kanban',hash:'#/tiendo-kanban'},
-   {label:'— Gantt',hash:'#/tiendo-gantt'},
-   {label:'— Calendar',hash:'#/tiendo-calendar'},
-   {label:'— Split',hash:'#/tiendo-split'}
+ {sec:'TỔNG QUAN & CÔNG VIỆC'},
+ {label:'Tổng quan điều hành',icon:'',hash:'#/dashboard'},
+ {label:'Việc của tôi — cần xử lý',icon:'',hash:'#/todo-me',planned:true},
+ {sec:'QUẢN LÝ DỰ ÁN'},
+ {label:'Danh sách dự án',icon:'',hash:'#/projects',perm:'projects_view'},
+ {label:'Hồ sơ tổng thể dự án',icon:'',hash:'#/project-profile',planned:true,perm:'projects_view'},
+ {label:'Kế hoạch & tiến độ thi công',icon:'',hash:'#/tiendo',perm:'projects_view',children:[
+    {label:'Dashboard tiến độ',hash:'#/tiendo'},
+    {label:'Bảng công việc (Table)',hash:'#/tiendo-list'},
+    {label:'Bảng Kanban',hash:'#/tiendo-kanban'},
+    {label:'Sơ đồ Gantt',hash:'#/tiendo-gantt'},
+    {label:'Lịch công việc',hash:'#/tiendo-calendar'},
+    {label:'Chế độ Split',hash:'#/tiendo-split'}
  ]},
- {sec:'ĐỀ NGHỊ & PHÊ DUYỆT'},
+ {label:'Ngân sách dự trù / Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
+ {label:'Quản lý phát sinh dự án',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
+ {sec:'NHÂN SỰ & NGUỒN LỰC'},
+ {label:'Danh sách nhân sự',icon:'',hash:'#/resources-staff',planned:true},
+ {label:'Người phụ trách & phân công',icon:'',hash:'#/resources-assign',planned:true},
+ {label:'Tổ đội thi công',icon:'',hash:'#/resources-teams',planned:true},
+ {label:'Máy móc & thiết bị',icon:'',hash:'#/resources-equipment',planned:true},
+ {sec:'BIỂU MẪU & HỒ SƠ CÔNG TRÌNH'},
+ {label:'Lệnh khởi công',icon:'',hash:'#/form-start-order',planned:true},
+ {label:'Nhật ký công trường',icon:'',hash:'#/form-site-diary',planned:true},
+ {label:'Biên bản nghiệm thu',icon:'',hash:'#/form-acceptance',planned:true},
+ {label:'Kiểm tra chất lượng & khắc phục lỗi',icon:'',hash:'#/form-quality',planned:true},
+ {label:'Biên bản họp / làm việc',icon:'',hash:'#/form-meeting',planned:true},
+ {label:'Hồ sơ hoàn công & bàn giao',icon:'',hash:'#/form-handover',planned:true},
+ {label:'Bảo hành & tồn tại sau bàn giao',icon:'',hash:'#/form-warranty',planned:true},
+ {sec:'YÊU CẦU & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
- {label:'Phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
+ {label:'Trung tâm phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
  {label:'Tạm ứng',icon:'',hash:'#/tamung',perm:'denghi_view'},
- {sec:'TÀI CHÍNH'},
- {label:'Thu & Chi tiền mặt',icon:'',hash:'#/cash',perm:'thuchi_view'},
- {label:'Chi phí',icon:'',hash:'#/expenses',perm:'thuchi_view'},
+ {label:'Đề nghị vật tư / thiết bị',icon:'',hash:'#/request-material',planned:true},
+ {label:'Yêu cầu thay đổi / phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
+ {sec:'VẬT TƯ, ĐỐI TÁC & DANH MỤC'},
+ {label:'Nhà cung cấp',icon:'',hash:'#/vendors'},
+ {label:'Nhà thầu / thầu phụ',icon:'',hash:'#/contractors'},
+ {label:'Chủ đầu tư / khách hàng',icon:'',hash:'#/clients',perm:'conno_view'},
+ {label:'Danh mục hạng mục công việc',icon:'',hash:'#/danhmuc'},
+ {sec:'NGÂN SÁCH & TÀI CHÍNH'},
+ {label:'Thu & chi tiền mặt',icon:'',hash:'#/cash',perm:'thuchi_view'},
+ {label:'Chi phí dự án',icon:'',hash:'#/expenses',perm:'thuchi_view'},
  {label:'Công nợ phải trả',icon:'',hash:'#/liabilities',perm:'conno_view'},
  {label:'Công nợ phải thu',icon:'',hash:'#/receivables',perm:'conno_view'},
- {label:'Ngân hàng & Quỹ',icon:'',hash:'#/bank',perm:'quy_view'},
- {sec:'VẬT TƯ & NHÂN SỰ'},
- {label:'Nhà cung cấp',icon:'',hash:'#/vendors'},
- {label:'Nhà thầu',icon:'',hash:'#/contractors'},
- {sec:'HỆ THỐNG'},
- {label:'Chủ đầu tư',icon:'',hash:'#/clients',perm:'conno_view'},
- {label:'Danh mục hạng mục',icon:'',hash:'#/danhmuc'},
- {label:'Báo cáo',icon:'',hash:'#/reports',perm:'baocao_view'},
- {label:'Lịch sử',icon:'',hash:'#/audit',perm:'users_manage'},
- {label:'Người dùng',icon:'',hash:'#/users',perm:'users_manage'},
- {label:'Cài đặt',icon:'',hash:'#/caidat',perm:'caidat_view'},
+ {label:'Ngân hàng & quỹ',icon:'',hash:'#/bank',perm:'quy_view'},
+ {sec:'BÁO CÁO & QUẢN TRỊ'},
+ {label:'Báo cáo tổng hợp',icon:'',hash:'#/reports',perm:'baocao_view'},
+ {label:'Lịch sử thao tác',icon:'',hash:'#/audit',perm:'users_manage'},
+ {label:'Người dùng & phân quyền',icon:'',hash:'#/users',perm:'users_manage'},
+ {label:'Cài đặt hệ thống',icon:'',hash:'#/caidat',perm:'caidat_view'},
 ];
 let navExpanded={};
 function toggleSidebarAll(open){
@@ -1434,7 +1461,7 @@ function buildSidebar(){
    let cnt='';
    if(it.hash==='#/vendors')cnt=scoped(DB.data.vendors).length;
    if(it.hash==='#/projects')cnt=scoped(DB.data.projects).length;
-   h+='<button class="sb-link'+(location.hash===it.hash?' active':'')+'" data-h="'+it.hash+'"><span class="ic">'+it.icon+'</span>'+it.label+(cnt!==''?'<span class="cnt">'+cnt+'</span>':'')+'</button>';
+   h+='<button class="sb-link'+(location.hash===it.hash?' active':'')+(it.planned?' sb-planned':'')+'" data-h="'+it.hash+'"'+(it.planned?' title="Mục đã lên kế hoạch; bấm để xem thông tin cần bổ sung"':'')+'><span class="ic">'+it.icon+'</span><span>'+it.label+'</span>'+(it.planned?'<span class="sb-plan-tag">FORM</span>':'')+(cnt!==''?'<span class="cnt">'+cnt+'</span>':'')+'</button>';
   }
  });
  h+='</div>';
@@ -1602,6 +1629,51 @@ function nav(rebuild){
  if(!fn)fn=ROUTES['#/dashboard'];
  $('#view').innerHTML='';fn();window.scrollTo(0,0);
 }
+const PLANNED_MODULES={
+ '#/todo-me':{title:'Việc của tôi — cần xử lý',stage:'Chưa triển khai',desc:'Màn hình tập trung các việc được giao, việc quá hạn, hồ sơ chờ bổ sung và yêu cầu cần duyệt.',fields:['Người được giao','Dự án / hạng mục','Hạn hoàn thành','Mức ưu tiên','Trạng thái','Liên kết hồ sơ / biểu mẫu']},
+ '#/project-profile':{title:'Hồ sơ tổng thể dự án',stage:'Cần hoàn thiện',desc:'Trang hồ sơ hợp nhất để xem thông tin dự án, các bên liên quan, hợp đồng, phạm vi, mốc tiến độ và tài liệu.',fields:['Mã và tên dự án','Địa điểm, ngày bắt đầu/kết thúc','Chủ đầu tư, tư vấn giám sát, nhà thầu','Quản lý dự án và người phụ trách','Phạm vi, mục tiêu, mốc chính','Hợp đồng, phụ lục, bản vẽ, tài liệu']},
+ '#/resources-staff':{title:'Danh sách nhân sự',stage:'Chưa có form',desc:'Danh bạ nhân sự vận hành dự án; không bắt buộc mỗi người đều có tài khoản đăng nhập.',fields:['Mã nhân sự, họ tên','Chức danh, chuyên môn','Đơn vị / tổ đội','Thông tin liên hệ','Trạng thái làm việc','Dự án đang tham gia']},
+ '#/resources-assign':{title:'Người phụ trách & phân công',stage:'Chưa có form',desc:'Giao trách nhiệm theo dự án, hạng mục và công việc; phân biệt người thực hiện, người chịu trách nhiệm và người duyệt.',fields:['Dự án / hạng mục / công việc','Người chịu trách nhiệm chính','Người thực hiện / phối hợp','Người phê duyệt','Ngày giao, hạn hoàn thành','Trạng thái và lịch sử phân công']},
+ '#/resources-teams':{title:'Tổ đội thi công',stage:'Chưa có form',desc:'Quản lý tổ đội nội bộ và tổ đội thuê ngoài, năng lực và lịch điều động.',fields:['Tên / mã tổ đội','Đơn vị phụ trách','Tổ trưởng và liên hệ','Năng lực / chuyên môn','Quy mô nhân sự','Lịch phân công theo dự án']},
+ '#/resources-equipment':{title:'Máy móc & thiết bị',stage:'Chưa có form',desc:'Danh mục và lịch điều động thiết bị theo công trình nếu phạm vi vận hành cần quản lý.',fields:['Mã / tên thiết bị','Sở hữu / đơn vị cho thuê','Tình trạng','Dự án / công việc sử dụng','Thời gian điều động','Bảo trì / sự cố']},
+ '#/form-start-order':{title:'Lệnh khởi công',stage:'Chưa có form',desc:'Biểu mẫu mở đầu triển khai thi công, gắn với dự án và người chịu trách nhiệm.',fields:['Số lệnh, ngày ban hành','Mã và tên dự án','Địa điểm / phạm vi khởi công','Ngày bắt đầu thi công','Người phụ trách / chỉ huy','Căn cứ, điều kiện khởi công','Người lập / người duyệt / file đính kèm']},
+ '#/form-site-diary':{title:'Nhật ký công trường',stage:'Chưa có form',desc:'Ghi nhận hoạt động hiện trường theo ngày và liên kết các công việc đang triển khai.',fields:['Ngày, dự án, thời tiết','Nhân lực và thiết bị','Công việc thực hiện','Khối lượng / vị trí thi công','Sự cố, vướng mắc, an toàn','Ảnh hiện trường, người lập / xác nhận']},
+ '#/form-acceptance':{title:'Biên bản nghiệm thu',stage:'Chưa có form',desc:'Lưu hồ sơ nghiệm thu theo hạng mục, đợt và bên tham gia; cần xác nhận mẫu chính thức trước khi lập form.',fields:['Số biên bản, ngày, dự án','Hạng mục / khối lượng / đơn vị tính','Hợp đồng, bản vẽ, tiêu chuẩn làm căn cứ','CĐT, TVGS, nhà thầu / thầu phụ tham gia','Kết quả chất lượng và kết luận','Khối lượng kỳ này / lũy kế nếu áp dụng','Chữ ký / xác nhận và tài liệu đính kèm']},
+ '#/form-quality':{title:'Kiểm tra chất lượng & khắc phục lỗi',stage:'Chưa có form',desc:'Theo dõi lỗi, yêu cầu khắc phục, người chịu trách nhiệm và xác nhận đóng lỗi.',fields:['Mã lỗi / ngày phát hiện','Dự án / hạng mục / vị trí','Mô tả và mức độ ảnh hưởng','Ảnh / tài liệu chứng minh','Người xử lý và hạn khắc phục','Kết quả kiểm tra lại / người xác nhận']},
+ '#/form-meeting':{title:'Biên bản họp / làm việc',stage:'Chưa có form',desc:'Lưu nội dung họp, quyết định và đầu việc phát sinh để không thất lạc cam kết.',fields:['Số biên bản, ngày giờ, địa điểm','Dự án và thành phần tham dự','Nội dung trao đổi','Kết luận / quyết định','Đầu việc, người phụ trách, thời hạn','Tài liệu / chữ ký xác nhận']},
+ '#/form-handover':{title:'Hồ sơ hoàn công & bàn giao',stage:'Chưa có form',desc:'Checklist hoàn tất hồ sơ và bàn giao công trình / hạng mục cho bên nhận.',fields:['Phạm vi bàn giao, ngày bàn giao','Biên bản nghiệm thu liên quan','Bản vẽ hoàn công / tài liệu kỹ thuật','Danh sách tài sản / hồ sơ bàn giao','Tồn tại cần khắc phục','Bên giao, bên nhận và xác nhận']},
+ '#/form-warranty':{title:'Bảo hành & tồn tại sau bàn giao',stage:'Chưa có form',desc:'Theo dõi thời hạn bảo hành, yêu cầu sau bàn giao và lịch sử xử lý.',fields:['Dự án / hạng mục bàn giao','Ngày bắt đầu và kết thúc bảo hành','Nội dung yêu cầu / sự cố','Người phụ trách và hạn xử lý','Lịch sử sửa chữa / ảnh','Kết quả xác nhận hoàn tất']},
+ '#/request-material':{title:'Đề nghị vật tư / thiết bị',stage:'Chưa có form',desc:'Tạo yêu cầu vật tư hoặc thiết bị gắn với công việc, dự án và lịch cần sử dụng.',fields:['Dự án / hạng mục / công việc','Vật tư / thiết bị và quy cách','Số lượng / đơn vị tính','Ngày cần có tại công trường','Người đề nghị / người duyệt','Trạng thái đặt hàng / giao nhận']}
+};
+function renderPlannedModule(hash){
+ const m=PLANNED_MODULES[hash];if(!m){location.hash='#/dashboard';return;}
+ const fields=m.fields.map(x=>'<li>'+esc(x)+'</li>').join('');
+ const h='<div class="page-head"><div><div style="font-size:11px;font-weight:800;color:#a16207;letter-spacing:.7px">KẾ HOẠCH HOÀN THIỆN ỨNG DỤNG</div><h1>'+esc(m.title)+'</h1><p>'+esc(m.desc)+'</p></div><div class="page-actions"><button class="btn btn-sec" onclick="history.back()">← Quay lại</button><button class="btn btn-sec" onclick="location.hash=\'#/dashboard\'">Tổng quan</button></div></div>'+
+ '<div class="planned-banner"><h3>⚠ '+esc(m.stage)+' — chưa thay đổi dữ liệu hiện tại</h3><div>Đây là mục đánh dấu phạm vi cần bổ sung. Chưa có form nhập/lưu dữ liệu cho chức năng này; các chức năng cũ vẫn được giữ nguyên.</div><div style="font-weight:700;margin-top:10px">Thông tin dự kiến cần có:</div><ul>'+fields+'</ul></div>'+
+ '<div class="card"><div class="card-h"><div><h3>Ghi chú triển khai</h3><div class="sub">Danh sách trường là đề xuất ban đầu, cần xác nhận trước khi phát triển form thật.</div></div></div><div class="card-b"><p>Để triển khai mục này, cần xác nhận mẫu biểu, quy tắc bắt buộc, vai trò được lập/duyệt và liên kết với dự án hoặc hạng mục. Chưa tạo biểu mẫu giả để tránh gây hiểu nhầm là dữ liệu đã được lưu.</p></div></div>';
+ document.getElementById('view').innerHTML=h;
+}
+Object.keys(PLANNED_MODULES).forEach(hash=>{ROUTES[hash]=()=>renderPlannedModule(hash);});
+/* Existing tạm ứng form/data were present but the sidebar route had no list page; connect it without changing the stored schema. */
+ROUTES['#/tamung']=function(){
+ if(!Auth.can('denghi_view')){location.hash='#/dashboard';return;}
+ const list=scoped(DB.data.tamung||[]);
+ const canApprove=Auth.can('pheduyet_view');
+ let h='<div class="page-head"><div><h1>Tạm ứng</h1><p>'+list.length+' khoản tạm ứng • theo dõi đề nghị, phê duyệt và quyết toán</p></div><div class="page-actions"><button class="btn btn-pri" onclick="tamungForm()">+ Tạo tạm ứng</button></div></div>';
+ h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Dự án</th><th>Người nhận</th><th>Lý do</th><th class="num">Số tiền</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>';
+ if(!list.length)h+='<tr><td colspan="7"><div class="empty">Chưa có khoản tạm ứng. Nhấn “Tạo tạm ứng” để bắt đầu.</div></td></tr>';
+ list.forEach(t=>{
+  const p=DB.data.projects.find(x=>x.id===t.projectId);
+  const status=t.trangthai==='da_duyet'?'<span class="badge b-green">Đã duyệt</span>':t.trangthai==='tu_choi'?'<span class="badge b-red">Từ chối</span>':t.trangthai==='da_quyet_toan'?'<span class="badge b-blue">Đã quyết toán</span>':'<span class="badge b-amber">Chờ duyệt</span>';
+  let actions='';
+  if(t.trangthai==='cho_duyet'&&canApprove)actions+='<button class="btn btn-sm btn-ok" onclick="duyetTU(\''+t.id+'\',true)">Duyệt</button> <button class="btn btn-sm btn-bad" onclick="duyetTU(\''+t.id+'\',false)">Từ chối</button> ';
+  if(t.trangthai==='da_duyet'&&canApprove)actions+='<button class="btn btn-sm btn-sec" onclick="quyetToanTU(\''+t.id+'\')">Quyết toán</button>';
+  if(!actions)actions='<span style="color:var(--mut);font-size:12px">—</span>';
+  h+='<tr><td>'+fmtDate(t.date)+'</td><td>'+esc(p?p.name:'Chưa gắn dự án')+'</td><td>'+esc(t.nguoingan||'—')+'</td><td>'+esc(t.lydo||'—')+'</td><td class="num"><b>'+fmtVND(t.sotien||0)+'</b></td><td>'+status+(t.ngayqt?'<div style="font-size:11px;color:var(--mut);margin-top:3px">Quyết toán: '+fmtDate(t.ngayqt)+'</div>':'')+'</td><td style="white-space:nowrap">'+actions+'</td></tr>';
+ });
+ h+='</tbody></table></div></div>';
+ $('#view').innerHTML=h;
+};
 const PCFG={
  vendors:{coll:'vendors',tx:'vendorTx',fk:'vendorId',t:'Nhà cung cấp',icon:'',inT:'purchase',outT:'payment',inL:'Mua hàng/Nhập',outL:'Thanh toán',dueL:'Công nợ phải trả',back:'#/vendors'},
  clients:{coll:'clients',tx:'clientTx',fk:'clientId',t:'Chủ đầu tư',icon:'',inT:'billed',outT:'received',inL:'Đã nghiệm thu',outL:'Đã nhận tiền',dueL:'Còn phải thu',back:'#/clients',noProj:true}
