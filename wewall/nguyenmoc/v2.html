@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>NGUYỄN MỘC - CHẤM CÔNG THỢ</title>
+<title>NGUYỄN MỘC - CHẤM CÔNG THỢ v2</title>
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <style>
 :root{--bg:#FDF8F3;--text:#4E342E;--accent:#FF6F00;--light:#8D6E63;--border:#EDE2D8;--dark:#3E2723;--card:#fff;--radius:20px}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
 body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;line-height:1.5}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 12px rgba(78,52,46,.07);padding:16px}
-.btn{border:none;border-radius:999px;padding:11px 18px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn{border:none;border-radius:999px;padding:11px 18px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .btn-primary{background:linear-gradient(135deg,var(--accent),#FF8F33);color:#fff}
 .btn-ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
+.badge{font-size:11px;padding:5px 11px;border-radius:999px;font-weight:800}
+.b-daduyet{background:#E8F5E9;color:#2E7D32}.b-choduyet{background:#FFF8E1;color:#EF6C00}.b-tuchoi{background:#FFEBEE;color:#C62828}
 #app-layout{display:flex;min-height:100vh;background:var(--bg)}
 #sidebar{width:150px;min-width:150px;background:#fff;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:2px}
 #sidebar .side-btn{width:100%;text-align:left;padding:11px 14px;border-radius:999px;border:1px solid transparent;background:transparent;font-size:13px;font-weight:650;margin-bottom:6px;cursor:pointer}
@@ -27,9 +29,10 @@ footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;bord
 .big-btn{width:100%;padding:18px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#FF8F33);color:#fff;font-size:17px;font-weight:900;border:none;cursor:pointer}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:14px}.stat .label{font-size:12px;color:var(--light)}.stat .value{font-size:20px;font-weight:900;margin-top:4px}
 .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:#fff}table{border-collapse:collapse;width:100%;min-width:600px}th,td{border:1px solid var(--border);padding:8px 6px;text-align:center;font-size:12px;white-space:nowrap}thead th{background:var(--dark);color:#fff;position:sticky;top:0}
-.sticky-left{position:sticky;left:0;background:#fff}.col-tong{right:200px !important}.col-dongia{right:100px !important}.col-thanhtien{right:0 !important}th.sticky-right,td.sticky-right{position:sticky;right:0}th.col-tong,th.col-dongia,th.col-thanhtien{background:#3E2723;color:#fff}td.col-tong,td.col-dongia,td.col-thanhtien{background:#3E2723;color:#fff;font-weight:700}.row-alt{background:#FFFBF7}
+.sticky-left{position:sticky;left:0;background:#fff}.col-tong{right:200px !important}.col-dongia{right:100px !important}.col-thanhtien{right:0 !important}th.sticky-right,td.sticky-right{position:sticky;right:0}th.col-tong,th.col-dongia,th.col-thanhtien{background:#3E2723;color:#fff}td.col-tong,td.col-dongia,td.col-thanhtien{background:#3E2723;color:#fff;font-weight:700}td.cell-co{background:#E8F5E9}td.cell-cho{background:#FFF8E1}td.cell-khong{background:#FFEBEE}.row-alt{background:#FFFBF7}
 .bottom-sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.18);z-index:100;max-height:72vh;overflow:auto;padding:16px;transform:translateY(100%);transition:.28s}.bottom-sheet.open{transform:translateY(0)}.sheet-backdrop{position:fixed;inset:0;background:rgba(60,40,30,.35);z-index:99;display:none}.sheet-backdrop.open{display:block}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:11px 18px;border-radius:999px;font-size:13px;z-index:200;display:none}.toast.show{display:block}
+.demo-banner{background:#FFF8E1;border:1px dashed #F57F17;padding:8px 14px;border-radius:999px;font-size:12px;text-align:center;margin-bottom:10px;font-weight:600}
 </style>
 </head>
 <body>
@@ -42,6 +45,7 @@ footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;bord
 const LocalDB={load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}},save(k,v){localStorage.setItem(k,JSON.stringify(v))}};
 const KEYS={users:'nm2_users',records:'nm2_records',chot:'nm2_chot',audit:'nm2_audit',cauhinh:'nm2_cauhinh',session:'nm2_session'};
 function fmtMoney(v){if(v==null||isNaN(v))return'0₫';return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'₫';}
+function fmtPhone(s){if(!s)return'';const d=s.replace(/\D/g,'');if(d.length!==10)return s;return d.slice(0,3)+' '+d.slice(3,7)+' '+d.slice(7);}
 function normalizePhone(s){return(s||'').replace(/\D/g,'');}
 function nowStr(){return new Date().toISOString();}
 function todayYMD(){return new Date().toISOString().slice(0,10);}
@@ -51,8 +55,8 @@ function seedIfNeeded(force=false){
  if(!force && LocalDB.load(KEYS.users)) return;
  const users=[
   {maTho:'TAM',hoTen:'Tâm',sdt:'0784944886',vaiTro:'GiamDoc',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat'],anhDataUrl:'',matKhau:'admin123',ngayVaoLam:'2024-01-15'},
-  {maTho:'QL001',hoTen:'Quản Lý',sdt:'0901234567',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-01'},
-  {maTho:'KT001',hoTen:'Kế Toán',sdt:'0907654321',vaiTro:'KeToan',trangThai:'hoat_dong',donGia:0,phanLoai:'Kế toán',quyen:['dashboard','bang_cong','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-10'},
+  {maTho:'QL001',hoTen:'Nguyễn Văn Quản',sdt:'0901234567',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-01'},
+  {maTho:'KT001',hoTen:'Trần Thị Kế',sdt:'0907654321',vaiTro:'KeToan',trangThai:'hoat_dong',donGia:0,phanLoai:'Kế toán',quyen:['dashboard','bang_cong','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-10'},
   {maTho:'T001',hoTen:'Lê Văn Sơn',sdt:'0981112222',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Thợ sơn',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-12'},
   {maTho:'T002',hoTen:'Phạm Thị Lan',sdt:'0982223333',vaiTro:'Tho',trangThai:'hoat_dong',donGia:280000,phanLoai:'Thợ sơn',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-20'},
   {maTho:'T003',hoTen:'Hoàng Văn Nề',sdt:'0983334444',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ nề',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-01-08'},
@@ -69,22 +73,22 @@ function seedIfNeeded(force=false){
   {maTho:'T014',hoTen:'Nguyễn Thị In',sdt:'0985006000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:310000,phanLoai:'Thợ in bạt',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-15'},
   {maTho:'T015',hoTen:'Lê Văn Led',sdt:'0986007000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ led điện',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-22'},
   {maTho:'T016',hoTen:'Phạm Văn Điện',sdt:'0987008000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:360000,phanLoai:'Thợ led điện',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-08-30'},
-  {maTho:'T017',hoTen:'Thiết Kế',sdt:'0988009000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ thiết kế',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-22'},
-  {maTho:'T018',hoTen:'CNC',sdt:'0989001000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ CNC',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-09-18'},
-  {maTho:'T019',hoTen:'Lái Xe',sdt:'0981012020',vaiTro:'Tho',trangThai:'hoat_dong',donGia:300000,phanLoai:'Lái xe',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-04-05'},
-  {maTho:'T020',hoTen:'Sơn 2',sdt:'0982023030',vaiTro:'Tho',trangThai:'hoat_dong',donGia:280000,phanLoai:'Thợ sơn',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-03-10'},
-  {maTho:'T021',hoTen:'Quảng 3',sdt:'0983034040',vaiTro:'Tho',trangThai:'hoat_dong',donGia:330000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-11-11'},
-  {maTho:'T022',hoTen:'Hàn',sdt:'0984045050',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Thợ hàn sắt',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-02-02'},
-  {maTho:'T023',hoTen:'Alu',sdt:'0985056060',vaiTro:'Tho',trangThai:'hoat_dong',donGia:360000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-07-07'},
-  {maTho:'T024',hoTen:'In 2',sdt:'0986067070',vaiTro:'Tho',trangThai:'hoat_dong',donGia:320000,phanLoai:'Thợ in bạt',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-10-20'},
-  {maTho:'T025',hoTen:'Led 2',sdt:'0987078080',vaiTro:'Tho',trangThai:'hoat_dong',donGia:370000,phanLoai:'Thợ led điện',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-01-25'},
-  {maTho:'T026',hoTen:'Gỗ',sdt:'0988089090',vaiTro:'Tho',trangThai:'hoat_dong',donGia:310000,phanLoai:'Thợ gỗ',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-12-12'},
-  {maTho:'T027',hoTen:'Decal 3',sdt:'0989090101',vaiTro:'Tho',trangThai:'hoat_dong',donGia:300000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-03-01'},
-  {maTho:'VP01',hoTen:'Văn Phòng',sdt:'0901112222',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Khối văn phòng',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-15'},
-  {maTho:'VP02',hoTen:'Sale',sdt:'0902223333',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-01'},
-  {maTho:'VP03',hoTen:'Kế Toán VP',sdt:'0903334444',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-10'},
-  {maTho:'VP04',hoTen:'Thiết Kế VP',sdt:'0904445555',vaiTro:'Tho',trangThai:'hoat_dong',donGia:420000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-18'},
-  {maTho:'VP05',hoTen:'CSKH',sdt:'0905556666',vaiTro:'Tho',trangThai:'hoat_dong',donGia:320000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-01-05'},
+  {maTho:'T017',hoTen:'Hoàng Thị Thiết Kế',sdt:'0988009000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ thiết kế',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-22'},
+  {maTho:'T018',hoTen:'Đỗ Văn CNC',sdt:'0989001000',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ CNC',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-09-18'},
+  {maTho:'T019',hoTen:'Bùi Văn Lái',sdt:'0981012020',vaiTro:'Tho',trangThai:'hoat_dong',donGia:300000,phanLoai:'Lái xe',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-04-05'},
+  {maTho:'T020',hoTen:'Trần Văn Sơn 2',sdt:'0982023030',vaiTro:'Tho',trangThai:'hoat_dong',donGia:280000,phanLoai:'Thợ sơn',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-03-10'},
+  {maTho:'T021',hoTen:'Nguyễn Văn Quảng 3',sdt:'0983034040',vaiTro:'Tho',trangThai:'hoat_dong',donGia:330000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-11-11'},
+  {maTho:'T022',hoTen:'Lê Thị Hàn',sdt:'0984045050',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Thợ hàn sắt',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-02-02'},
+  {maTho:'T023',hoTen:'Phạm Thị Alu',sdt:'0985056060',vaiTro:'Tho',trangThai:'hoat_dong',donGia:360000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-07-07'},
+  {maTho:'T024',hoTen:'Hoàng Văn In 2',sdt:'0986067070',vaiTro:'Tho',trangThai:'hoat_dong',donGia:320000,phanLoai:'Thợ in bạt',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-10-20'},
+  {maTho:'T025',hoTen:'Đỗ Văn Led 2',sdt:'0987078080',vaiTro:'Tho',trangThai:'hoat_dong',donGia:370000,phanLoai:'Thợ led điện',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-01-25'},
+  {maTho:'T026',hoTen:'Bùi Thị Gỗ',sdt:'0988089090',vaiTro:'Tho',trangThai:'hoat_dong',donGia:310000,phanLoai:'Thợ gỗ',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-12-12'},
+  {maTho:'T027',hoTen:'Trần Văn Decal 3',sdt:'0989090101',vaiTro:'Tho',trangThai:'hoat_dong',donGia:300000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-03-01'},
+  {maTho:'VP01',hoTen:'Nguyễn Thị Văn Phòng',sdt:'0901112222',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Khối văn phòng',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-15'},
+  {maTho:'VP02',hoTen:'Trần Văn Sale',sdt:'0902223333',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-01'},
+  {maTho:'VP03',hoTen:'Lê Thị Kế Toán',sdt:'0903334444',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-10'},
+  {maTho:'VP04',hoTen:'Phạm Văn Thiết Kế',sdt:'0904445555',vaiTro:'Tho',trangThai:'hoat_dong',donGia:420000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-18'},
+  {maTho:'VP05',hoTen:'Hoàng Thị CSKH',sdt:'0905556666',vaiTro:'Tho',trangThai:'hoat_dong',donGia:320000,phanLoai:'Khối văn phòng',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2025-01-05'},
  ];
  LocalDB.save(KEYS.users,users);
  LocalDB.save(KEYS.cauhinh,{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1});
@@ -96,26 +100,22 @@ seedIfNeeded();
 window.resetData35=function(){localStorage.clear();seedIfNeeded(true);location.reload();};
 function getUsers(){return LocalDB.load(KEYS.users)||[]}
 function getRecords(){return LocalDB.load(KEYS.records)||[]}
+function getCauHinh(){return LocalDB.load(KEYS.cauhinh)||{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1}}
 function getSession(){const s=LocalDB.load(KEYS.session);if(!s)return null;if(new Date(s.han)<new Date())return null;return s;}
 function setSession(user){LocalDB.save(KEYS.session,{user,han:new Date(Date.now()+7*24*3600*1000).toISOString()})}
 function clearSession(){localStorage.removeItem(KEYS.session)}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
-let loginMode='maTho',currentView='duyet';
+let loginMode='maTho',demoBanner=false,currentView='duyet';
 function render(){const s=getSession();if(!s){renderLogin();return}const u=s.user;if(u.vaiTro==='Tho'&&(!u.quyen||u.quyen.length===0)){renderTho(u);}else{renderQuanLy(u);}}
 function renderLogin(){
  document.getElementById('app').innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px;font-size:18px">CHẤM CÔNG THỢ</div><div class="tabs"><div class="tab ${loginMode==='maTho'?'active':''}" onclick="setLoginMode('maTho')">Mã thợ</div><div class="tab ${loginMode==='sdt'?'active':''}" onclick="setLoginMode('sdt')">Số điện thoại</div></div><div class="field"><input id="loginId" class="input" placeholder="Nhập mã thợ"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left;color:#C62828;font-size:12px"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button><div style="margin-top:16px;border-top:1px dashed var(--border);padding-top:12px"><div style="font-size:12px;color:var(--light);margin-bottom:8px">Xem thử nhanh</div><div class="grid2"><button class="btn btn-ghost" onclick="demoLogin('Tho')">Thợ</button><button class="btn btn-ghost" onclick="demoLogin('QuanLy')">Quản Lý</button><button class="btn btn-ghost" onclick="demoLogin('KeToan')">Kế Toán</button><button class="btn btn-ghost" onclick="demoLogin('GiamDoc')">Giám đốc</button></div><button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="resetData35()">RESET</button></div></div></div>`;
 }
 function setLoginMode(m){loginMode=m;renderLogin();}
 function doLogin(){const id=document.getElementById('loginId').value.trim();const pw=document.getElementById('loginPw').value;const users=getUsers();let u=null;if(loginMode==='maTho'){u=users.find(x=>x.maTho.toLowerCase()===id.toLowerCase()&&x.matKhau===pw);}else{const norm=normalizePhone(id);u=users.find(x=>normalizePhone(x.sdt)===norm&&x.matKhau===pw);}if(!u){document.getElementById('loginErr').textContent='Sai mã/SĐT hoặc mật khẩu';return;}setSession(u);render();}
-function demoLogin(r){const users=getUsers();let u;if(r==='Tho')u=users.find(x=>x.vaiTro==='Tho');else if(r==='QuanLy')u=users.find(x=>x.vaiTro==='QuanLy');else if(r==='KeToan')u=users.find(x=>x.vaiTro==='KeToan');else u=users.find(x=>x.vaiTro==='GiamDoc');setSession(u);render();}
-function renderTho(user){document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" onclick="logout()">Thoát</button></div><div id="main-inner"><div class="card"><b>Xin chào ${user.hoTen}</b></div></div></div></div>`;}
+function demoLogin(r){const users=getUsers();let u;if(r==='Tho')u=users.find(x=>x.vaiTro==='Tho');else if(r==='QuanLy')u=users.find(x=>x.vaiTro==='QuanLy');else if(r==='KeToan')u=users.find(x=>x.vaiTro==='KeToan');else u=users.find(x=>x.vaiTro==='GiamDoc');demoBanner=true;setSession(u);render();}
+function renderTho(user){const records=getRecords().filter(r=>r.maTho===user.maTho);const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" onclick="logout()">Thoát</button></div><div id="main-inner"><div class="card"><b>Xin chào ${user.hoTen}</b></div></div></div></div>`;}
 const MENU=[{id:'duyet',label:'Duyệt công',perm:'duyet_cong'},{id:'dashboard',label:'Dashboard',perm:'dashboard'},{id:'bangcong',label:'Bảng công',perm:'bang_cong'},{id:'dstho',label:'Danh sách thợ',perm:'nhan_su'},{id:'dukien',label:'Dự kiến trả thợ',perm:'thong_ke'}];
-function renderQuanLy(user){
- // ĐÃ XÓA NBA TÂM BÊN PHẢI - chỉ hiện tên công ty
- const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">Đăng xuất</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner"><div id="viewContent"></div></div></div></div>`;
- renderView(user,cur);
-}
+function renderQuanLy(user){const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">Đăng xuất</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><span style="font-size:11px">${user.hoTen}</span></div><div id="main-inner"><div id="viewContent"></div></div></div></div>`;renderView(user,cur);}
 function switchView(id){currentView=id;renderQuanLy(getSession().user);}function logout(){clearSession();render();}
 function renderView(user,view){const el=document.getElementById('viewContent');if(view==='duyet')renderDuyet(el,user);else if(view==='bangcong')renderBangCong(el,user);else if(view==='dstho')renderDsTho(el,user);else if(view==='dukien')renderDuKien(el,user);else if(view==='dashboard')renderDashboard(el,user);}
 function renderDashboard(el,user){const records=getRecords();const users=getUsers().filter(u=>u.vaiTro==='Tho');const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));const tong=daDuyet.reduce((s,r)=>{const u=getUsers().find(x=>x.maTho===r.maTho);return s+(u?.donGia||0);},0);el.innerHTML=`<div class="card">Tổng: ${fmtMoney(tong)} - ${users.length} thợ</div>`;}
@@ -153,25 +153,42 @@ async function exportExcelDep(){
    values.forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i>=3 && i<3+dim?'center':(i===2?'left':'center')}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}}; if(rIdx%2===0){c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}});
    rIdx++;
  });
+ // === HÀNG TỔNG CỘNG - đảm bảo hiện ===
  const rowTotal=ws.getRow(rIdx);
+ // Merge 3 cột đầu để ghi TỔNG CỘNG
  ws.mergeCells(rIdx,1,rIdx,3);
  const cTong = rowTotal.getCell(1);
  cTong.value='TỔNG CỘNG';
- cTong.font={name:'Arial',size:11,bold:true};
+ cTong.font={name:'Arial',size:11,bold:true,color:{argb:'FF000000'}};
  cTong.alignment={horizontal:'center',vertical:'middle'};
- let sumTong=0,sumTien=0; usersTho.forEach(u=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0);});
- for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
+ // Tính tổng
+ let sumTong=0,sumTien=0; 
+ usersTho.forEach(u=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0);});
+ // Gán style cho toàn bộ hàng tổng
+ for(let i=1;i<=colCount;i++){
+   const c=rowTotal.getCell(i);
+   c.font={name:'Arial',size:11,bold:true,color:{argb:'FF000000'}};
+   c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}};
+   c.alignment={horizontal:'center',vertical:'middle'};
+   c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};
+ }
+ // Ghi lại sau khi set style để không bị đè
  rowTotal.getCell(1).value='TỔNG CỘNG';
  rowTotal.getCell(3+dim+1).value=sumTong;
+ rowTotal.getCell(3+dim+2).value='';
  rowTotal.getCell(3+dim+3).value=sumTien;
+ rowTotal.getCell(3+dim+1).font={name:'Arial',size:11,bold:true};
+ rowTotal.getCell(3+dim+3).font={name:'Arial',size:11,bold:true};
  rowTotal.getCell(3+dim+3).numFmt='#,##0';
  rowTotal.height=24;
+
  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=10; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
  const fileName='BangCong_NguyenMoc_'+bangThang.replace('-','')+'.xlsx';
- const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName+' - 1 file duy nhất');
 }
-function renderDsTho(el,user){let list=getUsers().filter(u=>u.vaiTro==='Tho');el.innerHTML=`<div class="card">${list.length} thợ</div>`;}
-function renderDuKien(el,user){el.innerHTML=`<div class="card">Dự kiến</div>`;}
+let filterLoai='all';
+function renderDsTho(el,user){let list=getUsers().filter(u=>u.vaiTro==='Tho');if(filterLoai!=='all')list=list.filter(u=>u.phanLoai===filterLoai);el.innerHTML=`<div class="card"><div style="display:flex;gap:8px"><button class="btn btn-primary" onclick="toast('Thêm thợ')">+ Thêm thợ</button></div><div style="margin-top:12px;display:grid;gap:10px">${list.map(u=>`<div class="card"><b>${u.hoTen} - ${u.maTho}</b> - ${u.phanLoai}</div>`).join('')}</div></div>`;}
+function renderDuKien(el,user){el.innerHTML=`<div class="card">Dự kiến - xuất từ bảng công</div>`;}
 function hasPerm(u,p){if(!u)return false;if(u.vaiTro==='GiamDoc')return true;return(u.quyen||[]).includes(p)}
 function openSheet(){document.getElementById('bottomSheet').classList.add('open');document.getElementById('sheetBackdrop').classList.add('open');}
 function closeSheet(){document.getElementById('bottomSheet').classList.remove('open');document.getElementById('sheetBackdrop').classList.remove('open');}
