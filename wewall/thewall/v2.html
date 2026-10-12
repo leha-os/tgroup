@@ -1051,7 +1051,7 @@ table.tbl{border-color:#c9c9c9!important}
   .tw-report-header .tw-brand-meta{font-size:8.5pt!important;color:#555!important;text-align:center!important;line-height:1.45!important}
   .tw-report-header h1{font-size:15pt!important;font-weight:800!important;text-align:center!important;color:#3d2c12!important;margin:0 0 2mm!important;text-transform:uppercase!important}
   .tw-report-header .meta{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:2mm 7mm!important;font-size:9.5pt!important;color:#6b5d43!important;margin:0!important}
-  #view:has(.tw-report-header) .page-head{display:none!important}
+  #view:has(.tw-report-header) .page-head,#view:has(.print-header) .page-head{display:none!important}
   /* Bảng thống nhất: header vàng nhạt, cho xuống dòng, cột số canh phải */
   #view table.tbl,#view table.print-tbl,#tiendoScope table{border-collapse:collapse!important;table-layout:auto!important;width:100%!important}
   #view table.tbl th,#view table.print-tbl th,#tiendoScope th{background:#fff7dc!important;color:#4b3b17!important;border:1px solid #d8c58b!important;font-weight:700!important;text-align:center!important;vertical-align:middle!important;white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important;font-size:10pt!important;padding:2mm 2.4mm!important}
@@ -3056,6 +3056,7 @@ function twPrintCurrent(){
  const view=document.getElementById('view');if(!view)return window.print();
  view.querySelectorAll('[data-tw-print-injected]').forEach(e=>e.remove());
  document.body.classList.remove('tw-landscape');
+ if(view.querySelector('.print-header')){const tbl=view.querySelector('table.tbl,table.print-tbl');if(tbl&&tbl.rows.length&&tbl.rows[0].cells.length>8)document.body.classList.add('tw-landscape');window.print();return;}
  const h1=view.querySelector('.page-head h1');const title=h1?h1.textContent.trim():'BÁO CÁO / HỒ SƠ';
  const sub=view.querySelector('.page-head p');const subtitle=sub?sub.textContent.trim():'';
  const c=CFG||{};
@@ -3117,7 +3118,7 @@ function twEnsureModalPrintButton(){
  const hasPrint=[...foot.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||/^in\b/i.test((b.textContent||'').trim()));
  if(!hasPrint&&!foot.querySelector('[data-tw-print-filled]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In';b.type='button';b.setAttribute('data-tw-print-filled','1');b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
 }
-const TW_NO_AUTO_PRINT=['#/dashboard','#/quick','#/users','#/caidat','#/pheduyet'];
+const TW_NO_AUTO_PRINT=['#/dashboard','#/quick','#/users','#/caidat','#/pheduyet','#/tiendo','#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'];
 function twEnsurePrintButton(){
  const view=document.getElementById('view');if(!view||!Auth.user)return;
  const hh=String(location.hash||'');
