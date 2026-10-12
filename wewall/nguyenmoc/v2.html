@@ -79,7 +79,7 @@ td.cell-khong{background:#FFEBEE}
 <div id="sheetBackdrop" class="sheet-backdrop" onclick="closeSheet()"></div>
 <div id="bottomSheet" class="bottom-sheet"></div>
 <div id="toast" class="toast"></div>
-<footer id="global-footer"><div>© 2026 WeWall Group · Nguyen Moc Co. LTD | Le Ha</div><div>Hệ thống Chấm công Nội bộ</div></footer>
+<footer id="global-footer"><div>© 2026 Tgroup Ecosystem · WeWall Group · Nguyen Moc Co. LTD | Le Ha</div><div>Hệ thống Chấm công Nội bộ</div></footer>
 <script>
 const LocalDB={load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}},save(k,v){localStorage.setItem(k,JSON.stringify(v))}};
 const KEYS={users:'nm2_users',records:'nm2_records',chot:'nm2_chot',audit:'nm2_audit',cauhinh:'nm2_cauhinh',session:'nm2_session'};
@@ -247,6 +247,7 @@ function createHeader(ws,colCount,title){
  ws.mergeCells(7,1,7,colCount); const _d=new Date(); const _pad=n=>String(n).padStart(2,'0'); const _ngayXuat=_pad(_d.getHours())+':'+_pad(_d.getMinutes())+':'+_pad(_d.getSeconds())+' '+_pad(_d.getDate())+'/'+_pad(_d.getMonth()+1)+'/'+_d.getFullYear(); ws.getCell(7,1).value='Ngày xuất: '+_ngayXuat; ws.getCell(7,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(7,1).alignment={horizontal:'right'}; ws.getRow(7).height=18;
  // Hàng 8 - tiêu đề chính: size 12, cao nhỏ lại
  ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(8).height=28;
+ ws.views=[{state:'frozen',ySplit:9}]; // freeze 9 hàng đầu để tiêu đề cột không bị che khi cuộn
 }
 function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 
@@ -256,7 +257,7 @@ async function exportDsThoExcel(){
  const ws=wb.addWorksheet('DANH SÁCH THỢ',{properties:{defaultColWidth:12}});
  const colCount=7;
  createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
- const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
+ const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10;
  list.forEach((u,idx)=>{
@@ -283,9 +284,9 @@ async function exportDuKienExcel(){
  const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
  const wb=new ExcelJS.Workbook();
  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ',{properties:{defaultColWidth:12}});
- const colCount=6;
+ const colCount=7;
  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
- const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
+ const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
  const groups={};
@@ -296,10 +297,10 @@ async function exportDuKienExcel(){
   const rowG=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,colCount); rowG.getCell(1).value='Nhóm: '+loai+' ('+list.length+' thợ)'; rowG.getCell(1).font={name:'Arial',size:11,bold:true}; rowG.getCell(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF3E0'}}; rowG.getCell(1).alignment={horizontal:'left',vertical:'middle'}; for(let i=1;i<=colCount;i++){const c=rowG.getCell(i); c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF3E0'}};} rowG.height=20; rIdx++;
   list.forEach(({u,cong,tien},idx)=>{
    const row=ws.getRow(rIdx);
-   const values=[rIdx-9 - Object.keys(groups).indexOf(loai) ,u.maTho,u.hoTen,u.phanLoai,cong,tien];
+   const values=[rIdx-9 - Object.keys(groups).indexOf(loai),u.maTho,u.hoTen,u.phanLoai,cong,u.donGia||0,{formula:'E'+rIdx+'*F'+rIdx,result:tien}];
    values.forEach((v,i)=>{
     const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
-    if(i===5){ c.numFmt='#,##0'; }
+    if(i===5||i===6){ c.numFmt='#,##0'; }
    });
    if(rIdx%2===0){for(let i=1;i<=colCount;i++) ws.getRow(rIdx).getCell(i).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
    row.height=20; rIdx++; tongTho++; tongCong+=cong; tongTien+=tien;
@@ -307,8 +308,8 @@ async function exportDuKienExcel(){
  });
  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3);
  for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
- rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
- ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18;
+ rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=''; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.height=22;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=14; ws.getColumn(7).width=18;
  const fileName='DuKienTraTho_'+targetMonth.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
 }
@@ -329,7 +330,7 @@ async function exportExcelDep(){
    const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}});
    let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;});
    const row=ws.getRow(rIdx);
-   const values=[idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,tong*(u.donGia||0)];
+   const values=[idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,{formula:colL(3+dim+1)+rIdx+'*'+colL(3+dim+2)+rIdx,result:tong*(u.donGia||0)}];
    values.forEach((v,i)=>{
      const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
      if(i===3+dim+1 || i===3+dim+2){ c.numFmt='#,##0'; } // định dạng tiền có dấu .
@@ -368,7 +369,7 @@ async function exportAllExcel(){
   const ws=wb.addWorksheet('DANH SÁCH THỢ');
   const colCount=7;
   createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
-  const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
+  const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
   const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   let rIdx=10; usersTho.forEach((u,idx)=>{const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,fmtPhone(u.sdt),u.phanLoai,u.donGia||0,fmtDateDDMMYYYY(u.ngayVaoLam||'')].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
   ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=16; ws.getColumn(5).width=18; ws.getColumn(6).width=16; ws.getColumn(7).width=14;
@@ -381,23 +382,23 @@ async function exportAllExcel(){
   const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
   const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   let rIdx=10; let sumTong=0,sumTien=0;
-  usersTho.forEach((u,idx)=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0); const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,tong*(u.donGia||0)].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===3+dim+1||i===3+dim+2) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
+  usersTho.forEach((u,idx)=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0); const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,{formula:colL(3+dim+1)+rIdx+'*'+colL(3+dim+2)+rIdx,result:tong*(u.donGia||0)}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===3+dim+1||i===3+dim+2) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
   const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3+dim+1).value={formula:'SUM('+colL(3+dim+1)+'10:'+colL(3+dim+1)+(rIdx-1)+')',result:sumTong}; rowTotal.getCell(3+dim+3).value={formula:'SUM('+colL(3+dim+3)+'10:'+colL(3+dim+3)+(rIdx-1)+')',result:sumTien}; rowTotal.getCell(3+dim+3).numFmt='#,##0'; rowTotal.height=22;
   ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=10; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
  }
  // Sheet 3 - Dự kiến trả thợ
  {
   const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ');
-  const colCount=6;
+  const colCount=7;
   createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
-  const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
+  const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
   const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
   const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
   let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
-  usersTho.forEach((u,idx)=>{const cong=byTho[u.maTho]||0; if(cong===0)return; const tien=cong*(u.donGia||0); const row=ws.getRow(rIdx); [tongTho+1,u.maTho,u.hoTen,u.phanLoai,cong,tien].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); rIdx++; tongTho++; tongCong+=cong; tongTien+=tien; row.height=20;});
-  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
-  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18;
+  usersTho.forEach((u,idx)=>{const cong=byTho[u.maTho]||0; if(cong===0)return; const tien=cong*(u.donGia||0); const row=ws.getRow(rIdx); [tongTho+1,u.maTho,u.hoTen,u.phanLoai,cong,u.donGia||0,{formula:'E'+rIdx+'*F'+rIdx,result:tien}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5||i===6) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); rIdx++; tongTho++; tongCong+=cong; tongTien+=tien; row.height=20;});
+  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=''; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.height=22;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=14; ws.getColumn(7).width=18;
  }
  const fileName='NguyenMoc_TatCa_'+bangThang.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
