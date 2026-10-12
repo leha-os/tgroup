@@ -1530,11 +1530,12 @@ Auth.can=function(perm){
 Auth.assignedProjects=function(){
  if(!this.user)return [];
  const u=DB.data.users.find(x=>String(x.id)===String(this.user.id));
- if(!u)return null;
+ if(!u)return [];
  if(u.role==='Giám đốc')return null;
- const ids=u.projectIds||[];
- if(!ids.length||ids.includes('*'))return null;
- return ids.filter(id=>DB.data.projects.some(p=>p.id===id));
+ const ids=Array.isArray(u.projectIds)?u.projectIds:[];
+ if(ids.includes('*'))return null;
+ if(!ids.length)return [];
+ return ids.filter(id=>DB.data.projects.some(p=>String(p.id)===String(id))); 
 };
 function visibleProjects(){const ap=Auth.assignedProjects();return ap?DB.data.projects.filter(p=>ap.includes(p.id)):DB.data.projects;}
 const TW_SAMPLE_RESET_KEY='twpro_sample_reset_at';
@@ -2555,7 +2556,7 @@ function xuatPhieuDNTT_XLSX(id){
  mk();
  r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',2);
  const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
- xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:10,freezeCols:2}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
+ xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:0,freezeCols:0}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
 function xlsxMake(sheets,logoB64){
@@ -2872,7 +2873,7 @@ function dlXlsxTable(title,headers,rows,foot,filename){
  if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};const lc=Number.isInteger(foot.labelCol)?foot.labelCol:n-2,vc=Number.isInteger(foot.valueCol)?foot.valueCol:n-1;rf[lc]={v:foot.label||'Tổng cộng',s:10};rf[vc]=foot.formula?{f:foot.formula,v:foot.total,s:8}:{v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DeNghi',widths:[13,13,13,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:2}],filename);
+ xlsxDownload([{name:'DeNghi',widths:[13,13,13,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:0}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 function exportDeNghi(){
@@ -2881,7 +2882,7 @@ function exportDeNghi(){
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
  dlXlsxTable('Danh sách đề nghị',
   ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN','TRẠNG THÁI'],rows,
-  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:'SUMIF(J11:J'+Math.max(11,10+rows.length)+',"<>Từ chối",I11:I'+Math.max(11,10+rows.length)+')'},fname('baocao_denghi'));
+  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:fl.length?'SUMIF(J11:J'+(10+rows.length)+',"<>Từ chối",I11:I'+(10+rows.length)+')':null},fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -2911,7 +2912,7 @@ function syncCfgForm(){
  if(k&&k.value!==CFG.key){CFG.key=k.value;ch=true;}
  if(ch){saveCfg();renderSyncPill();}
 }
-const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
+const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD',resources:'NhanSu',resourceTeams:'ToDoi',resourceEquipment:'ThietBi',resourceAssignments:'PhanCong',projectForms:'BieuMauDuAn',attendanceRecords:'ChamCong',payrollRecords:'BangLuong'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
  if(!CFG.apiUrl)throw new Error('Chưa cấu hình API URL');
@@ -3360,6 +3361,22 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
   .tw-company-print-header .tw-brand-name { font-size:12pt!important; text-align:center!important; }
 }
 @media print { #view .planned-banner { display:none!important; } }
+</style>
+
+<style id="tw-print-final-safety-fix">
+/* In ấn: ẩn khung điều hướng và công cụ ứng dụng, giữ nội dung báo cáo/phiếu cần in. */
+@media print {
+  html, body { width:100%!important; min-width:0!important; height:auto!important; overflow:visible!important; background:#fff!important; }
+  #loginView, .sidebar, .topbar, .toolbar, .td-toolbar, .page-actions, .noprint, .modal-backdrop, .toast, .tw-select-menu, .tw-select-trigger, button, input[type=button], input[type=submit], select, textarea { display:none!important; }
+  #appView, .shell, .main, #view { display:block!important; position:static!important; width:100%!important; max-width:none!important; min-width:0!important; height:auto!important; max-height:none!important; margin:0!important; padding:0!important; overflow:visible!important; box-shadow:none!important; border:0!important; transform:none!important; }
+  #view { font-size:10pt!important; }
+  #view > .page-head { display:none!important; }
+  #view .card, #view .card-b, #view .tbl-wrap { width:100%!important; max-width:none!important; overflow:visible!important; box-shadow:none!important; }
+  #phieuPrintArea { display:block!important; width:100%!important; max-width:none!important; margin:0!important; }
+  body.printing-phieu #view > *:not(#phieuPrintArea) { display:none!important; }
+  body.printing-phieu #phieuPrintArea { position:static!important; }
+  a[href]:after { content:none!important; }
+}
 </style>
 </body>
 </html>
