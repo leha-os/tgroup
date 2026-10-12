@@ -21,10 +21,10 @@ button,input{font-family:inherit}
 .b-choduyet{background:#FFF8E1;color:#EF6C00;border-color:#FFECB3}
 .b-tuchoi{background:#FFEBEE;color:#C62828;border-color:#FFCDD2}
 #app-layout{display:flex;min-height:100vh;background:var(--bg)}
-#sidebar{width:150px;min-width:150px;background:#fff;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:2px}
-#sidebar .side-btn{width:100%;text-align:left;padding:11px 14px;border-radius:12px;border:1px solid transparent;background:transparent;color:var(--text);font-size:13px;font-weight:650;margin-bottom:6px;cursor:pointer;transition:.18s}
+#sidebar{width:150px;min-width:150px;background:#FFF3E0;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+#sidebar .side-btn{width:100%;text-align:left;padding:8px 14px;border-radius:12px;border:1px solid transparent;background:transparent;color:var(--text);font-size:13px;font-weight:650;margin-bottom:4px;cursor:pointer;transition:.18s;text-transform:uppercase;letter-spacing:.4px}
 #sidebar .side-btn.active{background:#FFE0B2;color:var(--dark);border-color:#FFCC80;box-shadow:0 2px 8px rgba(255,111,0,.15);font-weight:800}
-#sidebar .side-btn:hover:not(.active){background:#FFF3E0}
+#sidebar .side-btn:hover:not(.active){background:rgba(255,111,0,.07)}
 #main{flex:1;padding:0;max-width:1200px;overflow:hidden}
 #main-inner{padding:16px}
 .app-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
@@ -34,9 +34,9 @@ footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;bord
 .login-brand{text-align:center;padding:18px 12px}
 .login-brand h1{font-size:22px;letter-spacing:1px}
 .login-brand p{font-size:12px;color:var(--light)}
-.tabs{display:flex;gap:6px;margin:12px 0;padding:5px;background:#D7CCC8;border-radius:12px;box-shadow:inset 0 1px 3px rgba(62,39,35,.15)}
-.tab{flex:1;padding:10px 14px;border-radius:9px;text-align:center;font-weight:800;cursor:pointer;font-size:13px;color:#3E2723;border:1px solid transparent;transition:.18s;text-transform:uppercase;letter-spacing:.5px}
-.tab.active{background:#3E2723;color:#fff;border-color:#3E2723;box-shadow:0 2px 8px rgba(62,39,35,.35);font-weight:900}
+.tabs{display:flex;gap:6px;margin:12px 0;padding:4px;background:#EFEBE9;border-radius:12px}
+.tab{flex:1;padding:10px 14px;border-radius:12px;text-align:center;font-weight:800;cursor:pointer;font-size:13px;color:#3E2723;border:1px solid transparent;transition:.18s;text-transform:uppercase;letter-spacing:.4px}
+.tab.active{background:#fff;color:#2A1A14;border-color:#3E2723;box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:900}
 .input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:15px;transition:.18s}
 .input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,111,0,.15)}
 .field{margin-bottom:12px}
@@ -71,7 +71,7 @@ td.cell-khong{background:#FFEBEE}
 .toast.show{display:block}
 .avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:#eee}
 .demo-banner{background:#FFF8E1;border:1px dashed #F57F17;padding:8px 14px;border-radius:12px;font-size:12px;text-align:center;margin-bottom:10px;font-weight:600}
-@media(max-width:768px){#app-layout{flex-direction:column}#sidebar{width:100%;min-width:100%;height:auto;display:flex;flex-direction:row;gap:8px;overflow:auto;position:static;padding:10px}#sidebar .side-btn{white-space:nowrap;width:auto;padding:9px 14px}#main-inner{padding:12px}}
+@media(max-width:768px){#app-layout{flex-direction:column}#sidebar{width:100%;min-width:100%;height:auto;display:flex;flex-direction:row;gap:8px;overflow:auto;position:sticky;top:0;z-index:20;padding:7px 10px}#sidebar .side-btn{white-space:nowrap;width:auto;padding:7px 12px}#main-inner{padding:12px}}
 </style>
 </head>
 <body>
@@ -148,8 +148,9 @@ function seedIfNeeded(){
  }
  LocalDB.save(KEYS.records,records);LocalDB.save(KEYS.chot,[]);LocalDB.save(KEYS.audit,[]);
 }
-// Mặc định: ai mở link cũng tự reset sạch rồi seed lại, không cần bấm nút Reset
-localStorage.clear();
+// Mỗi lần mở link hay kéo refresh: reset sạch DỮ LIỆU về mặc định,
+// nhưng GIỮ NGUYÊN session đăng nhập (không bao giờ văng ra màn hình login)
+Object.values(KEYS).forEach(k=>{if(k!==KEYS.session)localStorage.removeItem(k);});
 seedIfNeeded();
 function getUsers(){return LocalDB.load(KEYS.users)||[]}
 function getRecords(){return LocalDB.load(KEYS.records)||[]}
@@ -185,10 +186,10 @@ function chamCong(){
  const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),maTho:user.maTho,ngayCong:today,thoiDiemGui:nowStr(),trangThai:'cho_duyet',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc};recs.unshift(nr);LocalDB.save(KEYS.records,recs);toast('Cảm ơn đã chấm công');render();};
  if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
 }
-const MENU=[{id:'duyet',label:'Duyệt công',perm:'duyet_cong'},{id:'dashboard',label:'Dashboard',perm:'dashboard'},{id:'bangcong',label:'Bảng công',perm:'bang_cong'},{id:'dstho',label:'Danh sách thợ',perm:'nhan_su'},{id:'dukien',label:'Dự kiến trả thợ',perm:'thong_ke'}];
+const MENU=[{id:'duyet',label:'DUYỆT CÔNG',perm:'duyet_cong'},{id:'dashboard',label:'DASHBOARD',perm:'dashboard'},{id:'bangcong',label:'BẢNG CÔNG',perm:'bang_cong'},{id:'dstho',label:'DANH SÁCH THỢ',perm:'nhan_su'},{id:'dukien',label:'DỰ KIẾN TRẢ THỢ',perm:'thong_ke'}];
 function renderQuanLy(user){
  const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">Đăng xuất</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">ĐĂNG XUẤT</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
  renderView(user,cur);
 }
 function switchView(id){currentView=id;renderQuanLy(getSession().user);}
@@ -247,11 +248,13 @@ function createHeader(ws,colCount,title){
  // Hàng 8 - tiêu đề chính: size 12, cao nhỏ lại
  ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(8).height=28;
 }
+function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
+function tenThangSheet(ym){const p=ym.split('-');return 'THÁNG '+p[1]+'.'+p[0];}
 
 async function exportDsThoExcel(){
  const list=getUsers().filter(u=>u.vaiTro==='Tho');
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('DanhSachTho',{properties:{defaultColWidth:12}});
+ const ws=wb.addWorksheet('DANH SÁCH THỢ - '+tenThangSheet(monthKey()),{properties:{defaultColWidth:12}});
  const colCount=7;
  createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
  const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
@@ -280,7 +283,7 @@ async function exportDuKienExcel(){
  const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
  const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('DuKienTraTho',{properties:{defaultColWidth:12}});
+ const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ - '+tenThangSheet(duKienNgay.slice(0,7)),{properties:{defaultColWidth:12}});
  const colCount=6;
  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth);
  const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
@@ -305,7 +308,7 @@ async function exportDuKienExcel(){
  });
  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3);
  for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
- rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=tongCong; rowTotal.getCell(6).value=tongTien; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
+ rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18;
  const fileName='DuKienTraTho_'+targetMonth.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
@@ -317,7 +320,7 @@ async function exportExcelDep(){
  const [y,m]=bangThang.split('-').map(Number);
  const dim=new Date(y,m,0).getDate();
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('BangCong',{properties:{defaultColWidth:10}});
+ const ws=wb.addWorksheet('BẢNG CÔNG - '+tenThangSheet(bangThang),{properties:{defaultColWidth:10}});
  const colCount = 3 + dim + 3;
  createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
  const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
@@ -343,9 +346,9 @@ async function exportExcelDep(){
  rowTotal.getCell(1).alignment={horizontal:'center',vertical:'middle'};
  let sumTong=0,sumTien=0; usersTho.forEach(u=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0);});
  for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
- rowTotal.getCell(3+dim+1).value=sumTong;
+ rowTotal.getCell(3+dim+1).value={formula:'SUM('+colL(3+dim+1)+'10:'+colL(3+dim+1)+(rIdx-1)+')',result:sumTong};
  rowTotal.getCell(3+dim+2).value=''; // cột đơn giá để trống ở tổng
- rowTotal.getCell(3+dim+3).value=sumTien;
+ rowTotal.getCell(3+dim+3).value={formula:'SUM('+colL(3+dim+3)+'10:'+colL(3+dim+3)+(rIdx-1)+')',result:sumTien};
  rowTotal.getCell(3+dim+2).numFmt='#,##0';
  rowTotal.getCell(3+dim+3).numFmt='#,##0';
  rowTotal.height=22;
@@ -363,7 +366,7 @@ async function exportAllExcel(){
  const wb=new ExcelJS.Workbook();
  // Sheet 1 - Danh sách thợ
  {
-  const ws=wb.addWorksheet('DanhSachTho');
+  const ws=wb.addWorksheet('DANH SÁCH THỢ - '+tenThangSheet(monthKey()));
   const colCount=7;
   createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
   const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
@@ -373,19 +376,19 @@ async function exportAllExcel(){
  }
  // Sheet 2 - Bảng công
  {
-  const ws=wb.addWorksheet('BangCong');
+  const ws=wb.addWorksheet('BẢNG CÔNG - '+tenThangSheet(bangThang));
   const colCount=3+dim+3;
   createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
   const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
   const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   let rIdx=10; let sumTong=0,sumTien=0;
   usersTho.forEach((u,idx)=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0); const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,tong*(u.donGia||0)].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===3+dim+1||i===3+dim+2) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
-  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3+dim+1).value=sumTong; rowTotal.getCell(3+dim+3).value=sumTien; rowTotal.getCell(3+dim+3).numFmt='#,##0'; rowTotal.height=22;
+  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3+dim+1).value={formula:'SUM('+colL(3+dim+1)+'10:'+colL(3+dim+1)+(rIdx-1)+')',result:sumTong}; rowTotal.getCell(3+dim+3).value={formula:'SUM('+colL(3+dim+3)+'10:'+colL(3+dim+3)+(rIdx-1)+')',result:sumTien}; rowTotal.getCell(3+dim+3).numFmt='#,##0'; rowTotal.height=22;
   ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=10; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
  }
  // Sheet 3 - Dự kiến trả thợ
  {
-  const ws=wb.addWorksheet('DuKienTraTho');
+  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ - '+tenThangSheet(targetMonth));
   const colCount=6;
   createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth);
   const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
@@ -394,7 +397,7 @@ async function exportAllExcel(){
   const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
   let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
   usersTho.forEach((u,idx)=>{const cong=byTho[u.maTho]||0; if(cong===0)return; const tien=cong*(u.donGia||0); const row=ws.getRow(rIdx); [tongTho+1,u.maTho,u.hoTen,u.phanLoai,cong,tien].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); rIdx++; tongTho++; tongCong+=cong; tongTien+=tien; row.height=20;});
-  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=tongCong; rowTotal.getCell(6).value=tongTien; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
+  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.height=22;
   ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18;
  }
  const fileName='NguyenMoc_TatCa_'+bangThang.replace('-','')+'.xlsx';
@@ -430,7 +433,7 @@ function renderDuKien(el,user){
   let html=`<div style="padding:14px 18px;border-radius:12px;background:linear-gradient(135deg,#3E2723,#5D4037);color:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><b>Tổng hợp đến ${fmtDateDDMMYYYY(duKienNgay)}</b><span style="display:flex;gap:6px"><span class="badge" style="background:rgba(255,255,255,.14);color:#fff">${tongTho} thợ</span><span class="badge" style="background:rgba(255,255,255,.14);color:#fff">${tongCong} công</span><span class="badge" style="background:#FFE0B2;color:#3E2723">${fmtMoney(tongTien)}</span></span></div>`;
   Object.entries(groups).forEach(([loai,list])=>{
     const sumTho=list.length;const sumCong=list.reduce((s,x)=>s+x.cong,0);const sumTien=list.reduce((s,x)=>s+x.tien,0);
-    html+=`<div class="card" style="padding:0;overflow:hidden;border-radius:20px"><div style="padding:12px 16px;background:#FFFBF7;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap"><span style="font-weight:900">${loai}</span><span style="color:var(--light)">•</span><span style="display:flex;gap:6px"><span class="badge" style="background:#fff">${sumTho} thợ</span><span class="badge" style="background:#fff">${sumCong} công</span><span class="badge b-choduyet" style="background:#fff">${fmtMoney(sumTien)}</span></span></div><div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th style="text-align:left;padding-left:16px">Họ tên</th><th>Tổng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody>${list.map(({u,cong,tien},i)=>`<tr class="${i%2===0?'row-alt':''}"><td style="text-align:left;padding-left:16px"><b>${u.hoTen}</b><br><small style="color:var(--light)">${u.maTho} · ${fmtPhone(u.sdt)}</small></td><td><b>${cong}</b></td><td>${fmtMoney(u.donGia)}</td><td><b>${fmtMoney(tien)}</b></td></tr>`).join('')}</tbody></table></div></div>`;
+    html+=`<div class="card" style="padding:0;overflow:hidden;border-radius:20px"><div style="padding:12px 16px;background:#FFF3E0;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="badge" style="background:#FFE0B2;color:#3E2723;font-size:13px;padding:7px 14px">${loai}</span><span style="color:var(--light)">•</span><span style="display:flex;gap:6px"><span class="badge" style="background:#fff">${sumTho} thợ</span><span class="badge" style="background:#fff">${sumCong} công</span><span class="badge b-choduyet" style="background:#fff">${fmtMoney(sumTien)}</span></span></div><div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th style="text-align:left;padding-left:16px">Họ tên</th><th>Tổng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody>${list.map(({u,cong,tien},i)=>`<tr class="${i%2===0?'row-alt':''}"><td style="text-align:left;padding-left:16px"><b>${u.hoTen}</b><br><small style="color:var(--light)">${u.maTho} · ${fmtPhone(u.sdt)}</small></td><td><b>${cong}</b></td><td>${fmtMoney(u.donGia)}</td><td><b>${fmtMoney(tien)}</b></td></tr>`).join('')}</tbody></table></div></div>`;
   });
   if(!Object.keys(groups).length)html+=`<div class="card" style="text-align:center;color:var(--light)">Chưa có công đã duyệt trong tháng ${targetMonth}</div>`;
   content.innerHTML=html;
