@@ -249,12 +249,11 @@ function createHeader(ws,colCount,title){
  ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(8).height=28;
 }
 function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
-function tenThangSheet(ym){const p=ym.split('-');return 'THÁNG '+p[1]+'.'+p[0];}
 
 async function exportDsThoExcel(){
  const list=getUsers().filter(u=>u.vaiTro==='Tho');
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('DANH SÁCH THỢ - '+tenThangSheet(monthKey()),{properties:{defaultColWidth:12}});
+ const ws=wb.addWorksheet('DANH SÁCH THỢ',{properties:{defaultColWidth:12}});
  const colCount=7;
  createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
  const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
@@ -283,9 +282,9 @@ async function exportDuKienExcel(){
  const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
  const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ - '+tenThangSheet(duKienNgay.slice(0,7)),{properties:{defaultColWidth:12}});
+ const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ',{properties:{defaultColWidth:12}});
  const colCount=6;
- createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth);
+ createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
  const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
@@ -320,7 +319,7 @@ async function exportExcelDep(){
  const [y,m]=bangThang.split('-').map(Number);
  const dim=new Date(y,m,0).getDate();
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('BẢNG CÔNG - '+tenThangSheet(bangThang),{properties:{defaultColWidth:10}});
+ const ws=wb.addWorksheet('BẢNG CÔNG',{properties:{defaultColWidth:10}});
  const colCount = 3 + dim + 3;
  createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
  const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
@@ -366,7 +365,7 @@ async function exportAllExcel(){
  const wb=new ExcelJS.Workbook();
  // Sheet 1 - Danh sách thợ
  {
-  const ws=wb.addWorksheet('DANH SÁCH THỢ - '+tenThangSheet(monthKey()));
+  const ws=wb.addWorksheet('DANH SÁCH THỢ');
   const colCount=7;
   createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
   const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','ĐƠN GIÁ','NGÀY VÀO LÀM'];
@@ -376,7 +375,7 @@ async function exportAllExcel(){
  }
  // Sheet 2 - Bảng công
  {
-  const ws=wb.addWorksheet('BẢNG CÔNG - '+tenThangSheet(bangThang));
+  const ws=wb.addWorksheet('BẢNG CÔNG');
   const colCount=3+dim+3;
   createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
   const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
@@ -388,9 +387,9 @@ async function exportAllExcel(){
  }
  // Sheet 3 - Dự kiến trả thợ
  {
-  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ - '+tenThangSheet(targetMonth));
+  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ');
   const colCount=6;
-  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth);
+  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
   const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','THÀNH TIỀN'];
   const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
