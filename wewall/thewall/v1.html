@@ -1070,6 +1070,9 @@ table.tbl{border-color:#c9c9c9!important}
   .tw-signature-row span{font-size:9pt!important;color:#6b5d43!important}
   /* Ẩn nút bấm khi in */
   .noprint,.page-actions,.td-toolbar,.td-view-switch,.rowbtns,.actions,.sidebar,.topbar,.toast,.proj-pick,button,select,input[type=text],input[type=date],input[type=number],.filter,.filters,.filter-bar,.toolbar,.qentry{display:none!important}
+  /* Việc cần xử lý: 2 khung/hàng khi in */
+  .stat-grid,.kpi-grid,.cards-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4mm!important}
+
 }
 </style>
 </head>
@@ -3224,9 +3227,6 @@ function twWordMl(title,root){
           if(i<compLines.length-1)runs.push({text:'\n'});
         });
         blocks.push({p:runs,align:'center',spaceAfter:200});
-        // Thêm đường gạch ngang
-        blocks.push({p:[{text:'──────────────────────────────'}],align:'center',sz:18,spaceAfter:150});
-        return;
       }
     }
    let cur=[];
