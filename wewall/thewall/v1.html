@@ -1040,21 +1040,21 @@ table.tbl{border-color:#c9c9c9!important}
 .print-only{display:none!important}
 @page twportrait{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
 @page twlandscape{size:A4 landscape;margin:12mm 12mm 12mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
-@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
+@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
 @media print{
   body{page:twportrait!important}
   body.tw-landscape{page:twlandscape!important}
   /* Header báo cáo thống nhất: 1 khối liền mạch công ty -> gạch vàng -> tiêu đề -> meta */
   .tw-report-header{display:block!important;margin:0 0 5mm!important;break-after:avoid!important;page-break-after:avoid!important}
   .tw-report-header .tw-company-print-header{display:block!important;text-align:center!important;border:0!important;border-bottom:2pt solid #d8a93b!important;padding:0 0 3mm!important;margin:0 0 3mm!important}
-  .tw-report-header .tw-brand-name{font-size:13pt!important;font-weight:800!important;color:#111!important;text-align:center!important}
+  .tw-report-header .tw-brand-name{font-size:15pt!important;font-weight:800!important;color:#111!important;text-align:center!important}
   .tw-report-header .tw-brand-meta{font-size:8.5pt!important;color:#555!important;text-align:center!important;line-height:1.45!important}
-  .tw-report-header h1{font-size:15pt!important;font-weight:800!important;text-align:center!important;color:#3d2c12!important;margin:0 0 2mm!important;text-transform:uppercase!important}
+  .tw-report-header h1{font-size:13pt!important;font-weight:700!important;text-align:center!important;color:#3d2c12!important;margin:0 0 2mm!important;text-transform:uppercase!important}
   .tw-report-header .meta{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:2mm 7mm!important;font-size:9.5pt!important;color:#6b5d43!important;margin:0!important}
   #view:has(.tw-report-header) .page-head,#view:has(.print-header) .page-head{display:none!important}
   /* Bảng thống nhất: header vàng nhạt, cho xuống dòng, cột số canh phải */
   #view table.tbl,#view table.print-tbl,#tiendoScope table{border-collapse:collapse!important;table-layout:auto!important;width:100%!important}
-  #view table.tbl th,#view table.print-tbl th,#tiendoScope th{background:#fff7dc!important;color:#4b3b17!important;border:1px solid #d8c58b!important;font-weight:700!important;text-align:center!important;vertical-align:middle!important;white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important;font-size:10pt!important;padding:2mm 2.4mm!important}
+  #view table.tbl th,#view table.print-tbl th,#tiendoScope th{background:#fff7dc!important;color:#4b3b17!important;border:1px solid #d8c58b!important;font-weight:700!important;text-align:center!important;vertical-align:middle!important;white-space:nowrap!important;overflow-wrap:break-word!important;word-break:normal!important;font-size:10pt!important;padding:2mm 2.4mm!important}
   #view table.tbl td,#view table.print-tbl td,#tiendoScope td{border:1px solid #d8c58b!important;font-size:10pt!important;padding:2mm 2.4mm!important;vertical-align:top!important;white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important}
   #view table.tbl td.num,#view table.print-tbl td.num,#tiendoScope td.num{text-align:right!important;white-space:nowrap!important}
   #view thead,#tiendoScope thead{display:table-header-group!important}
@@ -1069,26 +1069,8 @@ table.tbl{border-color:#c9c9c9!important}
   .tw-signature-row b{display:block!important;margin-bottom:18mm!important;font-size:10.5pt!important}
   .tw-signature-row span{font-size:9pt!important;color:#6b5d43!important}
   /* Ẩn nút bấm khi in */
-  .noprint,.page-actions,.td-toolbar,.td-view-switch,.rowbtns,.actions,.sidebar,.topbar,.toast,.proj-pick,button{display:none!important}
+  .noprint,.page-actions,.td-toolbar,.td-view-switch,.rowbtns,.actions,.sidebar,.topbar,.toast,.proj-pick,button,select,input[type=text],input[type=date],input[type=number],.filter,.filters,.filter-bar,.toolbar,.qentry{display:none!important}
 }
-</style>
-
-<style id="tw-unified-print-final">
-/* Shared print rules for reports and forms: one A4 baseline, larger readable titles. */
-@media print {
- @page { size:A4 portrait; margin:12mm 12mm 14mm; }
- html,body { background:#fff!important; color:#111!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
- #view { width:100%!important; max-width:100%!important; margin:0!important; padding:0!important; overflow:visible!important; }
- #view .page-head h1,#view .print-header h1,#view .tw-report-header h1 { font-size:20pt!important; line-height:1.22!important; font-weight:800!important; margin:0 0 3mm!important; break-after:avoid!important; page-break-after:avoid!important; }
- #view .card,#view .td-card,#view .project-overview-card,#view table { max-width:100%!important; }
- #view table { border-collapse:collapse!important; }
- #view tr { break-inside:avoid; page-break-inside:avoid; }
- #view th,#view td { overflow-wrap:anywhere!important; word-break:normal!important; }
- .tw-company-print-header,.print-header,.tw-report-header { break-inside:avoid!important; page-break-after:avoid!important; }
- .noprint,.no-print,.page-actions,.toolbar,.td-toolbar,.td-view-switch,.sidebar,#sbBackdrop,.topbar,.footer,.toast,.burger,.proj-pick,.sb-user,.sb-logout,.m-foot,.actions,button { display:none!important; }
- body.printing-phieu .phieu-title,body.printing-phieu .ptitle { font-size:16pt!important; line-height:1.2!important; }
-}
-@media print and (orientation:landscape) { @page { size:A4 landscape; } }
 </style>
 </head>
 <body>
@@ -1548,12 +1530,11 @@ Auth.can=function(perm){
 Auth.assignedProjects=function(){
  if(!this.user)return [];
  const u=DB.data.users.find(x=>String(x.id)===String(this.user.id));
- if(!u)return [];
+ if(!u)return null;
  if(u.role==='Giám đốc')return null;
- const ids=Array.isArray(u.projectIds)?u.projectIds:[];
- if(ids.includes('*'))return null;
- if(!ids.length)return [];
- return ids.filter(id=>DB.data.projects.some(p=>String(p.id)===String(id))); 
+ const ids=u.projectIds||[];
+ if(!ids.length||ids.includes('*'))return null;
+ return ids.filter(id=>DB.data.projects.some(p=>p.id===id));
 };
 function visibleProjects(){const ap=Auth.assignedProjects();return ap?DB.data.projects.filter(p=>ap.includes(p.id)):DB.data.projects;}
 const TW_SAMPLE_RESET_KEY='twpro_sample_reset_at';
@@ -1844,7 +1825,7 @@ function printProjectRecord(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p)return;
  const rows=[['Mã dự án',p.code],['Tên dự án',p.name],['Chủ đầu tư',p.client],['Địa điểm',p.location],['Ngày bắt đầu',fmtDate(p.start)],['Ngày kết thúc',fmtDate(p.end)],['Trạng thái',p.status],['Quản lý dự án',workPersonName(p.managerId)],['Người phụ trách chính',workPersonName(p.responsibleId)],['Ngân sách',fmtVND(p.budget)],['Ghi chú',p.note]];
  const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;margin:10px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#fff7dc}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button onclick="window.print()">In</button></body></html>');w.document.close();
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;margin:10px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#fff7dc}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button class="btn btn-sec" onclick="window.print()">In</button></body></html>');w.document.close();
 }
 function openProjectProfile(pid){SEL.projectId=pid||null;location.hash='#/project-profile';}
 function projectForm(id){
@@ -1974,7 +1955,7 @@ function workPrint(hash,id){
  let rows='';fs.forEach(f=>{let v=x[f[0]];if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&v!==undefined&&v!==null&&v!==''&&Number.isFinite(Number(v)))v=fmtVND(v);if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
  const c=CFG||{};
  const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
- win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:8px 0 5px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:32%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></div></body></html>');win.document.close();
+ win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:8px 0 5px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:32%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button class="btn btn-sec" onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></div></body></html>');win.document.close();
 }
 function workPrintRecord(kind,id){
  const x=workArray(kind).find(r=>r.id===id);if(!x){toast('Không tìm thấy bản ghi');return;}
@@ -1983,7 +1964,7 @@ function workPrintRecord(kind,id){
  if(kind==='payroll'){labels.push(['calculatedGross','Tổng lương dự kiến (VND)','number'],['calculatedNet','Thực nhận dự kiến (VND)','number']);}
  let rows='';labels.forEach(f=>{let v=x[f[0]];if(v==null||v==='')return;if(f[2]==='project'||f[0]==='projectId'||f[0]==='currentProjectId')v=workProjectName(v);else if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&Number.isFinite(Number(v)))v=fmtVND(v);rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
  const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button class="btn btn-sec" onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
 }
 function workListPage(hash){const m=WORK_MODULES[hash],kind=m.type;if(kind==='profile')return renderProjectProfile();if(hash==='#/todo-me')return renderMyWork();const arr=workArray(kind),rows=kind==='form'?arr.filter(x=>x.kind===hash):arr;let h='<div class="page-head"><div><h1>'+esc(m.title)+'</h1><p>'+esc(m.desc)+' · '+rows.length+' bản ghi</p></div><div class="page-actions">'+(kind==='form'?'<button class="btn btn-sec" onclick="twBlankFormWord(\''+hash+'\')">Mẫu Word</button>':'')+'<button class="btn btn-pri" onclick="workForm(\''+kind+'\',\''+hash+'\')">+ '+(kind==='form'?'Tạo biểu mẫu':kind==='resources'?'Thêm nhân sự':kind==='teams'?'Thêm tổ đội':kind==='equipment'?'Thêm thiết bị':kind==='attendance'?'Thêm chấm công':kind==='payroll'?'Tạo bảng lương':'Tạo phân công')+'</button></div></div>';
 if(kind==='assignments')h+='<div class="planned-banner" style="background:#eff6ff;border-color:#93c5fd;color:#1e3a8a"><b>Phân biệt vai trò:</b> người phụ trách chịu trách nhiệm đầu ra; người thực hiện làm việc; người phê duyệt ra quyết định.</div>';
@@ -2524,7 +2505,7 @@ function twPrintDNTTBlank(){
  const date=clone.querySelector('.pdate');if(date)date.innerHTML='Ngày: __________________';
  const win=window.open('','_blank');if(!win){toast('Hãy cho phép cửa sổ in');return;}
  const styles=[...document.querySelectorAll('style')].map(el=>el.outerHTML).join('');
- win.document.open();win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phiếu đề nghị thanh toán - Mẫu trống</title>'+styles+'</head><body class="printing-phieu"><div class="noprint" style="text-align:right;margin:8px"><button onclick="window.print()">In mẫu trống</button></div>'+clone.outerHTML+'</body></html>');win.document.close();
+ win.document.open();win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phiếu đề nghị thanh toán - Mẫu trống</title>'+styles+'</head><body class="printing-phieu"><div class="noprint" style="text-align:right;margin:8px"><button class="btn btn-sec" onclick="window.print()">In mẫu trống</button></div>'+clone.outerHTML+'</body></html>');win.document.close();
  setTimeout(()=>{try{win.focus();win.print();}catch(e){}},350);
 }
 function xuatPhieuDNTT_XLSX(id){
@@ -2574,7 +2555,7 @@ function xuatPhieuDNTT_XLSX(id){
  mk();
  r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',2);
  const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
- xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:0,freezeCols:0}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
+ xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:10,freezeCols:2}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
 function xlsxMake(sheets,logoB64){
@@ -2586,7 +2567,7 @@ function xlsxMake(sheets,logoB64){
   function b64ToBytes(b64){try{const s=String(b64);const raw=s.indexOf(',')>=0?s.slice(s.indexOf(',')+1):s;const bin=atob(raw.replace(/\s/g,''));const b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b;}catch(e){return null;}}
   const LOGO=(typeof logoB64==='string'&&logoB64.length>100)?b64ToBytes(logoB64):null;
   function colName(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
-  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="7"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="16"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="8"><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="16"/><name val="Arial"/><color rgb="FF7E4A12"/></font><font><b/><sz val="13"/><name val="Arial"/><color rgb="FF000000"/></font><font><i/><sz val="10"/><name val="Arial"/><color rgb="FF7E7B7B"/></font><font><b/><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><b/><sz val="9"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF000000"/></font><font><sz val="10"/><name val="Arial"/><color rgb="FF808080"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBBC04"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFDF3DC"/></patternFill></fill></fills><borders count="3"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FF404040"/></left><right style="thin"><color rgb="FF404040"/></right><top style="thin"><color rgb="FF404040"/></top><bottom style="thin"><color rgb="FF404040"/></bottom><diagonal/></border><border><left/><right/><top style="thin"><color rgb="FF000000"/></top><bottom style="thin"><color rgb="FF000000"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="18"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="2" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="6" fillId="0" borderId="1" xfId="0"><alignment horizontal="right" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="164" fontId="6" fillId="2" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="2" borderId="2" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="7" fillId="0" borderId="0" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="164" fontId="4" fillId="1" borderId="1" xfId="0"><alignment horizontal="center" vertical="center"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
   function sheetXml(sh,withDrawing){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
       +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
@@ -2880,18 +2861,18 @@ function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
  const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:1};R.push(rc);
- const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',s:5};R.push(ra);
- const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',s:5};R.push(rt);
- const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:5};R.push(rw);
+ const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',s:16};R.push(ra);
+ const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',s:16};R.push(rt);
+ const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:16};R.push(rw);
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
  const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};const lc=Number.isInteger(foot.labelCol)?foot.labelCol:n-2,vc=Number.isInteger(foot.valueCol)?foot.valueCol:n-1;rf[lc]={v:foot.label||'Tổng cộng',s:10};rf[vc]=foot.formula?{f:foot.formula,v:foot.total,s:8}:{v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};const lc=Number.isInteger(foot.labelCol)?foot.labelCol:n-2,vc=Number.isInteger(foot.valueCol)?foot.valueCol:n-1;rf[lc]={v:foot.label||'Tổng cộng',s:10};rf[vc]=foot.formula?{f:foot.formula,v:foot.total,s:17}:{v:foot.total,s:17};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DeNghi',widths:[13,13,13,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:0}],filename);
+ xlsxDownload([{name:'DeNghi',widths:[13,13,26,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:2,heights:{10:26}}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 function exportDeNghi(){
@@ -2900,7 +2881,7 @@ function exportDeNghi(){
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
  dlXlsxTable('Danh sách đề nghị',
   ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN','TRẠNG THÁI'],rows,
-  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:fl.length?'SUMIF(J11:J'+(10+rows.length)+',"<>Từ chối",I11:I'+(10+rows.length)+')':null},fname('baocao_denghi'));
+  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:'SUMIF(J11:J'+Math.max(11,10+rows.length)+',"<>Từ chối",I11:I'+Math.max(11,10+rows.length)+')'},fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -2930,7 +2911,7 @@ function syncCfgForm(){
  if(k&&k.value!==CFG.key){CFG.key=k.value;ch=true;}
  if(ch){saveCfg();renderSyncPill();}
 }
-const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD',resources:'NhanSu',resourceTeams:'ToDoi',resourceEquipment:'ThietBi',resourceAssignments:'PhanCong',projectForms:'BieuMauDuAn',attendanceRecords:'ChamCong',payrollRecords:'BangLuong'};
+const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
  if(!CFG.apiUrl)throw new Error('Chưa cấu hình API URL');
@@ -3020,8 +3001,25 @@ function tienDoProject(pid){return tdTaskProgress(tdItems(pid));}
 function tienDoGiaiDoan(pid){const items=(DB.data.tienDo||[]).filter(t=>t.projectId===pid);const order=['chuanbi','ngam','tho','hoanthien','mep'];const names={chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'};const active=order.find(g=>items.some(t=>(t.giaiDoan||'tho')===g&&tdPct(t)<100));return{avg:tienDoProject(pid),gd:active||'',gdl:active?names[active]:'Hoàn thành'};}
 function tdViewSwitcher(cur){const views=[['#/tiendo','Dashboard'],['#/tiendo-list','Table'],['#/tiendo-kanban','Kanban'],['#/tiendo-gantt','Gantt'],['#/tiendo-calendar','Calendar'],['#/tiendo-split','Split']];return `<div class="td-view-switch noprint">${views.map(v=>`<button class="${cur===v[0]?'active':''}" onclick="location.hash='${v[0]}'">${v[1]}</button>`).join('')}</div>`;}
 function tdPrintReport(){document.body.classList.add('printing-tiendo');window.print();}
-window.addEventListener('beforeprint',()=>{try{const v=document.getElementById('view');if(v&&!v.querySelector('.tw-company-print-header')&&!v.querySelector('.print-header')){const h=v.querySelector('h1');const d=document.createElement('div');d.className='tw-company-print-header';d.setAttribute('data-tw-print-injected','1');d.innerHTML=companyPrintHeader(h?h.textContent.trim():'BÁO CÁO / HỒ SƠ');v.insertBefore(d,v.firstChild);}}catch(e){}});
-window.addEventListener('afterprint',()=>{document.body.classList.remove('printing-tiendo');document.querySelectorAll('#view .tw-company-print-header[data-tw-print-injected="1"]').forEach(h=>h.remove());});
+window.addEventListener('beforeprint',()=>{try{
+/* Ẩn cột Thao tác khi in: tìm th chứa 'thao tác' và ẩn cả cột */
+document.querySelectorAll('#view table').forEach(function(tbl){
+  var ths=tbl.querySelectorAll('thead th');
+  ths.forEach(function(th,idx){
+    if(/thao t[aá]c/i.test(th.textContent.trim())){
+      th.style.display='none';
+      tbl.querySelectorAll('tbody tr').forEach(function(tr){
+        var td=tr.cells[idx]; if(td) td.style.display='none';
+      });
+      var tfoot=tbl.querySelector('tfoot tr');
+      if(tfoot){var ftd=tfoot.cells[idx]; if(ftd) ftd.style.display='none';}
+    }
+  });
+});
+const v=document.getElementById('view');if(v&&!v.querySelector('.tw-company-print-header')&&!v.querySelector('.print-header')){const h=v.querySelector('h1');const d=document.createElement('div');d.className='tw-company-print-header';d.setAttribute('data-tw-print-injected','1');d.innerHTML=companyPrintHeader(h?h.textContent.trim():'BÁO CÁO / HỒ SƠ');v.insertBefore(d,v.firstChild);}}catch(e){}});
+window.addEventListener('afterprint',()=>{
+document.querySelectorAll('#view table th[style*="none"],#view table td[style*="none"]').forEach(function(c){c.style.display='';});
+document.body.classList.remove('printing-tiendo');document.querySelectorAll('#view .tw-company-print-header[data-tw-print-injected="1"]').forEach(h=>h.remove());});
 function tdToolbar(extra=''){return `<div class="td-toolbar noprint">
 <div class="td-date-range"><label>Từ <input id="tdFrom" type="date" value="${window._tdFrom||''}"></label><label>Đến <input id="tdTo" type="date" value="${window._tdTo||''}"></label><button class="btn btn-sec btn-sm" onclick="tdApplyRange()">Lọc ngày</button><button class="btn btn-ghost btn-sm" onclick="tdClearRange()">Xóa lọc</button></div>
 <div class="td-tools"><div class="td-zoom"><span>Zoom</span><input type="range" min="60" max="100" step="10" value="${window._tdZoom||100}" oninput="setTdZoom(this.value)" aria-label="Thu phóng"><span id="tdZoomLb">${window._tdZoom||100}%</span><button class="btn btn-sec btn-sm" onclick="tdPrintReport()">In báo cáo</button></div><button class="btn btn-pri btn-sm" onclick="tienDoForm()">+ Hạng mục</button>${extra}</div>
@@ -3089,43 +3087,249 @@ function twPrintCurrent(){
 }
 window.addEventListener('afterprint',()=>{const v=document.getElementById('view');if(v)v.querySelectorAll('[data-tw-print-injected]').forEach(e=>e.remove());document.body.classList.remove('tw-landscape');});
 function twDocBrand(){const c=CFG||{};return '<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';}
+/* Pure-JS .docx generator (no libs): HTML -> WordprocessingML -> ZIP(stored) -> .docx */
+function twCrc32(data){let t=twCrc32.t;if(!t){t=twCrc32.t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}}
+ let c=0xFFFFFFFF;for(let i=0;i<data.length;i++)c=t[(c^data[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+function twU8(str){return new TextEncoder().encode(str);}
+function twZipStore(files){
+ const enc=new TextEncoder();const chunks=[];const central=[];let offset=0;
+ function w32(v){chunks.push(v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255);}
+ function w16(v){chunks.push(v&255,(v>>>8)&255);}
+ files.forEach(f=>{
+  const nameU8=enc.encode(f.name);const data=f.data;const crc=twCrc32(data);
+  const lh=offset;
+  w32(0x04034b50);w16(20);w16(0);w16(0);w16(0x7C00);w16(0x4D21);
+  w32(crc);w32(data.length);w32(data.length);w16(nameU8.length);w16(0);
+  nameU8.forEach(b=>chunks.push(b));data.forEach(b=>chunks.push(b));
+  central.push({lh:lh,crc:crc,len:data.length,name:nameU8});
+  offset=chunks.length;
+ });
+ const cdStart=offset;
+ central.forEach(c=>{
+  w32(0x02014b50);w16(20);w16(20);w16(0);w16(0);w16(0x7C00);w16(0x4D21);
+  w32(c.crc);w32(c.len);w32(c.len);w16(c.name.length);w16(0);w16(0);w16(0);w16(0);w32(0);w32(c.lh);
+  c.name.forEach(b=>chunks.push(b));
+ });
+ const cdEnd=chunks.length,cdSize=cdEnd-cdStart;
+ w32(0x06054b50);w16(0);w16(0);w16(central.length);w16(central.length);w32(cdSize);w32(cdStart);w16(0);
+ return new Uint8Array(chunks);
+}
+function twXmlEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function twDecodeEnt(s){return String(s).replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#(\d+);/g,function(m,n){return String.fromCharCode(+n);}).replace(/&#x([0-9a-fA-F]+);/g,function(m,n){return String.fromCharCode(parseInt(n,16));});}
+function twParseHtml(html){
+ const root={tag:'root',attrs:{},children:[]};const stack=[root];
+ const re=/<!--[\s\S]*?-->|<\/?[a-zA-Z][a-zA-Z0-9]*(?:\s+[^<>]*)?\/?>|[^<]+/g;
+ const VOID={br:1,img:1,hr:1,input:1,meta:1,link:1};
+ let m;
+ while((m=re.exec(html))){
+  const tok=m[0];
+  if(tok.charAt(0)!=='<'){const t=twDecodeEnt(tok);if(t)stack[stack.length-1].children.push({text:t});continue;}
+  if(tok.indexOf('<!--')===0)continue;
+  const isClose=tok.charAt(1)==='/';
+  const selfClose=/\/\s*>$/.test(tok);
+  const nm=tok.match(/^<\/?([a-zA-Z][a-zA-Z0-9]*)/);if(!nm)continue;
+  const name=nm[1].toLowerCase();
+  if(isClose){while(stack.length>1&&stack[stack.length-1].tag!==name)stack.pop();if(stack.length>1)stack.pop();continue;}
+  const attrs={};const am=tok.matchAll(/([a-zA-Z-]+)\s*=\s*("([^"]*)"|'([^']*)'|([^\s>]+))/g);
+  for(const a of am)attrs[a[1].toLowerCase()]=a[3]!==undefined?a[3]:(a[4]!==undefined?a[4]:a[5]);
+  const node={tag:name,attrs:attrs,children:[]};
+  stack[stack.length-1].children.push(node);
+  if(!selfClose&&!VOID[name])stack.push(node);
+ }
+ return root;
+}
+function twWordMl(title,root){
+ const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+ const out=[];
+ function rpr(st){let s='<w:rPr>';if(st.b)s+='<w:b/>';if(st.i)s+='<w:i/>';if(st.u)s+='<w:u w:val="single"/>';if(st.sz)s+='<w:sz w:val="'+st.sz+'"/><w:szCs w:val="'+st.sz+'"/>';s+='</w:rPr>';return s;}
+ function runXml(text,st){
+  const t=String(text).replace(/\u00a0/g,' ');
+  if(!t||!/[^ \t\n\r]/.test(t))return '';
+  const pres=(/^[ \t]/.test(t)||/[ \t]$/.test(t))?' xml:space="preserve"':'';
+  return '<w:r>'+rpr(st)+'<w:t'+pres+'>'+twXmlEsc(t)+'</w:t></w:r>';
+ }
+ function paraXml(runs,opt){
+  opt=opt||{};let s='<w:p><w:pPr>';
+  if(opt.align)s+='<w:jc w:val="'+opt.align+'"/>';
+  if(opt.spaceAfter)s+='<w:spacing w:after="'+opt.spaceAfter+'"/>';
+  if(opt.keepNext)s+='<w:keepNext/>';
+  s+=rpr({b:opt.bold,i:opt.italic,sz:opt.sz||26})+'</w:pPr>';
+  runs.forEach(r=>{s+=runXml(r.text,{b:r.b||opt.bold,i:r.i||opt.italic,u:r.u,sz:r.sz||opt.sz||26});});
+  if(!runs.length)s+='<w:r>'+rpr({sz:opt.sz||26})+'</w:r>';
+  return s+'</w:p>';
+ }
+ const INLINE={b:1,strong:1,i:1,em:1,span:1,u:1,font:1};
+ const SKIP={img:1,script:1,style:1,button:1};
+ function cls(n){return (n.attrs&&n.attrs['class']||'')+' ';}
+ function centered(n){return /\bctr\b/.test(cls(n))||/text-align\s*:\s*center/.test(n.attrs&&n.attrs.style||'');}
+ function collectRuns(node,st,acc){
+  st=st||{};
+  (node.children||[]).forEach(ch=>{
+   if(ch.text!==undefined){acc.push({text:ch.text,b:st.b,i:st.i,u:st.u,sz:st.sz});return;}
+   if(SKIP[ch.tag])return;
+   if(ch.tag==='br'){acc.push({text:'\n',b:st.b,i:st.i,sz:st.sz});return;}
+   const ns={b:st.b||ch.tag==='b'||ch.tag==='strong',i:st.i||ch.tag==='i'||ch.tag==='em',u:st.u||ch.tag==='u',sz:st.sz};
+   if(INLINE[ch.tag]||!ch.tag){collectRuns(ch,ns,acc);return;}
+   acc.push({breakBlock:ch,style:ns});
+  });
+  return acc;
+ }
+ function blocksOf(nodes){
+  const blocks=[];
+  nodes.forEach(n=>{
+   if(n.text!==undefined){if(/[^\s]/.test(n.text))blocks.push({p:[{text:n.text}]});return;}
+   if(SKIP[n.tag])return;
+   if(n.tag==='br'){blocks.push({p:[{text:' '}]});return;}
+   if(n.tag==='table'){blocks.push(tableBlock(n));return;}
+   if(n.tag==='ul'||n.tag==='ol'){
+    (n.children||[]).forEach(li=>{if(li.tag==='li'){const acc=collectRuns(li,{},[]);blocks.push({p:[{text:'• '}],cont:acc});}});
+    return;
+   }
+   if(n.tag==='li'){const acc=collectRuns(n,{},[]);blocks.push({p:[{text:'• '}],cont:acc});return;}
+   const c=cls(n);
+   if(n.tag==='div'&&/\bsign\b/.test(c)&&n.tag!=='table'){
+    const cells=(n.children||[]).filter(x=>x.tag==='div');
+    if(cells.length>1){blocks.push(signTable(cells));return;}
+   }
+   if(n.tag==='div'&&/\bwrite-line\b/.test(c)){
+    const tall=/20mm/.test(n.attrs.style||'');const k=tall?3:1;
+    for(let i=0;i<k;i++)blocks.push({p:[]});
+    return;
+   }
+   if(n.tag==='h1'){const acc=collectRuns(n,{b:true},[]);blocks.push(flushAcc(acc,{align:'center',bold:true,sz:32,spaceAfter:120}));return;}
+   if(n.tag==='h2'){const acc=collectRuns(n,{b:true},[]);blocks.push(flushAcc(acc,{align:'center',bold:true,sz:28,spaceAfter:100}));return;}
+   if(n.tag==='h3'){const acc=collectRuns(n,{b:true},[]);blocks.push(flushAcc(acc,{bold:true,sz:26,spaceAfter:80}));return;}
+   const acc=collectRuns(n,{},[]);
+   const opt={};
+   if(centered(n)||/\bbrand\b/.test(c)||/\bdoc-title\b/.test(c))opt.align='center';
+   if(/\bdoc-meta\b/.test(c)||/\bmeta\b/.test(c)){opt.sz=22;}
+   if(n.tag==='header')opt.align='center';
+    /* Xử lý riêng header.brand: trích tên cty + thông tin thành các dòng căn giữa */
+    if(n.tag==='header'&&/\bbrand\b/.test(c)){
+      const compLines=[];
+      (function walk(nd){
+        (nd.children||[]).forEach(function(ch){
+          if(ch.text!==undefined){var t=ch.text.trim(); if(t) compLines.push({text:t,b:false}); return;}
+          if(ch.tag==='strong'||ch.tag==='b'){var acc=collectRuns(ch,{b:true},[]); acc.forEach(function(r){if(r.text&&r.text.trim())compLines.push({text:r.text.trim(),b:true});}); return;}
+          if(ch.tag==='br'){return;}
+          if(ch.tag==='img'||ch.tag==='script'||ch.tag==='style')return;
+          walk(ch);
+        });
+      })(n);
+      // Gộp thành 1 block căn giữa: dòng đầu (tên cty) in đậm to, các dòng sau nhỏ hơn
+      if(compLines.length){
+        const runs=[];
+        compLines.forEach(function(l,i){
+          runs.push({text:l.text,b:l.b||i===0,sz:i===0?30:22});
+          if(i<compLines.length-1)runs.push({text:'\n'});
+        });
+        blocks.push({p:runs,align:'center',spaceAfter:200});
+        // Thêm đường gạch ngang
+        blocks.push({p:[{text:'──────────────────────────────'}],align:'center',sz:18,spaceAfter:150});
+        return;
+      }
+    }
+   let cur=[];
+   acc.forEach(r=>{
+    if(r.breakBlock){if(cur.length){blocks.push(flushAcc(cur,opt));cur=[];}
+     blocksOf([r.breakBlock]).forEach(b=>blocks.push(b));return;}
+    if(r.text==='\n'){blocks.push(flushAcc(cur,opt));cur=[];return;}
+    cur.push(r);
+   });
+   if(cur.length||!acc.length)blocks.push(flushAcc(cur,opt));
+  });
+  return blocks;
+ }
+ function flushAcc(acc,opt){
+  const runs=[];let lead=null;
+  acc.forEach(r=>{if(r.text==='• '&&!runs.length){lead=r;return;}runs.push(r);});
+  const p={p:runs};if(lead)p.lead=lead;
+  Object.keys(opt||{}).forEach(k=>{p[k]=opt[k];});
+  return p;
+ }
+ function cellBlocks(cellNode){
+  const inner=(cellNode.children||[]).filter(x=>!(x.text!==undefined&&!/[\S]/.test(x.text)));
+  if(!inner.length)return[{p:[]}];
+  const bs=blocksOf(inner);
+  return bs.length?bs:[{p:[]}];
+ }
+ function tableBlock(t){
+  const rows=[];(t.children||[]).forEach(function(x){if(x.tag==='tr')rows.push(x);else if(x.tag==='thead'||x.tag==='tbody'||x.tag==='tfoot'){(x.children||[]).forEach(function(r){if(r.tag==='tr')rows.push(r);});}});
+  const grid=rows.map(tr=>(tr.children||[]).filter(x=>x.tag==='td'||x.tag==='th'));
+  let ncols=1;
+  grid.forEach(r=>{let c=0;r.forEach(td=>{c+=parseInt(td.attrs.colspan||'1',10)||1;});ncols=Math.max(ncols,c);});
+  const cw=Math.round(10546/ncols);
+  return {table:{borderless:false,cols:ncols,cw:cw,rows:grid.map(r=>r.map(td=>({header:td.tag==='th',center:centered(td),blocks:cellBlocks(td)})))}};
+ }
+ function signTable(cells){
+  const n=cells.length;const cw=Math.round(10546/n);
+  return {table:{borderless:true,cols:n,cw:cw,rows:[cells.map(cd=>({header:false,center:true,bold:true,blocks:cellBlocks(cd)}))]}};
+ }
+ function blockXml(b){
+  if(b.table){
+   const t=b.table;let s='<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>';
+   if(t.borderless){s+='<w:tblBorders><w:top w:val="nil" w:sz="0" w:space="0" w:color="auto"/><w:left w:val="nil" w:sz="0" w:space="0" w:color="auto"/><w:bottom w:val="nil" w:sz="0" w:space="0" w:color="auto"/><w:right w:val="nil" w:sz="0" w:space="0" w:color="auto"/><w:insideH w:val="nil" w:sz="0" w:space="0" w:color="auto"/><w:insideV w:val="nil" w:sz="0" w:space="0" w:color="auto"/></w:tblBorders>';}
+   else{s+='<w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="000000"/><w:left w:val="single" w:sz="4" w:space="0" w:color="000000"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="000000"/><w:right w:val="single" w:sz="4" w:space="0" w:color="000000"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="000000"/><w:insideV w:val="single" w:sz="4" w:space="0" w:color="000000"/></w:tblBorders>';}
+   s+='</w:tblPr><w:tblGrid>';
+   for(let i=0;i<t.cols;i++)s+='<w:gridCol w:w="'+t.cw+'"/>';
+   s+='</w:tblGrid>';
+   t.rows.forEach(r=>{
+    s+='<w:tr>';
+    r.forEach(cd=>{
+     s+='<w:tc><w:tcPr><w:tcW w:w="'+t.cw+'" w:type="dxa"/>';
+     if(cd.header)s+='<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>';
+     s+='</w:tcPr>';
+     cd.blocks.forEach(pb=>{
+      const opt={};if(cd.center||pb.align==='center')opt.align='center';if(cd.header||cd.bold)opt.bold=true;if(pb.sz)opt.sz=pb.sz;
+      const runs=pb.p||[];
+      if(pb.lead)runs.unshift({text:'• '});
+      s+=paraXml(runs.length?runs:[{text:''}],opt);
+     });
+     s+='</w:tc>';
+    });
+    s+='</w:tr>';
+   });
+   return s+'</w:tbl>';
+  }
+  const runs=(b.p||[]).slice();
+  if(b.lead)runs.unshift({text:'• '});
+  return paraXml(runs,{align:b.align,sz:b.sz,bold:b.bold,italic:b.italic,spaceAfter:b.spaceAfter});
+ }
+ const blocks=blocksOf(root.children||[]);
+ let body='';
+ blocks.forEach(b=>{body+=blockXml(b);});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="'+W+'"><w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="850" w:right="680" w:bottom="850" w:left="680" w:header="0" w:footer="0"/></w:sectPr></w:body></w:document>';
+}
+function twBuildDocx(title,bodyHTML){
+ const root=twParseHtml(String(bodyHTML||''));
+ const docXml=twWordMl(title,root);
+ const now=new Date();const iso=now.toISOString().replace(/\.\d+Z$/,'Z');
+ const ct='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.open-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.open-package.relationships+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.open-package.relationships+xml"/></Types>';
+ const rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+ const docRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+ const styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:rPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="Normal" w:default="1"><w:name w:val="Normal"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:style></w:styles>';
+ const core='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"><dc:title>'+twXmlEsc(title)+'</dc:title><dcterms:created xsi:type="dcterms:W3CDTF" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+iso+'</dcterms:created></cp:coreProperties>';
+ const app='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>TW Docx</Application></Properties>';
+ return twZipStore([
+  {name:'[Content_Types].xml',data:twU8(ct)},
+  {name:'_rels/.rels',data:twU8(rels)},
+  {name:'word/document.xml',data:twU8(docXml)},
+  {name:'word/_rels/document.xml.rels',data:twU8(docRels)},
+  {name:'word/styles.xml',data:twU8(styles)},
+  {name:'docProps/core.xml',data:twU8(core)},
+  {name:'docProps/app.xml',data:twU8(app)}
+ ]);
+}
+
 function twDownloadWord(title,bodyHTML){
  try{
+  const bytes=twBuildDocx(title,bodyHTML);
   const safe=String(title||'bieu-mau').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase()||'bieu-mau';
-  // Create a genuine Office Open XML .docx package locally (no network/CDN dependency).
-  const xmlEsc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  const textRuns=(node,bold=false,italic=false)=>{
-   let out='';
-   node.childNodes.forEach(n=>{
-    if(n.nodeType===3){const parts=String(n.nodeValue||'').split(/\n/);parts.forEach((t,i)=>{if(i)out+='<w:r><w:br/></w:r>';if(t)out+='<w:r>'+((bold||italic)?'<w:rPr>'+(bold?'<w:b/>':'')+(italic?'<w:i/>':'')+'</w:rPr>':'')+'<w:t xml:space="preserve">'+xmlEsc(t)+'</w:t></w:r>';});}
-    else if(n.nodeType===1){const tag=n.tagName.toLowerCase();if(tag==='br'){out+='<w:r><w:br/></w:r>';return;}out+=textRuns(n,bold||/^(b|strong|th)$/.test(tag),italic||/^(i|em)$/.test(tag));}
-   });return out;
-  };
-  const paragraph=(node,style)=>'<w:p><w:pPr>'+(style?'<w:pStyle w:val="'+style+'"/>':'')+'<w:spacing w:after="100"/> </w:pPr>'+textRuns(node)+'</w:p>';
-  const cellXml=(cell)=>{let content='';cell.childNodes.forEach(n=>{if(n.nodeType===3&&n.nodeValue.trim())content+='<w:p><w:r><w:t>'+xmlEsc(n.nodeValue.trim())+'</w:t></w:r></w:p>';else if(n.nodeType===1){if(n.tagName.toLowerCase()==='br')content+='<w:p><w:r><w:br/></w:r></w:p>';else content+=paragraph(n);}});if(!content)content='<w:p/>';return '<w:tc><w:tcPr><w:tcW w:w="4500" w:type="dxa"/><w:tcBorders><w:top w:val="single" w:sz="6"/><w:left w:val="single" w:sz="6"/><w:bottom w:val="single" w:sz="6"/><w:right w:val="single" w:sz="6"/></w:tcBorders></w:tcPr>'+content+'</w:tc>';};
-  const tableXml=(table)=>'<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders><w:top w:val="single" w:sz="6"/><w:left w:val="single" w:sz="6"/><w:bottom w:val="single" w:sz="6"/><w:right w:val="single" w:sz="6"/><w:insideH w:val="single" w:sz="4"/><w:insideV w:val="single" w:sz="4"/></w:tblBorders></w:tblPr>'+Array.from(table.rows).map(row=>'<w:tr>'+Array.from(row.cells).map(cellXml).join('')+'</w:tr>').join('')+'</w:tbl>';
-  const parser=new DOMParser();const doc=parser.parseFromString('<!doctype html><html><body>'+String(bodyHTML||'')+'</body></html>','text/html');
-  let body='';
-  const walk=(node)=>{if(node.nodeType!==1)return;const tag=node.tagName.toLowerCase();if(tag==='table'){body+=tableXml(node);return;}if(tag==='img')return;if(tag==='br'){body+='<w:p><w:r><w:br/></w:r></w:p>';return;}if(['h1','h2','h3'].includes(tag)){body+=paragraph(node,tag==='h1'?'Title':tag==='h2'?'Subtitle':'Heading1');return;}if(tag==='table')return;if(['p','div','header','section','footer','li','b','strong','span'].includes(tag)){if(tag==='div'||tag==='header'||tag==='section'||tag==='footer'){Array.from(node.childNodes).forEach(walk);}else body+=paragraph(node);return;}Array.from(node.childNodes).forEach(walk);};
-  Array.from(doc.body.childNodes).forEach(walk);if(!body)body='<w:p><w:r><w:t>'+xmlEsc(title)+'</w:t></w:r></w:p>';
-  const documentXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="850" w:right="850" w:bottom="850" w:left="850" w:header="425" w:footer="425"/></w:sectPr></w:body></w:document>';
-  const stylesXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="26"/></w:rPr></w:rPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="32"/></w:rPr><w:pPr><w:jc w:val="center"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:pPr><w:jc w:val="center"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style></w:styles>';
-  const files={
-   '[Content_Types].xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>',
-   '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
-   'word/document.xml':documentXml,
-   'word/styles.xml':stylesXml,
-   'word/_rels/document.xml.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
-  };
-  const enc=new TextEncoder();const crcTable=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);crcTable[n]=c>>>0;}
-  const crc32=b=>{let c=0xffffffff;for(const x of b)c=crcTable[(c^x)&255]^(c>>>8);return (c^0xffffffff)>>>0;};
-  const u16=n=>[n&255,(n>>>8)&255],u32=n=>[n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255];
-  let local=[],central=[],offset=0;
-  for(const [name,value] of Object.entries(files)){const nb=enc.encode(name),data=enc.encode(value),crc=crc32(data);const lh=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...nb]);local.push(lh,data);const ch=new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),...nb]);central.push(ch);offset+=lh.length+data.length;}
-  const centralSize=central.reduce((n,b)=>n+b.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(central.length),...u16(central.length),...u32(centralSize),...u32(offset),...u16(0)]);
-  const all=[...local,...central,end];const blob=new Blob(all,{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=safe+'.docx';document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href);a.remove();}catch(e){}},1200);toast('Đã tải file Word DOCX: '+safe+'.docx');
- }catch(e){console.error('DOCX export failed',e);toast('Không tạo được file DOCX: '+(e&&e.message||'lỗi không xác định'));}
+  const blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=safe+'.docx';document.body.appendChild(a);a.click();
+  setTimeout(()=>{try{URL.revokeObjectURL(a.href);a.remove();}catch(e){}},800);
+  toast('Đã tải file Word: '+safe+'.docx');
+ }catch(e){toast('Không tải được file Word');}
 }
 function twBlankFormWord(hash){
  const m=WORK_MODULES[hash]||{},fs=WORK_FIELDS[hash]||[];if(!fs.length){toast('Chưa có mẫu cho biểu mẫu này');return;}
@@ -3146,7 +3350,7 @@ function twPrintModalCurrent(){
   rows+='<tr><th>Tổng lương dự kiến (VND)</th><td><b>'+esc(fmtVND(gross))+'</b></td></tr><tr><th>Thực nhận dự kiến (VND)</th><td><b>'+esc(fmtVND(net))+'</b></td></tr>';
  }
  const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:34%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:10.5pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:34%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button class="btn btn-sec" onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
 }
 function twPrintModalBlank(){
  const modal=document.getElementById('modal');if(!modal)return;
@@ -3155,7 +3359,7 @@ function twPrintModalBlank(){
  const c=CFG||{};
  const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
  const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}
- w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:8px 0 10px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff7dc;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
+ w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:10.5pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:12.5pt;text-transform:uppercase;margin:8px 0 10px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff7dc;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button class="btn btn-sec" onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
 }
 function twEnsureModalPrintButton(){
  const foot=document.getElementById('mFoot');if(!foot||!foot.children.length)return;
@@ -3406,22 +3610,6 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
   .tw-company-print-header .tw-brand-name { font-size:12pt!important; text-align:center!important; }
 }
 @media print { #view .planned-banner { display:none!important; } }
-</style>
-
-<style id="tw-print-final-safety-fix">
-/* In ấn: ẩn khung điều hướng và công cụ ứng dụng, giữ nội dung báo cáo/phiếu cần in. */
-@media print {
-  html, body { width:100%!important; min-width:0!important; height:auto!important; overflow:visible!important; background:#fff!important; }
-  #loginView, .sidebar, .topbar, .toolbar, .td-toolbar, .page-actions, .noprint, .modal-backdrop, .toast, .tw-select-menu, .tw-select-trigger, button, input[type=button], input[type=submit], select, textarea { display:none!important; }
-  #appView, .shell, .main, #view { display:block!important; position:static!important; width:100%!important; max-width:none!important; min-width:0!important; height:auto!important; max-height:none!important; margin:0!important; padding:0!important; overflow:visible!important; box-shadow:none!important; border:0!important; transform:none!important; }
-  #view { font-size:10pt!important; }
-  #view > .page-head { display:none!important; }
-  #view .card, #view .card-b, #view .tbl-wrap { width:100%!important; max-width:none!important; overflow:visible!important; box-shadow:none!important; }
-  #phieuPrintArea { display:block!important; width:100%!important; max-width:none!important; margin:0!important; }
-  body.printing-phieu #view > *:not(#phieuPrintArea) { display:none!important; }
-  body.printing-phieu #phieuPrintArea { position:static!important; }
-  a[href]:after { content:none!important; }
-}
 </style>
 </body>
 </html>
