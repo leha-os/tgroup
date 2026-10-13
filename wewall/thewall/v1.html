@@ -2517,7 +2517,7 @@ function xuatPhieuDNTT_XLSX(id){
  const ht=(t.hinhthuc||'').toLowerCase();
  const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
  const W=[11,10,17.57,13,10.29,8,11.29,19.29,10.86,13];
- const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
+ const H={2:25.2,8:28.35,9:24.15,10:27.3,11:27.3,12:27.3,13:27.3,14:33.6,15:35.7,16:35.7,17:35.7,18:29.4,19:29.4,20:29.4,21:29.4,22:52.5,23:24.15,24:27.3,26:28.35,27:29.4,28:27.3,29:27.3,30:28.35,31:36.75,33:32.55,35:32.55,37:33.6,38:33.6,41:34.65};
  const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
  let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',1);
@@ -3227,6 +3227,7 @@ function twWordMl(title,root){
           if(i<compLines.length-1)runs.push({text:'\n'});
         });
         blocks.push({p:runs,align:'center',spaceAfter:200});
+        return;
       }
     }
    let cur=[];
