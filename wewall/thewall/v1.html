@@ -751,10 +751,10 @@ button,.btn{min-width:0}
   .print-project-line{font-size:12.5pt!important;padding:1.5mm 0!important;border-bottom:.5pt solid #e5d5a8!important;color:#44403c!important}
   .print-header .meta{display:flex!important;flex-wrap:wrap!important;font-size:11pt!important;color:#57534e!important;margin-top:1.5mm!important;gap:1mm 6mm!important}
   .noprint,.td-toolbar,.td-view-switch,.page-actions,.sb-nav-tools,.tw-select-wrap,.tw-select-menu,.sidebar,#sbBackdrop,.topbar,.footer,.toast,.burger,.proj-pick,.sb-user,.sb-logout,button.m-x,.m-foot{display:none!important}
-  .tw-company-print-header{display:flex!important;align-items:center;gap:5mm;border-bottom:1.2pt solid #9b7a3d;padding:0 0 3mm;margin:0 0 5mm;break-after:avoid!important;color:#111!important;font-size:9.5pt!important}
-  .tw-company-print-header img{max-width:24mm;max-height:20mm;object-fit:contain}
-  .tw-company-print-header .tw-brand-name{font-weight:800;font-size:13pt;letter-spacing:.2pt}
-  .tw-company-print-header .tw-brand-meta{font-size:8.5pt;line-height:1.4;color:#444!important}
+  .tw-company-print-header{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:1.5mm!important;border-bottom:1.2pt solid #d8c58b!important;padding:0 0 3mm!important;margin:0 0 5mm!important;break-after:avoid!important;color:#111!important;font-size:9.5pt!important}
+  .tw-company-print-header img{max-width:24mm;max-height:20mm;object-fit:contain;margin:0 auto 1mm}
+  .tw-company-print-header .tw-brand-name{font-weight:800;font-size:14pt;letter-spacing:.2pt;text-align:center;width:100%}
+  .tw-company-print-header .tw-brand-meta{font-size:8.5pt;line-height:1.4;color:#444!important;text-align:center;width:100%}
   .rowbtns,.iconbtn,.btn,.actions,.planned-banner{display:none!important}
   .tw-signature-row{display:grid!important;grid-template-columns:repeat(3,1fr);gap:8mm;margin-top:18mm;text-align:center;break-inside:avoid}
 
@@ -1008,6 +1008,88 @@ table.tbl{border-color:#c9c9c9!important}
 .m-x{border-radius:6px!important}
 .m-x:hover{transform:none!important;background:#efe7d8!important;color:#57534e!important;border-color:#e0d5c0!important}
 </style>
+<style id="tw-print-polish-v2">
+@page { size: A4 portrait; margin: 13mm 12mm 17mm; @bottom-left { content: "THE WALL · Tài liệu nội bộ"; font: 8pt Arial,sans-serif; color: #76664b; } @bottom-right { content: "Trang " counter(page); font: 8pt Arial,sans-serif; color: #76664b; } }
+@media print {
+ *,*::before,*::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+ #view table.tbl, .ptbl, .phieu-wrap table, body.printing-phieu table, .print-sheet table { border-collapse: collapse !important; border-color: #b6a887 !important; }
+ #view table.tbl th, #view table.tbl thead th, .ptbl th, .phieu-wrap th, body.printing-phieu th, .print-sheet th { background: #fff2c9 !important; color: #30291e !important; border: .7pt solid #b6a887 !important; text-align: center !important; vertical-align: middle !important; font-weight: 700 !important; }
+ #view table.tbl td, #view table.tbl th, .ptbl td, .ptbl th, .phieu-wrap td, .phieu-wrap th, body.printing-phieu td, body.printing-phieu th, .print-sheet td, .print-sheet th { border: .65pt solid #b6a887 !important; }
+ #view table.tbl td, #view table.tbl th, .ptbl td, .ptbl th, .phieu-wrap td, .phieu-wrap th, .print-sheet td, .print-sheet th { padding: 4pt 5pt !important; }
+ #view table.tbl thead, .ptbl thead, .phieu-wrap thead, .print-sheet thead { display: table-header-group !important; }
+ #view table.tbl tr, .ptbl tr, .phieu-wrap tr, .print-sheet tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+ h1,h2,h3,.page-head,.print-header,.tw-company-print-header { break-after: avoid !important; page-break-after: avoid !important; } a[href]::after { content: none !important; }
+}
+@page payment { size: A4 portrait; margin: 13mm 12mm 17mm; }
+</style>
+
+<style id="tw-print-vn-refinement">
+@media print{
+  @page{size:A4 portrait;margin:18mm 15mm 18mm 25mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}
+  .tw-company-print-header,.brand{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important;justify-content:center!important}
+  .tw-company-print-header .tw-brand-name,.brand strong{display:block!important;text-align:center!important;width:100%!important}
+  .tw-company-print-header{border-bottom:1pt solid #d8c58b!important}
+  #view table.tbl th,#tiendoScope th{background:#fff7dc!important;color:#4b3b17!important;border:1px solid #d8c58b!important}
+  #view table.tbl td,#view table.tbl th,#tiendoScope td,#tiendoScope th{border-color:#d8c58b!important}
+  .page-head h1,.print-header h1{break-after:avoid!important;page-break-after:avoid!important}
+}
+</style>
+<style id="tw-print-unified-20261013">
+/* KHỐI IN ĐỒNG BỘ DUY NHẤT (13/10/2026) — override mọi khối print cũ, không xóa code cũ */
+.tw-report-header{display:none}
+.print-only{display:none!important}
+@page twportrait{size:A4 portrait;margin:15mm 12mm 15mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
+@page twlandscape{size:A4 landscape;margin:12mm 12mm 12mm 12mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
+@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}
+@media print{
+  body{page:twportrait!important}
+  body.tw-landscape{page:twlandscape!important}
+  /* Header báo cáo thống nhất: 1 khối liền mạch công ty -> gạch vàng -> tiêu đề -> meta */
+  .tw-report-header{display:block!important;margin:0 0 5mm!important;break-after:avoid!important;page-break-after:avoid!important}
+  .tw-report-header .tw-company-print-header{display:block!important;text-align:center!important;border:0!important;border-bottom:2pt solid #d8a93b!important;padding:0 0 3mm!important;margin:0 0 3mm!important}
+  .tw-report-header .tw-brand-name{font-size:13pt!important;font-weight:800!important;color:#111!important;text-align:center!important}
+  .tw-report-header .tw-brand-meta{font-size:8.5pt!important;color:#555!important;text-align:center!important;line-height:1.45!important}
+  .tw-report-header h1{font-size:15pt!important;font-weight:800!important;text-align:center!important;color:#3d2c12!important;margin:0 0 2mm!important;text-transform:uppercase!important}
+  .tw-report-header .meta{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:2mm 7mm!important;font-size:9.5pt!important;color:#6b5d43!important;margin:0!important}
+  #view:has(.tw-report-header) .page-head,#view:has(.print-header) .page-head{display:none!important}
+  /* Bảng thống nhất: header vàng nhạt, cho xuống dòng, cột số canh phải */
+  #view table.tbl,#view table.print-tbl,#tiendoScope table{border-collapse:collapse!important;table-layout:auto!important;width:100%!important}
+  #view table.tbl th,#view table.print-tbl th,#tiendoScope th{background:#fff7dc!important;color:#4b3b17!important;border:1px solid #d8c58b!important;font-weight:700!important;text-align:center!important;vertical-align:middle!important;white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important;font-size:10pt!important;padding:2mm 2.4mm!important}
+  #view table.tbl td,#view table.print-tbl td,#tiendoScope td{border:1px solid #d8c58b!important;font-size:10pt!important;padding:2mm 2.4mm!important;vertical-align:top!important;white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important}
+  #view table.tbl td.num,#view table.print-tbl td.num,#tiendoScope td.num{text-align:right!important;white-space:nowrap!important}
+  #view thead,#tiendoScope thead{display:table-header-group!important}
+  #view tr,#tiendoScope tr{break-inside:avoid!important;page-break-inside:avoid!important}
+  body.tw-landscape #view table.tbl th,body.tw-landscape #view table.tbl td{font-size:8.5pt!important;padding:1.4mm 1.8mm!important}
+  /* Phần chỉ hiện khi in: dòng tổng, chữ ký */
+  .print-only{display:block!important}
+  table.print-only{display:table!important;width:100%!important}
+  tfoot.print-only{display:table-footer-group!important}
+  tr.print-total td{background:#fff7dc!important;font-weight:800!important;border-top:1.5pt solid #b89b4a!important;font-size:10.5pt!important}
+  .tw-signature-row{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8mm!important;margin-top:14mm!important;text-align:center!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  .tw-signature-row b{display:block!important;margin-bottom:18mm!important;font-size:10.5pt!important}
+  .tw-signature-row span{font-size:9pt!important;color:#6b5d43!important}
+  /* Ẩn nút bấm khi in */
+  .noprint,.page-actions,.td-toolbar,.td-view-switch,.rowbtns,.actions,.sidebar,.topbar,.toast,.proj-pick,button{display:none!important}
+}
+</style>
+
+<style id="tw-unified-print-final">
+/* Shared print rules for reports and forms: one A4 baseline, larger readable titles. */
+@media print {
+ @page { size:A4 portrait; margin:12mm 12mm 14mm; }
+ html,body { background:#fff!important; color:#111!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+ #view { width:100%!important; max-width:100%!important; margin:0!important; padding:0!important; overflow:visible!important; }
+ #view .page-head h1,#view .print-header h1,#view .tw-report-header h1 { font-size:20pt!important; line-height:1.22!important; font-weight:800!important; margin:0 0 3mm!important; break-after:avoid!important; page-break-after:avoid!important; }
+ #view .card,#view .td-card,#view .project-overview-card,#view table { max-width:100%!important; }
+ #view table { border-collapse:collapse!important; }
+ #view tr { break-inside:avoid; page-break-inside:avoid; }
+ #view th,#view td { overflow-wrap:anywhere!important; word-break:normal!important; }
+ .tw-company-print-header,.print-header,.tw-report-header { break-inside:avoid!important; page-break-after:avoid!important; }
+ .noprint,.no-print,.page-actions,.toolbar,.td-toolbar,.td-view-switch,.sidebar,#sbBackdrop,.topbar,.footer,.toast,.burger,.proj-pick,.sb-user,.sb-logout,.m-foot,.actions,button { display:none!important; }
+ body.printing-phieu .phieu-title,body.printing-phieu .ptitle { font-size:16pt!important; line-height:1.2!important; }
+}
+@media print and (orientation:landscape) { @page { size:A4 landscape; } }
+</style>
 </head>
 <body>
 <div id="loginView">
@@ -1053,14 +1135,15 @@ const todayVN=()=>fmtDate(todayISO());
 function toast(m){const t=document.createElement('div');t.className='t';t.textContent=m;$('#toast').appendChild(t);setTimeout(()=>t.remove(),2600);}
 const SEED={
 users:[
- {id:'u1',name:'Lê Hà',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
- {id:'u2',name:'Kế toán (test)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:[]},
- {id:'u3',name:'Anh Dương Chỉ huy (test)',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1']},
- {id:'u4',name:'Quản lý Dự án (test)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:[]},
- {id:'u5',name:'Thủ Quỹ (test)',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:[]},
- {id:'u6',name:'NV Mua hàng (test)',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:[]}],
+ {id:'u1',name:'Nguyễn Bình An Tâm',username:'nbatam',pass:'admin123',role:'Giám đốc',projectIds:[]},
+ {id:'u2',name:'Nguyễn Thị Mai – Kế toán trưởng (DEMO)',username:'ketoan',pass:'ketoan123',role:'Kế toán',projectIds:['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20']},
+ {id:'u3',name:'Trần Minh Dương – Chỉ huy công trình (DEMO)',username:'congtruong',pass:'ctr123',role:'Chỉ huy công trình',projectIds:['p1','p2','p9']},
+ {id:'u4',name:'Phạm Quốc Huy – Quản lý dự án (DEMO)',username:'qldp',pass:'qldp123',role:'Quản Lý Dự Án',projectIds:['p1','p2','p3','p4','p5','p6','p7','p8']},
+ {id:'u5',name:'Võ Thị Thu Hạnh – Thủ quỹ (DEMO)',username:'thuquy',pass:'tq123',role:'Thủ Quỹ',projectIds:['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20']},
+ {id:'u6',name:'Nguyễn Hoàng Nam – Nhân viên mua hàng (DEMO)',username:'muahang',pass:'mh123',role:'Nhân viên mua hàng',projectIds:['p1','p3','p5','p9','p10','p14','p15','p16','p18','p19','p20']},
+ {id:'u7',name:'Lê Văn Thành – Đại diện thầu phụ (DEMO)',username:'thauphu',pass:'tp123',role:'Đại diện thầu phụ',projectIds:['p1'],perms:{projects_view:true,denghi_view:true,denghi_create:true}}],
 projects:[
- {id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
+{id:'p1',code:'BT-2026-01',name:'Chung cư An Phú – Tháp A',client:'CĐT An Phú Land',location:'Thủ Đức, TP.HCM',start:'2026-02-01',end:'2026-12-31',budget:8500000000,status:'Đang thi công',note:'Gói thầu phần thô + hoàn thiện'},
  {id:'p2',code:'BT-2026-02',name:'Biệt thự Nam Long',client:'Ông Trần Minh Đức',location:'KDC Nam Long, TP.HCM',start:'2026-03-05',end:'2026-11-30',budget:3200000000,status:'Đang thi công',note:'Xây dựng + nội thất cơ bản'},
  {id:'p3',code:'BT-2026-03',name:'Nhà xưởng Tân Thuận',client:'Cty TNHH Cơ khí Đông Nam',location:'KCN Tân Thuận, TP.HCM',start:'2026-04-15',end:'2027-02-15',budget:12500000000,status:'Đang thi công',note:'Nhà thép tiền chế 5000m2'},
  {id:'p4',code:'BT-2026-04',name:'Cao ốc văn phòng Phú Mỹ Hưng',client:'CĐT Phú Mỹ Hưng Corp',location:'Quận 7, TP.HCM',start:'2026-06-01',end:'2027-06-30',budget:28000000000,status:'Chuẩn bị',note:'Phần móng + hầm'},
@@ -1069,7 +1152,19 @@ projects:[
  {id:'p7',code:'BT-2026-07',name:'Khách sạn Grand Sài Gòn',location:'Quận 1, TP.HCM',client:'CĐT Grand Hotel Group',start:'2026-04-15',end:'2027-02-28',status:'Đang thi công',budget:68000000000},
  {id:'p8',code:'BT-2026-08',name:'Bệnh viện Đa khoa Miền Đông',location:'TP.Thủ Đức, TP.HCM',client:'CĐT MediCare VN',start:'2026-06-01',end:'2027-06-30',status:'Đang thi công',budget:95000000000},
  {id:'p9',code:'BT-2026-09',name:'Biệt thự đảo Thảo Điền – Villa Riverside',client:'Ông Nguyễn Quốc Hưng',location:'Thảo Điền, TP.Thủ Đức, TP.HCM',start:'2026-02-15',end:'2026-10-30',budget:18500000000,status:'Đang thi công',note:'Biệt thự 3 tầng + hồ bơi vô cực + hầm rượu, hoàn thiện cao cấp'},
- {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'}],
+ {id:'p10',code:'BT-2026-10',name:'Sân Golf Long Thành – Clubhouse 2500m2',client:'CĐT Golf Long Thành',location:'Long Thành, Đồng Nai',start:'2026-03-10',end:'2027-03-10',budget:125000000000,status:'Đang thi công',note:'Clubhouse, nhà hàng, proshop, khu changing, cảnh quan sân golf 18 lỗ'},
+ {id:'p11',code:'BT-2026-11',name:'Biệt thự sân Golf Hồ Tràm – 10 căn',client:'CĐT Hồ Tràm Resort',location:'Hồ Tràm, Bà Rịa-Vũng Tàu',start:'2026-04-01',end:'2026-12-15',budget:68000000000,status:'Chuẩn bị',note:'10 biệt thự nghỉ dưỡng view sân golf, nội thất full, hồ bơi riêng'},
+ {id:'p12',code:'BT-2026-12',name:'Biệt thự song lập Vinhomes Grand Park',client:'Bà Lê Thị Mai',location:'Vinhomes Grand Park, Q9, TP.HCM',start:'2026-05-20',end:'2026-11-20',budget:9800000000,status:'Đang thi công',note:'Song lập 2 tầng + sân vườn, hàng rào, cổng, hoàn thiện thô + cơ bản'},
+ {id:'p13',code:'BT-2026-13',name:'Sân Golf & Resort Đà Lạt – GĐ1 (18 lỗ)',client:'CĐT Đà Lạt Hills',location:'Lạc Dương, Lâm Đồng',start:'2026-06-15',end:'2027-08-30',budget:210000000000,status:'Tạm dừng',note:'18 lỗ par 72, khu resort 30 bungalow, hạ tầng, hồ điều hoà, chờ duyệt PCCC'},
+ {id:'p14',code:'BT-2026-14',name:'Sân bay Quốc tế Long Thành – Nhà ga hành khách & Đường lăn',client:'Tổng Cty Cảng HK VN – ACV',location:'Long Thành, Đồng Nai',start:'2026-01-15',end:'2028-12-30',budget:350000000000,status:'Đang thi công',note:'Gói thầu 4.6: Nhà ga 4000m2, đường lăn E1, sân đỗ, điện trung thế, PCCC'}
+ ,{id:'p15',code:'BT-2026-15',name:'Nhà phố thương mại The Riverside – 12 căn',client:'Công ty Địa ốc Riverside',location:'Bình Thạnh, TP.HCM',start:'2026-05-01',end:'2027-01-31',budget:42600000000,status:'Đang thi công',note:'12 căn shophouse 5 tầng; kết cấu, mặt dựng, MEP, hoàn thiện; nghiệm thu theo từng căn.'}
+ ,{id:'p16',code:'BT-2026-16',name:'Nhà máy thực phẩm sạch GreenFarm',client:'Công ty CP Thực phẩm GreenFarm',location:'KCN Hiệp Phước, Nhà Bè, TP.HCM',start:'2026-07-01',end:'2027-05-31',budget:78500000000,status:'Chuẩn bị',note:'Nhà xưởng chế biến, kho lạnh, nền epoxy, xử lý nước thải, hệ thống PCCC và điện dự phòng.'}
+ ,{id:'p17',code:'BT-2026-17',name:'Cải tạo trụ sở văn phòng Tân Bình',client:'Công ty Dịch vụ Hàng không Nam Việt',location:'Tân Bình, TP.HCM',start:'2026-08-15',end:'2026-12-20',budget:12600000000,status:'Đang thi công',note:'Cải tạo trong khi vẫn vận hành; chia khu vực thi công, kiểm soát bụi/ồn, MEP và nghiệm thu từng tầng.'}
+ ,{id:'p18',code:'BT-2026-18',name:'Hạ tầng khu dân cư Bình Chánh – Giai đoạn 1',client:'Công ty Phát triển Đô thị An Gia',location:'Bình Chánh, TP.HCM',start:'2026-04-01',end:'2027-03-31',budget:112000000000,status:'Đang thi công',note:'San nền, đường nội bộ, thoát nước mưa/nước thải, chiếu sáng, cấp nước và cây xanh.'}
+ ,{id:'p19',code:'BT-2026-19',name:'Trung tâm logistics Sóng Thần – Kho B2',client:'Công ty Logistics Đông Dương',location:'Dĩ An, Bình Dương',start:'2026-09-01',end:'2027-07-31',budget:64200000000,status:'Chuẩn bị',note:'Kho logistics 12.000m², sàn chịu tải, dock leveler, hệ thống sprinkler, văn phòng vận hành.'}
+ ,{id:'p20',code:'BT-2026-20',name:'Cụm 3 biệt thự nghỉ dưỡng Bảo Lộc',client:'Công ty Đầu tư Lâm Viên',location:'Bảo Lộc, Lâm Đồng',start:'2026-06-10',end:'2027-04-30',budget:23800000000,status:'Đang thi công',note:'3 villa nghỉ dưỡng, đường nội bộ, kè taluy, thoát nước mưa, cảnh quan và nội thất.'}
+
+],
 vendors:[
  {id:'v1',name:'VLXD Hoàng Phát',phone:'0909123456',address:'QL1A, Thủ Đức',projectId:'p1'},
  {id:'v2',name:'Sắt thép Miền Nam',phone:'0918234567',address:'KCN Sóng Thần',projectId:'p1'},
@@ -1081,7 +1176,13 @@ vendors:[
  {id:'v8',name:'Thiết bị sân golf Đà Lạt',phone:'0909988776',address:'Lạc Dương, Lâm Đồng',projectId:'p13'},
  {id:'v9',name:'Thép Hòa Phát',phone:'18002828',address:'KCN Phố Nối A, Hưng Yên',projectId:'p14'},
  {id:'v10',name:'Bê tông Sông Đà',phone:'0904111222',address:'Long Thành, Đồng Nai',projectId:'p14'},
- {id:'v11',name:'Thiết bị điện LS',phone:'02838223344',address:'KCN Long Thành, Đồng Nai',projectId:'p14'}],
+ {id:'v11',name:'Thiết bị điện LS',phone:'02838223344',address:'KCN Long Thành, Đồng Nai',projectId:'p14'},
+ {id:'v12',name:'Bê tông tươi Bình Triệu',phone:'02837281234',address:'Bình Thạnh, TP.HCM',projectId:'p15'},
+ {id:'v13',name:'Panel kho lạnh Nam Phát',phone:'0908123001',address:'KCN Hiệp Phước, TP.HCM',projectId:'p16'},
+ {id:'v14',name:'Cáp điện và ống luồn Minh Khang',phone:'0908123002',address:'Tân Bình, TP.HCM',projectId:'p17'},
+ {id:'v15',name:'Cống bê tông An Gia',phone:'0908123003',address:'Bình Chánh, TP.HCM',projectId:'p18'},
+ {id:'v16',name:'Thép kết cấu Đông Dương',phone:'0908123004',address:'Dĩ An, Bình Dương',projectId:'p19'},
+ {id:'v17',name:'Đá xây dựng Lâm Viên',phone:'0908123005',address:'Bảo Lộc, Lâm Đồng',projectId:'p20'}],
 vendorTx:[
  {id:'vt1',vendorId:'v1',projectId:'p1',date:'2026-08-02',type:'purchase',amount:385000000,note:'Xi măng PCB40 – 1.200 bao'},
  {id:'vt2',vendorId:'v1',projectId:'p1',date:'2026-08-20',type:'payment',amount:200000000,note:'Thanh toán đợt 1'},
@@ -1097,7 +1198,13 @@ vendorTx:[
  {id:'vt12',vendorId:'v8',projectId:'p13',date:'2026-09-25',type:'purchase',amount:5200000000,note:'Xe điện, máy cắt cỏ, thiết bị bảo dưỡng golf Đà Lạt'},
  {id:'vt13',vendorId:'v9',projectId:'p14',date:'2026-09-26',type:'purchase',amount:18500000000,note:'Thép hình + thép tấm kết cấu mái nhà ga'},
  {id:'vt14',vendorId:'v10',projectId:'p14',date:'2026-09-26',type:'purchase',amount:8200000000,note:'Bê tông tươi mác 350 đường lăn E1'},
- {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'}],
+ {id:'vt15',vendorId:'v11',projectId:'p14',date:'2026-09-27',type:'purchase',amount:6400000000,note:'Tủ trung thế, cáp điện, thiết bị PCCC'},
+ {id:'vt16',vendorId:'v12',projectId:'p15',date:'2026-09-28',type:'purchase',amount:680000000,note:'Bê tông thương phẩm cho sàn tầng 4'},
+ {id:'vt17',vendorId:'v13',projectId:'p16',date:'2026-10-02',type:'purchase',amount:1250000000,note:'Panel cách nhiệt và cửa kho lạnh – đặt hàng'},
+ {id:'vt18',vendorId:'v14',projectId:'p17',date:'2026-09-25',type:'purchase',amount:185000000,note:'Cáp điện, máng cáp và ống luồn MEP'},
+ {id:'vt19',vendorId:'v15',projectId:'p18',date:'2026-09-30',type:'purchase',amount:920000000,note:'Cống D800-D1200 và hố ga đúc sẵn'},
+ {id:'vt20',vendorId:'v16',projectId:'p19',date:'2026-10-01',type:'purchase',amount:2350000000,note:'Thép hình cho khung kho B2 – đơn đặt hàng'},
+ {id:'vt21',vendorId:'v17',projectId:'p20',date:'2026-09-26',type:'purchase',amount:265000000,note:'Đá hộc và đá 1x2 phục vụ kè taluy'}],
 contractors:[
  {id:'k1',name:'Đội khoán Anh Ba (cốp pha)',phone:'0978111222',projectId:'p1',note:'Khoán cốp pha dầm sàn'},
  {id:'k2',name:'Tổ điện nước Hùng',phone:'0988222333',projectId:'p2',note:'Khoán điện nước biệt thự'},
@@ -1106,7 +1213,13 @@ contractors:[
  {id:'k5',name:'Đội hoàn thiện Hồ Tràm',phone:'0934123456',projectId:'p11',note:'Sơn + trần thạch cao 10 villa'},
  {id:'k6',name:'Tổ cơ khí Đà Lạt',phone:'0977888999',projectId:'p13',note:'Kết cấu thép clubhouse'},
  {id:'k7',name:'Đội kết cấu thép mái nhà ga',phone:'0906555444',projectId:'p14',note:'Lắp dựng kết cấu thép mái nhà ga 4000m2'},
- {id:'k8',name:'Đội điện PCCC Long Thành',phone:'0909777666',projectId:'p14',note:'Thi công điện trung thế + PCCC nhà ga & đường lăn'}],
+ {id:'k8',name:'Đội điện PCCC Long Thành',phone:'0909777666',projectId:'p14',note:'Thi công điện trung thế + PCCC nhà ga & đường lăn'},
+ {id:'k9',name:'Đội xây tô Riverside',phone:'0908000015',projectId:'p15',note:'Xây tô và hoàn thiện 12 căn shophouse'},
+ {id:'k10',name:'Đội nền epoxy An Phú',phone:'0908000016',projectId:'p16',note:'Thi công nền công nghiệp và khu vệ sinh thực phẩm'},
+ {id:'k11',name:'Tổ MEP Tân Bình',phone:'0908000017',projectId:'p17',note:'Cải tạo điện, cấp thoát nước và điều hòa'},
+ {id:'k12',name:'Đội cống thoát nước An Gia',phone:'0908000018',projectId:'p18',note:'Lắp đặt cống, hố ga và đấu nối tuyến chính'},
+ {id:'k13',name:'Đội lắp dựng thép Đông Dương',phone:'0908000019',projectId:'p19',note:'Lắp dựng khung thép kho B2'},
+ {id:'k14',name:'Đội xây dựng Lâm Viên',phone:'0908000020',projectId:'p20',note:'Kết cấu và xây tô 3 biệt thự nghỉ dưỡng'}],
 contractorTx:[
  {id:'kt1',contractorId:'k1',projectId:'p1',date:'2026-08-15',type:'entry',amount:420000000,note:'Khối lượng cốp pha tầng 5-8'},
  {id:'kt2',contractorId:'k1',projectId:'p1',date:'2026-09-02',type:'payment',amount:250000000,note:'Tạm ứng 60%'},
@@ -1116,7 +1229,13 @@ contractorTx:[
  {id:'kt6',contractorId:'k5',projectId:'p11',date:'2026-09-20',type:'entry',amount:1200000000,note:'Hoàn thiện 3 villa đầu'},
  {id:'kt7',contractorId:'k6',projectId:'p13',date:'2026-09-22',type:'entry',amount:2800000000,note:'Lắp khung thép clubhouse Đà Lạt'},
  {id:'kt8',contractorId:'k7',projectId:'p14',date:'2026-09-28',type:'entry',amount:12500000000,note:'Khối lượng kết cấu thép mái nhà ga đợt 1'},
- {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'}],
+ {id:'kt9',contractorId:'k8',projectId:'p14',date:'2026-09-28',type:'entry',amount:4800000000,note:'Điện trung thế & PCCC nhà ga'},
+ {id:'kt10',contractorId:'k9',projectId:'p15',date:'2026-10-02',type:'entry',amount:780000000,note:'Khối lượng xây tô 4 căn đợt 1'},
+ {id:'kt11',contractorId:'k10',projectId:'p16',date:'2026-10-03',type:'entry',amount:0,note:'Chưa nghiệm thu khối lượng'},
+ {id:'kt12',contractorId:'k11',projectId:'p17',date:'2026-09-29',type:'entry',amount:320000000,note:'Khối lượng MEP tầng 2-3'},
+ {id:'kt13',contractorId:'k12',projectId:'p18',date:'2026-10-01',type:'entry',amount:560000000,note:'Lắp đặt cống tuyến N2'},
+ {id:'kt14',contractorId:'k13',projectId:'p19',date:'2026-10-04',type:'entry',amount:0,note:'Chưa khởi công'},
+ {id:'kt15',contractorId:'k14',projectId:'p20',date:'2026-09-30',type:'entry',amount:410000000,note:'Kè taluy và thoát nước đợt 1'}],
 bankAccounts:[
  {id:'b1',name:'Vietcombank',number:'0071001234567',note:'TK chính công ty'},
  {id:'b2',name:'Tiền mặt công trình',number:'TM-01',note:'Quỹ tiền mặt tại công trình'}],
@@ -1139,6 +1258,12 @@ expenses:[
  {id:'x5',projectId:'p2',date:'2026-09-19',category:'Thiết kế',amount:25000000,note:'Chỉnh sửa bản vẽ hoàn công',by:'Kế toán Mai'},
  {id:'x9',projectId:'p9',date:'2026-09-06',category:'Vật tư',amount:850000000,note:'Đá + gỗ villa Thảo Điền',by:'Anh Ba'},
  {id:'x10',projectId:'p10',date:'2026-09-16',category:'Vật tư',amount:2200000000,note:'Cỏ + phân + tưới Long Thành',by:'Kế toán Mai'},
+ {id:'x11',projectId:'p15',date:'2026-10-02',category:'Nhân công',amount:78000000,note:'Nhân công xây tô shophouse đợt 1',by:'Trần Minh Dương'},
+ {id:'x12',projectId:'p16',date:'2026-10-03',category:'Hồ sơ',amount:18500000,note:'Thí nghiệm mẫu đất và kiểm định vật liệu',by:'Phạm Quốc Huy'},
+ {id:'x13',projectId:'p17',date:'2026-09-29',category:'Vật tư',amount:42000000,note:'Vật tư phụ thi công MEP',by:'Nguyễn Hoàng Nam'},
+ {id:'x14',projectId:'p18',date:'2026-10-01',category:'Vận chuyển',amount:26500000,note:'Vận chuyển cống và hố ga',by:'Trần Minh Dương'},
+ {id:'x15',projectId:'p19',date:'2026-10-04',category:'An toàn',amount:12000000,note:'Hàng rào và biển báo công trường',by:'Phạm Quốc Huy'},
+ {id:'x16',projectId:'p20',date:'2026-09-30',category:'Thuê máy',amount:38000000,note:'Thuê máy đào phục vụ kè taluy',by:'Trần Minh Dương'},
  {id:'x6',projectId:'p11',date:'2026-09-19',category:'Nhân công',amount:950000000,note:'Nhân công hoàn thiện 3 villa Hồ Tràm',by:'Quản lý'},
  {id:'x7',projectId:'p12',date:'2026-09-23',category:'Vật tư',amount:380000000,note:'Gạch + sơn song lập Vinhomes',by:'Anh Ba'},
  {id:'x8',projectId:'p13',date:'2026-09-26',category:'Thuê máy',amount:1250000000,note:'Máy ủi + lu lèn sân golf Đà Lạt',by:'Chỉ huy'}],
@@ -1148,17 +1273,17 @@ clientTx:[
  {id:'clt1',clientId:'cl1',projectId:'p1',date:'2026-09-20',type:'billed',amount:1800000000,note:'Nghiệm thu đợt 2'},
  {id:'clt2',clientId:'cl1',projectId:'p1',date:'2026-10-02',type:'received',amount:1000000000,note:'Đã nhận 1 tỷ, còn 800tr'}],
 auditLogs:[
- {id:'a1',ts:'2026-10-08 09:12',user:'Lê Hà',action:'Tạo dự án',detail:'Chung cư An Phú – Tháp A'},
+ {id:'a1',ts:'2026-10-08 09:12',user:'Nguyễn Minh Quân – Giám đốc (DEMO)',action:'Tạo dự án',detail:'Chung cư An Phú – Tháp A'},
  {id:'a2',ts:'2026-10-08 14:40',user:'Kế toán Mai',action:'Thêm chi phí',detail:'Xe cẩu vật liệu tầng cao – 12.000.000 ₫'}],
 denghi:[
- {id:'dn1',projectId:'p1',date:'2026-10-02',loai:'mua_hang',hangmuc:'Bê tông',noidung:'Bê tông tươi mác 300 – 120m³',soluong:120,dongia:1850000,sotien:222000000,ncc:'Bê tông Minh Anh',trangthai:'da_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'Lê Hà',lydo:''},
+ {id:'dn1',projectId:'p1',date:'2026-10-02',loai:'mua_hang',hangmuc:'Bê tông',noidung:'Bê tông tươi mác 300 – 120m³',soluong:120,dongia:1850000,sotien:222000000,ncc:'Bê tông Minh Anh',trangthai:'da_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'Nguyễn Minh Quân – Giám đốc (DEMO)',lydo:''},
  {id:'dn2',projectId:'p1',date:'2026-10-06',loai:'nhan_cong',hangmuc:'Nhân công',noidung:'Thuê nhân công đổ bê tông tầng 11',soluong:1,dongia:38000000,sotien:38000000,ncc:'',trangthai:'cho_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'',lydo:''},
- {id:'dn3',projectId:'p2',date:'2026-10-04',loai:'mua_hang',hangmuc:'Gạch',noidung:'Gạch ống bổ sung 10.000 viên',soluong:10000,dongia:1450,sotien:14500000,ncc:'Gạch Tuynel',trangthai:'da_chi',nguoitao:'Kế toán Mai',nguoiduyet:'Lê Hà',lydo:''}],
+ {id:'dn3',projectId:'p2',date:'2026-10-04',loai:'mua_hang',hangmuc:'Gạch',noidung:'Gạch ống bổ sung 10.000 viên',soluong:10000,dongia:1450,sotien:14500000,ncc:'Gạch Tuynel',trangthai:'da_chi',nguoitao:'Kế toán Mai',nguoiduyet:'Nguyễn Minh Quân – Giám đốc (DEMO)',lydo:''}],
 phatsinh:[
- {id:'ps1',projectId:'p1',date:'2026-09-28',noidung:'Phát sinh chống thấm tầng hầm (ngoài hợp đồng)',sotien:85000000,trangthai:'da_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'Lê Hà',lydo:''}],
+ {id:'ps1',projectId:'p1',date:'2026-09-28',noidung:'Phát sinh chống thấm tầng hầm (ngoài hợp đồng)',sotien:85000000,trangthai:'da_duyet',nguoitao:'Anh Ba Chỉ huy',nguoiduyet:'Nguyễn Minh Quân – Giám đốc (DEMO)',lydo:''}],
 dutru:[
- {id:'dt1',projectId:'p1',hangmuc:'Phần thô',diengiai:'Bê tông + sắt thép + cốp pha',soluong:1,dongia:4200000000,thanhtien:4200000000,trangthai:'da_duyet',nguoitao:'Lê Hà',nguoiduyet:'Lê Hà',lydo:''},
- {id:'dt2',projectId:'p1',hangmuc:'Hoàn thiện',diengiai:'Gạch, sơn, thiết bị vệ sinh',soluong:1,dongia:2800000000,thanhtien:2800000000,trangthai:'cho_duyet',nguoitao:'Lê Hà',nguoiduyet:'',lydo:''}],
+ {id:'dt1',projectId:'p1',hangmuc:'Phần thô',diengiai:'Bê tông + sắt thép + cốp pha',soluong:1,dongia:4200000000,thanhtien:4200000000,trangthai:'da_duyet',nguoitao:'Phạm Quốc Huy – Quản lý dự án (DEMO)',nguoiduyet:'Nguyễn Minh Quân – Giám đốc (DEMO)',lydo:''},
+ {id:'dt2',projectId:'p1',hangmuc:'Hoàn thiện',diengiai:'Gạch, sơn, thiết bị vệ sinh',soluong:1,dongia:2800000000,thanhtien:2800000000,trangthai:'cho_duyet',nguoitao:'Phạm Quốc Huy – Quản lý dự án (DEMO)',nguoiduyet:'',lydo:''}],
 thanhtoan:[
  {id:'tt1',projectId:'p2',denghiId:'dn3',date:'2026-10-05',sotien:14500000,hinhthuc:'Chuyển khoản',trangthai:'da_chi',ghichu:'Gạch Tuynel'}],
 tamung:[
@@ -1215,11 +1340,29 @@ danhmuc:[
   {id:'td47',projectId:'p13',hangMuc:'Clubhouse',giaiDoan:'tho',phanTram:30,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-02-28',ngayCapNhat:'2026-09-14',ghiChu:'Móng xong'},
   {id:'td46',projectId:'p13',hangMuc:'Hệ thống tưới',giaiDoan:'mep',phanTram:60,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-09-12',ghiChu:'Đang lắp'},
   {id:'td48',projectId:'p14',hangMuc:'Cọc nhà ga',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-06-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-09-15',ghiChu:'70% cọc'},
-  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'}
+  {id:'td49',projectId:'p14',hangMuc:'Đài móng',giaiDoan:'ngam',phanTram:30,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-09-16',ghiChu:'Bắt đầu'},
+  {id:'td50',projectId:'p15',hangMuc:'Móng và kết cấu tầng trệt',giaiDoan:'ngam',phanTram:100,ngayBatDau:'2026-05-01',ngayKetThuc:'2026-07-15',ngayCapNhat:'2026-07-15',ghiChu:'Nghiệm thu kết cấu phần ngầm'},
+  {id:'td51',projectId:'p15',hangMuc:'Khung bê tông 12 căn',giaiDoan:'tho',phanTram:65,ngayBatDau:'2026-07-16',ngayKetThuc:'2026-11-30',ngayCapNhat:'2026-10-05',ghiChu:'Đang thi công tầng 4-5'},
+  {id:'td52',projectId:'p15',hangMuc:'Mặt dựng và MEP',giaiDoan:'mep',phanTram:20,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-31',ngayCapNhat:'2026-10-05',ghiChu:'Chốt mẫu mặt dựng'},
+  {id:'td53',projectId:'p16',hangMuc:'Thiết kế shopdrawing và hồ sơ PCCC',giaiDoan:'chuanbi',phanTram:75,ngayBatDau:'2026-07-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-10-05',ghiChu:'Chờ phê duyệt hồ sơ PCCC'},
+  {id:'td54',projectId:'p16',hangMuc:'San nền và móng nhà xưởng',giaiDoan:'ngam',phanTram:10,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-10-05',ghiChu:'Định vị tim trục'},
+  {id:'td55',projectId:'p16',hangMuc:'Kho lạnh và nền epoxy',giaiDoan:'hoanthien',phanTram:0,ngayBatDau:'2027-02-01',ngayKetThuc:'2027-04-30',ngayCapNhat:'2026-10-05',ghiChu:'Chưa đến thời điểm triển khai'},
+  {id:'td56',projectId:'p17',hangMuc:'Khảo sát hiện trạng và tháo dỡ',giaiDoan:'chuanbi',phanTram:100,ngayBatDau:'2026-08-15',ngayKetThuc:'2026-09-05',ngayCapNhat:'2026-09-05',ghiChu:'Đã bàn giao mặt bằng theo tầng'},
+  {id:'td57',projectId:'p17',hangMuc:'Cải tạo MEP tầng 2-4',giaiDoan:'mep',phanTram:55,ngayBatDau:'2026-09-06',ngayKetThuc:'2026-11-10',ngayCapNhat:'2026-10-05',ghiChu:'Thi công ngoài giờ hành chính'},
+  {id:'td58',projectId:'p17',hangMuc:'Hoàn thiện và nghiệm thu từng tầng',giaiDoan:'hoanthien',phanTram:15,ngayBatDau:'2026-10-01',ngayKetThuc:'2026-12-15',ngayCapNhat:'2026-10-05',ghiChu:'Tầng 2 đang xử lý trần'},
+  {id:'td59',projectId:'p18',hangMuc:'San nền và thoát nước mưa',giaiDoan:'ngam',phanTram:70,ngayBatDau:'2026-04-01',ngayKetThuc:'2026-10-31',ngayCapNhat:'2026-10-05',ghiChu:'Đang thi công tuyến cống chính'},
+  {id:'td60',projectId:'p18',hangMuc:'Đường nội bộ và bó vỉa',giaiDoan:'tho',phanTram:35,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-10-05',ghiChu:'Đã cấp phối một phần tuyến N2'},
+  {id:'td61',projectId:'p18',hangMuc:'Chiếu sáng và cây xanh',giaiDoan:'mep',phanTram:0,ngayBatDau:'2027-01-01',ngayKetThuc:'2027-03-15',ngayCapNhat:'2026-10-05',ghiChu:'Chờ hoàn tất hạ tầng ngầm'},
+  {id:'td62',projectId:'p19',hangMuc:'Thiết kế và phê duyệt tải trọng sàn',giaiDoan:'chuanbi',phanTram:60,ngayBatDau:'2026-09-01',ngayKetThuc:'2026-11-15',ngayCapNhat:'2026-10-05',ghiChu:'Đang chốt thông số xe nâng'},
+  {id:'td63',projectId:'p19',hangMuc:'Móng và nền kho B2',giaiDoan:'ngam',phanTram:0,ngayBatDau:'2026-11-16',ngayKetThuc:'2027-02-15',ngayCapNhat:'2026-10-05',ghiChu:'Chưa khởi công'},
+  {id:'td64',projectId:'p19',hangMuc:'Khung thép, mái và sprinkler',giaiDoan:'tho',phanTram:0,ngayBatDau:'2027-02-16',ngayKetThuc:'2027-06-30',ngayCapNhat:'2026-10-05',ghiChu:'Phụ thuộc nghiệm thu móng'},
+  {id:'td65',projectId:'p20',hangMuc:'Kè taluy và thoát nước',giaiDoan:'ngam',phanTram:80,ngayBatDau:'2026-06-10',ngayKetThuc:'2026-10-20',ngayCapNhat:'2026-10-05',ghiChu:'Hoàn thiện tuyến kè phía Đông'},
+  {id:'td66',projectId:'p20',hangMuc:'Kết cấu 3 biệt thự',giaiDoan:'tho',phanTram:45,ngayBatDau:'2026-08-01',ngayKetThuc:'2027-01-31',ngayCapNhat:'2026-10-05',ghiChu:'Hai căn đang xây tường tầng 1'},
+  {id:'td67',projectId:'p20',hangMuc:'Cảnh quan và nội thất',giaiDoan:'hoanthien',phanTram:0,ngayBatDau:'2027-01-01',ngayKetThuc:'2027-04-15',ngayCapNhat:'2026-10-05',ghiChu:'Chờ hoàn thiện phần thô'}
 ]
 };
-// Demo seed scope: keep 10 diverse sample projects only. Seed records tied to removed samples are excluded.
-const TW_SAMPLE_PROJECT_IDS=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p14'];
+// Demo seed scope: 20 diverse construction projects with linked sample records.
+const TW_SAMPLE_PROJECT_IDS=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20'];
 SEED.projects=SEED.projects.filter(p=>TW_SAMPLE_PROJECT_IDS.includes(p.id));
 Object.keys(SEED).forEach(k=>{if(Array.isArray(SEED[k])&&k!=='projects')SEED[k]=SEED[k].filter(x=>{
  const pid=x.projectId||x.currentProjectId;
@@ -1227,6 +1370,101 @@ Object.keys(SEED).forEach(k=>{if(Array.isArray(SEED[k])&&k!=='projects')SEED[k]=
  if(Array.isArray(x.projectIds))x.projectIds=x.projectIds.filter(id=>!/^p\d+$/.test(String(id))||TW_SAMPLE_PROJECT_IDS.includes(id));
  return true;
 });});
+// Bộ dữ liệu vận hành DEMO có liên kết chéo: nhân sự, tổ đội, thiết bị, giao việc, hồ sơ, công và lương.
+// Mọi tên/đơn vị/số liệu dưới đây là giả lập để kiểm thử, không phải hồ sơ giao dịch thật.
+SEED.resources=[
+{id:'r01',code:'NS-001',name:'Nguyễn Minh Quân',title:'Giám đốc điều hành',team:'Ban điều hành',phone:'0900000101',email:'quan.demo@thewall.example',skills:'Điều hành, phê duyệt ngân sách',status:'Đang làm việc'},
+{id:'r02',code:'NS-002',name:'Nguyễn Thị Mai',title:'Kế toán trưởng',team:'Phòng Tài chính – Kế toán',phone:'0900000102',email:'mai.demo@thewall.example',skills:'Công nợ, dòng tiền, đối chiếu',status:'Đang làm việc'},
+{id:'r03',code:'NS-003',name:'Phạm Quốc Huy',title:'Quản lý dự án',team:'Ban quản lý dự án',phone:'0900000103',email:'huy.demo@thewall.example',skills:'Kế hoạch, hợp đồng, điều phối',status:'Đang làm việc'},
+{id:'r04',code:'NS-004',name:'Trần Minh Dương',title:'Chỉ huy trưởng công trình',team:'Ban chỉ huy công trường',phone:'0900000104',email:'duong.demo@thewall.example',skills:'Tổ chức thi công, ATLĐ, nghiệm thu',status:'Đang làm việc'},
+{id:'r05',code:'NS-005',name:'Nguyễn Hoàng Nam',title:'Chuyên viên mua hàng',team:'Phòng cung ứng',phone:'0900000105',email:'nam.demo@thewall.example',skills:'RFQ, so sánh báo giá, theo dõi giao hàng',status:'Đang làm việc'},
+{id:'r06',code:'NS-006',name:'Võ Thị Thu Hạnh',title:'Thủ quỹ',team:'Phòng Tài chính – Kế toán',phone:'0900000106',email:'hanh.demo@thewall.example',skills:'Thu chi, phiếu thu/chi, kiểm quỹ',status:'Đang làm việc'},
+{id:'r07',code:'NS-007',name:'Lê Văn Thành',title:'Đội trưởng thầu phụ xây tô',team:'Thầu phụ Thành Phát',phone:'0900000107',email:'thanh.demo@thewall.example',skills:'Xây tô, nhân lực tổ đội',status:'Đang làm việc'},
+{id:'r08',code:'NS-008',name:'Đặng Hoài Phương',title:'Kỹ sư QA/QC',team:'Ban quản lý dự án',phone:'0900000108',email:'phuong.demo@thewall.example',skills:'Checklist, nghiệm thu, hồ sơ chất lượng',status:'Đang làm việc'},
+{id:'r09',code:'NS-009',name:'Bùi Thanh Tùng',title:'Kỹ sư MEP',team:'Tổ MEP nội bộ',phone:'0900000109',email:'tung.demo@thewall.example',skills:'Điện, cấp thoát nước, bản vẽ shop',status:'Đang làm việc'},
+{id:'r10',code:'NS-010',name:'Phan Quốc Bảo',title:'Kỹ sư QS',team:'Phòng QS',phone:'0900000110',email:'bao.demo@thewall.example',skills:'Khối lượng, dự toán, thanh toán',status:'Đang làm việc'},
+{id:'r11',code:'NS-011',name:'Trần Ngọc Linh',title:'Nhân viên hồ sơ',team:'Ban quản lý dự án',phone:'0900000111',email:'linh.demo@thewall.example',skills:'Văn bản, nhật ký, lưu trữ hồ sơ',status:'Đang làm việc'},
+{id:'r12',code:'NS-012',name:'Đỗ Văn Phúc',title:'Tổ trưởng cốt thép',team:'Tổ kết cấu',phone:'0900000112',email:'phuc.demo@thewall.example',skills:'Gia công, lắp dựng cốt thép',status:'Đang làm việc'},
+{id:'r13',code:'NS-013',name:'Lâm Quốc Vinh',title:'Tổ trưởng cốp pha',team:'Tổ kết cấu',phone:'0900000113',email:'vinh.demo@thewall.example',skills:'Cốp pha, giàn giáo',status:'Đang làm việc'},
+{id:'r14',code:'NS-014',name:'Nguyễn Anh Khoa',title:'Tổ trưởng hoàn thiện',team:'Tổ hoàn thiện',phone:'0900000114',email:'khoa.demo@thewall.example',skills:'Ốp lát, sơn, hoàn thiện',status:'Đang làm việc'},
+{id:'r15',code:'NS-015',name:'Lê Quốc Thịnh',title:'Cán bộ an toàn',team:'Ban chỉ huy công trường',phone:'0900000115',email:'thinh.demo@thewall.example',skills:'ATLĐ, PCCC, kiểm tra hiện trường',status:'Đang làm việc'},
+{id:'r16',code:'NS-016',name:'Phạm Đức Long',title:'Lái máy đào',team:'Tổ cơ giới',phone:'0900000116',email:'long.demo@thewall.example',skills:'Vận hành máy đào, kiểm tra đầu ca',status:'Đang làm việc'},
+{id:'r17',code:'NS-017',name:'Nguyễn Tấn Lộc',title:'Tổ trưởng điện nước',team:'Tổ MEP nội bộ',phone:'0900000117',email:'loc.demo@thewall.example',skills:'Lắp đặt điện nước',status:'Đang làm việc'},
+{id:'r18',code:'NS-018',name:'Mai Thanh Trúc',title:'Kế toán công nợ',team:'Phòng Tài chính – Kế toán',phone:'0900000118',email:'truc.demo@thewall.example',skills:'Đối chiếu nhà cung cấp, thanh toán',status:'Đang làm việc'},
+{id:'r19',code:'NS-019',name:'Đinh Hoàng Sơn',title:'Kỹ sư hiện trường',team:'Ban chỉ huy công trường',phone:'0900000119',email:'son.demo@thewall.example',skills:'Bóc tách khối lượng, nhật ký',status:'Đang làm việc'},
+{id:'r20',code:'NS-020',name:'Vũ Thị Ngọc',title:'Điều phối mua hàng',team:'Phòng cung ứng',phone:'0900000120',email:'ngoc.demo@thewall.example',skills:'Theo dõi PO, lịch giao nhận',status:'Đang làm việc'},
+{id:'r21',code:'NS-021',name:'Lê Hoàng Phúc',title:'Quản lý dự án khu nghỉ dưỡng',team:'Ban quản lý dự án',phone:'0900000121',email:'phuc.demo@thewall.example',skills:'Điều phối resort, cảnh quan, hoàn thiện',status:'Đang làm việc'},
+{id:'r22',code:'NS-022',name:'Đặng Quốc Khánh',title:'Quản lý dự án hạ tầng',team:'Ban quản lý dự án',phone:'0900000122',email:'khanh.demo@thewall.example',skills:'Hạ tầng, nhà công nghiệp, logistics',status:'Đang làm việc'}];
+SEED.resourceTeams=[
+{id:'team01',code:'TD-01',name:'Ban chỉ huy An Phú',type:'Nội bộ',leader:'Trần Minh Dương',phone:'0900000104',specialty:'Điều hành thi công',size:12,status:'Đang thi công',note:'Dự án BT-2026-01'},
+{id:'team02',code:'TD-02',name:'Tổ kết cấu',type:'Nội bộ',leader:'Đỗ Văn Phúc',phone:'0900000112',specialty:'Cốt thép, cốp pha, bê tông',size:24,status:'Đang thi công'},
+{id:'team03',code:'TD-03',name:'Thành Phát – xây tô',type:'Thầu phụ',leader:'Lê Văn Thành',phone:'0900000107',specialty:'Xây tô và trát tường',size:18,status:'Đang thi công',note:'Thầu phụ demo, chỉ xem dự án p1'},
+{id:'team04',code:'TD-04',name:'Tổ MEP nội bộ',type:'Nội bộ',leader:'Bùi Thanh Tùng',phone:'0900000109',specialty:'Điện, cấp thoát nước',size:10,status:'Đang thi công'},
+{id:'team05',code:'TD-05',name:'Tổ hoàn thiện',type:'Nội bộ',leader:'Nguyễn Anh Khoa',phone:'0900000114',specialty:'Ốp lát, sơn, hoàn thiện',size:16,status:'Sẵn sàng'},
+{id:'team06',code:'TD-06',name:'Đội cơ giới Long Thành',type:'Thuê ngoài',leader:'Phạm Đức Long',phone:'0900000116',specialty:'Đào đất, san nền, vận chuyển',size:6,status:'Đang thi công'}];
+SEED.resourceEquipment=[
+{id:'eq01',code:'TB-001',name:'Máy đào bánh xích 20 tấn',category:'Máy đào',ownership:'Thuê',supplier:'Cơ giới Đại Phát (DEMO)',status:'Đang sử dụng',currentProjectId:'p18',availableFrom:'2026-10-25',maintenance:'2026-12-01',note:'Thuê theo ca, kiểm tra đầu ca'},
+{id:'eq02',code:'TB-002',name:'Máy trộn bê tông 350L',category:'Máy trộn',ownership:'Sở hữu',supplier:'THE WALL',status:'Đang sử dụng',currentProjectId:'p1',availableFrom:'2026-11-01',maintenance:'2026-11-15',note:'Kiểm tra điện và che chắn'},
+{id:'eq03',code:'TB-003',name:'Vận thăng lồng 2 tấn',category:'Thiết bị nâng',ownership:'Thuê',supplier:'Thiết bị An Toàn (DEMO)',status:'Đang sử dụng',currentProjectId:'p1',availableFrom:'2027-01-01',maintenance:'2026-10-30',note:'Kiểm định trước hạn sử dụng'},
+{id:'eq04',code:'TB-004',name:'Máy hàn MIG',category:'Thiết bị hàn',ownership:'Sở hữu',supplier:'THE WALL',status:'Sẵn sàng',currentProjectId:'p3',availableFrom:'2026-10-20',maintenance:'2026-12-15'},
+{id:'eq05',code:'TB-005',name:'Máy toàn đạc điện tử',category:'Trắc đạc',ownership:'Sở hữu',supplier:'THE WALL',status:'Đang sử dụng',currentProjectId:'p18',availableFrom:'2026-10-20',maintenance:'2026-11-20'},
+{id:'eq06',code:'TB-006',name:'Máy cắt gạch bàn',category:'Thiết bị hoàn thiện',ownership:'Của thầu phụ',supplier:'Thành Phát (DEMO)',status:'Đang sử dụng',currentProjectId:'p1',availableFrom:'2026-10-22',maintenance:'2026-12-01'}];
+SEED.resourceAssignments=[
+{id:'asg01',projectId:'p1',scope:'Tổ chức đổ sàn tầng 13',responsible:'r04',assignees:'r12, r13, r15',approver:'Phạm Quốc Huy',start:'2026-10-12',due:'2026-10-12',priority:'Cao',status:'Đang thực hiện',details:'Chốt khối lượng bê tông, kiểm tra cốp pha/cốt thép và phương án bơm.',note:'Đã duyệt biện pháp thi công'},
+{id:'asg02',projectId:'p1',scope:'Đặt bê tông thương phẩm mác 300',responsible:'r05',assignees:'r20, r04',approver:'Nguyễn Minh Quân',start:'2026-10-10',due:'2026-10-11',priority:'Khẩn cấp',status:'Chờ xử lý',details:'Đối chiếu báo giá, chốt lịch giao theo ca đổ sàn.',note:'Liên kết đề nghị DN-2026-014'},
+{id:'asg03',projectId:'p1',scope:'Nghiệm thu cốt thép sàn tầng 13',responsible:'r08',assignees:'r19, r12',approver:'Phạm Quốc Huy',start:'2026-10-14',due:'2026-10-17',priority:'Cao',status:'Đang thực hiện',details:'Kiểm tra đường kính, khoảng cách thép, lớp bảo vệ và hồ sơ vật liệu.',note:'Chưa đổ bê tông khi chưa ký xác nhận'},
+{id:'asg04',projectId:'p2',scope:'Chốt mẫu gạch và thiết bị vệ sinh',responsible:'r03',assignees:'r05, r14',approver:'Nguyễn Minh Quân',start:'2026-10-08',due:'2026-10-20',priority:'Bình thường',status:'Đang thực hiện',details:'Trình mẫu chủ đầu tư trước khi đặt hàng.',note:'Theo dõi tiến độ giao hàng'},
+{id:'asg05',projectId:'p3',scope:'Hoàn thiện lắp dựng khung thép trục D–H',responsible:'r04',assignees:'r12, r13',approver:'Phạm Quốc Huy',start:'2026-10-01',due:'2026-10-25',priority:'Cao',status:'Đang thực hiện',details:'Kiểm tra bulông liên kết, độ thẳng đứng và biên bản siết lực.',note:'Cần cập nhật nhật ký nâng lắp'},
+{id:'asg06',projectId:'p4',scope:'Rà soát biện pháp thi công tầng hầm B2',responsible:'r03',assignees:'r08, r19, r15',approver:'Nguyễn Minh Quân',start:'2026-10-10',due:'2026-10-21',priority:'Cao',status:'Chờ xử lý',details:'Rà soát chống đỡ, thoát nước và quan trắc lân cận.',note:'Dự án giai đoạn móng/hầm'},
+{id:'asg07',projectId:'p5',scope:'Nghiệm thu chống thấm hồ bơi villa mẫu',responsible:'r08',assignees:'r14, r19',approver:'Phạm Quốc Huy',start:'2026-10-05',due:'2026-10-19',priority:'Cao',status:'Đang thực hiện',details:'Thử ngâm nước theo biện pháp đã phê duyệt, lập biên bản.',note:'Chụp ảnh trước khi lát hoàn thiện'},
+{id:'asg08',projectId:'p6',scope:'Kiểm tra hệ thống PCCC khu lớp học',responsible:'r09',assignees:'r15, r08',approver:'Phạm Quốc Huy',start:'2026-10-12',due:'2026-10-30',priority:'Cao',status:'Chưa bắt đầu',details:'Đối chiếu bản vẽ được duyệt, kiểm tra tuyến ống và đầu phun.',note:'Phối hợp nhà thầu PCCC'},
+{id:'asg09',projectId:'p7',scope:'Chốt vật liệu đá sảnh tầng trệt',responsible:'r05',assignees:'r14, r10',approver:'Nguyễn Minh Quân',start:'2026-10-06',due:'2026-10-22',priority:'Bình thường',status:'Đang thực hiện',details:'So sánh 3 báo giá, xác nhận mẫu và tiến độ cung ứng.',note:'Cần phê duyệt mẫu'},
+{id:'asg10',projectId:'p8',scope:'Kiểm tra nghiệm thu ống cấp nước trục chính',responsible:'r08',assignees:'r09, r17',approver:'Phạm Quốc Huy',start:'2026-10-09',due:'2026-10-24',priority:'Cao',status:'Chờ xử lý',details:'Thử áp, súc xả và lập hồ sơ chất lượng.',note:'Không che kín trước nghiệm thu'},
+{id:'asg11',projectId:'p9',scope:'Chốt mẫu gỗ veneer và lịch giao tủ',responsible:'r05',assignees:'r14, r20',approver:'Phạm Quốc Huy',start:'2026-10-03',due:'2026-10-18',priority:'Cao',status:'Đang thực hiện',details:'Đối chiếu mẫu duyệt, kích thước thực tế và điều kiện bảo quản.',note:'Hạng mục nội thất cao cấp'},
+{id:'asg12',projectId:'p10',scope:'Kiểm tra lớp nền sân golf khu clubhouse',responsible:'r08',assignees:'r16, r19',approver:'Phạm Quốc Huy',start:'2026-10-10',due:'2026-10-28',priority:'Bình thường',status:'Chưa bắt đầu',details:'Kiểm tra cao độ, độ chặt và thoát nước bề mặt.',note:'Phối hợp tư vấn giám sát'},
+{id:'asg13',projectId:'p14',scope:'Điều phối vật tư điện trung thế',responsible:'r05',assignees:'r09, r20',approver:'Nguyễn Minh Quân',start:'2026-10-01',due:'2026-10-27',priority:'Khẩn cấp',status:'Đang thực hiện',details:'Theo dõi CO/CQ, lịch giao hàng và kế hoạch kiểm tra đầu vào.',note:'Dự án quy mô lớn, hồ sơ theo lô'},
+{id:'asg14',projectId:'p15',scope:'Nghiệm thu xây tô căn SH-01 đến SH-03',responsible:'r08',assignees:'r07, r14',approver:'Phạm Quốc Huy',start:'2026-10-05',due:'2026-10-20',priority:'Bình thường',status:'Đang thực hiện',details:'Kiểm tra độ phẳng, độ vuông góc và vị trí chờ MEP.',note:'Nghiệm thu theo từng căn'},
+{id:'asg15',projectId:'p16',scope:'Phê duyệt panel kho lạnh và mẫu cửa',responsible:'r05',assignees:'r03, r08',approver:'Nguyễn Minh Quân',start:'2026-10-01',due:'2026-10-23',priority:'Cao',status:'Chờ xử lý',details:'Đối chiếu thông số cách nhiệt, chứng chỉ và điều kiện lắp đặt.',note:'Trước đặt hàng số lượng lớn'},
+{id:'asg16',projectId:'p17',scope:'Thi công MEP ngoài giờ – tầng 3',responsible:'r09',assignees:'r17, r15',approver:'Phạm Quốc Huy',start:'2026-10-12',due:'2026-10-19',priority:'Cao',status:'Đang thực hiện',details:'Đăng ký khung giờ, cô lập nguồn và bàn giao khu vực sạch.',note:'Công trình cải tạo đang vận hành'},
+{id:'asg17',projectId:'p18',scope:'Nghiệm thu tuyến cống D800 khu N2',responsible:'r08',assignees:'r16, r19',approver:'Phạm Quốc Huy',start:'2026-10-07',due:'2026-10-21',priority:'Cao',status:'Đang thực hiện',details:'Kiểm tra cao độ đáy cống, độ dốc, mối nối và hố ga.',note:'Lập biên bản trước lấp đất'},
+{id:'asg18',projectId:'p19',scope:'Chốt tải trọng sàn và bản vẽ shop kho B2',responsible:'r10',assignees:'r03, r08',approver:'Nguyễn Minh Quân',start:'2026-10-01',due:'2026-11-15',priority:'Cao',status:'Đang thực hiện',details:'Phối hợp tư vấn kết cấu và nhà cung cấp kệ kho.',note:'Điều kiện tiên quyết trước thi công nền'},
+{id:'asg19',projectId:'p20',scope:'Hoàn thiện kè taluy phía Đông',responsible:'r04',assignees:'r16, r19',approver:'Phạm Quốc Huy',start:'2026-09-20',due:'2026-10-20',priority:'Cao',status:'Đang thực hiện',details:'Kiểm tra thoát nước sau kè, mái dốc và an toàn mép taluy.',note:'Theo dõi mưa lớn'},
+{id:'asg20',projectId:'p1',scope:'Đối chiếu công nợ bê tông tháng 10',responsible:'r18',assignees:'r02, r05',approver:'Nguyễn Minh Quân',start:'2026-10-10',due:'2026-10-25',priority:'Bình thường',status:'Đang thực hiện',details:'Đối chiếu phiếu giao nhận, khối lượng nghiệm thu và hóa đơn.',note:'Chỉ thanh toán khi đủ hồ sơ'},
+{id:'asg21',projectId:'p1',scope:'Kiểm kê quỹ tiền mặt và đối chiếu sổ quỹ tuần 42',responsible:'r06',assignees:'r02, r18',approver:'Nguyễn Thị Mai',start:'2026-10-13',due:'2026-10-17',priority:'Cao',status:'Chưa bắt đầu',details:'Kiểm kê tiền mặt tồn quỹ, đối chiếu sổ quỹ với sao kê và phiếu thu/chi.',note:'Lập biên bản kiểm kê có chữ ký'}];
+SEED.projectForms=[
+{id:'doc01',projectId:'p1',number:'NK-ANP-2026-1012',date:'2026-10-12',title:'Nhật ký công trường',kind:'#/form-site-diary',weather:'Nắng, chiều có mưa nhẹ',responsible:'r04',workers:'Tổ kết cấu 18 người; MEP 6 người; an toàn 1 người',equipment:'Vận thăng lồng, máy trộn, bơm bê tông theo kế hoạch',work:'Gia công cốt thép sàn tầng 13; lắp dựng cốp pha khu trục A–D.',quantity:'Kiểm tra nội bộ khoảng 70% diện tích sàn tầng 13.',quality:'Chưa nghiệm thu cuối; yêu cầu kiểm tra lớp bảo vệ và thép tăng cường.',safety:'Họp đầu ca, kiểm tra dây an toàn và lưới bao che.',issues:'Chờ xác nhận lịch xe bê tông; không đổ trước khi ký nghiệm thu.',status:'Đã ghi nhận',createdBy:'Trần Minh Dương'},
+{id:'doc02',projectId:'p1',number:'NT-ANP-2026-018',date:'2026-10-14',title:'Biên bản nghiệm thu cốt thép sàn tầng 13',kind:'#/form-acceptance',scope:'Cốt thép sàn tầng 13, trục A–D',contract:'HĐXL-ANP-01/2026',basis:'Bản vẽ kết cấu được duyệt; biện pháp thi công đã chấp thuận.',participants:'Chủ đầu tư: đại diện dự án; TVGS: kỹ sư kết cấu; nhà thầu: chỉ huy trưởng; QA/QC.',quantityUnit:'m²',quantityContract:860,quantityPrev:0,quantityCurrent:610,quantityTotal:610,quality:'Đang kiểm tra đường kính, khoảng cách thép và lớp bảo vệ; hồ sơ thép đã đối chiếu.',conclusion:'Đạt có điều kiện',actions:'Bổ sung ảnh thép tăng cường tại ô thang trước khi đổ bê tông.',status:'Chờ xác nhận',createdBy:'Đặng Hoài Phương'},
+{id:'doc03',projectId:'p1',number:'YC-VT-ANP-014',date:'2026-10-10',title:'Đề nghị vật tư / thiết bị',kind:'#/request-material',scope:'Đổ sàn tầng 13',kind:'Vật tư',item:'Bê tông thương phẩm mác 300, độ sụt theo thiết kế',quantity:120,unit:'m³',needDate:'2026-10-17',requester:'r04',approver:'Nguyễn Minh Quân',reason:'Cấp theo tiến độ đổ sàn; giao theo từng xe và phiếu giao nhận.',status:'Chờ duyệt',createdBy:'Trần Minh Dương'},
+{id:'doc04',projectId:'p1',number:'BBH-ANP-2026-010',date:'2026-10-11',title:'Biên bản họp điều phối tuần',kind:'#/form-meeting',location:'Văn phòng công trường An Phú',participants:'QLDA, chỉ huy trưởng, QA/QC, mua hàng, thầu phụ Thành Phát.',agenda:'Tiến độ sàn tầng 13; lịch giao bê tông; nhân lực xây tô; hồ sơ nghiệm thu.',decisions:'Chốt kiểm tra thép trước 16:00 ngày 16/10; mua hàng xác nhận xe trước 12:00 ngày 16/10.',actions:'Nguyễn Hoàng Nam – xác nhận lịch xe – 16/10; Đặng Hoài Phương – checklist nghiệm thu – 16/10; Lê Văn Thành – bổ sung 6 công nhân – 17/10.',recorder:'r11',status:'Đã xác nhận',createdBy:'Trần Ngọc Linh'},
+{id:'doc05',projectId:'p2',number:'NK-NL-2026-1012',date:'2026-10-12',title:'Nhật ký công trường',kind:'#/form-site-diary',weather:'Nắng',responsible:'r19',workers:'Xây tô 12 người; điện nước 3 người',equipment:'Giàn giáo khung, máy cắt gạch',work:'Xây tường tầng 2, tô mặt trong và kéo ống điện âm tường.',quantity:'Hoàn thành khoảng 65 m² tường xây trong ngày.',quality:'Kiểm tra mạch vữa, vị trí hộp điện và liên kết tường-cột.',safety:'Đã kiểm tra giàn giáo đầu ca.',issues:'Thiếu ống luồn D20; đã tạo đề nghị bổ sung.',status:'Đã ghi nhận',createdBy:'Đinh Hoàng Sơn'},
+{id:'doc06',projectId:'p3',number:'NT-TT-2026-027',date:'2026-10-09',title:'Nghiệm thu lắp dựng khung thép',kind:'#/form-acceptance',scope:'Khung thép trục D–H, nhịp 3–5',contract:'HĐ-KCTT-03/2026',basis:'Bản vẽ shop được duyệt; chứng chỉ vật liệu; quy trình lắp dựng.',participants:'Đại diện chủ đầu tư, TVGS, nhà thầu kết cấu và QA/QC.',quantityUnit:'tấn',quantityContract:82,quantityPrev:42,quantityCurrent:18,quantityTotal:60,quality:'Đã kiểm tra sơ bộ bulông và độ thẳng đứng; còn 2 vị trí cần căn chỉnh.',conclusion:'Đạt có điều kiện',actions:'Hoàn thành căn chỉnh và cập nhật biên bản siết lực trước 18/10.',status:'Yêu cầu sửa đổi',createdBy:'Đặng Hoài Phương'},
+{id:'doc07',projectId:'p5',number:'CL-MN-2026-006',date:'2026-10-08',title:'Kiểm tra chất lượng chống thấm hồ bơi',kind:'#/form-quality',scope:'Hồ bơi villa mẫu V-03',severity:'Trung bình',description:'Cần bổ sung ảnh nghiệm thu lớp chống thấm tại góc thu đáy trước lớp bảo vệ.',responsible:'r08',due:'2026-10-16',action:'Chụp ảnh, bổ sung biên bản và kiểm tra lại mực nước sau thử ngâm.',recheck:'Chưa kiểm tra lại',closedBy:'',status:'Đang khắc phục',createdBy:'Đặng Hoài Phương'},
+{id:'doc08',projectId:'p9',number:'YC-VT-TD-2026-022',date:'2026-10-09',title:'Đề nghị vật tư / thiết bị',kind:'#/request-material',scope:'Hoàn thiện tủ bếp và phòng thay đồ',kind:'Vật tư',item:'Ván veneer sồi, phụ kiện giảm chấn, ray âm',quantity:1,unit:'lô',needDate:'2026-10-24',requester:'r05',approver:'Phạm Quốc Huy',reason:'Cần duyệt mẫu và kích thước thực tế trước đặt hàng.',status:'Đã duyệt',createdBy:'Nguyễn Hoàng Nam'},
+{id:'doc09',projectId:'p14',number:'BBH-LT-2026-033',date:'2026-10-07',title:'Biên bản họp điều phối tuần',kind:'#/form-meeting',location:'Văn phòng điều hành gói thầu',participants:'QLDA, chỉ huy, mua hàng, QA/QC, nhà cung cấp thiết bị điện.',agenda:'Tiến độ giao vật tư trung thế; hồ sơ CO/CQ; kế hoạch kiểm tra đầu vào.',decisions:'Tách giao hàng theo lô; mọi lô phải có chứng chỉ và biên bản kiểm tra trước nhập kho.',actions:'Mua hàng gửi lịch giao trước 20/10; QA/QC chuẩn bị checklist đầu vào trước 22/10.',recorder:'r11',status:'Đã xác nhận',createdBy:'Trần Ngọc Linh'},
+{id:'doc10',projectId:'p15',number:'NT-SH-2026-012',date:'2026-10-10',title:'Nghiệm thu xây tô căn SH-01',kind:'#/form-acceptance',scope:'Tường xây và tô trong căn SH-01',contract:'HĐ-RS-15/2026',basis:'Bản vẽ kiến trúc và chỉ dẫn kỹ thuật đã duyệt.',participants:'QLDA, QA/QC, thầu phụ Thành Phát, kỹ sư hiện trường.',quantityUnit:'m²',quantityContract:185,quantityPrev:0,quantityCurrent:126,quantityTotal:126,quality:'Còn 3 vị trí cần xử lý phẳng bề mặt trước sơn lót.',conclusion:'Đạt có điều kiện',actions:'Thầu phụ xử lý trước 18/10, mời kiểm tra lại.',status:'Chờ xác nhận',createdBy:'Đặng Hoài Phương'},
+{id:'doc11',projectId:'p16',number:'YC-VT-GF-2026-008',date:'2026-10-05',title:'Đề nghị vật tư / thiết bị',kind:'#/request-material',scope:'Vách kho lạnh khu chế biến',kind:'Vật tư',item:'Panel PU dày 100 mm, có chứng chỉ xuất xưởng',quantity:1250,unit:'m²',needDate:'2026-11-20',requester:'r05',approver:'Nguyễn Minh Quân',reason:'Cần duyệt mẫu, thông số cách nhiệt và chi tiết liên kết.',status:'Chờ duyệt',createdBy:'Nguyễn Hoàng Nam'},
+{id:'doc12',projectId:'p17',number:'NK-TB-2026-1012',date:'2026-10-12',title:'Nhật ký công trường',kind:'#/form-site-diary',weather:'Thi công trong nhà',responsible:'r04',workers:'MEP 8 người; hoàn thiện 5 người; an toàn 1 người',equipment:'Máy khoan, thang công tác, thiết bị đo điện',work:'Đi ống điện và cấp thoát nước tầng 3 ngoài giờ hành chính.',quantity:'Hoàn thành khoảng 40 m tuyến ống và 12 vị trí hộp âm.',quality:'Kiểm tra vị trí hộp và khoảng cách tuyến trước khi đóng trần.',safety:'Đã cô lập nguồn tại khu vực; có biên bản bàn giao khu vực.',issues:'Bàn giao mặt bằng lại bộ phận vận hành trước 06:00.',status:'Đã ghi nhận',createdBy:'Trần Minh Dương'},
+{id:'doc13',projectId:'p18',number:'NT-HTBC-2026-041',date:'2026-10-11',title:'Nghiệm thu tuyến cống D800 khu N2',kind:'#/form-acceptance',scope:'Tuyến cống thoát nước mưa N2 từ hố ga HG-12 đến HG-18',contract:'HĐ-HT-18/2026',basis:'Bản vẽ thoát nước được duyệt; kết quả kiểm tra cao độ.',participants:'Chủ đầu tư, TVGS, chỉ huy trưởng, QA/QC và đội thi công.',quantityUnit:'m',quantityContract:420,quantityPrev:160,quantityCurrent:85,quantityTotal:245,quality:'Cao độ và mối nối đạt kiểm tra sơ bộ; cần hoàn thiện ảnh hố ga HG-16.',conclusion:'Đạt có điều kiện',actions:'Bổ sung ảnh và cập nhật sơ đồ hoàn công trước lấp đất đoạn tiếp theo.',status:'Chờ xác nhận',createdBy:'Đặng Hoài Phương'},
+{id:'doc14',projectId:'p19',number:'BBH-LG-2026-004',date:'2026-10-08',title:'Biên bản họp thiết kế kho B2',kind:'#/form-meeting',location:'Họp trực tuyến và văn phòng dự án',participants:'QLDA, QS, tư vấn kết cấu, nhà cung cấp kệ kho.',agenda:'Tải trọng sàn, khe co giãn, tải xe nâng và vị trí dock leveler.',decisions:'Chưa phát hành bản vẽ thi công đến khi tư vấn xác nhận tải trọng điểm.',actions:'QS cập nhật tải trọng thiết bị trước 15/10; QLDA chốt bản vẽ shop trước 20/10.',recorder:'r11',status:'Đã xác nhận',createdBy:'Trần Ngọc Linh'},
+{id:'doc15',projectId:'p20',number:'NK-BL-2026-1012',date:'2026-10-12',title:'Nhật ký công trường',kind:'#/form-site-diary',weather:'Mưa rào buổi chiều',responsible:'r04',workers:'Tổ kè 10 người; cơ giới 3 người',equipment:'Máy đào 20 tấn, đầm cóc, máy toàn đạc',work:'Thi công lớp thoát nước sau kè taluy phía Đông; kiểm tra cao độ.',quantity:'Hoàn thành 22 m rãnh thu nước.',quality:'Kiểm tra độ dốc và lớp lọc; chờ tư vấn xác nhận đoạn tiếp theo.',safety:'Dừng công tác trên mái dốc khi mưa lớn.',issues:'Cần bổ sung bạt che vật liệu và rào mép taluy.',status:'Đã ghi nhận',createdBy:'Trần Minh Dương'},
+{id:'doc16',projectId:'p1',number:'BBBG-ANP-2026-003',date:'2026-10-01',title:'Biên bản bàn giao mặt bằng thi công',kind:'#/form-handover',scope:'Khu vực sàn tầng 13, trục A–D',fromParty:'Ban chỉ huy công trường',toParty:'Tổ kết cấu và QA/QC',acceptanceRefs:'Phiếu kiểm tra cốp pha ngày 30/09/2026',documents:'Bản vẽ kết cấu được duyệt; checklist an toàn; biện pháp thi công.',assets:'Giàn giáo, cốp pha và vật tư đã tập kết theo khu vực.',openIssues:'Bổ sung lối đi an toàn phía Đông trước khi đổ bê tông.',status:'Bàn giao có tồn tại',createdBy:'Trần Ngọc Linh'}];
+SEED.attendanceRecords=[
+{id:'att01',date:'2026-10-12',projectId:'p1',employee:'r12',team:'Tổ kết cấu',shift:'Ca ngày',checkIn:'07:00',checkOut:'17:30',workDays:1,overtimeHours:1.5,status:'Đã duyệt',approver:'Trần Minh Dương',note:'Đổ thép sàn tầng 13'},
+{id:'att02',date:'2026-10-12',projectId:'p1',employee:'r13',team:'Tổ kết cấu',shift:'Ca ngày',checkIn:'07:00',checkOut:'17:00',workDays:1,overtimeHours:1,status:'Đã duyệt',approver:'Trần Minh Dương',note:'Lắp dựng cốp pha'},
+{id:'att03',date:'2026-10-12',projectId:'p1',employee:'r15',team:'Ban chỉ huy công trường',shift:'Ca ngày',checkIn:'06:45',checkOut:'17:00',workDays:1,overtimeHours:0,status:'Đã duyệt',approver:'Trần Minh Dương',note:'Kiểm tra an toàn đầu ca'},
+{id:'att04',date:'2026-10-12',projectId:'p2',employee:'r14',team:'Tổ hoàn thiện',shift:'Ca ngày',checkIn:'07:30',checkOut:'16:30',workDays:1,overtimeHours:0,status:'Đã duyệt',approver:'Phạm Quốc Huy',note:'Ốp lát mẫu'},
+{id:'att05',date:'2026-10-12',projectId:'p18',employee:'r16',team:'Tổ cơ giới',shift:'Ca ngày',checkIn:'06:30',checkOut:'17:30',workDays:1,overtimeHours:1,status:'Chờ duyệt',approver:'Phạm Quốc Huy',note:'Đào rãnh thoát nước'},
+{id:'att06',date:'2026-10-13',projectId:'p1',employee:'r12',team:'Tổ kết cấu',shift:'Ca ngày',checkIn:'07:00',checkOut:'17:00',workDays:1,overtimeHours:1,status:'Đã duyệt',approver:'Trần Minh Dương',note:'Gia công thép'},
+{id:'att07',date:'2026-10-13',projectId:'p1',employee:'r13',team:'Tổ kết cấu',shift:'Ca ngày',checkIn:'07:00',checkOut:'12:00',workDays:0.5,overtimeHours:0,status:'Nửa công',approver:'Trần Minh Dương',note:'Ra công trường khác buổi chiều'},
+{id:'att08',date:'2026-10-13',projectId:'p17',employee:'r17',team:'Tổ MEP nội bộ',shift:'Ca đêm',checkIn:'20:00',checkOut:'02:00',workDays:1,overtimeHours:2,status:'Chờ duyệt',approver:'Phạm Quốc Huy',note:'Thi công ngoài giờ'}];
+SEED.payrollRecords=[
+{id:'pay01',period:'2026-10',projectId:'p1',employee:'r12',baseSalary:18000000,standardDays:26,workDays:12,overtimeHours:8,overtimeRate:120000,allowance:1200000,deductions:0,advance:2000000,calculatedGross:10606154,calculatedNet:8606154,status:'Bản nháp',note:'Số liệu demo đến ngày 13/10/2026; chưa phải bảng lương chốt'},
+{id:'pay02',period:'2026-10',projectId:'p1',employee:'r13',baseSalary:17000000,standardDays:26,workDays:11.5,overtimeHours:5,overtimeRate:110000,allowance:900000,deductions:150000,advance:1500000,calculatedGross:8969231,calculatedNet:7259231,status:'Chờ duyệt',note:'Đối chiếu công tháng trước khi chốt'},
+{id:'pay03',period:'2026-10',projectId:'p18',employee:'r16',baseSalary:16000000,standardDays:26,workDays:10,overtimeHours:6,overtimeRate:100000,allowance:1500000,deductions:0,advance:1000000,calculatedGross:8261538,calculatedNet:7261538,status:'Bản nháp',note:'Cần xác nhận công chờ duyệt'}];
+// Liên kết người quản lý và người chịu trách nhiệm vào từng hồ sơ dự án.
+const _pmByProject={p1:'r03',p2:'r03',p3:'r03',p4:'r03',p5:'r03',p6:'r03',p7:'r03',p8:'r03',p9:'r21',p10:'r21',p11:'r21',p12:'r21',p13:'r21',p14:'r22',p15:'r22',p16:'r22',p17:'r22',p18:'r22',p19:'r22',p20:'r22'};
+(SEED.projects||[]).forEach(p=>{p.managerId=_pmByProject[p.id]||'u4';p.responsibleId=['p1','p2','p9'].includes(p.id)?'r04':(['p3','p4','p5','p6','p7','p8'].includes(p.id)?'r19':'r08');});
+
 const DBKEY='twpro_v1';
 const DB={
  data:null,
@@ -1283,17 +1521,19 @@ const PERMS=[
  {grp:'Thu chi',items:[{k:'thuchi_view',t:'Xem thu chi'},{k:'thuchi_create',t:'Tạo thu chi'},{k:'thuchi_edit',t:'Sửa thu chi'},{k:'thuchi_delete',t:'Xóa thu chi'}]},
  {grp:'Quỹ',items:[{k:'quy_view',t:'Xem quỹ'},{k:'quy_create',t:'Tạo giao dịch quỹ'}]},
  {grp:'Công nợ',items:[{k:'conno_view',t:'Xem công nợ'}]},
+ {grp:'Nhân sự & hồ sơ',items:[{k:'resources_view',t:'Xem danh bạ nguồn lực'},{k:'resources_edit',t:'Quản lý nguồn lực / phân công'},{k:'forms_view',t:'Xem hồ sơ công trình'},{k:'forms_edit',t:'Lập / sửa hồ sơ công trình'},{k:'attendance_view',t:'Xem chấm công'},{k:'attendance_edit',t:'Lập / duyệt chấm công'},{k:'payroll_view',t:'Xem bảng lương'},{k:'payroll_edit',t:'Lập / duyệt bảng lương'}]},
  {grp:'Báo cáo',items:[{k:'baocao_view',t:'Xem báo cáo'},{k:'baocao_export',t:'Xuất Excel'}]},
  {grp:'Hệ thống',items:[{k:'users_manage',t:'Quản lý người dùng'},{k:'caidat_view',t:'Xem cài đặt'},{k:'caidat_sync',t:'Đồng bộ dữ liệu'}]}
 ];
 const ROLE_PERMS={
  'Giám đốc':'*',
- 'Quản Lý Dự Án':['projects_view','projects_create','projects_edit','dutru_view','dutru_create','dutru_approve','phatsinh_view','phatsinh_create','phatsinh_approve','denghi_view','denghi_create','denghi_approve','pheduyet_view','pheduyet_approve','thuchi_view','quy_view','conno_view','baocao_view','baocao_export','caidat_view','caidat_sync'],
- 'Kế toán':['thuchi_view','thuchi_create','thuchi_edit','denghi_view','denghi_approve','pheduyet_view','pheduyet_approve','quy_view','quy_create','conno_view','baocao_view','baocao_export','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
+ 'Quản Lý Dự Án':['resources_view','resources_edit','forms_view','forms_edit','attendance_view','attendance_edit','projects_view','projects_create','projects_edit','dutru_view','dutru_create','dutru_approve','phatsinh_view','phatsinh_create','phatsinh_approve','denghi_view','denghi_create','denghi_approve','pheduyet_view','pheduyet_approve','thuchi_view','quy_view','conno_view','baocao_view','baocao_export','caidat_view','caidat_sync'],
+ 'Kế toán':['payroll_view','payroll_edit','attendance_view','resources_view','forms_view','thuchi_view','thuchi_create','thuchi_edit','denghi_view','denghi_approve','pheduyet_view','pheduyet_approve','quy_view','quy_create','conno_view','baocao_view','baocao_export','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
  'Thủ Quỹ':['quy_view','quy_create','thuchi_view','thuchi_create','denghi_view','caidat_view','caidat_sync'],
- 'Nhân viên mua hàng':['denghi_view','denghi_create','projects_view','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
- 'Nhân viên Dự án':['denghi_view','denghi_create','projects_view','baocao_export'],
- 'Chỉ huy công trình':['projects_view','denghi_view','denghi_create','dutru_view','phatsinh_view','caidat_view','caidat_sync']
+ 'Nhân viên mua hàng':['resources_view','denghi_view','denghi_create','projects_view','dutru_view','phatsinh_view','caidat_view','caidat_sync'],
+ 'Nhân viên Dự án':['resources_view','forms_view','denghi_view','denghi_create','projects_view','baocao_export'],
+ 'Đại diện thầu phụ':['projects_view','denghi_view','denghi_create'],
+ 'Chỉ huy công trình':['resources_view','resources_edit','forms_view','forms_edit','attendance_view','attendance_edit','projects_view','denghi_view','denghi_create','dutru_view','phatsinh_view','caidat_view','caidat_sync']
 };
 Auth.can=function(perm){
  if(!this.user)return false;
@@ -1308,11 +1548,12 @@ Auth.can=function(perm){
 Auth.assignedProjects=function(){
  if(!this.user)return [];
  const u=DB.data.users.find(x=>String(x.id)===String(this.user.id));
- if(!u)return null;
+ if(!u)return [];
  if(u.role==='Giám đốc')return null;
- const ids=u.projectIds||[];
- if(!ids.length||ids.includes('*'))return null;
- return ids.filter(id=>DB.data.projects.some(p=>p.id===id));
+ const ids=Array.isArray(u.projectIds)?u.projectIds:[];
+ if(ids.includes('*'))return null;
+ if(!ids.length)return [];
+ return ids.filter(id=>DB.data.projects.some(p=>String(p.id)===String(id))); 
 };
 function visibleProjects(){const ap=Auth.assignedProjects();return ap?DB.data.projects.filter(p=>ap.includes(p.id)):DB.data.projects;}
 const TW_SAMPLE_RESET_KEY='twpro_sample_reset_at';
@@ -1320,22 +1561,16 @@ function resetSampleDataIfDue(){
  const interval=30*24*60*60*1000,now=Date.now();let last=0;try{last=+(localStorage.getItem(TW_SAMPLE_RESET_KEY)||0);}catch(e){}
  if(last&&now-last<interval)return false;
  const sampleIds=new Set(TW_SAMPLE_PROJECT_IDS),seedProjectIds=new Set((SEED.projects||[]).map(p=>p.id));
- // Remove obsolete sample projects p10-p13 and their dependent records from older app versions.
- DB.data.projects=(DB.data.projects||[]).filter(p=>!['p10','p11','p12','p13'].includes(p.id));
- Object.keys(DB.data).forEach(k=>{const a=DB.data[k];if(!Array.isArray(a))return;DB.data[k]=a.filter(x=>{
-   const pid=x.projectId||x.currentProjectId;
-   if(pid&&['p10','p11','p12','p13'].includes(pid))return false;
-   return true;
- });});
+ // All 20 sample projects are current; keep them and their linked records.
  // Refresh only known demo rows by their stable seed IDs; keep user-created records and projects intact.
- const resetCols=['projects','vendors','vendorTx','contractors','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo'];
+ const resetCols=['projects','vendors','vendorTx','contractors','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo','resources','resourceTeams','resourceEquipment','resourceAssignments','projectForms','attendanceRecords','payrollRecords'];
  resetCols.forEach(k=>{
    const seed=Array.isArray(SEED[k])?SEED[k]:[];const current=Array.isArray(DB.data[k])?DB.data[k]:[];
    const seedIds=new Set(seed.map(x=>String(x.id)));
    const keep=current.filter(x=>!seedIds.has(String(x.id)) && !(x.projectId&&sampleIds.has(x.projectId)&&String(x.id).startsWith('demo_')));
    DB.data[k]=keep.concat(JSON.parse(JSON.stringify(seed)));
  });
- try{(DB.data.users||[]).forEach(u=>{if(Array.isArray(u.projectIds))u.projectIds=u.projectIds.filter(id=>!['p10','p11','p12','p13'].includes(id));});}catch(e){}
+
  try{localStorage.setItem(TW_SAMPLE_RESET_KEY,String(now));localStorage.setItem(DBKEY,JSON.stringify(DB.data));}catch(e){}
  return true;
 }
@@ -1396,7 +1631,7 @@ function openModal(title,bodyHTML,footHTML,wide){
 function closeModal(){$('#mback').classList.remove('open');modalCb=null;}
 $('#mback').addEventListener('mousedown',e=>{if(e.target.id==='mback')closeModal();});
 function fld(label,inner){return '<div class="fld"><label>'+label+'</label>'+inner+'</div>';}
-function inp(name,val,type,attrs){const money=/^(amount|sotien|dongia|thanhtien|budget|salary|rate|price)$/.test(name);const cls=money?' money':'';const tp=money?'text':(type||'text');const im=money?' inputmode="numeric"':'';const vv=money&&!val?'000':(val==null?'':val);return '<input class="inp'+cls+'" name="'+name+'" value="'+esc(vv)+'" type="'+tp+'"'+im+' '+(attrs||'')+'>';}
+function inp(name,val,type,attrs){const money=/^(amount|sotien|dongia|thanhtien|budget|salary|rate|price)$/.test(name);const cls=money?' money':'';const tp=money?'text':(type||'text');const im=money?' inputmode="numeric"':'';const vv=money&&!val?'000':(money&&val!==''&&val!=null?new Intl.NumberFormat('vi-VN').format(Number(String(val).replace(/[^\d-]/g,''))||0):(val==null?'':val));return '<input class="inp'+cls+'" name="'+name+'" value="'+esc(vv)+'" type="'+tp+'"'+im+' '+(attrs||'')+'>';}
 function sel(name,opts,val,attrs){return '<select class="inp" name="'+name+'" '+(attrs||'')+'>'+opts.map(o=>'<option value="'+esc(o.v)+'"'+(String(o.v)===String(val)?' selected':'')+'>'+esc(o.t)+'</option>').join('')+'</select>';}
 function txa(name,val,attrs){return '<textarea class="inp" name="'+name+'" '+(attrs||'')+'>'+esc(val||'')+'</textarea>';}
 function formVal(name){const el=document.querySelector('#mBody [name="'+name+'"]')||document.querySelector('#view [name="'+name+'"]');if(!el)return '';let v=el.value.trim();if(el.classList.contains('money'))v=v.replace(/[^\d]/g,'');return v;}
@@ -1421,7 +1656,7 @@ function uniqNames(arr,key){return[...new Set((arr||[]).map(x=>x[key]).filter(Bo
 const NAV=[
  {sec:'TỔNG QUAN & CÔNG VIỆC'},
  {label:'Tổng quan điều hành',icon:'',hash:'#/dashboard'},
- {label:'Việc của tôi — cần xử lý',icon:'',hash:'#/todo-me',},
+ {label:'Việc của tôi — cần xử lý',icon:'',hash:'#/todo-me',perm:'resources_view'},
  {sec:'QUẢN LÝ DỰ ÁN'},
  {label:'Danh sách dự án',icon:'',hash:'#/projects',perm:'projects_view'},
  {label:'Hồ sơ tổng thể dự án',icon:'',hash:'#/project-profile',perm:'projects_view'},
@@ -1436,25 +1671,25 @@ const NAV=[
  {label:'Ngân sách dự trù / Định mức',icon:'',hash:'#/dutru',perm:'dutru_view'},
  {label:'Quản lý phát sinh dự án',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {sec:'NHÂN SỰ & NGUỒN LỰC'},
- {label:'Danh sách nhân sự',icon:'',hash:'#/resources-staff',},
- {label:'Người phụ trách & phân công',icon:'',hash:'#/resources-assign',},
- {label:'Tổ đội thi công',icon:'',hash:'#/resources-teams',},
- {label:'Máy móc & thiết bị',icon:'',hash:'#/resources-equipment',},
- {label:'Chấm công công trường',icon:'',hash:'#/attendance',},
- {label:'Tính lương nhân công',icon:'',hash:'#/payroll',},
+ {label:'Danh sách nhân sự',icon:'',hash:'#/resources-staff',perm:'resources_view'},
+ {label:'Người phụ trách & phân công',icon:'',hash:'#/resources-assign',perm:'resources_view'},
+ {label:'Tổ đội thi công',icon:'',hash:'#/resources-teams',perm:'resources_view'},
+ {label:'Máy móc & thiết bị',icon:'',hash:'#/resources-equipment',perm:'resources_view'},
+ {label:'Chấm công công trường',icon:'',hash:'#/attendance',perm:'attendance_view'},
+ {label:'Tính lương nhân công',icon:'',hash:'#/payroll',perm:'payroll_view'},
  {sec:'BIỂU MẪU & HỒ SƠ CÔNG TRÌNH'},
- {label:'Lệnh khởi công',icon:'',hash:'#/form-start-order',},
- {label:'Nhật ký công trường',icon:'',hash:'#/form-site-diary',},
- {label:'Biên bản nghiệm thu',icon:'',hash:'#/form-acceptance',},
- {label:'Kiểm tra chất lượng & khắc phục lỗi',icon:'',hash:'#/form-quality',},
- {label:'Biên bản họp / làm việc',icon:'',hash:'#/form-meeting',},
- {label:'Hồ sơ hoàn công & bàn giao',icon:'',hash:'#/form-handover',},
- {label:'Bảo hành & tồn tại sau bàn giao',icon:'',hash:'#/form-warranty',},
+ {label:'Lệnh khởi công',icon:'',hash:'#/form-start-order',perm:'forms_view'},,
+ {label:'Nhật ký công trường',icon:'',hash:'#/form-site-diary',perm:'forms_view'},,
+ {label:'Biên bản nghiệm thu',icon:'',hash:'#/form-acceptance',perm:'forms_view'},,
+ {label:'Kiểm tra chất lượng & khắc phục lỗi',icon:'',hash:'#/form-quality',perm:'forms_view'},,
+ {label:'Biên bản họp / làm việc',icon:'',hash:'#/form-meeting',perm:'forms_view'},,
+ {label:'Hồ sơ hoàn công & bàn giao',icon:'',hash:'#/form-handover',perm:'forms_view'},,
+ {label:'Bảo hành & tồn tại sau bàn giao',icon:'',hash:'#/form-warranty',perm:'forms_view'},,
  {sec:'YÊU CẦU & PHÊ DUYỆT'},
  {label:'Đề nghị thanh toán',icon:'',hash:'#/denghi',perm:'denghi_view'},
  {label:'Trung tâm phê duyệt',icon:'',hash:'#/pheduyet',perm:'pheduyet_view'},
  {label:'Tạm ứng',icon:'',hash:'#/tamung',perm:'denghi_view'},
- {label:'Đề nghị vật tư / thiết bị',icon:'',hash:'#/request-material',},
+ {label:'Đề nghị vật tư / thiết bị',icon:'',hash:'#/request-material',perm:'denghi_view'},
  {label:'Yêu cầu thay đổi / phát sinh',icon:'',hash:'#/phatsinh',perm:'phatsinh_view'},
  {sec:'VẬT TƯ, ĐỐI TÁC & DANH MỤC'},
  {label:'Nhà cung cấp',icon:'',hash:'#/vendors'},
@@ -1608,8 +1843,8 @@ ROUTES['#/projects']=function(){if(!Auth.can('projects_view')){location.hash='#/
 function printProjectRecord(pid){
  const p=DB.data.projects.find(x=>x.id===pid);if(!p)return;
  const rows=[['Mã dự án',p.code],['Tên dự án',p.name],['Chủ đầu tư',p.client],['Địa điểm',p.location],['Ngày bắt đầu',fmtDate(p.start)],['Ngày kết thúc',fmtDate(p.end)],['Trạng thái',p.status],['Quản lý dự án',workPersonName(p.managerId)],['Người phụ trách chính',workPersonName(p.responsibleId)],['Ngân sách',fmtVND(p.budget)],['Ghi chú',p.note]];
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;margin:18px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#f4f0e7}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button onclick="window.print()">In</button></body></html>');w.document.close();
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hồ sơ dự án '+esc(p.code)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;margin:10px 0;text-transform:uppercase}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top}th{width:32%;background:#fff7dc}@media print{button{display:none}}</style></head><body>'+brand+'<h1>HỒ SƠ TỔNG THỂ DỰ ÁN</h1><table>'+rows.filter(r=>r[1]!==undefined&&r[1]!==null&&r[1]!=='').map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(String(r[1]))+'</td></tr>').join('')+'</table><p style="text-align:right;margin-top:18px">Ngày in: '+todayVN()+'</p><button onclick="window.print()">In</button></body></html>');w.document.close();
 }
 function openProjectProfile(pid){SEL.projectId=pid||null;location.hash='#/project-profile';}
 function projectForm(id){
@@ -1666,6 +1901,8 @@ function nav(rebuild){
  if(rebuild!==false)buildSidebar();
  const parts=h.split('/');
  let fn=ROUTES[h];
+ const workRoutePerm = h==='#/resources-staff'||h==='#/resources-assign'||h==='#/resources-teams'||h==='#/resources-equipment'?'resources_view':h==='#/attendance'?'attendance_view':h==='#/payroll'?'payroll_view':h==='#/todo-me'?'resources_view':h==='#/project-profile'?'projects_view':h==='#/request-material'?'denghi_view':(h.startsWith('#/form-')?'forms_view':'');
+ if(workRoutePerm&&!Auth.can(workRoutePerm)){toast('Tài khoản hiện tại không được cấp quyền vào chức năng này.');location.hash='#/dashboard';return;}
  if(!fn&&parts.length>=3){
   const id=parts.slice(2).join('/');
   if(parts[1]==='projects')fn=()=>renderProjectLedger(id);
@@ -1719,7 +1956,7 @@ function workProjectName(id){const p=(DB.data.projects||[]).find(x=>x.id===id);r
 function workPersonName(id){const p=workArray('resources').find(x=>x.id===id);return p?p.name:(id||'—');}
 function workFields(kind,hash){const f=kind==='form'?(WORK_FIELDS[hash]||[]):(WORK_FIELDS[kind]||[]);return kind==='form'?f.concat([['preparedBy','Người lập / đại diện lập','text'],['checkedBy','Người kiểm tra / giám sát','text'],['approvedBy','Người phê duyệt / đại diện xác nhận','text'],['confirmationDate','Ngày xác nhận','date']]):f;}
 function workFieldHTML(f,v){const k=f[0],label=f[1],type=f[2],req=f[3]?' required':'';if(type==='project')return fld(label,sel(k,[{v:'',t:'— Chọn dự án —'}].concat(visibleProjects().map(p=>({v:p.id,t:(p.code?p.code+' · ':'')+p.name}))),v,req));if(type==='resource')return fld(label,sel(k,[{v:'',t:'— Chọn nhân sự —'}].concat(workArray('resources').filter(x=>x.status!=='Ngừng hợp tác').map(x=>({v:x.id,t:(x.code?x.code+' · ':'')+x.name}))),v,req));if(type.startsWith('select:'))return fld(label,sel(k,[{v:'',t:'— Chọn —'}].concat(type.slice(7).split('|').map(x=>({v:x,t:x}))),v,req));if(type==='textarea')return fld(label,txa(k,v,'rows="3"'+req));if(type==='number')return fld(label,inp(k,v,'number','min="0" step="any"'+req));return fld(label,inp(k,v,type,req));}
-function workForm(kind,hash,id){const arr=workArray(kind),base={projectId:SEL.projectId||visibleProjects()[0]?.id||'',currentProjectId:SEL.projectId||'',date:todayISO(),status:kind==='assignments'?'Chưa bắt đầu':kind==='resources'?'Đang làm việc':kind==='teams'?'Sẵn sàng':kind==='equipment'?'Sẵn sàng':'Bản nháp',priority:'Bình thường',start:todayISO()},old=id?(arr.find(x=>x.id===id)||{}):base;const fs=workFields(kind,hash);const title=(WORK_MODULES[hash]&&WORK_MODULES[hash].title)||(kind==='resources'?'nhân sự':kind==='teams'?'tổ đội':kind==='equipment'?'thiết bị':'phân công');let body='<div class="frm-row">';fs.forEach((f,i)=>{body+=workFieldHTML(f,old[f[0]]==null?'':String(old[f[0]]));if(i%2===1)body+='</div><div class="frm-row">';});body+='</div>';if(kind==='payroll')body+='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><button class="btn btn-sec" type="button" onclick="workLoadAttendance()">Lấy công từ chấm công đã duyệt</button><span style="font-size:12px;color:var(--mut)">Thực nhận dự kiến = lương theo công + tăng ca + phụ cấp − khấu trừ − tạm ứng. Cần kế toán xác nhận quy tắc công ty trước khi dùng trả lương thật.</span></div>';if(kind==='form')body+='<div class="planned-banner" style="margin-top:10px"><b>Lưu ý:</b> Đây là mẫu tham khảo để quản lý nội bộ. Trường tệp hiện nhận tên/đường dẫn; chữ ký số và upload file thật cần tích hợp riêng.</div>';openModal((id?'Sửa ':'Tạo ')+title,body,'<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="workSave(\''+kind+'\',\''+(id||'')+'\',\''+hash+'\')">Lưu</button>',true);}
+function workForm(kind,hash,id){const perm=kind==='attendance'?'attendance_edit':kind==='payroll'?'payroll_edit':kind==='form'?(hash==='#/request-material'?'denghi_create':'forms_edit'):'resources_edit';if(!Auth.can(perm)){toast('Bạn không có quyền tạo hoặc sửa mục này.');return;}const arr=workArray(kind),base={projectId:SEL.projectId||visibleProjects()[0]?.id||'',currentProjectId:SEL.projectId||'',date:todayISO(),status:kind==='assignments'?'Chưa bắt đầu':kind==='resources'?'Đang làm việc':kind==='teams'?'Sẵn sàng':kind==='equipment'?'Sẵn sàng':'Bản nháp',priority:'Bình thường',start:todayISO()},old=id?(arr.find(x=>x.id===id)||{}):base;const fs=workFields(kind,hash);const title=(WORK_MODULES[hash]&&WORK_MODULES[hash].title)||(kind==='resources'?'nhân sự':kind==='teams'?'tổ đội':kind==='equipment'?'thiết bị':'phân công');let body='<div class="frm-row">';fs.forEach((f,i)=>{body+=workFieldHTML(f,old[f[0]]==null?'':String(old[f[0]]));if(i%2===1)body+='</div><div class="frm-row">';});body+='</div>';if(kind==='payroll')body+='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><button class="btn btn-sec" type="button" onclick="workLoadAttendance()">Lấy công từ chấm công đã duyệt</button><span style="font-size:12px;color:var(--mut)">Thực nhận dự kiến = lương theo công + tăng ca + phụ cấp − khấu trừ − tạm ứng. Cần kế toán xác nhận quy tắc công ty trước khi dùng trả lương thật.</span></div>';if(kind==='form')body+='<div class="planned-banner" style="margin-top:10px"><b>Lưu ý:</b> Đây là mẫu tham khảo để quản lý nội bộ. Trường tệp hiện nhận tên/đường dẫn; chữ ký số và upload file thật cần tích hợp riêng.</div>';openModal((id?'Sửa ':'Tạo ')+title,body,'<button class="btn btn-sec" onclick="closeModal()">Hủy</button><button class="btn btn-pri" onclick="workSave(\''+kind+'\',\''+(id||'')+'\',\''+hash+'\')">Lưu</button>',true);}
 function workLoadAttendance(){
  const period=formVal('period'),projectId=formVal('projectId'),employee=formVal('employee');
  if(!period||!projectId||!employee){toast('Chọn kỳ lương, dự án và nhân sự trước');return;}
@@ -1728,36 +1965,79 @@ function workLoadAttendance(){
  const d=document.querySelector('#mBody [name="workDays"]'),o=document.querySelector('#mBody [name="overtimeHours"]');if(d)d.value=days;if(o)o.value=ot;
  toast('Đã lấy '+rows.length+' dòng chấm công đã duyệt · '+days+' công · '+ot+' giờ tăng ca');
 }
-function workSave(kind,id,hash){const fs=workFields(kind,hash),obj={};fs.forEach(f=>obj[f[0]]=formVal(f[0]));if(kind==='form'){obj.kind=hash;obj.title=WORK_MODULES[hash].title;}const missing=fs.find(f=>f[3]&&!String(obj[f[0]]||'').trim());if(missing){toast('Vui lòng nhập: '+missing[1]);return;}if(kind==='form'&&obj.quantityCurrent!==undefined&&obj.quantityCurrent!==''&&+obj.quantityCurrent<0){toast('Khối lượng không được âm');return;}if(kind==='form'&&obj.start&&obj.end&&obj.start>obj.end){toast('Ngày kết thúc phải bằng hoặc sau ngày bắt đầu');return;} if(kind==='payroll'){const standard=Math.max(1,+obj.standardDays||26),base=+obj.baseSalary||0,days=+obj.workDays||0,ot=+obj.overtimeHours||0;obj.calculatedGross=Math.round(base/standard*days+ot*(+obj.overtimeRate||0)+(+obj.allowance||0));obj.calculatedNet=Math.max(0,obj.calculatedGross-(+obj.deductions||0)-(+obj.advance||0));}
+function workSave(kind,id,hash){const perm=kind==='attendance'?'attendance_edit':kind==='payroll'?'payroll_edit':kind==='form'?(hash==='#/request-material'?'denghi_create':'forms_edit'):'resources_edit';if(!Auth.can(perm)){toast('Bạn không có quyền lưu thay đổi này.');return;}const fs=workFields(kind,hash),obj={};fs.forEach(f=>obj[f[0]]=formVal(f[0]));if(kind==='form'){obj.kind=hash;obj.title=WORK_MODULES[hash].title;}const missing=fs.find(f=>f[3]&&!String(obj[f[0]]||'').trim());if(missing){toast('Vui lòng nhập: '+missing[1]);return;}if(kind==='form'&&obj.quantityCurrent!==undefined&&obj.quantityCurrent!==''&&+obj.quantityCurrent<0){toast('Khối lượng không được âm');return;}if(kind==='form'&&obj.start&&obj.end&&obj.start>obj.end){toast('Ngày kết thúc phải bằng hoặc sau ngày bắt đầu');return;} if(kind==='payroll'){const standard=Math.max(1,+obj.standardDays||26),base=+obj.baseSalary||0,days=+obj.workDays||0,ot=+obj.overtimeHours||0;obj.calculatedGross=Math.round(base/standard*days+ot*(+obj.overtimeRate||0)+(+obj.allowance||0));obj.calculatedNet=Math.max(0,obj.calculatedGross-(+obj.deductions||0)-(+obj.advance||0));}
  const arr=workArray(kind);if(id){const old=arr.find(x=>x.id===id);if(old)Object.assign(old,obj,{updatedAt:new Date().toISOString(),updatedBy:Auth.user&&Auth.user.name||''});}else arr.unshift(Object.assign({id:uid(kind==='form'?'doc':kind==='assignments'?'asg':kind==='resources'?'ns':kind==='teams'?'team':'eq'),createdAt:new Date().toISOString(),createdBy:Auth.user&&Auth.user.name||''},obj));DB.log(id?'Cập nhật '+(WORK_MODULES[hash]?.title||'nguồn lực'):'Tạo '+(WORK_MODULES[hash]?.title||'nguồn lực'),obj.title||obj.name||obj.scope||obj.code||obj.number||'');DB.save();closeModal();nav(false);toast('Đã lưu dữ liệu');}
-function workDelete(kind,id,title){if(!confirm('Xóa "'+title+'" khỏi dữ liệu?'))return;const arr=workArray(kind),idx=arr.findIndex(x=>x.id===id);if(idx>=0)arr.splice(idx,1);DB.log('Xóa '+title,title);DB.save();nav(false);toast('Đã xóa');}
+function workDelete(kind,id,title,hash){hash=hash||location.hash.split('?')[0];const perm=kind==='attendance'?'attendance_edit':kind==='payroll'?'payroll_edit':kind==='form'?(hash==='#/request-material'?'denghi_create':'forms_edit'):'resources_edit';if(!Auth.can(perm)){toast('Bạn không có quyền xóa mục này.');return;}if(!confirm('Xóa "'+title+'" khỏi dữ liệu?'))return;const arr=workArray(kind),idx=arr.findIndex(x=>x.id===id);if(idx>=0)arr.splice(idx,1);DB.log('Xóa '+title,title);DB.save();nav(false);toast('Đã xóa');}
 function workPrint(hash,id){
  const x=workArray('form').find(r=>r.id===id&&r.kind===hash);if(!x){toast('Không tìm thấy hồ sơ để in');return;}
  const fs=workFields('form',hash),win=window.open('','_blank');if(!win){toast('Trình duyệt đang chặn cửa sổ in. Hãy cho phép mở cửa sổ bật lên.');return;}
- let rows='';fs.forEach(f=>{const v=x[f[0]];if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
- const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+details+'</small></div></header>';
- win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:15mm 16mm}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;align-items:center;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:18px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:14pt}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:17pt;text-transform:uppercase;margin:14px 0 6px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #777;padding:7px;vertical-align:top;overflow-wrap:anywhere}th{width:32%;text-align:left;background:#f4f0e7}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In biểu mẫu</button></div>'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></body></html>');win.document.close();
+ let rows='';fs.forEach(f=>{let v=x[f[0]];if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&v!==undefined&&v!==null&&v!==''&&Number.isFinite(Number(v)))v=fmtVND(v);if(v!==undefined&&v!==null&&String(v).trim()!=='')rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
+ const c=CFG||{};
+ const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(WORK_MODULES[hash].title)+' - '+esc(x.number||x.id)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;color:#111;margin:0}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:90px;max-height:65px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;color:#444;margin-top:4px}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:8px 0 5px}h2{text-align:center;font-size:11pt;font-weight:500;margin:0 0 16px}.meta{text-align:center;color:#333;font-size:9pt;margin-bottom:14px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:32%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px;text-align:center;break-inside:avoid}.sign div{min-height:95px}.sign b{display:block;margin-bottom:65px}.actions{margin-bottom:12px;text-align:right}@media print{.actions{display:none}body{margin:0}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(WORK_MODULES[hash].title)+'</h1><h2>'+esc(x.number||'')+'</h2><div class="meta">Dự án: '+esc(workProjectName(x.projectId))+' · Ngày: '+esc(fmtDate(x.date)||'')+'</div><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.preparedBy||'')+'</div><div><b>NGƯỜI KIỂM TRA / GIÁM SÁT</b>'+esc(x.checkedBy||'')+'</div><div><b>ĐẠI DIỆN / NGƯỜI PHÊ DUYỆT</b>'+esc(x.approvedBy||'')+'</div></div></div></body></html>');win.document.close();
 }
 function workPrintRecord(kind,id){
  const x=workArray(kind).find(r=>r.id===id);if(!x){toast('Không tìm thấy bản ghi');return;}
  const labels=kind==='resources'?WORK_FIELDS.resources:kind==='teams'?WORK_FIELDS.teams:kind==='equipment'?WORK_FIELDS.equipment:kind==='attendance'?WORK_FIELDS.attendance:kind==='payroll'?WORK_FIELDS.payroll:WORK_FIELDS.assignments;
  const title=WORK_MODULES[kind==='resources'?'#/resources-staff':kind==='teams'?'#/resources-teams':kind==='equipment'?'#/resources-equipment':kind==='attendance'?'#/attendance':kind==='payroll'?'#/payroll':'#/resources-assign']?.title||'HỒ SƠ';
  if(kind==='payroll'){labels.push(['calculatedGross','Tổng lương dự kiến (VND)','number'],['calculatedNet','Thực nhận dự kiến (VND)','number']);}
- let rows='';labels.forEach(f=>{let v=x[f[0]];if(v==null||v==='')return;if(f[2]==='project'||f[0]==='projectId'||f[0]==='currentProjectId')v=workProjectName(v);rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4;margin:16mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:20px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#f4f0e7}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+ let rows='';labels.forEach(f=>{let v=x[f[0]];if(v==null||v==='')return;if(f[2]==='project'||f[0]==='projectId'||f[0]==='currentProjectId')v=workProjectName(v);else if(/VND|số tiền|đơn giá|thành tiền|ngân sách|chi phí|lương|thực nhận/i.test(f[1])&&Number.isFinite(Number(v)))v=fmtVND(v);rows+='<tr><th>'+esc(f[1])+'</th><td>'+esc(String(v)).replace(/\n/g,'<br>')+'</td></tr>';});
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial,sans-serif;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial,sans-serif;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5px solid #d8c58b;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #777;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{width:34%;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:36px}.sign b{display:block;margin-bottom:65px}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b>'+esc(x.createdBy||'')+'</div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
 }
-function workListPage(hash){const m=WORK_MODULES[hash],kind=m.type;if(kind==='profile')return renderProjectProfile();if(hash==='#/todo-me')return renderMyWork();const arr=workArray(kind),rows=kind==='form'?arr.filter(x=>x.kind===hash):arr;let h='<div class="page-head"><div><h1>'+esc(m.title)+'</h1><p>'+esc(m.desc)+' · '+rows.length+' bản ghi</p></div><div class="page-actions"><button class="btn btn-pri" onclick="workForm(\''+kind+'\',\''+hash+'\')">+ '+(kind==='form'?'Tạo biểu mẫu':kind==='resources'?'Thêm nhân sự':kind==='teams'?'Thêm tổ đội':kind==='equipment'?'Thêm thiết bị':kind==='attendance'?'Thêm chấm công':kind==='payroll'?'Tạo bảng lương':'Tạo phân công')+'</button></div></div>';
+function workListPage(hash){const m=WORK_MODULES[hash],kind=m.type;if(kind==='profile')return renderProjectProfile();if(hash==='#/todo-me')return renderMyWork();const arr=workArray(kind),rows=kind==='form'?arr.filter(x=>x.kind===hash):arr;let h='<div class="page-head"><div><h1>'+esc(m.title)+'</h1><p>'+esc(m.desc)+' · '+rows.length+' bản ghi</p></div><div class="page-actions">'+(kind==='form'?'<button class="btn btn-sec" onclick="twBlankFormWord(\''+hash+'\')">Mẫu Word</button>':'')+'<button class="btn btn-pri" onclick="workForm(\''+kind+'\',\''+hash+'\')">+ '+(kind==='form'?'Tạo biểu mẫu':kind==='resources'?'Thêm nhân sự':kind==='teams'?'Thêm tổ đội':kind==='equipment'?'Thêm thiết bị':kind==='attendance'?'Thêm chấm công':kind==='payroll'?'Tạo bảng lương':'Tạo phân công')+'</button></div></div>';
 if(kind==='assignments')h+='<div class="planned-banner" style="background:#eff6ff;border-color:#93c5fd;color:#1e3a8a"><b>Phân biệt vai trò:</b> người phụ trách chịu trách nhiệm đầu ra; người thực hiện làm việc; người phê duyệt ra quyết định.</div>';
-if(kind==='form')h+='<div class="planned-banner" style="background:#f8fafc;border-color:#cbd5e1;color:#334155">Mẫu tham khảo theo thông lệ quản lý dự án/công trường. Bạn có thể điều chỉnh trường sau. File đính kèm hiện lưu tên hoặc đường dẫn, chưa tải lên máy chủ.</div>';
+
 const heads=kind==='form'?['Số / ngày','Dự án','Hạng mục / nội dung','Người phụ trách','Trạng thái']:kind==='attendance'?['Ngày','Dự án','Nhân sự','Công','Tăng ca','Trạng thái']:kind==='payroll'?['Kỳ lương','Dự án','Nhân sự','Lương thực nhận dự kiến','Trạng thái']:kind==='resources'?['Mã','Họ tên','Chức danh','Tổ đội / đơn vị','Liên hệ','Trạng thái']:kind==='teams'?['Mã','Tổ đội','Loại','Đầu mối','Chuyên môn','Trạng thái']:kind==='equipment'?['Mã','Thiết bị','Nguồn','Dự án','Tình trạng','Bảo trì đến']:['Dự án','Hạng mục / công việc','Người chịu trách nhiệm','Người thực hiện','Hạn','Ưu tiên','Trạng thái'];
 h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr>'+heads.map(x=>'<th>'+x+'</th>').join('')+'<th>Thao tác</th></tr></thead><tbody>';if(!rows.length)h+='<tr><td colspan="'+(heads.length+1)+'"><div class="empty">Chưa có dữ liệu. Nhấn nút tạo mới để bắt đầu.</div></td></tr>';
 rows.forEach(x=>{let c;if(kind==='form')c=[(x.number||'Chưa có số')+(x.date?' · '+fmtDate(x.date):''),workProjectName(x.projectId),x.scope||x.work||x.issue||x.item||x.title||'—',workPersonName(x.responsible||x.recorder||x.requester||x.createdBy),x.status||'Bản nháp'];else if(kind==='attendance')c=[fmtDate(x.date),workProjectName(x.projectId),x.employee,x.workDays,x.overtimeHours||0,x.status];else if(kind==='payroll')c=[x.period,workProjectName(x.projectId),x.employee,fmtVND(x.calculatedNet||0),x.status];else if(kind==='resources')c=[x.code,x.name,x.title,x.team,x.phone,x.status];else if(kind==='teams')c=[x.code,x.name,x.type,x.leader,x.specialty,x.status];else if(kind==='equipment')c=[x.code,x.name,x.ownership,workProjectName(x.currentProjectId),x.status,fmtDate(x.maintenance)];else c=[workProjectName(x.projectId),x.scope,workPersonName(x.responsible),x.assignees,fmtDate(x.due),x.priority,x.status];h+='<tr>'+c.map(v=>'<td>'+esc(v||'—')+'</td>').join('')+'<td><div class="rowbtns"><button class="btn btn-sm btn-sec" onclick="workForm(\''+kind+'\',\''+hash+'\',\''+x.id+'\')">Mở / sửa</button>'+(kind==='form'?'<button class="btn btn-sm btn-sec" onclick="workPrint(\''+hash+'\',\''+x.id+'\')">In</button>':'<button class="btn btn-sm btn-sec" onclick="workPrintRecord(\''+kind+'\',\''+x.id+'\')">In</button>')+'<button class="btn btn-sm btn-bad" onclick="workDelete(\''+kind+'\',\''+x.id+'\',\''+esc(m.title)+'\')">Xóa</button></div></td></tr>';});h+='</tbody></table></div></div>';$('#view').innerHTML=h;}
-function renderProjectProfile(){const projects=visibleProjects();let pid=SEL.projectId||projects[0]?.id||'';const p=projects.find(x=>x.id===pid);let h='<div class="page-head"><div><h1>Hồ sơ tổng thể dự án</h1><p>Một màn hình tổng hợp để biết dự án đang ở đâu, ai phụ trách và việc gì còn mở.</p></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">Danh sách dự án</button></div></div><div class="card card-b" style="margin-bottom:14px">'+fld('Chọn dự án',sel('profileProject',projects.map(x=>({v:x.id,t:(x.code?x.code+' · ':'')+x.name})),pid,'onchange="workSetProfileProject(this.value)"'))+'</div>';if(!p){h+='<div class="empty">Chưa có dự án để hiển thị.</div>';$('#view').innerHTML=h;return;}const as=workArray('assignments').filter(x=>x.projectId===pid),docs=workArray('form').filter(x=>x.projectId===pid),tasks=(DB.data.tienDo||[]).filter(x=>x.projectId===pid),open=as.filter(x=>!['Hoàn thành','Đã hủy'].includes(x.status));h+='<div class="card"><div class="card-b"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><div style="font-size:12px;color:var(--mut)">'+esc(p.code||'')+' · '+esc(p.status||'')+'</div><h2 style="margin:5px 0">'+esc(p.name)+'</h2><div>'+esc(p.location||'Chưa cập nhật địa điểm')+'</div><div style="margin-top:8px">Chủ đầu tư: <b>'+esc(p.client||'Chưa cập nhật')+'</b></div><div>Quản lý dự án: <b>'+esc(workPersonName(p.managerId))+'</b> · Người phụ trách chính: <b>'+esc(workPersonName(p.responsibleId))+'</b></div><div>Thời gian: '+esc(fmtDate(p.start)||'Chưa đặt')+' → '+esc(fmtDate(p.end)||'Chưa đặt')+'</div></div><button class="btn btn-pri" onclick="workForm(\'assignments\',\'#/resources-assign\')">+ Giao việc</button></div><div class="grid g4" style="margin-top:16px"><div class="stat st-info"><div><div class="lb">Hạng mục tiến độ</div><div class="vl">'+tasks.length+'</div></div></div><div class="stat st-warn"><div><div class="lb">Việc đang mở</div><div class="vl">'+open.length+'</div></div></div><div class="stat st-ok"><div><div class="lb">Hồ sơ đã lưu</div><div class="vl">'+docs.length+'</div></div></div><div class="stat st-bad"><div><div class="lb">Việc quá hạn</div><div class="vl">'+open.filter(x=>x.due&&x.due<todayISO()).length+'</div></div></div></div></div></div>';
+function renderProjectProfile(){const projects=visibleProjects();let pid=SEL.projectId||projects[0]?.id||'';const p=projects.find(x=>x.id===pid);let h='<div class="page-head"><div><h1>Hồ sơ tổng thể dự án</h1></div><div class="page-actions"><button class="btn btn-sec" onclick="location.hash=\'#/projects\'">Danh sách dự án</button></div></div><div class="card card-b" style="margin-bottom:14px">'+fld('Chọn dự án',sel('profileProject',projects.map(x=>({v:x.id,t:(x.code?x.code+' · ':'')+x.name})),pid,'onchange="workSetProfileProject(this.value)"'))+'</div>';if(!p){h+='<div class="empty">Chưa có dự án để hiển thị.</div>';$('#view').innerHTML=h;return;}const as=workArray('assignments').filter(x=>x.projectId===pid),docs=workArray('form').filter(x=>x.projectId===pid),tasks=(DB.data.tienDo||[]).filter(x=>x.projectId===pid),open=as.filter(x=>!['Hoàn thành','Đã hủy'].includes(x.status));h+='<div class="card"><div class="card-b"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><div style="font-size:12px;color:var(--mut)">'+esc(p.code||'')+' · '+esc(p.status||'')+'</div><h2 style="margin:5px 0">'+esc(p.name)+'</h2><div>'+esc(p.location||'Chưa cập nhật địa điểm')+'</div><div style="margin-top:8px">Chủ đầu tư: <b>'+esc(p.client||'Chưa cập nhật')+'</b></div><div>Quản lý dự án: <b>'+esc(workPersonName(p.managerId))+'</b> · Người phụ trách chính: <b>'+esc(workPersonName(p.responsibleId))+'</b></div><div>Thời gian: '+esc(fmtDate(p.start)||'Chưa đặt')+' → '+esc(fmtDate(p.end)||'Chưa đặt')+'</div></div><button class="btn btn-pri" onclick="workForm(\'assignments\',\'#/resources-assign\')">+ Giao việc</button></div><div class="grid g4" style="margin-top:16px"><div class="stat st-info"><div><div class="lb">Hạng mục tiến độ</div><div class="vl">'+tasks.length+'</div></div></div><div class="stat st-warn"><div><div class="lb">Việc đang mở</div><div class="vl">'+open.length+'</div></div></div><div class="stat st-ok"><div><div class="lb">Hồ sơ đã lưu</div><div class="vl">'+docs.length+'</div></div></div><div class="stat st-bad"><div><div class="lb">Việc quá hạn</div><div class="vl">'+open.filter(x=>x.due&&x.due<todayISO()).length+'</div></div></div></div></div></div>';
 h+='<div class="grid g2"><div class="card"><div class="card-h"><h3>Người phụ trách & công việc</h3><button class="btn btn-sm btn-sec" onclick="location.hash=\'#/resources-assign\'">Mở phân công</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Công việc</th><th>Phụ trách</th><th>Hạn</th><th>Trạng thái</th></tr></thead><tbody>';if(!as.length)h+='<tr><td colspan="4">Chưa có phân công. Hãy tạo việc và gán người phụ trách.</td></tr>';as.slice(0,8).forEach(x=>h+='<tr><td>'+esc(x.scope)+'</td><td>'+esc(workPersonName(x.responsible))+'</td><td>'+esc(fmtDate(x.due)||'—')+'</td><td>'+esc(x.status)+'</td></tr>');h+='</tbody></table></div></div><div class="card"><div class="card-h"><h3>Hồ sơ của dự án</h3><button class="btn btn-sm btn-sec" onclick="location.hash=\'#/form-start-order\'">Tạo hồ sơ</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Loại hồ sơ</th><th>Số / nội dung</th><th>Ngày</th><th>Trạng thái</th></tr></thead><tbody>';if(!docs.length)h+='<tr><td colspan="4">Chưa có hồ sơ được lập trong app.</td></tr>';docs.slice(0,8).forEach(x=>h+='<tr><td>'+esc(WORK_MODULES[x.kind]?.title||x.title||'Hồ sơ')+'</td><td>'+esc(x.number||x.scope||x.work||'—')+'</td><td>'+esc(fmtDate(x.date)||'—')+'</td><td>'+esc(x.status||'Bản nháp')+'</td></tr>');h+='</tbody></table></div></div></div><div class="card"><div class="card-h"><h3>Tiến độ thi công hiện có</h3><button class="btn btn-sm btn-sec" onclick="location.hash=\'#/tiendo-list\'">Mở tiến độ</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hạng mục</th><th>Giai đoạn</th><th>Tiến độ</th><th>Ngày kết thúc</th><th>Ghi chú</th></tr></thead><tbody>';if(!tasks.length)h+='<tr><td colspan="5">Chưa có hạng mục tiến độ.</td></tr>';tasks.forEach(x=>h+='<tr><td>'+esc(x.hangMuc)+'</td><td>'+esc(x.giaiDoan||'—')+'</td><td><div class="prog"><i style="width:'+Math.max(0,Math.min(100,+x.phanTram||0))+'%"></i></div>'+Math.max(0,Math.min(100,+x.phanTram||0))+'%</td><td>'+esc(fmtDate(x.ngayKetThuc)||'—')+'</td><td>'+esc(x.ghiChu||'')+'</td></tr>');h+='</tbody></table></div></div>';$('#view').innerHTML=h;}
 function workSetProfileProject(pid){SEL.projectId=pid||null;nav(false);}
-function renderMyWork(){const me=Auth.user&&Auth.user.name||'';const myResource=workArray('resources').find(r=>String(r.name||'').trim().toLowerCase()===me.trim().toLowerCase());const rows=workArray('assignments').filter(x=>(myResource&&x.responsible===myResource.id)||x.responsible===me||String(x.assignees||'').toLowerCase().includes(me.toLowerCase()));const open=rows.filter(x=>!['Hoàn thành','Đã hủy'].includes(x.status));let h='<div class="page-head"><div><h1>Việc của tôi — cần xử lý</h1><p>Đăng nhập: '+esc(me)+' · '+rows.length+' việc được gán</p></div><div class="page-actions"><button class="btn btn-pri" onclick="workForm(\'assignments\',\'#/resources-assign\')">+ Tạo phân công</button></div></div><div class="grid g3" style="margin-bottom:14px"><div class="stat st-info"><div><div class="lb">Tổng việc</div><div class="vl">'+rows.length+'</div></div></div><div class="stat st-bad"><div><div class="lb">Quá hạn</div><div class="vl">'+open.filter(x=>x.due&&x.due<todayISO()).length+'</div></div></div><div class="stat st-ok"><div><div class="lb">Hoàn thành</div><div class="vl">'+rows.filter(x=>x.status==='Hoàn thành').length+'</div></div></div></div><div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Công việc</th><th>Hạn</th><th>Ưu tiên</th><th>Trạng thái</th><th></th></tr></thead><tbody>';if(!rows.length)h+='<tr><td colspan="6"><div class="empty">Chưa có việc được gán cho tài khoản này. Hãy tạo phân công và nhập đúng tên người phụ trách.</div></td></tr>';rows.forEach(x=>h+='<tr><td>'+esc(workProjectName(x.projectId))+'</td><td>'+esc(x.scope)+'</td><td>'+esc(fmtDate(x.due)||'—')+'</td><td>'+esc(x.priority)+'</td><td>'+esc(x.status)+'</td><td><button class="btn btn-sm btn-sec" onclick="workForm(\'assignments\',\'#/resources-assign\',\''+x.id+'\')">Mở</button></td></tr>');h+='</tbody></table></div></div>';$('#view').innerHTML=h;}
+function renderMyWork(){
+ const me=Auth.user&&Auth.user.name||'';
+ const baseName=me.split('–')[0].trim().toLowerCase();
+ const myResource=workArray('resources').find(r=>{const rn=String(r.name||'').trim().toLowerCase();return rn===me.trim().toLowerCase()||rn===baseName;});
+ const isManager=Auth.can('pheduyet_approve');
+ const allAsg=workArray('assignments');
+ let rows,scopeLabel,pageTitle;
+ if(isManager){
+  const allowed=new Set(visibleProjects().map(p=>p.id));
+  rows=allAsg.filter(x=>allowed.has(x.projectId));
+  scopeLabel='Chế độ điều hành · tất cả việc đang mở trong các dự án được phân quyền';
+  pageTitle='Việc cần xử lý';
+ }else if(myResource){
+  rows=allAsg.filter(x=>x.responsible===myResource.id||String(x.assignees||'').split(',').map(s=>s.trim()).includes(myResource.id)||x.responsible===me);
+  scopeLabel='Đăng nhập: '+me;
+  pageTitle='Việc của tôi — cần xử lý';
+ }else{
+  rows=allAsg.filter(x=>x.responsible===me||String(x.assignees||'').toLowerCase().includes(me.toLowerCase()));
+  scopeLabel='Đăng nhập: '+me;
+  pageTitle='Việc của tôi — cần xử lý';
+ }
+ const today=todayISO();
+ const open=rows.filter(x=>!['Hoàn thành','Đã hủy'].includes(x.status));
+ const overdue=open.filter(x=>x.due&&x.due<today);
+ const urgent=open.filter(x=>x.priority==='Khẩn cấp');
+ const waiting=open.filter(x=>x.status==='Chờ xử lý');
+ const pendAppr=isManager?(scoped(DB.data.denghi).filter(d=>d.trangthai==='cho_duyet').length+scoped(DB.data.phatsinh).filter(d=>d.trangthai==='cho_duyet').length+scoped(DB.data.dutru).filter(d=>d.trangthai==='cho_duyet').length):0;
+ const rank={'Khẩn cấp':0,'Cao':1,'Bình thường':2,'Thấp':3};
+ open.sort((a,b)=>(((a.due&&a.due<today)?0:1)-((b.due&&b.due<today)?0:1))||((rank[a.priority]??9)-(rank[b.priority]??9))||String(a.due||'9999').localeCompare(String(b.due||'9999')));
+ const priBadge=p=>'<span class="badge '+({'Khẩn cấp':'b-red','Cao':'b-amber','Bình thường':'b-gray','Thấp':'b-gray'}[p]||'b-gray')+'">'+esc(p||'—')+'</span>';
+ let h='<div class="page-head"><div><h1>'+pageTitle+'</h1><p>'+esc(scopeLabel)+'</p></div><div class="page-actions"><button class="btn btn-pri" onclick="workForm(\'assignments\',\'#/resources-assign\')">+ Tạo phân công</button>'+(isManager&&pendAppr?'<button class="btn btn-warn" onclick="location.hash=\'#/pheduyet\'">Duyệt '+pendAppr+' mục chờ</button>':'')+'</div></div>';
+ h+='<div class="grid g3" style="margin-bottom:14px">'
+  +'<div class="stat st-bad"><div><div class="lb">Quá hạn</div><div class="vl">'+overdue.length+'</div></div></div>'
+  +'<div class="stat st-warn"><div><div class="lb">Khẩn cấp</div><div class="vl">'+urgent.length+'</div></div></div>'
+  +'<div class="stat st-info"><div><div class="lb">Chờ xử lý</div><div class="vl">'+waiting.length+'</div></div></div>'
+  +(isManager?'<div class="stat st-warn"><div><div class="lb">Chờ duyệt</div><div class="vl">'+pendAppr+'</div></div></div>':'')
+  +'<div class="stat st-ok"><div><div class="lb">Hoàn thành</div><div class="vl">'+rows.filter(x=>x.status==='Hoàn thành').length+'</div></div></div>'
+  +'<div class="stat"><div><div class="lb">Đang mở</div><div class="vl">'+open.length+'</div></div></div></div>';
+ h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Dự án</th><th>Công việc</th>'+(isManager?'<th>Phụ trách</th>':'')+'<th>Hạn</th><th>Ưu tiên</th><th>Trạng thái</th><th></th></tr></thead><tbody>';
+ if(!open.length)h+='<tr><td colspan="'+(isManager?7:6)+'"><div class="empty">Không còn việc mở. Mọi đầu việc đã hoàn thành hoặc đã hủy.</div></td></tr>';
+ open.forEach(x=>{const od=x.due&&x.due<today;
+  h+='<tr'+(od?' style="background:#fef2f2"':'')+'><td>'+esc(workProjectName(x.projectId))+'</td><td><b>'+esc(x.scope)+'</b>'+(od?'<div style="color:#dc2626;font-size:11px;font-weight:700">Quá hạn '+esc(fmtDate(x.due))+'</div>':'')+'</td>'+(isManager?'<td>'+esc(workPersonName(x.responsible))+'</td>':'')+'<td style="white-space:nowrap">'+esc(fmtDate(x.due)||'—')+'</td><td>'+priBadge(x.priority)+'</td><td>'+esc(x.status)+'</td><td><button class="btn btn-sm btn-sec" onclick="workForm(\'assignments\',\'#/resources-assign\',\''+x.id+'\')">Mở</button></td></tr>';});
+ h+='</tbody></table></div></div>';$('#view').innerHTML=h;
+}
 function renderPlannedModule(hash){if(!WORK_MODULES[hash]){location.hash='#/dashboard';return;}workListPage(hash);}
 Object.keys(WORK_MODULES).forEach(hash=>{ROUTES[hash]=()=>renderPlannedModule(hash);});
 /* Existing tạm ứng form/data were present but the sidebar route had no list page; connect it without changing the stored schema. */
@@ -1932,11 +2212,14 @@ function renderBankLedger(id){
 const EXPCATS=['Nhân công','Vật tư','Vận chuyển','Điện nước','An toàn','Thiết kế','Thuê máy','Văn phòng','Khác'];
 ROUTES['#/cash']=function(){if(!Auth.can('thuchi_view')){location.hash='#/dashboard';return;}
  const txs=scoped(DB.data.bankTx).slice().sort((a,b)=>a.date<b.date?-1:1).slice(-80).reverse();
+ const totIn=txs.reduce((s,t)=>s+(t.type==='inflow'?t.amount:0),0),totOut=txs.reduce((s,t)=>s+(t.type==='outflow'?t.amount:0),0);
  let h='<div class="page-head"><div><h1>Thu & Chi tiền mặt</h1><p>Dòng tiền qua các quỹ • 80 giao dịch gần nhất</p></div><div class="page-actions"><button class="btn btn-ok" onclick="quickBankTx(\'inflow\')">Thu tiền</button><button class="btn btn-bad" onclick="quickBankTx(\'outflow\')">Chi tiền</button><button class="btn btn-pri" onclick="expenseForm()">Thêm chi phí</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Ngày</th><th>Quỹ</th><th>Dự án</th><th>Diễn giải</th><th class="num">Thu</th><th class="num">Chi</th></tr></thead><tbody>';
  txs.forEach(t=>{const a=DB.data.bankAccounts.find(x=>x.id===t.accountId);
   h+='<tr><td style="white-space:nowrap">'+fmtDate(t.date)+'</td><td>'+esc(a?a.name:'')+'</td><td>'+esc(projCode(t.projectId))+'</td><td>'+esc(t.note)+'</td><td class="num ledger-in">'+(t.type==='inflow'?fmtVND(t.amount):'—')+'</td><td class="num ledger-out">'+(t.type==='outflow'?fmtVND(t.amount):'—')+'</td></tr>';});
- h+='</tbody></table></div></div>';$('#view').innerHTML=h;
+ h+='</tbody><tfoot class="print-only"><tr class="print-total"><td colspan="4" style="text-align:right">TỔNG CỘNG</td><td class="num">'+fmtVND(totIn)+'</td><td class="num">'+fmtVND(totOut)+'</td></tr></tfoot></table></div></div>';
+ h+='<div class="print-only tw-signature-row"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>KẾ TOÁN</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>GIÁM ĐỐC</b><span>(Ký, ghi rõ họ tên)</span></div></div>';
+ $('#view').innerHTML=h;
 };
 function quickBankTx(type){
  const acc=DB.data.bankAccounts[0];if(!acc){toast('Chưa có tài khoản');return;}bankTxForm(acc.id,type);
@@ -2028,14 +2311,14 @@ function firstId(coll){const l=scoped(DB.data[coll]);return l.length?l[0].id:'';
 function projBadges(u){const ids=u.projectIds||[];if(!ids.length||ids.includes('*'))return '<span class="badge b-gray">Tất cả</span>';return ids.map(pid=>{const pr=DB.data.projects.find(x=>x.id===pid);return pr?'<span class="badge b-green">'+esc(pr.code)+'</span>':'';}).join(' ');}
 ROUTES['#/users']=function(){
  if(!Auth.can('users_manage')){location.hash='#/dashboard';return;}
- const roleBadge=r=>r==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':r==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':r==='Quản Lý Dự Án'?'<span class="badge b-green">Quản Lý Dự Án</span>':r==='Thủ Quỹ'?'<span class="badge b-purple">Thủ Quỹ</span>':r==='Nhân viên mua hàng'?'<span class="badge b-amber">NV mua hàng</span>':'<span class="badge b-gray">'+esc(r)+'</span>';
+ const roleBadge=r=>r==='Giám đốc'?'<span class="badge b-red">Giám đốc</span>':r==='Kế toán'?'<span class="badge b-blue">Kế toán</span>':r==='Quản Lý Dự Án'?'<span class="badge b-green">Quản Lý Dự Án</span>':r==='Thủ Quỹ'?'<span class="badge b-purple">Thủ Quỹ</span>':r==='Nhân viên mua hàng'?'<span class="badge b-amber">NV mua hàng</span>':r==='Đại diện thầu phụ'?'<span class="badge b-gray">Thầu phụ</span>':'<span class="badge b-gray">'+esc(r)+'</span>';
  let h='<div class="page-head"><div><h1>Quản lý người dùng</h1><p>Bấm vào tên để phân quyền chi tiết từng người • Giám đốc có toàn quyền</p></div><div class="page-actions"><button class="btn btn-pri" onclick="userForm()">+ Tạo user</button></div></div>';
  h+='<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>Tên đăng nhập</th><th>Vai trò</th><th>Dự án phụ trách</th><th>Số quyền</th><th></th></tr></thead><tbody>';
  DB.data.users.forEach(u=>{const np=u.perms?Object.keys(u.perms).filter(k=>u.perms[k]).length:(ROLE_PERMS[u.role]==='*'? 'all' : (ROLE_PERMS[u.role]||[]).length);
  h+='<tr><td><a class="linklike" href="javascript:permForm(\''+u.id+'\')"><b>'+esc(u.name)+'</b></a></td><td>'+esc(u.username)+'</td><td>'+roleBadge(u.role)+'</td><td>'+projBadges(u)+'</td><td>'+(np==='all'?'Tất cả':np+' quyền')+(u.perms?' <span class="badge b-blue">tùy chỉnh</span>':'')+'</td><td><div class="rowbtns"><button class="iconbtn" onclick="userForm(\''+u.id+'\')" title="Sửa">Sửa</button><button class="iconbtn" onclick="permForm(\''+u.id+'\')" title="Phân quyền">Quyền</button>'+(u.id!==Auth.user.id?'<button class="iconbtn" onclick="if(confirm(\'Xóa user '+esc(u.username)+'?\'))delObj(\'users\',\''+u.id+'\')" style="color:#dc2626" title="Xóa">Xóa</button>':'')+'</div></td></tr>';});
  h+='</tbody></table></div></div>';$('#view').innerHTML=h;
 };
-const ROLES=[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Quản Lý Dự Án',t:'Quản Lý Dự Án'},{v:'Kế toán',t:'Kế toán'},{v:'Thủ Quỹ',t:'Thủ Quỹ'},{v:'Nhân viên mua hàng',t:'Nhân viên mua hàng'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'}];
+const ROLES=[{v:'Giám đốc',t:'Giám đốc (toàn quyền)'},{v:'Quản Lý Dự Án',t:'Quản Lý Dự Án'},{v:'Kế toán',t:'Kế toán'},{v:'Thủ Quỹ',t:'Thủ Quỹ'},{v:'Nhân viên mua hàng',t:'Nhân viên mua hàng'},{v:'Chỉ huy công trình',t:'Chỉ huy công trình (1 dự án)'},{v:'Đại diện thầu phụ',t:'Đại diện thầu phụ (chỉ xem/gửi đề nghị)'}];
 function userForm(id){
  const u=id?DB.data.users.find(x=>x.id===id):{name:'',username:'',pass:'',role:'Nhân viên mua hàng',projectIds:[]};
  const projChk='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:170px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px">'+DB.data.projects.map(p=>'<label style="display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer"><input type="checkbox" data-proj="'+p.id+'"'+((u.projectIds||[]).includes(p.id)?' checked':'')+' style="width:16px;height:16px">'+esc(p.code)+'</label>').join('')+'</div>';
@@ -2235,6 +2518,15 @@ function printPhieu(){
   setTimeout(()=>window.print(),80);
   setTimeout(cleanup,3000);
 }
+function twPrintDNTTBlank(){
+ const src=document.getElementById('phieuPrintArea');if(!src){toast('Mở phiếu DNTT trước khi in mẫu trống');return;}
+ const clone=src.cloneNode(true);clone.querySelectorAll('.dntt-value').forEach(el=>{el.textContent='';});
+ const date=clone.querySelector('.pdate');if(date)date.innerHTML='Ngày: __________________';
+ const win=window.open('','_blank');if(!win){toast('Hãy cho phép cửa sổ in');return;}
+ const styles=[...document.querySelectorAll('style')].map(el=>el.outerHTML).join('');
+ win.document.open();win.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phiếu đề nghị thanh toán - Mẫu trống</title>'+styles+'</head><body class="printing-phieu"><div class="noprint" style="text-align:right;margin:8px"><button onclick="window.print()">In mẫu trống</button></div>'+clone.outerHTML+'</body></html>');win.document.close();
+ setTimeout(()=>{try{win.focus();win.print();}catch(e){}},350);
+}
 function xuatPhieuDNTT_XLSX(id){
  const c=dnttCalc(id);if(!c)return;
  const t=c.t,dn=c.dn,p=c.p;
@@ -2244,10 +2536,10 @@ function xuatPhieuDNTT_XLSX(id){
  const H={2:18,8:20.25,9:17.25,10:19.5,11:19.5,12:19.5,13:19.5,14:24,15:25.5,16:25.5,17:25.5,18:21,19:21,20:21,21:21,22:37.5,23:17.25,24:19.5,26:20.25,27:21,28:19.5,29:19.5,30:20.25,31:26.25,33:23.25,35:23.25,37:24,38:24,41:24.75};
  const R=[];const mk=()=>{const r=new Array(10).fill(null);R.push(r);return r;};
  const C=(r,i,v,s)=>{r[i]={v:v,s:s};};
- let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',2);
- r=mk();C(r,1,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',3);
- r=mk();C(r,1,'Điện thoại: +848 3535 1905 - 0903 865 240',3);
- r=mk();C(r,1,'Website: www.thewall.com.vn',3);
+ let r=mk();C(r,1,'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',1);
+ r=mk();C(r,1,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',5);
+ r=mk();C(r,1,'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',5);
+ r=mk();C(r,1,'Website: www.thewall.com.vn',5);
  mk();mk();mk();
  r=mk();C(r,0,'PHIẾU ĐỀ NGHỊ THANH TOÁN',11);
  r=mk();C(r,5,'Ngày: '+fmtDate(t.date),2);
@@ -2280,9 +2572,9 @@ function xuatPhieuDNTT_XLSX(id){
  mk();mk();
  r=mk();C(r,0,'VUI LÒNG KÝ TÊN VÀ KIỂM TRA TIỀN TRƯỚC KHI RỜI PHÒNG KẾ TOÁN. XIN CẢM ƠN!',5);
  mk();
- r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',2);
+ r=mk();C(r,0,'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',2);
  const merges=['B1:J1','B2:J2','B3:J3','B4:J4','A8:J8','A10:B10','A11:B11','C11:J11','A12:B12','C12:J12','A13:B13','C13:J13','A14:B14','E14:G14','I14:J14','A15:B17','C15:C17','D15:D17','E15:G17','H15:H17','I15:J17','H19:J19','C20:E20','I20:J20','A22:C22','D22:F22','G22:H22','I22:J22','B23:C23','D23:F23','G23:H23','I23:J23','B24:J24','A26:C26','A27:J27','I28:J28','A32:J32','G33:J33','A34:J34','F35:G35','A36:J36','C37:J37','A41:J41','A43:J43'];
- xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
+ xlsxDownload([{name:'DNTT',widths:W,rows:R,merges:merges,heights:H,freezeRows:0,freezeCols:0}],'phieu_dntt_'+fmtDate(t.date).replace(/\//g,'')+'.xlsx');
  toast('Đã tải phiếu DNTT (.xlsx)');
 }
 function xlsxMake(sheets,logoB64){
@@ -2299,6 +2591,7 @@ function xlsxMake(sheets,logoB64){
     let s='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
       +'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'+(withDrawing?' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"':'')+'>'
       +'<sheetPr><pageSetUpPr fitToPage="1" autoPageBreaks="0"/></sheetPr>';
+    if(sh.freezeRows||sh.freezeCols){const fr=sh.freezeRows||0,fc=sh.freezeCols||0,top=colName(fc)+ (fr+1);s+='<sheetViews><sheetView workbookViewId="0"><pane xSplit="'+fc+'" ySplit="'+fr+'" topLeftCell="'+top+'" activePane="bottomRight" state="frozen"/><selection pane="bottomRight" activeCell="'+top+'" sqref="'+top+'"/></sheetView></sheetViews>'; }
     if(sh.widths&&sh.widths.length){
       s+='<cols>';
       sh.widths.forEach((w,i)=>{s+='<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';});
@@ -2313,7 +2606,9 @@ function xlsxMake(sheets,logoB64){
         if(cell==null||cell.v==null)return;
         const ref=colName(c)+rn;
         const st=(cell.s!=null)?(' s="'+cell.s+'"'):'';
-        if(typeof cell.v==='number'){
+        if(cell.f){
+          s+='<c r="'+ref+'"'+st+'><f>'+esc(cell.f)+'</f>'+(cell.v!=null?'<v>'+esc(cell.v)+'</v>':'<v>0</v>')+'</c>';
+        }else if(typeof cell.v==='number'){
           s+='<c r="'+ref+'"'+st+'><v>'+cell.v+'</v></c>';
         }else{
           s+='<c r="'+ref+'"'+st+' t="inlineStr"><is><t>'+esc(cell.v)+'</t></is></c>';
@@ -2448,14 +2743,14 @@ function inPhieuDNTT(id){
  const ckTM=/tiền mặt/.test(ht)?'☑':'☐', ckCK=/chuyển khoản/.test(ht)?'☑':'☐', ckTU=/trừ.*tư|tạm ứng/.test(ht)?'☑':'☐', ckTH=/thu hồi/.test(ht)?'☑':'☐';
  const nguoide=esc(dn.nguoitao||Auth.user.name||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+esc(CFG.companyLogo||TW_LOGO)+'" alt="logo"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'+848 3535 1905 - 0903 865 240')+'<br>Email: '+esc(CFG.companyEmail||'')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
+  +'<div class="phieu-head"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(t.date)+'</b></div>'
   +'<table class="ptbl ptbl-seg">'
-  +'<tr><td>Người đề nghị:</td><td colspan="2"><b>'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b>'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
-  +'<tr><td>Hạng mục:</td><td colspan="5"><b>'+esc(dn.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="5"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr><td>Người đề nghị:</td><td colspan="2"><b class="dntt-value">'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b class="dntt-value">'+esc(dn.noidung||t.ghichu||'')+'</b></td></tr>'
+  +'<tr><td>Hạng mục:</td><td colspan="5"><b class="dntt-value">'+esc(dn.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="5"><b class="dntt-value">'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
   +'</table>'
   +'<table class="ptbl ptbl-seg">'
   +'<tr class="ctr"><td class="ul">Người Đề Nghị</td><td class="ul">Trưởng Bộ Phận</td><td class="ul">Phụ Trách DA</td><td class="ul">Trưởng Phòng DA</td><td class="ul">Kế Toán</td><td class="ul">Giám Đốc</td></tr>'
@@ -2466,8 +2761,8 @@ function inPhieuDNTT(id){
   +'<tr><td colspan="2" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="2" class="gray">Số tài khoản:</td></tr>'
   +'<tr class="ctr"><td colspan="2" class="gray">Số CCCD/CMND</td><td colspan="2" class="gray">Nơi cấp</td></tr>'
   +'<tr class="ctr"><td>Số tiền thanh toán</td><td>Thanh toán lũy kế</td><td>Tổng giá trị hợp đồng</td><td>Giá trị còn lại</td></tr>'
-  +'<tr class="ctr"><td class="nw"><b>'+fmtVND(t.sotien)+'</b></td><td class="nw">'+fmtVND(c.lk)+'</td><td class="nw">'+fmtVND(p.budget||0)+'</td><td class="nw">'+fmtVND(c.conlai)+'</td></tr>'
-  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i>'+esc(docSoTien(t.sotien))+'</i></td></tr>'
+  +'<tr class="ctr"><td class="nw dntt-value"><b>'+fmtVND(t.sotien)+'</b></td><td class="nw dntt-value">'+fmtVND(c.lk)+'</td><td class="nw dntt-value">'+fmtVND(p.budget||0)+'</td><td class="nw dntt-value">'+fmtVND(c.conlai)+'</td></tr>'
+  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i class="dntt-value">'+esc(docSoTien(t.sotien))+'</i></td></tr>'
   +'</table>'
   +'<div class="psec">A. Người nhận thanh toán:</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ tạm ứng &nbsp;&nbsp; '+ckTH+' Thu hồi</div><div class="pdot"></div><div class="pdot"></div>'
@@ -2496,14 +2791,14 @@ function inPhieuDeNghi(id){
  const luyKe=lk+sotien, tongHD=+p.budget||0, conLai=tongHD-luyKe;
  const nguoide=esc(d.nguoitao||(Auth.user&&Auth.user.name)||'');
  const htm='<div class="phieu-wrap" id="phieuPrintArea">'
-  +'<div class="phieu-head"><img class="logo" src="'+esc(CFG.companyLogo||TW_LOGO)+'" alt="logo"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'+848 3535 1905 - 0903 865 240')+'<br>Email: '+esc(CFG.companyEmail||'')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
+  +'<div class="phieu-head"><div class="co"><b>'+esc(CFG.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</b><br>Địa chỉ: '+esc(CFG.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'<br>Điện thoại: '+esc(CFG.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'<br>Website: '+esc(CFG.companyWebsite||'www.thewall.com.vn')+'</div></div>'
   +'<div class="ptitle">PHIẾU ĐỀ NGHỊ THANH TOÁN</div>'
   +'<div class="pdate">Ngày: <b>'+fmtDate(d.date)+'</b></div>'
   +'<table class="ptbl ptbl-dntt ptbl-seg">'
-  +'<tr><td>Người đề nghị:</td><td colspan="2"><b>'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
-  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b>'+esc(d.noidung||'')+'</b></td></tr>'
-  +'<tr><td>Hạng mục:</td><td colspan="5"><b>'+esc(d.hangmuc||'')+'</b></td></tr>'
-  +'<tr><td>Dự án:</td><td colspan="5"><b>'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
+  +'<tr><td>Người đề nghị:</td><td colspan="2"><b class="dntt-value">'+nguoide+'</b></td><td>Bộ phận:</td><td colspan="2"></td></tr>'
+  +'<tr><td>Mục đích thanh toán:</td><td colspan="5"><b class="dntt-value">'+esc(d.noidung||'')+'</b></td></tr>'
+  +'<tr><td>Hạng mục:</td><td colspan="5"><b class="dntt-value">'+esc(d.hangmuc||'')+'</b></td></tr>'
+  +'<tr><td>Dự án:</td><td colspan="5"><b class="dntt-value">'+esc((p.code?p.code+' • ':'')+(p.name||''))+'</b></td></tr>'
   +'</table>'
   +'<table class="ptbl ptbl-dntt ptbl-seg">'
   +'<tr class="sig-h"><td><u>Người Đề Nghị</u></td><td><u>Trưởng Bộ Phận</u></td><td><u>Phụ Trách DA</u></td><td><u>Trưởng Phòng DA</u></td><td><u>Kế Toán</u></td><td><u>Giám Đốc</u></td></tr>'
@@ -2514,8 +2809,8 @@ function inPhieuDeNghi(id){
   +'<tr><td colspan="2" class="gray">Chuyển tiền đến ngân hàng</td><td colspan="2" class="gray"><b>Số tài khoản:</b></td></tr>'
   +'<tr><td colspan="2" class="gray">Số CCCD/CMND</td><td colspan="2" class="gray ctr"><b>Nơi cấp</b></td></tr>'
   +'<tr class="money-h"><td><b>Số tiền thanh toán</b></td><td><b>Thanh toán lũy kế</b></td><td><b>Tổng giá trị hợp đồng</b></td><td><b>Giá trị còn lại</b></td></tr>'
-  +'<tr class="money-v"><td class="nw"><b>'+fmtVND(sotien)+'</b></td><td class="nw">'+fmtVND(luyKe)+'</td><td class="nw">'+fmtVND(tongHD)+'</td><td class="nw">'+fmtVND(conLai)+'</td></tr>'
-  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i>'+esc(docSoTien(sotien))+'</i></td></tr>'
+  +'<tr class="money-v"><td class="nw dntt-value"><b>'+fmtVND(sotien)+'</b></td><td class="nw dntt-value">'+fmtVND(luyKe)+'</td><td class="nw dntt-value">'+fmtVND(tongHD)+'</td><td class="nw dntt-value">'+fmtVND(conLai)+'</td></tr>'
+  +'<tr><td><b>Bằng chữ:</b></td><td colspan="3"><i class="dntt-value">'+esc(docSoTien(sotien))+'</i></td></tr>'
   +'</table>'
   +'<div class="psec">A. Người nhận thanh toán</div><div class="pdot"></div>'
   +'<div class="psec">B. Hình thức thanh toán &nbsp; '+ckTM+' Tiền mặt &nbsp;&nbsp; '+ckCK+' Chuyển khoản &nbsp;&nbsp; '+ckTU+' Trừ tạm ứng &nbsp;&nbsp; '+ckTH+' Thu hồi</div><div class="pdot"></div>'
@@ -2584,28 +2879,28 @@ function fname(p){return p+'_'+todayISO().replace(/-/g,'')+'.xlsx';}
 function xlsxColL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
 function dlXlsxTable(title,headers,rows,foot,filename){
  const R=[];const n=headers.length;
- const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:2};R.push(rc);
- const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, P. Long Trường, TPHCM, Việt Nam',s:3};R.push(ra);
- const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: +848 3535 1905 - 0903 865 240',s:3};R.push(rt);
- const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:3};R.push(rw);
+ const rc=new Array(n).fill(null);rc[1]={v:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',s:1};R.push(rc);
+ const ra=new Array(n).fill(null);ra[1]={v:'Địa chỉ: 1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',s:5};R.push(ra);
+ const rt=new Array(n).fill(null);rt[1]={v:'Điện thoại: (84) 8 3535 1905 - (84) 903 865 240',s:5};R.push(rt);
+ const rw=new Array(n).fill(null);rw[1]={v:'Website: www.thewall.com.vn',s:5};R.push(rw);
  R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));R.push(new Array(n).fill(null));
  const rti=new Array(n).fill(null);rti[0]={v:title.toUpperCase(),s:11};R.push(rti);
  const rnx=new Array(n).fill(null);rnx[0]={v:'Ngày xuất: '+new Date().toLocaleDateString('vi-VN'),s:3};R.push(rnx);
  const rh=new Array(n).fill(null);headers.forEach((h,i)=>{rh[i]={v:String(h).toUpperCase(),s:10};});R.push(rh);
  rows.forEach(row=>{const r=new Array(n).fill(null);row.forEach((v,i)=>{if(v==null||v==='')return;r[i]={v:(typeof v==='number'?v:String(v)),s:(typeof v==='number'?8:6)};});R.push(r);});
- if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:'Tổng cộng',s:10};rf[n-1]={v:foot.total,s:10};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
+ if(foot){const rf=new Array(n).fill(null);if(typeof foot==='object'&&foot.total!=null){for(let i=0;i<n;i++)rf[i]={v:'',s:10};const lc=Number.isInteger(foot.labelCol)?foot.labelCol:n-2,vc=Number.isInteger(foot.valueCol)?foot.valueCol:n-1;rf[lc]={v:foot.label||'Tổng cộng',s:10};rf[vc]=foot.formula?{f:foot.formula,v:foot.total,s:8}:{v:foot.total,s:8};}else{const clean=String(foot).replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();const parts=clean.split(':');if(parts.length>1){for(let i=0;i<n;i++)rf[i]={v:'',s:10};rf[n-2]={v:parts[0].trim(),s:10};rf[n-1]={v:parts.slice(1).join(':').trim(),s:10};}else{rf[0]={v:clean,s:2};}}R.push(rf);}
  const colL=xlsxColL(n);
  const merges=['B1:'+colL+'1','B2:'+colL+'2','B3:'+colL+'3','B4:'+colL+'4','A8:'+colL+'8','A9:'+colL+'9'];
- xlsxDownload([{name:'DeNghi',widths:[11,7,14,13,12,27,7,14,17].slice(0,n),rows:R,merges:merges}],filename);
+ xlsxDownload([{name:'DeNghi',widths:[13,13,13,18,24,36,9,17,18,18].slice(0,n),rows:R,merges:merges,freezeRows:10,freezeCols:0}],filename);
  toast('Đã xuất Excel (.xlsx)');
 }
 function exportDeNghi(){
  const fl=scoped(DB.data.denghi).filter(d=>(!DN_F.loai||d.loai===DN_F.loai)&&(!DN_F.tt||d.trangthai===DN_F.tt));
- const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien]);
+ const rows=fl.map(d=>[d.id,projCode(d.projectId),fmtDate(d.date),LOAI_DN[d.loai],d.hangmuc,d.noidung,d.soluong,d.dongia,d.sotien,(TT_DN[d.trangthai]||[''])[0]]);
  const tong=fl.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+d.sotien,0);
  dlXlsxTable('Danh sách đề nghị',
-  ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN'],rows,
-  {total:tong},fname('baocao_denghi'));
+  ['MÃ','DỰ ÁN','NGÀY','LOẠI','HẠNG MỤC','NỘI DUNG','SL','ĐƠN GIÁ','THÀNH TIỀN','TRẠNG THÁI'],rows,
+  {total:tong,label:'TỔNG CỘNG',labelCol:7,valueCol:8,formula:fl.length?'SUMIF(J11:J'+(10+rows.length)+',"<>Từ chối",I11:I'+(10+rows.length)+')':null},fname('baocao_denghi'));
  toast('Đã xuất Excel');
 }
 function exportDuTru(){
@@ -2613,19 +2908,19 @@ function exportDuTru(){
  const p=DB.data.projects.find(x=>x.id===DT_P)||{};
  const rows=list.map(d=>[d.hangmuc,d.diengiai,d.soluong,d.dongia,d.thanhtien,(TT_DN[d.trangthai]||[''])[0]]);
  dlXlsxTable('Dự trù — '+p.name,['Hạng mục','Diễn giải','Số lượng','Đơn giá','Thành tiền','Trạng thái'],rows,
-  '<b>Tổng dự trù:</b> '+fmtVND(list.reduce((s,d)=>s+d.thanhtien,0)),fname('dutru_'+(p.code||'all')));
+  {total:list.reduce((s,d)=>s+(+d.thanhtien||0),0),label:'TỔNG DỰ TRÙ',labelCol:3,valueCol:4,formula:'SUM(E11:E'+Math.max(11,10+rows.length)+')'},fname('dutru_'+(p.code||'all')));
  toast('Đã xuất Excel');
 }
 function exportPhatSinh(){
  const list=scoped(DB.data.phatsinh);
  const rows=list.map(d=>[fmtDate(d.date),projCode(d.projectId),d.noidung,d.sotien,(TT_DN[d.trangthai]||[''])[0],d.nguoitao]);
  dlXlsxTable('Báo cáo phát sinh',['Ngày','Dự án','Nội dung','Số tiền','Trạng thái','Người tạo'],rows,
-  '<b>Tổng:</b> '+fmtVND(list.reduce((s,d)=>s+d.sotien,0)),fname('baocao_phatsinh'));
+  {total:list.filter(d=>d.trangthai!=='tu_choi').reduce((s,d)=>s+(+d.sotien||0),0),label:'TỔNG PHÁT SINH',labelCol:2,valueCol:3,formula:'SUMIF(E11:E'+Math.max(11,10+rows.length)+',"<>Từ chối",D11:D'+Math.max(11,10+rows.length)+')'},fname('baocao_phatsinh'));
  toast('Đã xuất Excel');
 }
 const CFG_KEY='twpro_cfg';
-let CFG={apiUrl:'',key:'',companyName:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',companyLogo:'',companyAddress:'',companyPhone:'',companyEmail:'',companyWebsite:'',companyTaxCode:'',companyRepresentative:'',companyTagline:'Quản lý dự án chuyên nghiệp'};
-function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){}}
+let CFG={apiUrl:'',key:'',companyName:'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL',companyLogo:'',companyAddress:'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam',companyPhone:'(84) 8 3535 1905 - (84) 903 865 240',companyEmail:'',companyWebsite:'www.thewall.com.vn',companyTaxCode:'',companyRepresentative:'Nguyễn Bình An Tâm',companyTagline:''};
+function loadCfg(){try{Object.assign(CFG,JSON.parse(localStorage.getItem(CFG_KEY)||'{}'));}catch(e){} CFG.companyName='CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL';CFG.companyAddress='1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam';CFG.companyPhone='(84) 8 3535 1905 - (84) 903 865 240';CFG.companyWebsite='www.thewall.com.vn';CFG.companyRepresentative='Nguyễn Bình An Tâm';}
 function saveCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(CFG));}
 function syncCfgForm(){
  const a=document.querySelector('#mBody [name="apiUrl"]')||document.querySelector('#view [name="apiUrl"]');
@@ -2635,7 +2930,7 @@ function syncCfgForm(){
  if(k&&k.value!==CFG.key){CFG.key=k.value;ch=true;}
  if(ch){saveCfg();renderSyncPill();}
 }
-const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD'};
+const SYNC_MAP={projects:'DuAn',denghi:'DeNghi',phatsinh:'PhatSinh',dutru:'DuTu',thanhtoan:'ThanhToan',tamung:'TamUng',vendors:'NCC',vendorTx:'NCC_GD',contractors:'NhaThau',contractorTx:'NT_GD',bankAccounts:'Quy',bankTx:'Quy_GD',expenses:'ChiPhi',users:'Users',auditLogs:'LichSu',danhmuc:'DanhMuc',clients:'ChuDauTu',clientTx:'CDT_GD',resources:'NhanSu',resourceTeams:'ToDoi',resourceEquipment:'ThietBi',resourceAssignments:'PhanCong',projectForms:'BieuMauDuAn',attendanceRecords:'ChamCong',payrollRecords:'BangLuong'};
 let SYNC={connected:false,dirty:false,msg:'Chưa cấu hình'};
 async function apiCall(action,params){
  if(!CFG.apiUrl)throw new Error('Chưa cấu hình API URL');
@@ -2739,7 +3034,7 @@ function tdItems(pid){return(DB.data.tienDo||[]).filter(t=>{if(pid&&t.projectId!
 function tdDateRange(items){const ds=items.flatMap(t=>[tdDate(t.ngayBatDau),tdDate(t.ngayKetThuc)]).filter(Boolean);if(!ds.length){const n=new Date();return[new Date(n.getFullYear(),n.getMonth(),1),new Date(n.getFullYear(),n.getMonth()+2,0)];}let a=new Date(Math.min(...ds)),b=new Date(Math.max(...ds));a=new Date(a.getFullYear(),a.getMonth(),1);b=new Date(b.getFullYear(),b.getMonth()+1,0);return[a,b];}
 function tdPhaseLabel(k){return({chuanbi:'Chuẩn bị',ngam:'Phần ngầm',tho:'Phần thô',hoanthien:'Hoàn thiện',mep:'MEP & HT'})[k]||'Khác';}
 function tdPhaseOptions(selected){return[['chuanbi','Chuẩn bị'],['ngam','Phần ngầm'],['tho','Phần thô'],['hoanthien','Hoàn thiện'],['mep','MEP & HT']].map(x=>`<option value="${x[0]}" ${selected===x[0]?'selected':''}>${x[1]}</option>`).join('');}
-function tdPrintHeader(title,project){const p=project||{};const hasProject=!!p.id;const period=(window._tdFrom||window._tdTo)?`${window._tdFrom?fmtDate(window._tdFrom):'Đầu kỳ'} → ${window._tdTo?fmtDate(window._tdTo):'Hiện tại'}`:'Toàn bộ thời gian';return `<div class="print-header">${companyPrintHeader('')}<h1>BÁO CÁO TIẾN ĐỘ DỰ ÁN — ${tdEsc(title)}</h1><div class="print-project-line"><b>Mã dự án:</b> ${tdEsc(hasProject?(p.code||'—'):'Tất cả dự án')} <span class="print-sep">|</span> <b>Tên dự án:</b> ${tdEsc(hasProject?(p.name||'—'):'Danh mục dự án')}</div><div class="meta"><span><b>Kỳ báo cáo:</b> ${tdEsc(period)}</span><span><b>Ngày in:</b> ${todayVN()}</span><span><b>Người in:</b> ${tdEsc(Auth.user&&Auth.user.name||'Chưa xác định')}</span><span><b>Số hạng mục:</b> ${(DB.data.tienDo||[]).filter(t=>!hasProject||t.projectId===p.id).length}</span></div></div>`;}
+function tdPrintHeader(title,project){const p=project||{};const hasProject=!!p.id;const period=(window._tdFrom||window._tdTo)?`${window._tdFrom?fmtDate(window._tdFrom):'Đầu kỳ'} → ${window._tdTo?fmtDate(window._tdTo):'Hiện tại'}`:'Toàn bộ thời gian';return `<div class="print-header">${companyPrintHeader('')}<h1>BÁO CÁO TIẾN ĐỘ DỰ ÁN — ${tdEsc(title)}</h1><div class="print-project-line"><b>Mã dự án:</b> ${tdEsc(hasProject?(p.code||'—'):'Tất cả dự án')} <span class="print-sep">|</span> <b>Tên dự án:</b> ${tdEsc(hasProject?(p.name||'—'):'Danh mục dự án')}</div><div class="meta"><span><b>Kỳ báo cáo:</b> ${tdEsc(period)}</span><span><b>Ngày in:</b> ${todayVN()}</span><span><b>Người in:</b> ${tdEsc(Auth.user&&Auth.user.name||'')}</span><span><b>Số hạng mục:</b> ${(DB.data.tienDo||[]).filter(t=>!hasProject||t.projectId===p.id).length}</span></div></div>`;}
 ROUTES['#/tiendo']=function(){const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];const all=tdItems();const items=all.filter(t=>projs.some(p=>p.id===t.projectId));const pct=tdTaskProgress(items);const late=items.filter(t=>tdStatus(t)==='late');let h=tdPrintHeader('TỔNG QUAN TIẾN ĐỘ THI CÔNG');h+=`<div class="page-head"><div><h1>Tiến độ dự án</h1><p>Theo dõi tiến độ có trọng số, mốc thời gian và hạng mục trễ hạn.</p></div></div>`+tdViewSwitcher('#/tiendo')+tdToolbar()+`<div id="tiendoScope"><div class="grid g4" style="margin:14px 0"><div class="stat"><div class="lb">Tiến độ danh mục</div><div class="vl">${pct}%</div></div><div class="stat"><div class="lb">Dự án theo dõi</div><div class="vl">${projs.length}</div></div><div class="stat"><div class="lb">Hạng mục đang làm</div><div class="vl">${items.filter(t=>tdStatus(t)==='doing').length}</div></div><div class="stat"><div class="lb">Hạng mục trễ</div><div class="vl" style="color:${late.length?'#dc2626':'inherit'}">${late.length}</div></div></div><div class="project-overview-grid">`;
 let prow='';projs.forEach(p=>{const its=items.filter(t=>t.projectId===p.id);const pp=tdTaskProgress(its);const statuses=its.filter(t=>tdStatus(t)==='late').length;const range=its.length?`${fmtDate(its.map(t=>t.ngayBatDau).filter(Boolean).sort()[0])||'—'} → ${fmtDate(its.map(t=>t.ngayKetThuc).filter(Boolean).sort().slice(-1)[0])||'—'}`:`${fmtDate(p.start)||'—'} → ${fmtDate(p.end)||'—'}`;h+=`<div class="project-overview-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><div style="font-size:11px;color:#8b6b43;font-weight:800">${tdEsc(p.code||'')}</div><h3>${tdEsc(p.name)}</h3></div><strong style="font-size:22px;color:${statuses?'#c2410c':'#a16207'}">${pp}%</strong></div><div class="phase-bar" style="height:9px;margin:10px 0"><i style="width:${pp}%"></i></div><div style="font-size:11px;color:#64748b;display:flex;justify-content:space-between;gap:8px"><span>${its.length} hạng mục</span><span>${statuses?statuses+' trễ hạn':'Không có hạng mục trễ'}</span></div><div style="font-size:11px;color:#64748b;margin-top:5px">${range}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-sm btn-sec" onclick="location.hash='#/tiendo/${p.id}'">Mở dự án</button><button class="btn btn-sm btn-pri" onclick="tienDoForm('${p.id}')">+ Hạng mục</button></div></div>`;prow+=`<tr><td><b>${tdEsc(p.name)}</b><br><small style="color:#78716c">${tdEsc(p.code||'')}</small></td><td class="num">${its.length}</td><td class="num">${statuses||'—'}</td><td><div class="prog"><i style="width:${pp}%"></i></div><b>${pp}%</b></td><td style="white-space:nowrap">${range}</td></tr>`;});if(!projs.length)h+='<div class="empty">Chưa có dự án được phân quyền.</div>';h+='</div><div class="print-only"><table class="tbl print-tbl"><thead><tr><th>Dự án</th><th class="num">Hạng mục</th><th class="num">Trễ hạn</th><th style="width:32%">Tiến độ</th><th>Thời gian</th></tr></thead><tbody>'+prow+'</tbody></table></div></div>';document.getElementById('view').innerHTML=h;};
 ROUTES['#/tiendo-list']=function(){const projs=(typeof visibleProjects==='function'?visibleProjects():DB.data.projects)||[];const allowed=new Set(projs.map(p=>p.id));const items=tdItems().filter(t=>allowed.has(t.projectId)).sort((a,b)=>(a.ngayBatDau||'9999').localeCompare(b.ngayBatDau||'9999')||(a.giaiDoan||'').localeCompare(b.giaiDoan||''));let h=tdPrintHeader('DANH SÁCH HẠNG MỤC TIẾN ĐỘ')+`<div class="page-head"><div><h1>Danh sách hạng mục</h1><p>${items.length} hạng mục · tiến độ tổng hợp có trọng số theo thời lượng / trọng số nhập.</p></div></div>`+tdViewSwitcher('#/tiendo-list')+tdToolbar()+'<div id="tiendoScope"><div class="card"><div class="tbl-wrap"><table class="tbl print-tbl"><thead><tr><th>Dự án</th><th>Giai đoạn</th><th>Hạng mục</th><th>Thời gian</th><th>Trọng số</th><th>Tiến độ</th><th>Trạng thái</th><th class="noprint"></th></tr></thead><tbody>';
@@ -2773,42 +3068,121 @@ function saveCompanyCfg(){
 }
 function companyPrintHeader(title){
  const c=CFG||{};const logo=c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'';
- const details=[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ');
- return '<div class="tw-company-print-header">'+logo+'<div><div class="tw-brand-name">'+esc(c.companyName||'THE WALL')+'</div><div class="tw-brand-meta">'+esc(c.companyTagline||'')+'</div><div class="tw-brand-meta">'+details+'</div></div></div>';
+ const details=[c.companyAddress?'Địa chỉ: '+c.companyAddress:'',c.companyPhone?'Điện thoại: '+c.companyPhone:'',c.companyWebsite?'Website: '+c.companyWebsite:''].filter(Boolean).map(esc).join('<br>');
+ return '<div class="tw-company-print-header">'+logo+'<div class="tw-company-print-lines"><div class="tw-brand-name">'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</div><div class="tw-brand-meta">'+details+'</div></div></div>';
 }
 function twPrintCurrent(){
  const view=document.getElementById('view');if(!view)return window.print();
- const h1=view.querySelector('h1');const title=h1?h1.textContent.trim():'BÁO CÁO / HỒ SƠ';
- let header=view.querySelector('.tw-company-print-header');if(!header){header=document.createElement('div');header.className='tw-company-print-header';view.insertBefore(header,view.firstChild);}header.outerHTML=companyPrintHeader(title).replace('class="tw-company-print-header"','class="tw-company-print-header" data-tw-print-injected="1"');
+ view.querySelectorAll('[data-tw-print-injected]').forEach(e=>e.remove());
+ document.body.classList.remove('tw-landscape');
+ if(view.querySelector('.print-header')){const tbl=view.querySelector('table.tbl,table.print-tbl');if(tbl&&tbl.rows.length&&tbl.rows[0].cells.length>8)document.body.classList.add('tw-landscape');window.print();return;}
+ const h1=view.querySelector('.page-head h1');const title=h1?h1.textContent.trim():'BÁO CÁO / HỒ SƠ';
+ const sub=view.querySelector('.page-head p');const subtitle=sub?sub.textContent.trim():'';
+ const c=CFG||{};
+ const header=document.createElement('div');
+ header.className='tw-report-header';header.setAttribute('data-tw-print-injected','1');
+ header.innerHTML='<div class="tw-company-print-header"><div class="tw-brand-name">'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</div><div class="tw-brand-meta">Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'<br>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'<br>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div><h1>'+esc(title)+'</h1><div class="meta">'+(subtitle?'<span>'+esc(subtitle)+'</span>':'')+'<span>Ngày in: '+todayVN()+'</span><span>Người in: '+esc(Auth.user&&Auth.user.name||'')+'</span></div>';
+ view.insertBefore(header,view.firstChild);
+ const tbl=view.querySelector('table.tbl,table.print-tbl');
+ if(tbl&&tbl.rows.length&&tbl.rows[0].cells.length>8)document.body.classList.add('tw-landscape');
  window.print();
+}
+window.addEventListener('afterprint',()=>{const v=document.getElementById('view');if(v)v.querySelectorAll('[data-tw-print-injected]').forEach(e=>e.remove());document.body.classList.remove('tw-landscape');});
+function twDocBrand(){const c=CFG||{};return '<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';}
+function twDownloadWord(title,bodyHTML){
+ try{
+  const safe=String(title||'bieu-mau').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase()||'bieu-mau';
+  // Create a genuine Office Open XML .docx package locally (no network/CDN dependency).
+  const xmlEsc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const textRuns=(node,bold=false,italic=false)=>{
+   let out='';
+   node.childNodes.forEach(n=>{
+    if(n.nodeType===3){const parts=String(n.nodeValue||'').split(/\n/);parts.forEach((t,i)=>{if(i)out+='<w:r><w:br/></w:r>';if(t)out+='<w:r>'+((bold||italic)?'<w:rPr>'+(bold?'<w:b/>':'')+(italic?'<w:i/>':'')+'</w:rPr>':'')+'<w:t xml:space="preserve">'+xmlEsc(t)+'</w:t></w:r>';});}
+    else if(n.nodeType===1){const tag=n.tagName.toLowerCase();if(tag==='br'){out+='<w:r><w:br/></w:r>';return;}out+=textRuns(n,bold||/^(b|strong|th)$/.test(tag),italic||/^(i|em)$/.test(tag));}
+   });return out;
+  };
+  const paragraph=(node,style)=>'<w:p><w:pPr>'+(style?'<w:pStyle w:val="'+style+'"/>':'')+'<w:spacing w:after="100"/> </w:pPr>'+textRuns(node)+'</w:p>';
+  const cellXml=(cell)=>{let content='';cell.childNodes.forEach(n=>{if(n.nodeType===3&&n.nodeValue.trim())content+='<w:p><w:r><w:t>'+xmlEsc(n.nodeValue.trim())+'</w:t></w:r></w:p>';else if(n.nodeType===1){if(n.tagName.toLowerCase()==='br')content+='<w:p><w:r><w:br/></w:r></w:p>';else content+=paragraph(n);}});if(!content)content='<w:p/>';return '<w:tc><w:tcPr><w:tcW w:w="4500" w:type="dxa"/><w:tcBorders><w:top w:val="single" w:sz="6"/><w:left w:val="single" w:sz="6"/><w:bottom w:val="single" w:sz="6"/><w:right w:val="single" w:sz="6"/></w:tcBorders></w:tcPr>'+content+'</w:tc>';};
+  const tableXml=(table)=>'<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders><w:top w:val="single" w:sz="6"/><w:left w:val="single" w:sz="6"/><w:bottom w:val="single" w:sz="6"/><w:right w:val="single" w:sz="6"/><w:insideH w:val="single" w:sz="4"/><w:insideV w:val="single" w:sz="4"/></w:tblBorders></w:tblPr>'+Array.from(table.rows).map(row=>'<w:tr>'+Array.from(row.cells).map(cellXml).join('')+'</w:tr>').join('')+'</w:tbl>';
+  const parser=new DOMParser();const doc=parser.parseFromString('<!doctype html><html><body>'+String(bodyHTML||'')+'</body></html>','text/html');
+  let body='';
+  const walk=(node)=>{if(node.nodeType!==1)return;const tag=node.tagName.toLowerCase();if(tag==='table'){body+=tableXml(node);return;}if(tag==='img')return;if(tag==='br'){body+='<w:p><w:r><w:br/></w:r></w:p>';return;}if(['h1','h2','h3'].includes(tag)){body+=paragraph(node,tag==='h1'?'Title':tag==='h2'?'Subtitle':'Heading1');return;}if(tag==='table')return;if(['p','div','header','section','footer','li','b','strong','span'].includes(tag)){if(tag==='div'||tag==='header'||tag==='section'||tag==='footer'){Array.from(node.childNodes).forEach(walk);}else body+=paragraph(node);return;}Array.from(node.childNodes).forEach(walk);};
+  Array.from(doc.body.childNodes).forEach(walk);if(!body)body='<w:p><w:r><w:t>'+xmlEsc(title)+'</w:t></w:r></w:p>';
+  const documentXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="850" w:right="850" w:bottom="850" w:left="850" w:header="425" w:footer="425"/></w:sectPr></w:body></w:document>';
+  const stylesXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="26"/></w:rPr></w:rPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="32"/></w:rPr><w:pPr><w:jc w:val="center"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:pPr><w:jc w:val="center"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style></w:styles>';
+  const files={
+   '[Content_Types].xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>',
+   '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
+   'word/document.xml':documentXml,
+   'word/styles.xml':stylesXml,
+   'word/_rels/document.xml.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
+  };
+  const enc=new TextEncoder();const crcTable=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);crcTable[n]=c>>>0;}
+  const crc32=b=>{let c=0xffffffff;for(const x of b)c=crcTable[(c^x)&255]^(c>>>8);return (c^0xffffffff)>>>0;};
+  const u16=n=>[n&255,(n>>>8)&255],u32=n=>[n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255];
+  let local=[],central=[],offset=0;
+  for(const [name,value] of Object.entries(files)){const nb=enc.encode(name),data=enc.encode(value),crc=crc32(data);const lh=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...nb]);local.push(lh,data);const ch=new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),...nb]);central.push(ch);offset+=lh.length+data.length;}
+  const centralSize=central.reduce((n,b)=>n+b.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(central.length),...u16(central.length),...u32(centralSize),...u32(offset),...u16(0)]);
+  const all=[...local,...central,end];const blob=new Blob(all,{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=safe+'.docx';document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href);a.remove();}catch(e){}},1200);toast('Đã tải file Word DOCX: '+safe+'.docx');
+ }catch(e){console.error('DOCX export failed',e);toast('Không tạo được file DOCX: '+(e&&e.message||'lỗi không xác định'));}
+}
+function twBlankFormWord(hash){
+ const m=WORK_MODULES[hash]||{},fs=WORK_FIELDS[hash]||[];if(!fs.length){toast('Chưa có mẫu cho biểu mẫu này');return;}
+ const title='MẪU TRỐNG - '+String(m.title||'BIỂU MẪU').toUpperCase();let rows='';
+ fs.forEach(f=>{const lb=f[1]||f[0],tall=/textarea|ghi chú|mô tả|nội dung|kết luận|phạm vi/i.test(lb);rows+='<tr><th>'+esc(lb)+'</th><td><div class="write-line" style="min-height:'+(tall?'20mm':'9mm')+'">&nbsp;</div></td></tr>';});
+ const body=twDocBrand()+'<h1 class="doc-title">'+esc(title)+'</h1><div class="doc-meta">Số: .................... &nbsp;&nbsp; Ngày: ......../......../................</div><table class="doc">'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div>';
+ twDownloadWord(title,body);
 }
 function twPrintModalCurrent(){
  const modal=document.getElementById('modal');if(!modal)return;
+ const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim().replace(/^(Sửa|Thêm|Tạo)\s+/i,'');let rows='';
+ const isMoney=lb=>/VND|tiền|lương|phụ cấp|khấu trừ|tạm ứng|đơn giá|thành tiền/i.test(lb);
+ modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;let value=el.value||'';if(el.tagName==='SELECT'&&el.selectedOptions?.length)value=el.selectedOptions[0].textContent;if(!String(value).trim())return;if(isMoney(label)&&Number.isFinite(Number(value)))value=fmtVND(Number(value));rows+='<tr><th>'+esc(label)+'</th><td>'+esc(String(value)).replace(/\n/g,'<br>')+'</td></tr>';});
+ if(modal.querySelector('#mBody [name="baseSalary"]')){
+  const q=n=>{const e=modal.querySelector('#mBody [name="'+n+'"]');return e?+e.value||0:0;};
+  const gross=Math.round(q('baseSalary')/Math.max(1,q('standardDays')||26)*q('workDays')+q('overtimeHours')*q('overtimeRate')+q('allowance'));
+  const net=Math.max(0,gross-q('deductions')-q('advance'));
+  rows+='<tr><th>Tổng lương dự kiến (VND)</th><td><b>'+esc(fmtVND(gross))+'</b></td></tr><tr><th>Thực nhận dự kiến (VND)</th><td><b>'+esc(fmtVND(net))+'</b></td></tr>';
+ }
+ const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:16px}.brand img{max-width:80px;max-height:60px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:10px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:6pt;vertical-align:top;overflow-wrap:break-word;word-break:normal}th{width:34%;text-align:left;background:#fff7dc}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{.actions,button{display:none}}</style></head><body><div class="actions"><button onclick="window.print()">In</button> <button onclick="opener.twDownloadWord(document.title,document.getElementById(\'twDocBody\').innerHTML)">Tải Word</button></div><div id="twDocBody">'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div></div></body></html>');w.document.close();
+}
+function twPrintModalBlank(){
+ const modal=document.getElementById('modal');if(!modal)return;
  const title=(document.getElementById('mTitle')?.textContent||'BIỂU MẪU').trim();let rows='';
- modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;let value=el.value||'';if(el.tagName==='SELECT'&&el.selectedOptions?.length)value=el.selectedOptions[0].textContent;if(!String(value).trim())return;rows+='<tr><th>'+esc(label)+'</th><td>'+esc(String(value)).replace(/\n/g,'<br>')+'</td></tr>';});
- const c=CFG||{},brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div><strong>'+esc(c.companyName||'THE WALL')+'</strong><div>'+esc(c.companyTagline||'')+'</div><small>'+[c.companyAddress,c.companyPhone,c.companyEmail,c.companyWebsite,c.companyTaxCode?'MST: '+c.companyTaxCode:''].filter(Boolean).map(esc).join(' · ')+'</small></div></header>';
- const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>@page{size:A4;margin:15mm}body{font:11pt Arial;margin:0;color:#111}.brand{display:flex;align-items:center;gap:12px;border-bottom:2px solid #9b7a3d;padding-bottom:10px;margin-bottom:20px}.brand img{max-width:80px;max-height:60px}.brand strong{font-size:14pt}h1{text-align:center;font-size:16pt;text-transform:uppercase;margin:20px 0}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #777;padding:8px;vertical-align:top;overflow-wrap:anywhere}th{width:34%;text-align:left;background:#f4f0e7}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:20mm;break-inside:avoid}.sign b{display:block;margin-bottom:20mm}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table>'+rows+'</table><div class="sign"><div><b>NGƯỜI LẬP</b></div><div><b>NGƯỜI KIỂM TRA</b></div><div><b>NGƯỜI PHÊ DUYỆT</b></div></div><button onclick="window.print()">In</button></body></html>');w.document.close();
+ modal.querySelectorAll('#mBody .fld').forEach(f=>{const label=f.querySelector('label')?.textContent?.trim()||'';const el=f.querySelector('input,textarea,select');if(!el||el.type==='button'||el.type==='submit')return;rows+='<tr><th>'+esc(label)+'</th><td><div class="write-line">&nbsp;</div></td></tr>';});
+ const c=CFG||{};
+ const brand='<header class="brand">'+(c.companyLogo?'<img src="'+esc(c.companyLogo)+'" alt="Logo">':'')+'<div class="company-lines"><strong>'+esc(c.companyName||'CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG THE WALL')+'</strong><div>Địa chỉ: '+esc(c.companyAddress||'1086/4 Nguyễn Duy Trinh, Phường Long Trường, Thành phố Hồ Chí Minh, Việt Nam')+'</div><div>Điện thoại: '+esc(c.companyPhone||'(84) 8 3535 1905 - (84) 903 865 240')+'</div><div>Website: '+esc(c.companyWebsite||'www.thewall.com.vn')+'</div></div></header>';
+ const w=window.open('','_blank');if(!w){toast('Hãy cho phép cửa sổ in');return;}
+ w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>'+esc(title)+' - Mẫu trống</title><style>@page{size:A4 portrait;margin:12mm 12mm 14mm;@bottom-left{content:"THE WALL · Tài liệu nội bộ";font:8pt Arial;color:#76664b}@bottom-right{content:"Trang " counter(page);font:8pt Arial;color:#76664b}}*{box-sizing:border-box}body{font:11pt Arial,sans-serif;margin:0;color:#111}.brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border-bottom:1.5pt solid #d8c58b;padding-bottom:8px;margin-bottom:14px}.brand img{max-width:75px;max-height:52px;object-fit:contain}.brand strong{font-size:12pt}.brand .company-lines{text-align:center;line-height:1.3;width:100%}.brand .company-lines strong{display:block;font-size:12pt;margin-bottom:2px}.brand .company-lines div{font-size:8.5pt;line-height:1.25}.brand small{display:block;font-size:8.5pt;margin-top:4px;color:#444}h1{text-align:center;font-size:14pt;text-transform:uppercase;margin:8px 0 10px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:.7pt solid #d8c58b;padding:7pt;vertical-align:middle;overflow-wrap:anywhere}th{width:35%;text-align:left;background:#fff7dc;font-weight:700}.write-line{min-height:8mm}tr{break-inside:avoid;page-break-inside:avoid}.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;text-align:center;margin-top:16mm;break-inside:avoid}.sign b{display:block;margin-bottom:22mm}.sign span{font-size:9pt}button{margin-top:10px}@media print{button{display:none}}</style></head><body>'+brand+'<h1>'+esc(title)+'</h1><table><tbody>'+rows+'</tbody></table><div class="sign"><div><b>NGƯỜI LẬP</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI KIỂM TRA</b><span>(Ký, ghi rõ họ tên)</span></div><div><b>NGƯỜI PHÊ DUYỆT</b><span>(Ký, ghi rõ họ tên)</span></div></div><button onclick="window.print()">In mẫu trống</button></body></html>');w.document.close();
 }
 function twEnsureModalPrintButton(){
  const foot=document.getElementById('mFoot');if(!foot||!foot.children.length)return;
- const has=[...foot.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||/^In\\b/i.test((b.textContent||'').trim()));
- if(!has){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In biểu mẫu';b.type='button';b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
+ const mTitle=(document.getElementById('mTitle')?.textContent||'').toLowerCase();
+ if(mTitle.includes('đề nghị'))return;
+ const hasPrint=[...foot.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||/^in\b/i.test((b.textContent||'').trim()));
+ if(!hasPrint&&!foot.querySelector('[data-tw-print-filled]')){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In';b.type='button';b.setAttribute('data-tw-print-filled','1');b.onclick=twPrintModalCurrent;foot.insertBefore(b,foot.firstChild);}
 }
+const TW_NO_AUTO_PRINT=['#/dashboard','#/quick','#/users','#/caidat','#/pheduyet','#/tiendo','#/tiendo-list','#/tiendo-kanban','#/tiendo-gantt','#/tiendo-calendar','#/tiendo-split'];
 function twEnsurePrintButton(){
  const view=document.getElementById('view');if(!view||!Auth.user)return;
+ const hh=String(location.hash||'');
+ if(hh.includes('form-warranty')||TW_NO_AUTO_PRINT.some(x=>hh===x||hh.startsWith(x+'/')))return;
  const ph=view.querySelector('.page-head');if(!ph)return;
  let actions=ph.querySelector('.page-actions');if(!actions){actions=document.createElement('div');actions.className='page-actions';ph.appendChild(actions);}
  if(!actions.querySelector('[data-tw-global-print]')&&![...actions.querySelectorAll('button')].some(b=>/print/i.test(b.getAttribute('onclick')||'')||(b.textContent||'').trim().toLowerCase().startsWith('in '))){const b=document.createElement('button');b.className='btn btn-sec';b.textContent='In';b.title='In nội dung đang mở theo bố cục in';b.setAttribute('data-tw-global-print','1');b.onclick=twPrintCurrent;actions.appendChild(b);}
 }
 function saveApiCfg(){CFG.apiUrl=formVal('apiUrl');CFG.key=formVal('apiKey');saveCfg();renderSyncPill();toast('Đã lưu cấu hình');}
 function ensureArrays(){
- try{DB.data.projects=(DB.data.projects||[]).filter(p=>!['p10','p11','p12','p13'].includes(p.id));Object.keys(DB.data).forEach(k=>{if(Array.isArray(DB.data[k]))DB.data[k]=DB.data[k].filter(x=>!['p10','p11','p12','p13'].includes(x.projectId||x.currentProjectId));});}catch(e){}
  try{Object.keys(DB.data).forEach(k=>{if(!Array.isArray(DB.data[k]))return;const seen=new Set();DB.data[k]=DB.data[k].filter(x=>{if(!x||x.id==null)return true;const id=String(x.id);if(seen.has(id))return false;seen.add(id);return true;});});}catch(e){}
  ['resources','resourceTeams','resourceEquipment','resourceAssignments','projectForms','attendanceRecords','payrollRecords'].forEach(k=>{if(!Array.isArray(DB.data[k]))DB.data[k]=[];});
  let ch=false;
  Object.keys(SEED).forEach(k=>{if(!Array.isArray(DB.data[k])||(k==='danhmuc'&&DB.data[k].length===0)){DB.data[k]=JSON.parse(JSON.stringify(SEED[k]));ch=true;}});
  try{
-  ['users','projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx'].forEach(col=>{
+  // One-time upgrade migration: add newly introduced sample records once, not on every refresh.
+  if(localStorage.getItem('twpro_seed_v3')!=='1'){
+   ['users','projects','vendors','contractors','vendorTx','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo'].forEach(col=>{
     if(!Array.isArray(SEED[col])||!Array.isArray(DB.data[col])) return;
     const existing = new Set(DB.data[col].map(x=>x.id));
     SEED[col].forEach(item=>{
@@ -2817,14 +3191,30 @@ function ensureArrays(){
         ch=true;
       }
     });
-  });
+   });
+   try{localStorage.setItem('twpro_seed_v3','1');}catch(e){}
+  }
  }catch(e){}
+ // One-time realistic operational demo migration: refresh only known seed IDs, preserve custom records.
+ try{if(localStorage.getItem('twpro_realistic_seed_v1')!=='1'){
+  const cols=['users','projects','vendors','vendorTx','contractors','contractorTx','bankAccounts','bankTx','expenses','clients','clientTx','denghi','phatsinh','dutru','thanhtoan','tamung','danhmuc','tienDo','resources','resourceTeams','resourceEquipment','resourceAssignments','projectForms','attendanceRecords','payrollRecords'];
+  cols.forEach(k=>{if(!Array.isArray(SEED[k]))return;const seeded=new Map(SEED[k].map(x=>[String(x.id),x]));const cur=Array.isArray(DB.data[k])?DB.data[k]:[];const seen=new Set();const next=[];cur.forEach(x=>{const id=String(x&&x.id);if(seeded.has(id)){next.push(JSON.parse(JSON.stringify(seeded.get(id))));seen.add(id);}else next.push(x);});SEED[k].forEach(x=>{if(!seen.has(String(x.id)))next.push(JSON.parse(JSON.stringify(x)));});DB.data[k]=next;});
+  (DB.data.projects||[]).forEach(p=>{const seed=(SEED.projects||[]).find(x=>x.id===p.id);if(seed){p.managerId=seed.managerId;p.responsibleId=seed.responsibleId;}});
+  try{localStorage.setItem('twpro_realistic_seed_v1','1');}catch(e){} ch=true;
+ }}catch(e){}
+ // Keep the director's approved display name in existing local data; never overwrite credentials.
+ try{const director=(DB.data.users||[]).find(u=>u.username==='nbatam');if(director)director.name='Nguyễn Bình An Tâm';}catch(e){}
+ // Migrate demo display names/roles once; do not overwrite passwords users may have changed.
+ try{if(localStorage.getItem('twpro_demo_users_v3')!=='1'){
+  (SEED.users||[]).forEach(seed=>{const u=(DB.data.users||[]).find(x=>String(x.id)===String(seed.id));if(u){u.name=seed.name;u.role=seed.role;u.username=u.username||seed.username;u.projectIds=JSON.parse(JSON.stringify(seed.projectIds||[]));if(seed.perms)u.perms=JSON.parse(JSON.stringify(seed.perms));}});
+  try{localStorage.setItem('twpro_demo_users_v3','1');}catch(e){} ch=true;
+ }}catch(e){}
  // Fix role cũ viết HOA (GIÁM ĐỐC → Giám đốc) + tên rỗng → tránh menu rỗng, session fail
  try{
   const ROLE_FIX={'GIÁM ĐỐC':'Giám đốc','KẾ TOÁN':'Kế toán','THỦ QUỸ':'Thủ Quỹ','QUẢN LÝ DỰ ÁN':'Quản Lý Dự Án','NHÂN VIÊN MUA HÀNG':'Nhân viên mua hàng','CHỈ HUY CÔNG TRÌNH':'Chỉ huy công trình'};
   (DB.data.users||[]).forEach(u=>{
    if(ROLE_FIX[u.role]){u.role=ROLE_FIX[u.role];ch=true;}
-   if(u.id==='u1'&&!u.name){u.name='Lê Hà';ch=true;}
+   if(u.id==='u1'&&!u.name){u.name='Nguyễn Minh Quân – Giám đốc công ty (DEMO)';ch=true;}
   });
  }catch(e){}
  try{
@@ -2988,5 +3378,50 @@ setInterval(async()=>{ try{ if(typeof CFG!=='undefined'&&CFG.apiUrl&&typeof pull
  mo.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
+
+<style id="tw-company-and-payment-final-fix">
+@media print {
+  @page payment { size:A4 portrait; margin:5mm 7mm 7mm 7mm; @bottom-right { content:'Trang ' counter(page); font:7pt Arial,sans-serif; color:#76664b; } }
+  body.printing-phieu { page:payment!important; }
+  body.printing-phieu .phieu-wrap { width:100%!important; max-width:100%!important; min-width:0!important; margin:0 auto!important; padding:0!important; font-family:Arial,Helvetica,sans-serif!important; font-size:8.4pt!important; line-height:1.12!important; border:0!important; break-inside:auto!important; page-break-inside:auto!important; }
+  body.printing-phieu .phieu-head { display:block!important; text-align:center!important; border:0!important; border-bottom:.7pt solid #b6a887!important; padding:0 0 1.2mm!important; margin:0 0 1.5mm!important; overflow:visible!important; }
+  body.printing-phieu .phieu-head .co { display:block!important; width:100%!important; min-width:0!important; flex:none!important; font-size:8.2pt!important; line-height:1.15!important; text-align:center!important; overflow-wrap:anywhere!important; }
+  body.printing-phieu .phieu-head .co b { display:block!important; text-align:center!important; font-size:10pt!important; line-height:1.15!important; margin-bottom:.6mm!important; }
+  body.printing-phieu .ptitle { font-size:12pt!important; line-height:1.1!important; margin:1.5mm 0 .5mm!important; text-align:center!important; text-decoration:none!important; }
+  body.printing-phieu .pdate { font-size:8.5pt!important; margin:0 0 1mm!important; }
+  body.printing-phieu .ptbl { font-size:7.7pt!important; margin:1mm 0!important; width:100%!important; table-layout:fixed!important; }
+  body.printing-phieu .ptbl td,body.printing-phieu .ptbl th { padding:.7mm 1mm!important; line-height:1.1!important; border:.55pt solid #b6a887!important; overflow-wrap:anywhere!important; word-break:normal!important; }
+  body.printing-phieu .ptbl .gray { background:#fff5d9!important; -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important; }
+  body.printing-phieu .ptbl .sig-b td { height:9mm!important; }
+  body.printing-phieu .ptbl .money-h td { font-size:7.2pt!important; padding:.8mm .5mm!important; }
+  body.printing-phieu .ptbl .money-v td { font-size:7.8pt!important; padding:.8mm .5mm!important; }
+  body.printing-phieu .psec { font-size:7.8pt!important; margin:.65mm 0 .3mm!important; line-height:1.08!important; }
+  body.printing-phieu .pdot { height:2.3mm!important; margin:0 0 .4mm!important; }
+  body.printing-phieu .prow { font-size:7.8pt!important; gap:2mm!important; margin:.6mm 0!important; }
+  body.printing-phieu .prow .dot { height:2.2mm!important; }
+  body.printing-phieu .pfoot { font-size:7.4pt!important; padding:.8mm!important; margin-top:1mm!important; line-height:1.1!important; }
+  .tw-company-print-header { display:flex!important; flex-direction:column!important; align-items:center!important; justify-content:center!important; text-align:center!important; width:100%!important; }
+  .tw-company-print-lines,.tw-company-print-header .tw-brand-meta { width:100%!important; text-align:center!important; line-height:1.35!important; }
+  .tw-company-print-header .tw-brand-meta br { display:block!important; content:''!important; margin:1px 0!important; }
+  .tw-company-print-header .tw-brand-name { font-size:12pt!important; text-align:center!important; }
+}
+@media print { #view .planned-banner { display:none!important; } }
+</style>
+
+<style id="tw-print-final-safety-fix">
+/* In ấn: ẩn khung điều hướng và công cụ ứng dụng, giữ nội dung báo cáo/phiếu cần in. */
+@media print {
+  html, body { width:100%!important; min-width:0!important; height:auto!important; overflow:visible!important; background:#fff!important; }
+  #loginView, .sidebar, .topbar, .toolbar, .td-toolbar, .page-actions, .noprint, .modal-backdrop, .toast, .tw-select-menu, .tw-select-trigger, button, input[type=button], input[type=submit], select, textarea { display:none!important; }
+  #appView, .shell, .main, #view { display:block!important; position:static!important; width:100%!important; max-width:none!important; min-width:0!important; height:auto!important; max-height:none!important; margin:0!important; padding:0!important; overflow:visible!important; box-shadow:none!important; border:0!important; transform:none!important; }
+  #view { font-size:10pt!important; }
+  #view > .page-head { display:none!important; }
+  #view .card, #view .card-b, #view .tbl-wrap { width:100%!important; max-width:none!important; overflow:visible!important; box-shadow:none!important; }
+  #phieuPrintArea { display:block!important; width:100%!important; max-width:none!important; margin:0!important; }
+  body.printing-phieu #view > *:not(#phieuPrintArea) { display:none!important; }
+  body.printing-phieu #phieuPrintArea { position:static!important; }
+  a[href]:after { content:none!important; }
+}
+</style>
 </body>
 </html>
