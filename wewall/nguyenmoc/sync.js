@@ -1,4 +1,4 @@
-const SYNC_URL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnS7-vESYBoAFIhEQKENU3ypl6TnvkYAseuK7cMWJ7PsC42RH9hw4GWcT-xh-g6_ZtOGY4sJHZAYRkhN5hlz5NS_e_BPlt-gJzAHCYIKt-RD_YpwB8D4V25qR_Wy60ddwAxN6rPESLFH4MAvf489c62MatLTWfV3Tx5EQqYWVXCxz_p73K13TITKqYF8bSf-YGwovixdLOvagUbPxgG8SbUg2BwcMJuuw0HzykL-27yOrkuJGjJTuUQG9jEOkXGKJT7khlIjVgYuER8U9n5dntTzIDForg&lib=MswnrDDHE9eYWbRzIO0rdSzRApillb0hU';
+const SYNC_URL = 'https://script.google.com/macros/s/AKfycbxvGpMP9GXuQM6Nl2e316FnleRjvKf2b4X_T1FtEdzxJucHVlvWRPx3HGKxGD2INvNM/exec';
 const SYNC_KEY = '0983351744';
 const SYNC_QUEUE_KEY = 'nm2_sync_queue';
 const SYNC_META_KEY = 'nm2_sync_meta';
