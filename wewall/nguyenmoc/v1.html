@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NGUYỄN MỘC - CHẤM CÔNG & TÍNH LƯƠNG</title>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+<style>
+:root{--bg:#FDF8F3;--text:#4E342E;--accent:#FF6F00;--light:#8D6E63;--border:#e8d9cb;--dark:#3E2723;--card:#fff;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;line-height:1.5}
+button,input{font-family:inherit}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 12px rgba(78,52,46,.07);padding:16px}
+.btn{border:none;border-radius:6px;padding:11px 18px;font-weight:700;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#FF8F33);color:#fff;box-shadow:0 4px 14px rgba(255,111,0,.28);border:1px solid rgba(255,111,0,.2)}
+.btn-excel{background:linear-gradient(135deg,#1D6F42,#2FA35F);color:#fff;box-shadow:0 4px 14px rgba(29,111,66,.28);border:1px solid rgba(29,111,66,.2)}
+.btn-ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
+.badge{font-size:11px;padding:5px 11px;border-radius:6px;font-weight:800;display:inline-flex;align-items:center;border:1px solid transparent}
+.b-daduyet{background:#E8F5E9;color:#2E7D32;border-color:#C8E6C9}
+.b-choduyet{background:#FFF8E1;color:#EF6C00;border-color:#FFECB3}
+.b-tuchoi{background:#FFEBEE;color:#C62828;border-color:#FFCDD2}
+#app-layout{display:flex;min-height:100vh;background:var(--bg)}
+#sidebar{width:160px;min-width:160px;background:#fff;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:auto;padding:12px 10px;display:flex;flex-direction:column;gap:6px;box-shadow:2px 0 10px rgba(78,52,46,.06)}
+#sidebar .side-btn{width:100%;text-align:left;padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:#FFF8F3;color:var(--text);font-size:13px;font-weight:700;cursor:pointer;transition:.18s;text-transform:uppercase;letter-spacing:.4px}
+#sidebar .side-btn.active{background:#3E2723;color:#fff;border-color:#3E2723;box-shadow:0 2px 8px rgba(62,39,35,.25);font-weight:800}
+#sidebar .side-btn:hover:not(.active){background:#FFF3E0;border-color:#FFCC80}
+#main{flex:1;padding:0;max-width:1200px;overflow:hidden}
+#main-inner{padding:16px}
+.app-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.app-header b{letter-spacing:.3px}
+footer#global-footer{position:fixed;bottom:0;left:0;right:0;background:#f8f8f8;border-top:1px solid var(--border);text-align:center;font-size:10px;line-height:1.3;padding:6px 4px;z-index:50;color:var(--light)}
+.login-wrap{max-width:420px;margin:24px auto}
+.login-brand{text-align:center;padding:18px 12px}
+.login-brand h1{font-size:22px;letter-spacing:1px}
+.login-brand p{font-size:12px;color:var(--light)}
+.tabs{display:flex;gap:6px;margin:12px 0;padding:4px;background:#EFEBE9;border-radius:6px}
+.tab{flex:1;padding:10px 14px;border-radius:6px;text-align:center;font-weight:800;cursor:pointer;font-size:13px;color:#3E2723;border:1px solid transparent;transition:.18s;text-transform:uppercase;letter-spacing:.4px}
+.tab.active{background:#fff;color:#2A1A14;border-color:#3E2723;box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:900}
+.input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:15px;transition:.18s}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,111,0,.15)}
+.field{margin-bottom:12px}
+.field .err{color:#C62828;font-size:12px;margin-top:4px;min-height:14px}
+.big-btn{width:100%;padding:18px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#FF8F33);color:#fff;font-size:17px;font-weight:900;border:none;cursor:pointer;box-shadow:0 8px 20px rgba(255,111,0,.32);transition:.18s}
+.big-btn:disabled{background:#BDBDBD;box-shadow:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:14px}
+.stat .label{font-size:12px;color:var(--light)}
+.stat .value{font-size:20px;font-weight:900;margin-top:4px}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:8px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:500px}
+th,td{border:1px solid var(--border);padding:8px 6px;text-align:center;font-size:12px;white-space:nowrap}
+thead th{background:var(--dark);color:#fff;position:sticky;top:0;z-index:2}
+.sticky-left{position:sticky;left:0;z-index:3;background:#fff}
+.sticky-left.head{background:var(--dark)}
+th.sticky-right,td.sticky-right{position:sticky;right:0;z-index:3}
+.col-tong{right:200px !important}
+.col-dongia{right:100px !important}
+.col-thanhtien{right:0 !important}
+th.col-tong,th.col-dongia,th.col-thanhtien{background:#3E2723;color:#fff}
+td.col-tong,td.col-dongia,td.col-thanhtien{background:#3E2723;color:#fff;font-weight:700}
+td.cell-co{background:#E8F5E9}
+td.cell-cho{background:#FFF8E1}
+td.cell-khong{background:#FFEBEE}
+.row-alt{background:#FFFBF7}
+.bottom-sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:12px 12px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.18);z-index:100;max-height:72vh;overflow:auto;padding:16px;transform:translateY(100%);transition:.28s cubic-bezier(.32,.72,0,1)}
+.bottom-sheet.open{transform:translateY(0)}
+.sheet-backdrop{position:fixed;inset:0;background:rgba(60,40,30,.35);backdrop-filter:blur(3px);z-index:99;display:none}
+.sheet-backdrop.open{display:block}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:11px 18px;border-radius:6px;font-size:13px;z-index:200;display:none;box-shadow:0 8px 20px rgba(0,0,0,.2);font-weight:600}
+.toast.show{display:block}
+.avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:#eee}
+.demo-banner{background:#FFF8E1;border:1px dashed #F57F17;padding:8px 14px;border-radius:6px;font-size:12px;text-align:center;margin-bottom:10px;font-weight:600}
+@media(max-width:768px){#app-layout{flex-direction:column}#sidebar{width:100%;min-width:100%;height:auto;display:flex;flex-direction:row;gap:8px;overflow-x:auto;overflow-y:hidden;position:sticky;top:0;z-index:20;padding:8px 12px;background:#fff;border-right:none;border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(78,52,46,.08)}#sidebar .side-btn{white-space:nowrap;width:auto;flex:0 0 auto;padding:9px 16px;margin-bottom:0}#main-inner{padding:12px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheetBackdrop" class="sheet-backdrop" onclick="closeSheet()"></div>
+<div id="bottomSheet" class="bottom-sheet"></div>
+<div id="toast" class="toast"></div>
+<footer id="global-footer"><div>© 2026 Tgroup Ecosystem · WeWall Group · Nguyen Moc Co. LTD | Le Ha</div><div>Hệ thống Chấm công Nội bộ</div></footer>
+<script>
+const LocalDB={load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}},save(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+const KEYS={users:'nm2_users',records:'nm2_records',chot:'nm2_chot',audit:'nm2_audit',cauhinh:'nm2_cauhinh',session:'nm2_session'};
+function fmtMoney(v){if(v==null||isNaN(v))return'0₫';return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'₫';}
+function fmtPhone(s){if(!s)return'';const d=s.replace(/\D/g,'');if(d.length!==10)return s;return d.slice(0,3)+' '+d.slice(3,7)+' '+d.slice(7);}
+function fmtPhoneInput(v){const d=v.replace(/\D/g,'').slice(0,10);if(d.length<=3)return d;if(d.length<=7)return d.slice(0,3)+' '+d.slice(3);return d.slice(0,3)+' '+d.slice(3,7)+' '+d.slice(7);}
+function normalizePhone(s){return(s||'').replace(/\D/g,'');}
+function nowStr(){return new Date().toISOString();}
+function fmtDateDDMMYYYY(s){if(!s)return'';const d=new Date(s);if(isNaN(d)) {const p=(s||'').split('-'); if(p.length===3) return p[2]+'/'+p[1]+'/'+p[0]; return s;} const pad=n=>String(n).padStart(2,'0'); return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+function todayYMD(){const d=new Date();return d.toISOString().slice(0,10);}
+function monthKey(d=new Date()){return d.toISOString().slice(0,7);}
+function genId(p){return p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);}
+function resetAllData(){ if(!confirm('Reset toàn bộ dữ liệu và load lại danh sách thợ mới?')) return; localStorage.clear(); location.reload(); }
+// ===== CẤU HÌNH TẠM (DEMO v2.1) — chị cập nhật số thật sau =====
+// Giá tăng ca TẠM: 30.000đ/giờ (chưa có quy định chính thức)
+const TAM={GIA_TANG_CA_GIO:30000,GIO_HC_BAT_DAU:'07:30',GIO_HC_KET_THUC:'17:00'};
+// Danh mục TẠM — sau này QL tự tạo/sửa trong app, thợ chỉ chọn
+const DM_MA_DU_AN_KHACH=['DETHAM-001-26','VINHOMES-002-26','AEON-003-26','SJC-004-26','CAFE-005-26','SHOWROOM-006-26'];
+const DM_MA_DU_AN_CTY=['QUANGCAO-T10','NOITHAT-T11','BAOTRI-T12','LAPDAT-T13'];
+const DM_PHU_CAP=[{ten:'Cơm',gia:30000},{ten:'Xăng xe',gia:30000}];
+function gioRaPhut(g){const p=(g||'').split(':');return (parseInt(p[0])||0)*60+(parseInt(p[1])||0);}
+function tinhTangCaGio(gioRa){return Math.max(0,(gioRaPhut(gioRa)-gioRaPhut(TAM.GIO_HC_KET_THUC))/60);}
+function seedIfNeeded(){
+ if(LocalDB.load(KEYS.users))return;
+ const users=[
+  {maTho:'nbatam',hoTen:'NBA Tâm',sdt:'0784944886',vaiTro:'GiamDoc',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat'],anhDataUrl:'',matKhau:'admin123',ngayVaoLam:'2024-01-15'},
+  {maTho:'gd002',hoTen:'Nguyễn Văn Giám',sdt:'0785000111',vaiTro:'GiamDoc',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','sua_cong','duyet_cong','nhan_su','thong_ke','xuat_excel','cai_dat'],anhDataUrl:'',matKhau:'admin123',ngayVaoLam:'2024-06-01'},
+  {maTho:'QL001',hoTen:'Nguyễn Văn Quản',sdt:'0901234567',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-01'},
+  {maTho:'QL002',hoTen:'Phạm Thu Hà',sdt:'0902345678',vaiTro:'QuanLy',trangThai:'hoat_dong',donGia:0,phanLoai:'Quản lý',quyen:['dashboard','bang_cong','duyet_cong','nhan_su','thong_ke','xuat_excel'],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-10'},
+  {maTho:'T001',hoTen:'Nguyễn Văn Thành',sdt:'0903112456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-10'},
+  {maTho:'T002',hoTen:'Trần Minh Đức',sdt:'0903221456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:370000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-05'},
+  {maTho:'T003',hoTen:'Lê Hoàng Nam',sdt:'0903332456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-01-15'},
+  {maTho:'T004',hoTen:'Phạm Quốc Bảo',sdt:'0903441456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:360000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-04-20'},
+  {maTho:'T005',hoTen:'Hoàng Văn Tuấn',sdt:'0903552456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-12'},
+  {maTho:'T006',hoTen:'Đỗ Thành Đạt',sdt:'0903661456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:370000,phanLoai:'Thợ quảng cáo',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-18'},
+  {maTho:'T007',hoTen:'Bùi Văn Khang',sdt:'0913112456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-28'},
+  {maTho:'T008',hoTen:'Vũ Minh Hoàng',sdt:'0913221456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-22'},
+  {maTho:'T009',hoTen:'Nguyễn Đức Huy',sdt:'0913332456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-07-10'},
+  {maTho:'T010',hoTen:'Trần Văn Phúc',sdt:'0913441456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ alu',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-08-05'},
+  {maTho:'T011',hoTen:'Lê Văn Sỹ',sdt:'0913552456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ mica',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-01-20'},
+  {maTho:'T012',hoTen:'Phạm Minh Trí',sdt:'0913661456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ mica',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-09-15'},
+  {maTho:'T013',hoTen:'Hoàng Quốc Việt',sdt:'0923112456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ mica',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-10-10'},
+  {maTho:'T014',hoTen:'Đỗ Văn Linh',sdt:'0923221456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:340000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-11-02'},
+  {maTho:'T015',hoTen:'Bùi Thị Hồng Nhung',sdt:'0923332456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:330000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-25'},
+  {maTho:'T016',hoTen:'Vũ Văn Hào',sdt:'0923441456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-06-30'},
+  {maTho:'T017',hoTen:'Nguyễn Thị Kim Oanh',sdt:'0923552456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:340000,phanLoai:'Thợ dán decal',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-04-12'},
+  {maTho:'T018',hoTen:'Trần Quang Vinh',sdt:'0923661456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ LED',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-07-18'},
+  {maTho:'T019',hoTen:'Lê Minh Quân',sdt:'0933112456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ LED',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-08-20'},
+  {maTho:'T020',hoTen:'Phạm Văn Thái',sdt:'0933221456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:410000,phanLoai:'Thợ LED',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-09-01'},
+  {maTho:'T021',hoTen:'Hoàng Anh Tuấn',sdt:'0933332456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:400000,phanLoai:'Thợ LED',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-10'},
+  {maTho:'T022',hoTen:'Đỗ Văn Cường',sdt:'0933441456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ hàn khung',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-05-05'},
+  {maTho:'T023',hoTen:'Bùi Văn Sơn',sdt:'0933552456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:370000,phanLoai:'Thợ hàn khung',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-02-15'},
+  {maTho:'T024',hoTen:'Vũ Đức Thắng',sdt:'0933661456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:390000,phanLoai:'Thợ hàn khung',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-03-28'},
+  {maTho:'T025',hoTen:'Nguyễn Văn Hùng',sdt:'0943112456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:380000,phanLoai:'Thợ hàn khung',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-10-15'},
+  {maTho:'T026',hoTen:'Trần Văn Lợi',sdt:'0943221456',vaiTro:'Tho',trangThai:'hoat_dong',donGia:350000,phanLoai:'Thợ sơn',quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:'2024-11-20'},
+ ];
+ LocalDB.save(KEYS.users,users);
+ LocalDB.save(KEYS.cauhinh,{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1});
+ const records=[];
+ const GHICHU_DEMO=['Lắp xong biển A, mai hàn khung tiếp','Hoàn thành mái che, bàn giao cho khách','Sửa chữa xong, mai qua sơn tiếp','Đang thi công 70%, mai tiếp tục','Lắp đặt xong, chờ khách nghiệm thu','Hỗ trợ QC, xong việc','Đi 2 công trình, xong công trình 1, mai qua công trình 2','Hoàn thành dán decal, khách đã kiểm tra','Lắp LED xong, test sáng bình thường','Sơn xong 2 lớp, mai sơn lót tiếp','Hàn xong khung, mai lắp alu','Mài + sơn xong, bàn giao','Lắp xong khung sắt, mai lắp mica'];
+ const thoList=users.filter(u=>u.vaiTro==='Tho');
+ function taoCaDemo(tho,ngayCong,st,homNay){
+  const gioVao=Math.random()<0.8?'07:30':(Math.random()<0.5?'07:45':'08:00');
+  const coTC=!homNay&&Math.random()<0.35;
+  const gioRa=homNay?'':(coTC?['19:00','21:00','22:00','24:00'][Math.floor(Math.random()*4)]:'17:00');
+  const tcGio=homNay?0:(coTC?(parseInt(gioRa)-17):0);
+  let phuCap=[];
+  if(!homNay){
+   phuCap=[{ten:'Cơm',gia:30000,soLuong:1,thanhTien:30000}];
+   const haiCT=Math.random()<0.3;
+   if(haiCT)phuCap.push({ten:'Xăng xe',gia:30000,soLuong:2,thanhTien:60000});
+   else if(Math.random()<0.5)phuCap.push({ten:'Xăng xe',gia:30000,soLuong:1,thanhTien:30000});
+  }
+  return {maBanGhi:genId('BG')+'_'+records.length,maTho:tho.maTho,ngayCong,gioVao,gioRa,thoiDiemGui:new Date(Date.now()-Math.random()*86400000*3).toISOString(),trangThai:homNay?'dang_lam':st,nguoiDuyet:(!homNay&&st!=='cho_duyet')?'QL001':'',thoiDiemDuyet:(!homNay&&st!=='cho_duyet')?new Date().toISOString():'',lyDoTuChoi:st==='tu_choi'?'Sai vị trí':'',viDo:10.762622+Math.random()*0.02,kinhDo:106.660172+Math.random()*0.02,doChinhXac:5+Math.random()*40,viDoRa:homNay?null:(10.762622+Math.random()*0.02),kinhDoRa:homNay?null:(106.660172+Math.random()*0.02),doChinhXacRa:homNay?null:(5+Math.random()*40),maDuAnKhach:DM_MA_DU_AN_KHACH[Math.floor(Math.random()*DM_MA_DU_AN_KHACH.length)],maDuAnCty:DM_MA_DU_AN_CTY[Math.floor(Math.random()*DM_MA_DU_AN_CTY.length)],phuCap,tangCaGio:tcGio,tangCaTien:tcGio*TAM.GIA_TANG_CA_GIO,tangCaLyDo:coTC?'Hỗ trợ QC':'',ghiChu:homNay?'':GHICHU_DEMO[Math.floor(Math.random()*GHICHU_DEMO.length)]};
+ }
+ for(let d=10;d>=1;d--){
+  const dt=new Date();dt.setDate(dt.getDate()-d);const ymd=dt.toISOString().slice(0,10);
+  thoList.forEach(tho=>{if(Math.random()<0.15)return;const st=d===1?(Math.random()<0.5?'cho_duyet':'da_duyet'):(Math.random()<0.08?'tu_choi':'da_duyet');records.push(taoCaDemo(tho,ymd,st,false));});
+ }
+ // Hôm nay: T001 đang làm (để demo nút RA CA), số khác đã ra ca chờ duyệt / đang làm
+ thoList.forEach((tho,idx)=>{
+  if(idx===0){records.push(taoCaDemo(tho,todayYMD(),'dang_lam',true));return;}
+  if(Math.random()<0.2)return;
+  if(Math.random()<0.5){records.push(taoCaDemo(tho,todayYMD(),'cho_duyet',false));}
+  else{records.push(taoCaDemo(tho,todayYMD(),'dang_lam',true));}
+ });
+ LocalDB.save(KEYS.records,records);LocalDB.save(KEYS.chot,[]);LocalDB.save(KEYS.audit,[]);
+}
+// Mỗi lần mở link hay kéo refresh: reset sạch DỮ LIỆU về mặc định,
+// nhưng GIỮ NGUYÊN session đăng nhập (không bao giờ văng ra màn hình login)
+Object.values(KEYS).forEach(k=>{if(k!==KEYS.session)localStorage.removeItem(k);});
+seedIfNeeded();
+function getUsers(){return LocalDB.load(KEYS.users)||[]}
+function getRecords(){return LocalDB.load(KEYS.records)||[]}
+function getCauHinh(){return LocalDB.load(KEYS.cauhinh)||{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1}}
+function getSession(){const s=LocalDB.load(KEYS.session);if(!s)return null;if(new Date(s.han)<new Date())return null;return s;}
+function setSession(user){LocalDB.save(KEYS.session,{user,han:new Date(Date.now()+7*24*3600*1000).toISOString()})}
+function clearSession(){localStorage.removeItem(KEYS.session)}
+function addAudit(h,a,c){const arr=LocalDB.load(KEYS.audit)||[];arr.unshift({thoiDiem:nowStr(),nguoiThucHien:(getSession()?.user?.maTho||'system'),hanhDong:h,maBanGhi:a,chiTiet:c});LocalDB.save(KEYS.audit,arr)}
+function hasPerm(u,p){if(!u)return false;if(u.vaiTro==='GiamDoc')return true;return(u.quyen||[]).includes(p)}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+let demoBanner=false,currentView='duyet',thoTab='chamcong';
+function render(){const s=getSession();if(!s){renderLogin();return}const u=s.user;if(u.vaiTro==='Tho'&&(!u.quyen||u.quyen.length===0)){renderTho(u);}else{renderQuanLy(u);}}
+function renderLogin(){
+ const app=document.getElementById('app');
+ app.innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px">CHẤM CÔNG THỢ</div><div class="field"><input id="loginId" class="input" placeholder="Nhập số điện thoại"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button><div style="margin-top:16px;border-top:1px dashed var(--border);padding-top:12px"><div style="font-size:12px;color:var(--light);margin-bottom:8px">Xem thử nhanh</div><div class="grid2"><button class="btn btn-ghost" onclick="demoLogin('Tho')">Thợ</button><button class="btn btn-ghost" onclick="demoLogin('QuanLy')">Quản Lý</button><button class="btn btn-ghost" onclick="demoLogin('GiamDoc')">Giám đốc</button></div><div style="margin-top:16px"><button class="btn btn-ghost" style="width:100%;color:#C62828;border-color:#FFCDD2;background:#FFEBEE" onclick="resetAllData()">Reset</button></div></div></div></div>`;
+}
+function doLogin(){
+ const id=document.getElementById('loginId').value.trim();const pw=document.getElementById('loginPw').value;const users=getUsers();let u=null;
+ const norm=normalizePhone(id);u=users.find(x=>normalizePhone(x.sdt)===norm&&x.matKhau===pw);
+ if(!u){document.getElementById('loginErr').textContent='Sai SĐT hoặc mật khẩu';return;}
+ if(u.trangThai!=='hoat_dong'){document.getElementById('loginErr').textContent='Tài khoản đã bị khóa';return;}
+ demoBanner=false;setSession(u);render();
+}
+function demoLogin(r){const users=getUsers();let u;if(r==='Tho')u=users.find(x=>x.vaiTro==='Tho');else if(r==='QuanLy')u=users.find(x=>x.vaiTro==='QuanLy');else u=users.find(x=>x.vaiTro==='GiamDoc');demoBanner=true;setSession(u);render();}
+function renderTho(user){
+ const records=getRecords().filter(r=>r.maTho===user.maTho);const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));const choDuyet=records.filter(r=>r.trangThai==='cho_duyet'&&r.ngayCong.startsWith(curM));const tongCong=daDuyet.length;const tien=(user.donGia||0)*tongCong;const today=todayYMD();const recHomNay=records.find(r=>r.ngayCong===today);const daRaCa=!!(recHomNay&&recHomNay.gioRa);const cauhinh=getCauHinh();const gioMo=cauhinh.GIO_MO_CHAM_CONG||'05:00';const now=new Date();const[hM,mM]=gioMo.split(':').map(Number);const moPhut=hM*60+mM;const nowPhut=now.getHours()*60+now.getMinutes();const chuaDenGio=nowPhut<moPhut;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" style="padding:6px 12px" onclick="logout()">Thoát</button></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - Tài khoản Thợ</div>':''}<div class="card" style="margin-bottom:12px"><div style="font-weight:900">Xin chào, ${user.hoTen}</div><div style="font-size:12px;color:var(--light)">${fmtPhone(user.sdt)} · ${user.phanLoai}</div></div><div class="tabs"><div class="tab ${thoTab==='chamcong'?'active':''}" onclick="thoTab='chamcong';render()">Chấm công</div><div class="tab ${thoTab==='thongtin'?'active':''}" onclick="thoTab='thongtin';render()">Thông tin</div></div>${thoTab==='chamcong'?`<div class="card" style="margin-top:10px">${!recHomNay?`<button class="big-btn" ${chuaDenGio?'disabled':''} onclick="vaoCa()">VÀO CA</button>${chuaDenGio?`<div style="color:#C62828;text-align:center;margin-top:8px;font-size:13px">Chưa đến giờ chấm công (sau ${gioMo})</div>`:''}`:!daRaCa?`<div style="text-align:center;color:#2E7D32;font-weight:800">Đã vào ca lúc ${recHomNay.gioVao}</div><button class="big-btn" style="margin-top:10px" onclick="openRaCaForm()">RA CA</button>`:`<div style="text-align:center;color:#2E7D32;font-weight:800">Đã ra ca lúc ${recHomNay.gioRa}</div><div style="text-align:center;color:#2E7D32;margin-top:8px;font-size:13px">Cảm ơn đã chấm công, vui lòng chờ quản lý duyệt</div>`}</div><div class="grid2" style="margin-top:10px"><div class="card stat"><div class="label">1. Số công hiện tại</div><div class="value">${tongCong}</div><div style="font-size:11px;color:var(--light)">đã duyệt tháng này</div></div><div class="card stat"><div class="label">2. Số tiền dự kiến</div><div class="value">${fmtMoney(tien)}</div><div style="font-size:11px;color:var(--light)">tạm tính</div></div></div><div class="card" style="margin-top:10px;cursor:pointer" onclick="toggleChoDuyet()"><div style="display:flex;justify-content:space-between"><b>3. Số công chờ duyệt</b><b>${choDuyet.length}</b></div><div id="choDuyetList" style="display:none;margin-top:10px">${choDuyet.length===0?'<div style="font-size:13px;color:var(--light)">Không có</div>':choDuyet.map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>${r.ngayCong}</span><span class="badge b-choduyet">Chờ duyệt</span></div>`).join('')}</div></div><div class="card" style="margin-top:10px"><div style="font-size:12px;color:var(--light)">Lịch sử gần đây</div>${records.slice().sort((a,b)=>new Date(b.ngayCong)-new Date(a.ngayCong)).slice(0,8).map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0eb"><span>${r.ngayCong}</span><span class="badge ${r.trangThai==='da_duyet'?'b-daduyet':r.trangThai==='cho_duyet'?'b-choduyet':'b-tuchoi'}">${r.trangThai==='da_duyet'?'Đã duyệt':r.trangThai==='cho_duyet'?'Chờ duyệt':'Từ chối'}</span></div>`).join('')}</div>`:`<div class="card" style="margin-top:12px;padding:0;overflow:hidden;border-radius:10px"><div style="padding:16px 18px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#FFFBF7,#FFF3E0);border-bottom:1px solid var(--border)"><img src="${user.anhDataUrl||''}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#eee" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:900;font-size:16px">${user.hoTen}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge" style="background:#fff">${user.maTho}</span><span class="badge" style="background:#3E2723;color:#fff">${user.phanLoai}</span><span class="badge" style="background:#fff">${fmtPhone(user.sdt)}</span></div></div></div><div style="padding:4px 0"><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">5. HỌ TÊN / MÃ / SĐT</span><span style="font-weight:800;text-align:right">${user.hoTen}<br><small style="font-weight:400;color:var(--light)">${fmtPhone(user.sdt)}</small></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">6. NGÀY VÀO LÀM</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${user.ngayVaoLam||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px"><span style="font-size:12px;color:var(--light);font-weight:700">7. LƯƠNG NGÀY / PHÂN LOẠI</span><span style="text-align:right"><b style="font-size:15px">${fmtMoney(user.donGia)}</b><br><small class="badge" style="background:#FFE0B2;margin-top:4px">${user.phanLoai}</small></span></div></div></div>`}</div></div></div>`;
+}
+function toggleChoDuyet(){const el=document.getElementById('choDuyetList');el.style.display=el.style.display==='none'?'block':'none';}
+function vaoCa(){
+ const sess=getSession();if(!sess)return;const user=sess.user;const today=todayYMD();const recs=getRecords();if(recs.some(r=>r.maTho===user.maTho&&r.ngayCong===today)){toast('Đã vào ca hôm nay');return;}
+ const now=new Date();const gioVao=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+ const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),maTho:user.maTho,ngayCong:today,gioVao,gioRa:'',thoiDiemGui:nowStr(),trangThai:'dang_lam',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc,viDoRa:null,kinhDoRa:null,doChinhXacRa:null,maDuAnKhach:'',maDuAnCty:'',phuCap:[],tangCaGio:0,tangCaTien:0,tangCaLyDo:'',ghiChu:''};recs.unshift(nr);LocalDB.save(KEYS.records,recs);toast('Đã vào ca lúc '+gioVao);render();};
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
+}
+let raCaPhuCap={};
+function openRaCaForm(){
+ const sess=getSession();if(!sess)return;const rec=getRecords().find(r=>r.maTho===sess.user.maTho&&r.ngayCong===todayYMD());if(!rec||rec.gioRa){toast('Chưa vào ca');return;}
+ const now=new Date();const gioRa=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+ raCaPhuCap={};DM_PHU_CAP.forEach((p,i)=>{raCaPhuCap[i]=0;});
+ const tcGoiY=tinhTangCaGio(gioRa);
+ document.getElementById('bottomSheet').innerHTML=`<div style="max-height:70vh;overflow:auto"><h3>Ra ca — ${fmtDateDDMMYYYY(todayYMD())}</h3><div style="font-size:13px;color:var(--light)">Vào ca: ${rec.gioVao} · Ra ca: ${gioRa}</div><div style="font-size:12px;color:var(--light)">Mã dự án: chọn ít nhất 1 trong 2</div>
+ <div class="field" style="margin-top:12px"><label>Mã dự án khách</label><select id="rc_khach" class="input"><option value="">-- Chọn --</option>${DM_MA_DU_AN_KHACH.map(m=>`<option>${m}</option>`).join('')}</select></div>
+ <div class="field"><label>Mã dự án cty</label><select id="rc_cty" class="input"><option value="">-- Chọn --</option>${DM_MA_DU_AN_CTY.map(m=>`<option>${m}</option>`).join('')}</select></div>
+ <div class="field"><label>Phụ cấp</label>${DM_PHU_CAP.map((p,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><span>${p.ten} — ${fmtMoney(p.gia)}</span><span style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost" style="padding:4px 10px" onclick="pcDoi(${i},-1)">−</button><b id="pc_sl_${i}">0</b><button class="btn btn-ghost" style="padding:4px 10px" onclick="pcDoi(${i},1)">+</button><b id="pc_tt_${i}" style="min-width:70px;text-align:right">0₫</b></span></div>`).join('')}</div>
+ <div class="field"><label>Tăng ca (giờ) — tự gợi ý từ giờ ra ca</label><input id="rc_tc" class="input" type="number" min="0" step="0.5" value="${tcGoiY}"></div>
+ <div class="field"><label>Lý do tăng ca</label><input id="rc_tclydo" class="input" placeholder="VD: Hỗ trợ QC"></div>
+ <div class="field"><label>Ghi chú tình trạng công việc *</label><textarea id="rc_ghichu" class="input" rows="3" placeholder="VD: Lắp xong biển A, mai hàn khung tiếp"></textarea></div>
+ <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="xacNhanRaCa('${gioRa}')">XÁC NHẬN RA CA</button></div>`;openSheet();
+}
+function pcDoi(i,d){raCaPhuCap[i]=Math.max(0,(raCaPhuCap[i]||0)+d);document.getElementById('pc_sl_'+i).textContent=raCaPhuCap[i];document.getElementById('pc_tt_'+i).textContent=fmtMoney(raCaPhuCap[i]*DM_PHU_CAP[i].gia);}
+function xacNhanRaCa(gioRa){
+ const sess=getSession();if(!sess)return;const khach=document.getElementById('rc_khach').value;const cty=document.getElementById('rc_cty').value;const ghichu=document.getElementById('rc_ghichu').value.trim();const tcGio=parseFloat(document.getElementById('rc_tc').value||'0');const tcLyDo=document.getElementById('rc_tclydo').value.trim();
+ if(!khach&&!cty){toast('Chọn ít nhất 1 mã dự án');return;}
+ if(!ghichu){toast('Nhập ghi chú tình trạng công việc');return;}
+ const recs=getRecords();const rec=recs.find(r=>r.maTho===sess.user.maTho&&r.ngayCong===todayYMD());if(!rec||rec.gioRa)return;
+ const save=(lat,lng,acc)=>{
+  rec.gioRa=gioRa;rec.maDuAnKhach=khach;rec.maDuAnCty=cty;rec.tangCaGio=isNaN(tcGio)?0:tcGio;rec.tangCaTien=rec.tangCaGio*TAM.GIA_TANG_CA_GIO;rec.tangCaLyDo=tcLyDo;rec.ghiChu=ghichu;rec.trangThai='cho_duyet';rec.thoiDiemGui=nowStr();
+  rec.viDoRa=lat;rec.kinhDoRa=lng;rec.doChinhXacRa=acc;
+  rec.phuCap=DM_PHU_CAP.map((p,i)=>({ten:p.ten,gia:p.gia,soLuong:raCaPhuCap[i]||0,thanhTien:(raCaPhuCap[i]||0)*p.gia})).filter(p=>p.soLuong>0);
+  LocalDB.save(KEYS.records,recs);closeSheet();toast('Đã ra ca lúc '+gioRa);render();
+ };
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
+}
+const MENU=[{id:'duyet',label:'DUYỆT CÔNG',perm:'duyet_cong'},{id:'theodoi',label:'THEO DÕI CA',perm:'thong_ke'},{id:'dashboard',label:'DASHBOARD',perm:'dashboard'},{id:'bangcong',label:'BẢNG CÔNG',perm:'bang_cong'},{id:'dstho',label:'DANH SÁCH THỢ',perm:'nhan_su'},{id:'dukien',label:'DỰ KIẾN TRẢ THỢ',perm:'thong_ke'}];
+function renderQuanLy(user){
+ const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">ĐĂNG XUẤT</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
+ renderView(user,cur);
+}
+function switchView(id){currentView=id;renderQuanLy(getSession().user);}
+function logout(){clearSession();render();}
+function renderView(user,view){
+ const el=document.getElementById('viewContent');
+ if(view==='dashboard')renderDashboard(el,user);
+ else if(view==='duyet')renderDuyet(el,user);
+ else if(view==='theodoi')renderTheoDoiCa(el,user);
+ else if(view==='bangcong')renderBangCong(el,user);
+ else if(view==='dstho')renderDsTho(el,user);
+ else if(view==='dukien')renderDuKien(el,user);
+}
+function renderDashboard(el,user){
+ const records=getRecords();const users=getUsers().filter(u=>u.vaiTro==='Tho'&&u.trangThai==='hoat_dong');const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));const choDuyet=records.filter(r=>r.trangThai==='cho_duyet');const tongTien=daDuyet.reduce((s,r)=>{const u=getUsers().find(x=>x.maTho===r.maTho);return s+(u?.donGia||0);},0);const today=todayYMD();const diLam=new Set(records.filter(r=>r.ngayCong===today&&r.trangThai!=='tu_choi').map(r=>r.maTho)).size;
+ el.innerHTML=`<div class="grid2"><div class="card stat"><div class="label">Dự kiến trả thợ tháng</div><div class="value">${fmtMoney(tongTien)}</div></div><div class="card stat"><div class="label">Thợ đi làm hôm nay / Tổng</div><div class="value">${diLam} / ${users.length}</div></div><div class="card stat"><div class="label">Chờ duyệt</div><div class="value">${choDuyet.length}</div></div><div class="card stat"><div class="label">Tổng công đã duyệt</div><div class="value">${daDuyet.length}</div></div></div>`;
+}
+function renderDuyet(el,user){
+ let recs=getRecords().filter(r=>r.trangThai==='cho_duyet');recs.sort((a,b)=>new Date(b.thoiDiemGui)-new Date(a.thoiDiemGui));
+ el.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h3>Duyệt công (${recs.length})</h3><button class="btn btn-primary" onclick="duyetAll()">Duyệt tất cả (${recs.length})</button></div><div style="margin-top:12px;display:grid;gap:12px">${recs.map(r=>{
+   const u=getUsers().find(x=>x.maTho===r.maTho);const hasGPS=r.viDo&&r.kinhDo;
+   return `<div class="card" style="border-left:4px solid var(--accent);padding:12px"><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge" style="background:#E3F2FD;color:#1565C0">${hasGPS? r.viDo.toFixed(5)+', '+r.kinhDo.toFixed(5) : 'Không GPS'}</span>${hasGPS?`<a href="https://maps.google.com/?q=${r.viDo},${r.kinhDo}" target="_blank" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">Xem vị trí</a>`:''}</div><div style="margin-top:8px;font-weight:800">${u?.hoTen||''} <small style="color:var(--light)">${u?.phanLoai||''}</small></div><div style="font-size:12px;color:var(--light)">${fmtPhone(u?.sdt||'')} · ${fmtDateDDMMYYYY(r.ngayCong)}</div>${r.gioVao?`<div style="font-size:12px;margin-top:4px">Vào: ${r.gioVao} · Ra: ${r.gioRa||'—'}${(r.tangCaGio||0)>0?` · Tăng ca: ${r.tangCaGio} giờ = ${fmtMoney(r.tangCaTien)}`:''}</div>`:''}${r.maDuAnKhach||r.maDuAnCty?`<div style="font-size:12px">Mã DA: ${[r.maDuAnKhach,r.maDuAnCty].filter(Boolean).join(' · ')}</div>`:''}${(r.phuCap||[]).length?`<div style="font-size:12px">Phụ cấp: ${(r.phuCap||[]).map(p=>p.ten+' ×'+p.soLuong+' = '+fmtMoney(p.thanhTien)).join(', ')}</div>`:''}${r.ghiChu?`<div style="font-size:13px;margin-top:6px;background:#FFFBF7;border:1px solid var(--border);border-radius:6px;padding:8px">${r.ghiChu}</div>`:''}<div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-primary" style="flex:1" onclick="duyetOne('${r.maBanGhi}',true)">✓ Duyệt</button><button class="btn btn-ghost" style="flex:1" onclick="duyetOne('${r.maBanGhi}',false)">✕ Từ chối</button></div></div>`;
+ }).join('') || '<div style="text-align:center;padding:20px;color:var(--light)">Không có bản ghi chờ duyệt ✅</div>'}</div></div>`;
+}
+let theoDoiNgay=todayYMD();
+function renderTheoDoiCa(el,user){
+ const recs=getRecords().filter(r=>r.ngayCong===theoDoiNgay);
+ const daVao=recs.length;const daRa=recs.filter(r=>r.gioRa).length;
+ let tcGio=0,tcTien=0,pcTien=0;
+ recs.forEach(r=>{tcGio+=(r.tangCaGio||0);tcTien+=(r.tangCaTien||0);(r.phuCap||[]).forEach(p=>pcTien+=p.thanhTien||0);});
+ el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b>Theo dõi ca</b><input type="date" class="input" style="width:168px" value="${theoDoiNgay}" onchange="theoDoiNgay=this.value;renderTheoDoiCa(document.getElementById('viewContent'), getSession().user)"></div><div class="grid2" style="margin-top:12px"><div class="card stat"><div class="label">Vào ca / Đã ra ca</div><div class="value">${daRa} / ${daVao}</div></div><div class="card stat"><div class="label">Tăng ca / Tiền tăng ca</div><div class="value">${tcGio} giờ</div><div style="font-size:11px;color:var(--light)">${fmtMoney(tcTien)}</div></div><div class="card stat"><div class="label">Tổng phụ cấp</div><div class="value">${fmtMoney(pcTien)}</div></div></div><div style="margin-top:12px;display:grid;gap:10px">${recs.map(r=>{const u=getUsers().find(x=>x.maTho===r.maTho);const hasGPSRa=r.viDoRa&&r.kinhDoRa;return `<div class="card" style="border-left:4px solid ${r.gioRa?'#2E7D32':'var(--accent)'};padding:12px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><b>${u?.hoTen||''}</b><span class="badge ${r.gioRa?'b-daduyet':'b-choduyet'}">${r.gioRa?'Đã ra ca':'Đang làm'}</span></div><div style="font-size:12px;color:var(--light)">${fmtPhone(u?.sdt||'')} · ${u?.phanLoai||''} · Vào: ${r.gioVao||'—'}${r.viDo&&r.kinhDo?` (<a href="https://maps.google.com/?q=${r.viDo},${r.kinhDo}" target="_blank">vị trí</a>)`:''} · Ra: ${r.gioRa||'—'}${hasGPSRa?` (<a href="https://maps.google.com/?q=${r.viDoRa},${r.kinhDoRa}" target="_blank">vị trí</a>)`:''}</div>${r.maDuAnKhach||r.maDuAnCty?`<div style="font-size:12px;margin-top:6px">Mã DA: ${[r.maDuAnKhach,r.maDuAnCty].filter(Boolean).join(' · ')}</div>`:''}${(r.phuCap||[]).length?`<div style="font-size:12px">Phụ cấp: ${(r.phuCap||[]).map(p=>p.ten+' ×'+p.soLuong+' = '+fmtMoney(p.thanhTien)).join(', ')}</div>`:''}${(r.tangCaGio||0)>0?`<div style="font-size:12px">Tăng ca: ${r.tangCaGio} giờ = ${fmtMoney(r.tangCaTien)}${r.tangCaLyDo?' ('+r.tangCaLyDo+')':''}</div>`:''}${r.ghiChu?`<div style="font-size:13px;margin-top:6px;background:#FFFBF7;border:1px solid var(--border);border-radius:6px;padding:8px">${r.ghiChu}</div>`:''}</div>`;}).join('')||'<div style="text-align:center;padding:20px;color:var(--light)">Chưa có ca làm ngày này</div>'}</div></div>`;
+}
+function duyetOne(id,ok){if(!ok){const re=prompt('Lý do từ chối:');if(!re)return;updateStatus(id,'tu_choi',re);}else updateStatus(id,'da_duyet','');}
+function duyetAll(){const recs=getRecords().filter(r=>r.trangThai==='cho_duyet');if(!recs.length)return;if(!confirm(`Duyệt ${recs.length} bản ghi?`))return;recs.forEach(r=>updateStatus(r.maBanGhi,'da_duyet','',true));toast(`Đã duyệt ${recs.length}`);render();}
+function updateStatus(ma,tt,ly,silent){const recs=getRecords();const i=recs.findIndex(r=>r.maBanGhi===ma);if(i<0)return;recs[i].trangThai=tt;recs[i].nguoiDuyet=getSession().user.maTho;recs[i].thoiDiemDuyet=nowStr();recs[i].lyDoTuChoi=ly||'';LocalDB.save(KEYS.records,recs);if(!silent){toast(tt==='da_duyet'?'Đã duyệt':'Đã từ chối');render();}}
+let bangThang=monthKey();
+function renderBangCong(el,user){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');const records=getRecords();const[y,m]=bangThang.split('-').map(Number);const dim=new Date(y,m,0).getDate();
+ el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="month" class="input" style="width:160px" value="${bangThang}" onchange="bangThang=this.value;renderBangCong(document.getElementById('viewContent'), getSession().user)"><button class="btn btn-excel" onclick="openExportSheet('bangcong')">Xuất file Excel</button></div><div class="table-wrap" style="margin-top:10px"><table><thead><tr><th class="sticky-left head" style="min-width:180px;left:0">Thợ</th>${Array.from({length:dim},(_,i)=>`<th>${i+1}</th>`).join('')}<th class="sticky-right col-tong">Tổng</th><th class="sticky-right col-dongia">Đơn giá</th><th class="sticky-right col-thanhtien">Thành tiền</th></tr></thead><tbody>${usersTho.map((u,ui)=>{const byDay={};records.forEach(r=>{if(r.maTho===u.maTho&&r.ngayCong.startsWith(bangThang)){byDay[Number(r.ngayCong.slice(8,10))]=r;}});let tong=0;Object.values(byDay).forEach(r=>{if(r.trangThai==='da_duyet')tong++;});return `<tr class="${ui%2===0?'row-alt':''}"><td class="sticky-left" style="text-align:left"><b>${u.hoTen}</b><br><small>${u.phanLoai}</small></td>${Array.from({length:dim},(_,i)=>{const r=byDay[i+1];let cls='',txt='';if(r){if(r.trangThai==='da_duyet'){cls='cell-co';txt='✓';}else if(r.trangThai==='cho_duyet'){cls='cell-cho';txt='C';}else{cls='cell-khong';txt='X';}}return `<td class="${cls}">${txt}</td>`;}).join('')}<td class="sticky-right col-tong">${tong}</td><td class="sticky-right col-dongia">${fmtMoney(u.donGia)}</td><td class="sticky-right col-thanhtien">${fmtMoney(tong*(u.donGia||0))}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+}
+
+// ==== HÀM XUẤT EXCEL CHUNG ====
+function openExportSheet(from){ const s=document.getElementById('bottomSheet'); s.innerHTML=`<div style="padding:4px 0"><h3 style="text-align:center;margin-bottom:12px">Chọn loại xuất Excel</h3>
+ <div style="display:grid;gap:10px">
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('dstho')">Xuất Danh sách thợ</button>
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('bangcong')">Xuất Bảng công</button>
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('dukien')">Xuất Dự kiến trả thợ</button>
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('all')">Xuất tất cả</button>
+ </div><button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="closeSheet()">Đóng</button></div>`; openSheet();}
+function exportExcelByChoice(type){
+ closeSheet();
+ if(type==='dstho') exportDsThoExcel();
+ else if(type==='bangcong') exportExcelDep();
+ else if(type==='dukien') exportDuKienExcel();
+ else if(type==='all') exportAllExcel();
+}
+
+function createHeader(ws,colCount,title){
+ ws.mergeCells(1,1,1,colCount); const r1=ws.getCell(1,1); r1.value='CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC'; r1.font={name:'Arial',size:14,bold:true}; r1.alignment={horizontal:'center'}; ws.getRow(1).height=20;
+ ws.mergeCells(2,1,2,colCount); ws.getCell(2,1).value='Add: 62/7 Đường Long Thuận, Phường Trường Thạnh, TP.Thủ Đức'; ws.getCell(2,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(2,1).alignment={horizontal:'center'};
+ ws.mergeCells(3,1,3,colCount); ws.getCell(3,1).value='Tel: 028 36201795 - 0906 933199'; ws.getCell(3,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(3,1).alignment={horizontal:'center'};
+ ws.mergeCells(4,1,4,colCount); ws.getCell(4,1).value='Website: www.nguyenmoc.com.vn'; ws.getCell(4,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(4,1).alignment={horizontal:'center'};
+ ws.getRow(5).height=6; ws.getRow(6).height=6;
+ ws.mergeCells(7,1,7,colCount); const _d=new Date(); const _pad=n=>String(n).padStart(2,'0'); const _ngayXuat=_pad(_d.getHours())+':'+_pad(_d.getMinutes())+':'+_pad(_d.getSeconds())+' '+_pad(_d.getDate())+'/'+_pad(_d.getMonth()+1)+'/'+_d.getFullYear(); ws.getCell(7,1).value='Ngày xuất: '+_ngayXuat; ws.getCell(7,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(7,1).alignment={horizontal:'right'}; ws.getRow(7).height=18;
+ // Hàng 8 - tiêu đề chính: size 12, cao nhỏ lại
+ ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:13,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle'}; ws.getRow(8).height=28;
+ ws.views=[{state:'frozen',ySplit:9}]; // freeze 9 hàng đầu để tiêu đề cột không bị che khi cuộn
+}
+function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
+
+async function exportDsThoExcel(){
+ const list=getUsers().filter(u=>u.vaiTro==='Tho');
+ const wb=new ExcelJS.Workbook();
+ const ws=wb.addWorksheet('DANH SÁCH THỢ',{properties:{defaultColWidth:12}});
+ const colCount=7;
+ createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
+ const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ let rIdx=10;
+ list.forEach((u,idx)=>{
+  const row=ws.getRow(rIdx);
+  const values=[idx+1,u.maTho,u.hoTen,fmtPhone(u.sdt),u.phanLoai,u.donGia||0,fmtDateDDMMYYYY(u.ngayVaoLam||'')];
+  values.forEach((v,i)=>{
+   const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
+   if(i===5){ c.numFmt='#,##0'; } // đơn giá có dấu chấm
+   if(rIdx%2===0){c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
+  });
+  row.height=20; rIdx++;
+ });
+ // Đã bỏ hàng tổng cộng theo yêu cầu
+ ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=16; ws.getColumn(5).width=18; ws.getColumn(6).width=16; ws.getColumn(7).width=14;
+ const fileName='DanhSachTho_NguyenMoc_'+todayYMD()+'.xlsx';
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
+}
+
+async function exportDuKienExcel(){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const records=getRecords();
+ const targetMonth=duKienNgay.slice(0,7);
+ const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
+ const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
+ const wb=new ExcelJS.Workbook();
+ const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ',{properties:{defaultColWidth:12}});
+ const colCount=7;
+ createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
+ const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
+ const groups={};
+ usersTho.forEach(u=>{const cong=byTho[u.maTho]||0; if(cong===0)return; const tien=cong*(u.donGia||0); if(!groups[u.phanLoai])groups[u.phanLoai]=[]; groups[u.phanLoai].push({u,cong,tien});});
+ // ghi theo nhóm
+ Object.entries(groups).forEach(([loai,list])=>{
+  // dòng nhóm
+  const rowG=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,colCount); rowG.getCell(1).value='Nhóm: '+loai+' ('+list.length+' thợ)'; rowG.getCell(1).font={name:'Arial',size:11,bold:true}; rowG.getCell(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF3E0'}}; rowG.getCell(1).alignment={horizontal:'left',vertical:'middle'}; for(let i=1;i<=colCount;i++){const c=rowG.getCell(i); c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF3E0'}};} rowG.height=20; rIdx++;
+  list.forEach(({u,cong,tien},idx)=>{
+   const row=ws.getRow(rIdx);
+   const values=[rIdx-9 - Object.keys(groups).indexOf(loai),u.maTho,u.hoTen,u.phanLoai,cong,u.donGia||0,{formula:'E'+rIdx+'*F'+rIdx,result:tien}];
+   values.forEach((v,i)=>{
+    const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
+    if(i===5||i===6){ c.numFmt='#,##0'; }
+   });
+   if(rIdx%2===0){for(let i=1;i<=colCount;i++) ws.getRow(rIdx).getCell(i).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
+   row.height=20; rIdx++; tongTho++; tongCong+=cong; tongTien+=tien;
+  });
+ });
+ const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3);
+ for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
+ rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=''; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.height=22;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=14; ws.getColumn(7).width=18;
+ const fileName='DuKienTraTho_'+targetMonth.replace('-','')+'.xlsx';
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
+}
+
+async function exportExcelDep(){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const records=getRecords();
+ const [y,m]=bangThang.split('-').map(Number);
+ const dim=new Date(y,m,0).getDate();
+ const wb=new ExcelJS.Workbook();
+ const ws=wb.addWorksheet('BẢNG CÔNG',{properties:{defaultColWidth:10}});
+ const colCount = 3 + dim + 3;
+ createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
+ const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ let rIdx=10;
+ usersTho.forEach((u,idx)=>{
+   const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}});
+   let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;});
+   const row=ws.getRow(rIdx);
+   const values=[idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,{formula:colL(3+dim+1)+rIdx+'*'+colL(3+dim+2)+rIdx,result:tong*(u.donGia||0)}];
+   values.forEach((v,i)=>{
+     const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
+     if(i===3+dim+1 || i===3+dim+2){ c.numFmt='#,##0'; } // định dạng tiền có dấu .
+     if(rIdx%2===0){c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
+   });
+   row.height=20;
+   rIdx++;
+ });
+ const rowTotal=ws.getRow(rIdx);
+ ws.mergeCells(rIdx,1,rIdx,3);
+ rowTotal.getCell(1).value='TỔNG CỘNG';
+ rowTotal.getCell(1).font={name:'Arial',size:11,bold:true};
+ rowTotal.getCell(1).alignment={horizontal:'center',vertical:'middle'};
+ let sumTong=0,sumTien=0; usersTho.forEach(u=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0);});
+ for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
+ rowTotal.getCell(3+dim+1).value={formula:'SUM('+colL(3+dim+1)+'10:'+colL(3+dim+1)+(rIdx-1)+')',result:sumTong};
+ rowTotal.getCell(3+dim+2).value=''; // cột đơn giá để trống ở tổng
+ rowTotal.getCell(3+dim+3).value={formula:'SUM('+colL(3+dim+3)+'10:'+colL(3+dim+3)+(rIdx-1)+')',result:sumTien};
+ rowTotal.getCell(3+dim+2).numFmt='#,##0';
+ rowTotal.getCell(3+dim+3).numFmt='#,##0';
+ rowTotal.height=22;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=10; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
+ const fileName='BangCong_NguyenMoc_'+bangThang.replace('-','')+'.xlsx';
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
+}
+
+async function exportAllExcel(){
+ const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+ const records=getRecords();
+ const targetMonth=duKienNgay.slice(0,7);
+ const [y,m]=bangThang.split('-').map(Number);
+ const dim=new Date(y,m,0).getDate();
+ const wb=new ExcelJS.Workbook();
+ // Sheet 1 - Danh sách thợ
+ {
+  const ws=wb.addWorksheet('DANH SÁCH THỢ');
+  const colCount=7;
+  createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
+  const header=['STT','MÃ THỢ','HỌ TÊN','SĐT','PHÂN LOẠI','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  let rIdx=10; usersTho.forEach((u,idx)=>{const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,fmtPhone(u.sdt),u.phanLoai,u.donGia||0,fmtDateDDMMYYYY(u.ngayVaoLam||'')].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
+  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=16; ws.getColumn(5).width=18; ws.getColumn(6).width=16; ws.getColumn(7).width=14;
+ }
+ // Sheet 2 - Bảng công
+ {
+  const ws=wb.addWorksheet('BẢNG CÔNG');
+  const colCount=3+dim+3;
+  createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
+  const header=['STT','MÃ THỢ','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  let rIdx=10; let sumTong=0,sumTien=0;
+  usersTho.forEach((u,idx)=>{const byDay={}; records.forEach(rec=>{if(rec.maTho===u.maTho&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet')tong++;}); sumTong+=tong; sumTien+=tong*(u.donGia||0); const row=ws.getRow(rIdx); [idx+1,u.maTho,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,{formula:colL(3+dim+1)+rIdx+'*'+colL(3+dim+2)+rIdx,result:tong*(u.donGia||0)}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===3+dim+1||i===3+dim+2) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=20; rIdx++;});
+  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3+dim+1).value={formula:'SUM('+colL(3+dim+1)+'10:'+colL(3+dim+1)+(rIdx-1)+')',result:sumTong}; rowTotal.getCell(3+dim+3).value={formula:'SUM('+colL(3+dim+3)+'10:'+colL(3+dim+3)+(rIdx-1)+')',result:sumTien}; rowTotal.getCell(3+dim+3).numFmt='#,##0'; rowTotal.height=22;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; for(let i=4;i<4+dim;i++) ws.getColumn(i).width=4; ws.getColumn(3+dim+1).width=10; ws.getColumn(3+dim+2).width=14; ws.getColumn(3+dim+3).width=16;
+ }
+ // Sheet 3 - Dự kiến trả thợ
+ {
+  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ');
+  const colCount=7;
+  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
+  const header=['STT','MÃ THỢ','HỌ TÊN','PHÂN LOẠI','TỔNG CÔNG','LƯƠNG 1 NGÀY','TỔNG LƯƠNG'];
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
+  const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
+  let rIdx=10; let tongTho=0,tongCong=0,tongTien=0;
+  usersTho.forEach((u,idx)=>{const cong=byTho[u.maTho]||0; if(cong===0)return; const tien=cong*(u.donGia||0); const row=ws.getRow(rIdx); [tongTho+1,u.maTho,u.hoTen,u.phanLoai,cong,u.donGia||0,{formula:'E'+rIdx+'*F'+rIdx,result:tien}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:'center',vertical:'middle'}; if(i===5||i===6) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); rIdx++; tongTho++; tongCong+=cong; tongTien+=tien; row.height=20;});
+  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle'}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(4).value=tongTho+' thợ'; rowTotal.getCell(5).value=rIdx>10?{formula:'SUM(E10:E'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(6).value=''; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.height=22;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=12; ws.getColumn(3).width=22; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=14; ws.getColumn(7).width=18;
+ }
+ const fileName='NguyenMoc_TatCa_'+bangThang.replace('-','')+'.xlsx';
+ const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
+}
+
+let filterLoai='all';
+function renderDsTho(el,user){
+ let list=getUsers().filter(u=>u.vaiTro==='Tho');if(filterLoai!=='all')list=list.filter(u=>u.phanLoai===filterLoai);
+ el.innerHTML=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="openThoForm()">+ Thêm thợ</button><button class="btn btn-excel" onclick="openExportSheet('dstho')">Xuất file Excel</button><button class="btn btn-ghost" onclick="openBottomSheetLoai()">Lọc: ${filterLoai==='all'?'Tất cả ('+getUsers().filter(u=>u.vaiTro==='Tho').length+')':filterLoai}</button></div><div style="margin-top:12px;display:grid;gap:10px">${list.map(u=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${u.anhDataUrl||''}" class="avatar" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:800">${u.hoTen}</div><div style="font-size:12px">${fmtPhone(u.sdt)} · ${u.phanLoai} · ${fmtMoney(u.donGia)}</div></div><div style="display:flex;gap:6px"><button class="btn btn-ghost" style="padding:6px 10px" onclick="openThoForm('${u.maTho}')">Sửa</button><button class="btn btn-ghost" style="padding:6px 10px" onclick="toggleKhoa('${u.maTho}')">${u.trangThai==='hoat_dong'?'Khóa':'Mở'}</button></div></div>`).join('')}</div></div>`;
+}
+function openBottomSheetLoai(){const loais=['all','Thợ quảng cáo','Thợ alu','Thợ mica','Thợ dán decal','Thợ LED','Thợ hàn khung','Thợ sơn','Thợ mộc','Thợ lắp đặt nội thất'];const s=document.getElementById('bottomSheet');s.innerHTML=`<h4>Chọn phân loại</h4>${loais.map(l=>`<div style="padding:12px;border-bottom:1px solid var(--border);cursor:pointer" onclick="chonLoai('${l}')">${l==='all'?'Tất cả':l}</div>`).join('')}`;openSheet();}
+function chonLoai(l){filterLoai=l;closeSheet();render();}
+function openSheet(){document.getElementById('bottomSheet').classList.add('open');document.getElementById('sheetBackdrop').classList.add('open');}
+function closeSheet(){document.getElementById('bottomSheet').classList.remove('open');document.getElementById('sheetBackdrop').classList.remove('open');}
+let editingMaTho=null;
+function openThoForm(maTho){
+ editingMaTho=maTho||null;const users=getUsers();const u=maTho?users.find(x=>x.maTho===maTho):null;
+ document.getElementById('bottomSheet').innerHTML=`<div style="max-height:70vh;overflow:auto"><h3>${u?'Sửa thợ':'Thêm thợ'}</h3><div class="field"><label>Họ tên *</label><input id="f_hoTen" class="input" value="${u?.hoTen||''}"></div><div class="field"><label>SĐT *</label><input id="f_sdt" class="input" value="${u?fmtPhone(u.sdt):''}"></div><div class="field"><label>Phân loại</label><select id="f_phanLoai" class="input"><option ${u?.phanLoai==='Thợ quảng cáo'?'selected':''}>Thợ quảng cáo</option><option ${u?.phanLoai==='Thợ alu'?'selected':''}>Thợ alu</option><option ${u?.phanLoai==='Thợ mica'?'selected':''}>Thợ mica</option><option ${u?.phanLoai==='Thợ dán decal'?'selected':''}>Thợ dán decal</option><option ${u?.phanLoai==='Thợ LED'?'selected':''}>Thợ LED</option><option ${u?.phanLoai==='Thợ hàn khung'?'selected':''}>Thợ hàn khung</option><option ${u?.phanLoai==='Thợ sơn'?'selected':''}>Thợ sơn</option><option ${u?.phanLoai==='Thợ mộc'?'selected':''}>Thợ mộc</option><option ${u?.phanLoai==='Thợ lắp đặt nội thất'?'selected':''}>Thợ lắp đặt nội thất</option></select></div><div class="field"><label>Đơn giá</label><input id="f_donGia" class="input" type="number" value="${u?.donGia||''}"></div><div class="field"><label>Ngày vào làm</label><input id="f_ngayVao" type="date" class="input" value="${u?.ngayVaoLam||todayYMD()}"></div><button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveTho()">Lưu</button></div>`;openSheet();
+}
+function saveTho(){const hoTen=document.getElementById('f_hoTen').value.trim();const sdt=normalizePhone(document.getElementById('f_sdt').value);const phanLoai=document.getElementById('f_phanLoai').value;const donGia=parseInt(document.getElementById('f_donGia').value||'0');const ngayVao=document.getElementById('f_ngayVao').value;const users=getUsers();let user;if(editingMaTho){user=users.find(u=>u.maTho===editingMaTho);user.hoTen=hoTen;user.sdt=sdt;user.phanLoai=phanLoai;user.donGia=donGia;user.ngayVaoLam=ngayVao;}else{user={maTho:sdt,hoTen,sdt,vaiTro:'Tho',trangThai:'hoat_dong',donGia,phanLoai,quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:ngayVao};users.push(user);}LocalDB.save(KEYS.users,users);closeSheet();toast('Lưu thành công');render();}
+function toggleKhoa(ma){const users=getUsers();const u=users.find(x=>x.maTho===ma);u.trangThai=u.trangThai==='hoat_dong'?'khoa':'hoat_dong';LocalDB.save(KEYS.users,users);render();}
+let duKienNgay=todayYMD();
+function renderDuKien(el,user){
+  const records=getRecords(); const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');
+  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-weight:900;font-size:15px">Dự kiến trả thợ</span><input type="date" id="duKienDate" class="input" style="width:168px;height:38px" value="${duKienNgay}" onchange="duKienNgay=this.value;renderDuKien(document.getElementById('viewContent'), getSession().user)"><button class="btn btn-excel" onclick="openExportSheet('dukien')">Xuất file Excel</button></div><div id="duKienContent"></div></div>`;
+  const targetMonth=duKienNgay.slice(0,7);
+  const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
+  const byTho={}; recs.forEach(r=>{ byTho[r.maTho]=(byTho[r.maTho]||0)+1; });
+  const groups={}; let tongTho=0, tongCong=0, tongTien=0;
+  usersTho.forEach(u=>{const cong=byTho[u.maTho]||0;if(cong===0)return;const tien=cong*(u.donGia||0);if(!groups[u.phanLoai])groups[u.phanLoai]=[];groups[u.phanLoai].push({u,cong,tien});tongTho++;tongCong+=cong;tongTien+=tien;});
+  const content=document.getElementById('duKienContent');
+  let html=`<div style="padding:14px 18px;border-radius:6px;background:linear-gradient(135deg,#3E2723,#5D4037);color:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><b>Tổng hợp đến ${fmtDateDDMMYYYY(duKienNgay)}</b><span style="display:flex;gap:6px"><span class="badge" style="background:rgba(255,255,255,.14);color:#fff">${tongTho} thợ</span><span class="badge" style="background:rgba(255,255,255,.14);color:#fff">${tongCong} công</span><span class="badge" style="background:#FFE0B2;color:#3E2723">${fmtMoney(tongTien)}</span></span></div>`;
+  Object.entries(groups).forEach(([loai,list])=>{
+    const sumTho=list.length;const sumCong=list.reduce((s,x)=>s+x.cong,0);const sumTien=list.reduce((s,x)=>s+x.tien,0);
+    html+=`<div class="card" style="padding:0;overflow:hidden;border-radius:10px"><div style="padding:12px 16px;background:#FFF3E0;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="badge" style="background:#FFE0B2;color:#3E2723;font-size:13px;padding:7px 14px">${loai}</span><span style="color:var(--light)">•</span><span style="display:flex;gap:6px"><span class="badge" style="background:#fff">${sumTho} thợ</span><span class="badge" style="background:#fff">${sumCong} công</span><span class="badge b-choduyet" style="background:#fff">${fmtMoney(sumTien)}</span></span></div><div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th style="text-align:left;padding-left:16px">Họ tên</th><th>Tổng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody>${list.map(({u,cong,tien},i)=>`<tr class="${i%2===0?'row-alt':''}"><td style="text-align:left;padding-left:16px"><b>${u.hoTen}</b><br><small style="color:var(--light)">${fmtPhone(u.sdt)}</small></td><td><b>${cong}</b></td><td>${fmtMoney(u.donGia)}</td><td><b>${fmtMoney(tien)}</b></td></tr>`).join('')}</tbody></table></div></div>`;
+  });
+  if(!Object.keys(groups).length)html+=`<div class="card" style="text-align:center;color:var(--light)">Chưa có công đã duyệt trong tháng ${targetMonth}</div>`;
+  content.innerHTML=html;
+}
+window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.vaoCa=vaoCa;window.openRaCaForm=openRaCaForm;window.xacNhanRaCa=xacNhanRaCa;window.pcDoi=pcDoi;window.renderTheoDoiCa=renderTheoDoiCa;window.toggleChoDuyet=toggleChoDuyet;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.openExportSheet=openExportSheet;window.exportExcelByChoice=exportExcelByChoice;window.exportExcelDep=exportExcelDep;window.exportDsThoExcel=exportDsThoExcel;window.exportDuKienExcel=exportDuKienExcel;window.exportAllExcel=exportAllExcel;
+render();
+</script>
+</body>
+</html>
