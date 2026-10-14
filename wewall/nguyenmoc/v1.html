@@ -200,13 +200,13 @@ function doLogin(){
 function demoLogin(r){const users=getUsers();let u;if(r==='Tho')u=users.find(x=>x.vaiTro==='Tho');else if(r==='QuanLy')u=users.find(x=>x.vaiTro==='QuanLy');else u=users.find(x=>x.vaiTro==='GiamDoc');demoBanner=true;setSession(u);render();}
 function renderTho(user){
  const records=getRecords().filter(r=>r.sdt===user.sdt);const curM=monthKey();const daDuyet=records.filter(r=>r.trangThai==='da_duyet'&&r.ngayCong.startsWith(curM));const choDuyet=records.filter(r=>r.trangThai==='cho_duyet'&&r.ngayCong.startsWith(curM));const tongCong=daDuyet.length;const tien=(user.donGia||0)*tongCong;const today=todayYMD();const recHomNay=records.find(r=>r.ngayCong===today);const daRaCa=!!(recHomNay&&recHomNay.gioRa);const cauhinh=getCauHinh();const gioMo=cauhinh.GIO_MO_CHAM_CONG||'05:00';const now=new Date();const[hM,mM]=gioMo.split(':').map(Number);const moPhut=hM*60+mM;const nowPhut=now.getHours()*60+now.getMinutes();const chuaDenGio=nowPhut<moPhut;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" style="padding:6px 12px" onclick="syncNow()">🔄</button><button class="btn btn-ghost" style="padding:6px 12px" onclick="logout()">Thoát</button></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - Tài khoản Thợ</div>':''}<div class="card" style="margin-bottom:12px"><div style="font-weight:900">Xin chào, ${user.hoTen}</div><div style="font-size:12px;color:var(--light)">${fmtPhone(user.sdt)} · ${user.boPhan||''}</div></div><div class="tabs"><div class="tab ${thoTab==='chamcong'?'active':''}" onclick="thoTab='chamcong';render()">Chấm công</div><div class="tab ${thoTab==='thongtin'?'active':''}" onclick="thoTab='thongtin';render()">Thông tin</div></div>${thoTab==='chamcong'?`<div class="card" style="margin-top:10px">${!recHomNay?`<button class="big-btn" ${chuaDenGio?'disabled':''} onclick="vaoCa()">VÀO CA</button>${chuaDenGio?`<div style="color:#C62828;text-align:center;margin-top:8px;font-size:13px">Chưa đến giờ chấm công (sau ${gioMo})</div>`:''}`:!daRaCa?`<div style="text-align:center;color:#2E7D32;font-weight:800">Đã vào ca lúc ${recHomNay.gioVao}</div><button class="big-btn" style="margin-top:10px" onclick="openRaCaForm()">RA CA</button>`:`<div style="text-align:center;color:#2E7D32;margin-top:8px;font-size:14px;font-weight:800">Đã ra ca lúc ${recHomNay.gioRa}.<br>Cảm ơn đã chấm công. Vui lòng chờ quản lý duyệt.</div>`}</div><div class="grid2" style="margin-top:10px"><div class="card stat"><div class="label">Số công hiện tại</div><div class="value">${tongCong}</div><div style="font-size:11px;color:var(--light)">đã duyệt tháng này</div></div><div class="card stat"><div class="label">Số tiền dự kiến</div><div class="value">${fmtMoney(tien)}</div><div style="font-size:11px;color:var(--light)">tạm tính</div></div></div><div class="card" style="margin-top:10px;cursor:pointer" onclick="toggleChoDuyet()"><div style="display:flex;justify-content:space-between"><b>Số công chờ duyệt</b><b>${choDuyet.length}</b></div><div id="choDuyetList" style="display:none;margin-top:10px">${choDuyet.length===0?'<div style="font-size:13px;color:var(--light)">Không có</div>':choDuyet.map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>${fmtDateDDMMYYYY(r.ngayCong)}</span><span class="badge b-choduyet">Chờ duyệt</span></div>`).join('')}</div></div><div class="card" style="margin-top:10px"><div style="font-size:12px;color:var(--light)">Lịch sử gần đây</div>${records.slice().sort((a,b)=>new Date(b.ngayCong)-new Date(a.ngayCong)).slice(0,8).map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0eb"><span>${fmtDateDDMMYYYY(r.ngayCong)}</span><span class="badge ${r.trangThai==='da_duyet'?'b-daduyet':r.trangThai==='cho_duyet'?'b-choduyet':'b-tuchoi'}">${r.trangThai==='da_duyet'?'Đã duyệt':r.trangThai==='cho_duyet'?'Chờ duyệt':'Từ chối'}</span></div>`).join('')}</div>`:`<div class="card" style="margin-top:12px;padding:0;overflow:hidden;border-radius:10px"><div style="padding:16px 18px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#FFFBF7,#FFF3E0);border-bottom:1px solid var(--border)"><img src="${user.anhDataUrl||''}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#eee" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:900;font-size:16px">${user.hoTen}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge" style="background:#3E2723;color:#fff">${user.boPhan||''}</span><span class="badge" style="background:#fff">${fmtPhone(user.sdt)}</span></div></div></div><div style="padding:4px 0"><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">HỌ TÊN</span><span style="text-align:right">${user.hoTen}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">BỘ PHẬN</span><span style="font-weight:800;text-align:right">${user.boPhan||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">SĐT</span><span style="font-weight:800;text-align:right">${fmtPhone(user.sdt)}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY SINH</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngaySinh)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">CCCD</span><span style="font-weight:800;text-align:right">${user.cccd||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY CẤP</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngayCap)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NƠI Ở</span><span style="font-weight:800;text-align:right">${user.noiO||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">SỐ TÀI KHOẢN</span><span style="display:flex;gap:6px;align-items:center"><span style="font-weight:800">${user.taiKhoan?.soTK||'—'}</span>${user.taiKhoan?.soTK?`<button class="btn btn-ghost" style="padding:6px 12px;font-size:12px;background:#E3F2FD;border-color:#BBDEFB;color:#1565C0" onclick="copyText('${user.taiKhoan.soTK}')">Copy</button>`:``}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÂN HÀNG</span><span style="font-weight:800;text-align:right">${user.taiKhoan?.nganHang||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY VÀO LÀM</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngayVaoLam)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">LƯƠNG NGÀY</span><span style="text-align:right"><b style="font-size:15px">${fmtMoney(user.donGia)}</b></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px"><span style="font-size:12px;color:var(--light);font-weight:700">GIỜ HÀNH CHÍNH</span><span style="font-weight:800;text-align:right">${TAM.GIO_HC_BAT_DAU} - ${TAM.GIO_HC_KET_THUC}</span></div></div></div>`}</div></div></div>`;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="main" style="max-width:520px;margin:0 auto;width:100%"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b><button class="btn btn-ghost" style="padding:6px 12px" onclick="logout()">Thoát</button></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - Tài khoản Thợ</div>':''}<div class="card" style="margin-bottom:12px"><div style="font-weight:900">Xin chào, ${user.hoTen}</div><div style="font-size:12px;color:var(--light)">${fmtPhone(user.sdt)} · ${user.boPhan||''}</div></div><div class="tabs"><div class="tab ${thoTab==='chamcong'?'active':''}" onclick="thoTab='chamcong';render()">Chấm công</div><div class="tab ${thoTab==='thongtin'?'active':''}" onclick="thoTab='thongtin';render()">Thông tin</div></div>${thoTab==='chamcong'?`<div class="card" style="margin-top:10px">${!recHomNay?`<button class="big-btn" ${chuaDenGio?'disabled':''} onclick="vaoCa()">VÀO CA</button>${chuaDenGio?`<div style="color:#C62828;text-align:center;margin-top:8px;font-size:13px">Chưa đến giờ chấm công (sau ${gioMo})</div>`:''}`:!daRaCa?`<div style="text-align:center;color:#2E7D32;font-weight:800">Đã vào ca lúc ${recHomNay.gioVao}</div><button class="big-btn" style="margin-top:10px" onclick="openRaCaForm()">RA CA</button>`:`<div style="text-align:center;color:#2E7D32;margin-top:8px;font-size:14px;font-weight:800">Đã ra ca lúc ${recHomNay.gioRa}.<br>Cảm ơn đã chấm công. Vui lòng chờ quản lý duyệt.</div>`}</div><div class="grid2" style="margin-top:10px"><div class="card stat"><div class="label">Số công hiện tại</div><div class="value">${tongCong}</div><div style="font-size:11px;color:var(--light)">đã duyệt tháng này</div></div><div class="card stat"><div class="label">Số tiền dự kiến</div><div class="value">${fmtMoney(tien)}</div><div style="font-size:11px;color:var(--light)">tạm tính</div></div></div><div class="card" style="margin-top:10px;cursor:pointer" onclick="toggleChoDuyet()"><div style="display:flex;justify-content:space-between"><b>Số công chờ duyệt</b><b>${choDuyet.length}</b></div><div id="choDuyetList" style="display:none;margin-top:10px">${choDuyet.length===0?'<div style="font-size:13px;color:var(--light)">Không có</div>':choDuyet.map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>${fmtDateDDMMYYYY(r.ngayCong)}</span><span class="badge b-choduyet">Chờ duyệt</span></div>`).join('')}</div></div><div class="card" style="margin-top:10px"><div style="font-size:12px;color:var(--light)">Lịch sử gần đây</div>${records.slice().sort((a,b)=>new Date(b.ngayCong)-new Date(a.ngayCong)).slice(0,8).map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0eb"><span>${fmtDateDDMMYYYY(r.ngayCong)}</span><span class="badge ${r.trangThai==='da_duyet'?'b-daduyet':r.trangThai==='cho_duyet'?'b-choduyet':'b-tuchoi'}">${r.trangThai==='da_duyet'?'Đã duyệt':r.trangThai==='cho_duyet'?'Chờ duyệt':'Từ chối'}</span></div>`).join('')}</div>`:`<div class="card" style="margin-top:12px;padding:0;overflow:hidden;border-radius:10px"><div style="padding:16px 18px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#FFFBF7,#FFF3E0);border-bottom:1px solid var(--border)"><img src="${user.anhDataUrl||''}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#eee" onerror="this.style.display='none'"><div style="flex:1"><div style="font-weight:900;font-size:16px">${user.hoTen}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge" style="background:#3E2723;color:#fff">${user.boPhan||''}</span><span class="badge" style="background:#fff">${fmtPhone(user.sdt)}</span></div></div></div><div style="padding:4px 0"><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">HỌ TÊN</span><span style="text-align:right">${user.hoTen}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">BỘ PHẬN</span><span style="font-weight:800;text-align:right">${user.boPhan||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">SĐT</span><span style="font-weight:800;text-align:right">${fmtPhone(user.sdt)}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY SINH</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngaySinh)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">CCCD</span><span style="font-weight:800;text-align:right">${user.cccd||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY CẤP</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngayCap)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NƠI Ở</span><span style="font-weight:800;text-align:right">${user.noiO||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">SỐ TÀI KHOẢN</span><span style="display:flex;gap:6px;align-items:center"><span style="font-weight:800">${user.taiKhoan?.soTK||'—'}</span>${user.taiKhoan?.soTK?`<button class="btn btn-ghost" style="padding:6px 12px;font-size:12px;background:#E3F2FD;border-color:#BBDEFB;color:#1565C0" onclick="copyText('${user.taiKhoan.soTK}')">Copy</button>`:``}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÂN HÀNG</span><span style="font-weight:800;text-align:right">${user.taiKhoan?.nganHang||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">NGÀY VÀO LÀM</span><span class="badge" style="background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px">${fmtDateDDMMYYYY(user.ngayVaoLam)||'—'}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px;border-bottom:1px solid #f5f0eb"><span style="font-size:12px;color:var(--light);font-weight:700">LƯƠNG NGÀY</span><span style="text-align:right"><b style="font-size:15px">${fmtMoney(user.donGia)}</b></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:7px 18px"><span style="font-size:12px;color:var(--light);font-weight:700">GIỜ HÀNH CHÍNH</span><span style="font-weight:800;text-align:right">${TAM.GIO_HC_BAT_DAU} - ${TAM.GIO_HC_KET_THUC}</span></div></div></div>`}</div></div></div>`;
 }
 function toggleChoDuyet(){const el=document.getElementById('choDuyetList');el.style.display=el.style.display==='none'?'block':'none';}
 function vaoCa(){
  const sess=getSession();if(!sess)return;const user=sess.user;const today=todayYMD();const recs=getRecords();if(recs.some(r=>r.sdt===user.sdt&&r.ngayCong===today)){toast('Đã vào ca hôm nay');return;}
  const now=new Date();const gioVao=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
- const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),sdt:user.sdt,ngayCong:today,gioVao,gioRa:'',thoiDiemGui:nowStr(),trangThai:'dang_lam',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc,viDoRa:null,kinhDoRa:null,doChinhXacRa:null,maDuAn:[],phuCap:[],tangCaGio:0,tangCaTien:0,tangCaLyDo:'',ghiChu:'',updatedAt:new Date().toISOString()};recs.unshift(nr);LocalDB.save(KEYS.records,recs);syncPushOne(nr);toast('Đã vào ca lúc '+gioVao);render();};
+ const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),sdt:user.sdt,ngayCong:today,gioVao,gioRa:'',thoiDiemGui:nowStr(),trangThai:'dang_lam',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc,viDoRa:null,kinhDoRa:null,doChinhXacRa:null,maDuAn:[],phuCap:[],tangCaGio:0,tangCaTien:0,tangCaLyDo:'',ghiChu:''};recs.unshift(nr);LocalDB.save(KEYS.records,recs);toast('Đã vào ca lúc '+gioVao);render();};
  if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
 }
 let raCaPhuCap={};
@@ -237,14 +237,14 @@ function xacNhanRaCa(gioRa){
   raCaPhuCap[3]=tcGio>2?1:0; // Cơm tăng ca tối: tự động 1 suất khi TC trên 2h, không chọn số lượng
   rec.phuCap=DM_PHU_CAP.map((p,i)=>({ten:p.ten,gia:p.gia,soLuong:raCaPhuCap[i]||0,thanhTien:(raCaPhuCap[i]||0)*p.gia})).filter(p=>p.soLuong>0);
   const ct=DM_PHU_CAP.find(p=>p.ten==='Cơm trưa');if(gioRa>'11:30'&&ct)rec.phuCap.push({ten:ct.ten,gia:ct.gia,soLuong:1,thanhTien:ct.gia}); // Cơm trưa tự động 1 suất, ra ca lúc/trước 11:30 thì 0
-  rec.updatedAt=new Date().toISOString();LocalDB.save(KEYS.records,recs);syncPushOne(rec);closeSheet();toast('Đã ra ca lúc '+gioRa);render();
+  LocalDB.save(KEYS.records,recs);closeSheet();toast('Đã ra ca lúc '+gioRa);render();
  };
  if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
 }
 const MENU=[{id:'duyet',label:'DUYỆT CÔNG',perm:'duyet_cong'},{id:'theodoi',label:'HÔM NAY',perm:'thong_ke'},{id:'dashboard',label:'TỔNG QUAN THÁNG',perm:'dashboard'},{id:'dstho',label:'DANH SÁCH THỢ',perm:'nhan_su'}];
 function renderQuanLy(user){
  const allowed=MENU.filter(m=>hasPerm(user,m.perm));const cur=allowed.find(x=>x.id===currentView)?currentView:(allowed[0]?.id||'duyet');currentView=cur;
- document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="syncNow()">🔄 ĐỒNG BỘ</button><button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">ĐĂNG XUẤT</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
+ document.getElementById('app').innerHTML=`<div id="app-layout"><div id="sidebar">${allowed.map(m=>`<button class="side-btn ${m.id===cur?'active':''}" onclick="switchView('${m.id}')">${m.label}</button>`).join('')}<button class="side-btn" onclick="logout()" style="margin-top:auto;color:#C62828">ĐĂNG XUẤT</button></div><div id="main"><div class="app-header"><b>CÔNG TY TNHH SXTM NGUYỄN MỘC</b></div><div id="main-inner">${demoBanner?'<div class="demo-banner">Xem thử - '+user.vaiTro+'</div>':''}<div id="viewContent"></div></div></div></div>`;
  renderView(user,cur);
 }
 function switchView(id){currentView=id;renderQuanLy(getSession().user);}
@@ -277,7 +277,7 @@ function renderTheoDoiCa(el,user){
 }
 function duyetOne(id,ok){if(!ok){const re=prompt('Lý do từ chối:');if(!re)return;updateStatus(id,'tu_choi',re);}else updateStatus(id,'da_duyet','');}
 function duyetAll(){const recs=getRecords().filter(r=>r.trangThai==='cho_duyet');if(!recs.length)return;if(!confirm(`Duyệt ${recs.length} bản ghi?`))return;recs.forEach(r=>updateStatus(r.maBanGhi,'da_duyet','',true));toast(`Đã duyệt ${recs.length}`);render();}
-function updateStatus(ma,tt,ly,silent){const recs=getRecords();const i=recs.findIndex(r=>r.maBanGhi===ma);if(i<0)return;recs[i].trangThai=tt;recs[i].nguoiDuyet=fmtNguoiDuyet(getSession().user);recs[i].thoiDiemDuyet=nowStr();recs[i].lyDoTuChoi=ly||'';recs[i].updatedAt=new Date().toISOString();LocalDB.save(KEYS.records,recs);syncPushOne(recs[i]);if(!silent){toast(tt==='da_duyet'?'Đã duyệt':'Đã từ chối');render();}}
+function updateStatus(ma,tt,ly,silent){const recs=getRecords();const i=recs.findIndex(r=>r.maBanGhi===ma);if(i<0)return;recs[i].trangThai=tt;recs[i].nguoiDuyet=fmtNguoiDuyet(getSession().user);recs[i].thoiDiemDuyet=nowStr();recs[i].lyDoTuChoi=ly||'';LocalDB.save(KEYS.records,recs);if(!silent){toast(tt==='da_duyet'?'Đã duyệt':'Đã từ chối');render();}}
 let bangThang=monthKey();
 function renderBangCong(el,user){
  const usersTho=getUsers().filter(u=>u.vaiTro==='Tho');const records=getRecords();const[y,m]=bangThang.split('-').map(Number);const dim=new Date(y,m,0).getDate();
@@ -287,9 +287,9 @@ function renderBangCong(el,user){
 // ==== HÀM XUẤT EXCEL CHUNG ====
 function openExportSheet(from){ const s=document.getElementById('bottomSheet'); s.innerHTML=`<div style="padding:4px 0"><h3 style="text-align:center;margin-bottom:12px">Chọn loại xuất Excel</h3>
  <div style="display:grid;gap:10px">
-  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('dukien')">Xuất Bảng lương tạm tính</button>
-  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('bangcong')">Xuất Bảng chấm công</button>
   <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('dstho')">Xuất Danh sách thợ</button>
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('bangcong')">Xuất Bảng công</button>
+  <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('dukien')">Xuất Dự kiến trả thợ</button>
   <button class="btn btn-excel" style="width:100%;justify-content:flex-start;padding:14px 18px" onclick="exportExcelByChoice('all')">Xuất tất cả</button>
  </div><button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="closeSheet()">Đóng</button></div>`; openSheet();}
 function exportExcelByChoice(type){
@@ -308,7 +308,7 @@ function createHeader(ws,colCount,title){
  ws.getRow(5).height=6; ws.getRow(6).height=6;
  ws.mergeCells(7,1,7,colCount); const _d=new Date(); const _pad=n=>String(n).padStart(2,'0'); const _ngayXuat=_pad(_d.getHours())+':'+_pad(_d.getMinutes())+':'+_pad(_d.getSeconds())+' '+_pad(_d.getDate())+'/'+_pad(_d.getMonth()+1)+'/'+_d.getFullYear(); ws.getCell(7,1).value='Ngày xuất: '+_ngayXuat; ws.getCell(7,1).font={name:'Arial',size:11,italic:true,color:{argb:'FF808080'}}; ws.getCell(7,1).alignment={horizontal:'right'}; ws.getRow(7).height=18;
  // Hàng 8 - tiêu đề chính: size 14
- ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:14,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle',wrapText:false}; ws.getRow(8).height=28;
+ ws.mergeCells(8,1,8,colCount); const r8=ws.getCell(8,1); r8.value=title; r8.font={name:'Arial',size:14,bold:true,color:{argb:'FFFFFFFF'}}; r8.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF5D4037'}}; r8.alignment={horizontal:'center',vertical:'middle',wrapText:true}; ws.getRow(8).height=28;
  ws.views=[{state:'frozen',ySplit:9}]; // freeze 9 hàng đầu để tiêu đề cột không bị che khi cuộn
 }
 function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
@@ -320,20 +320,20 @@ async function exportDsThoExcel(){
  const colCount=12;
  createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
  const header=['STT','HỌ TÊN','BỘ PHẬN','SĐT','NGÀY SINH','CCCD','NGÀY CẤP','NƠI Ở','NGÂN HÀNG','SỐ TÀI KHOẢN','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
- const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10;
  list.forEach((u,idx)=>{
   const row=ws.getRow(rIdx);
   const values=[idx+1,u.hoTen,u.boPhan||'',fmtPhone(u.sdt),fmtDateDDMMYYYY(u.ngaySinh||''),u.cccd||'',fmtDateDDMMYYYY(u.ngayCap||''),u.noiO||'',u.taiKhoan?.nganHang||'',u.taiKhoan?.soTK||'',u.donGia||0,fmtDateDDMMYYYY(u.ngayVaoLam||'')];
   values.forEach((v,i)=>{
-   const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; if(i===7)c.font={name:'Arial',size:9}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
+   const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
    if(i===10){ c.numFmt='#,##0'; } // đơn giá có dấu chấm
    if(rIdx%2===0){c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
   });
   row.height=28; rIdx++;
  });
  // Đã bỏ hàng tổng cộng theo yêu cầu
- ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=18; ws.getColumn(4).width=18; ws.getColumn(5).width=13; ws.getColumn(6).width=18; ws.getColumn(7).width=12; ws.getColumn(8).width=26; ws.getColumn(9).width=20; ws.getColumn(10).width=22; ws.getColumn(11).width=18; ws.getColumn(12).width=18;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=18; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18; ws.getColumn(7).width=12; ws.getColumn(8).width=26; ws.getColumn(9).width=20; ws.getColumn(10).width=22; ws.getColumn(11).width=18; ws.getColumn(12).width=16;
  const fileName='DanhSachTho_NguyenMoc_'+todayYMD()+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
 }
@@ -345,11 +345,11 @@ async function exportDuKienExcel(){
  const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
  const byTho={}; recs.forEach(r=>{const a=byTho[r.sdt]||(byTho[r.sdt]={cong:0,tc:0,dc:0,com:0});a.cong++;a.tc+=(r.tangCaTien||0);(r.phuCap||[]).forEach(p=>{if(p.ten.startsWith('Xăng xe'))a.dc+=p.thanhTien||0;if(p.ten.startsWith('Cơm'))a.com+=p.thanhTien||0;});});
  const wb=new ExcelJS.Workbook();
- const ws=wb.addWorksheet('BẢNG LƯƠNG TẠM TÍNH',{properties:{defaultColWidth:12}});
+ const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ',{properties:{defaultColWidth:12}});
  const colCount=9;
- createHeader(ws,colCount,'BẢNG LƯƠNG TẠM TÍNH THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
+ createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
  const header=['STT','HỌ TÊN','BỘ PHẬN','TỔNG CÔNG','LƯƠNG 1 NGÀY','TIỀN TĂNG CA','PHỤ CẤP DI CHUYỂN','CƠM','TỔNG LƯƠNG'];
- const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10; let tongTho=0,tongCong=0,tongTien=0,tongTC=0,tongDC=0,tongCom=0;
  const groups={};
  usersTho.forEach(u=>{const a=byTho[u.sdt]; if(!a)return; const cong=a.cong; const tien=cong*(u.donGia||0)+a.tc+a.dc+a.com; if(!groups[u.boPhan||''])groups[u.boPhan||'']=[]; groups[u.boPhan||''].push({u,cong,tien,tc:a.tc,dc:a.dc,com:a.com});});
@@ -371,8 +371,8 @@ async function exportDuKienExcel(){
  const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,2);
  for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}
  rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3).value=tongTho+' thợ'; rowTotal.getCell(4).value=rIdx>10?{formula:'SUM(D10:D'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(5).value=''; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTC}:0; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongDC}:0; rowTotal.getCell(8).value=rIdx>10?{formula:'SUM(H10:H'+(rIdx-1)+')',result:tongCom}:0; rowTotal.getCell(9).value=rIdx>10?{formula:'SUM(I10:I'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.getCell(8).numFmt='#,##0'; rowTotal.getCell(9).numFmt='#,##0'; rowTotal.height=22;
- ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=20; ws.getColumn(4).width=13; ws.getColumn(5).width=17; ws.getColumn(6).width=17; ws.getColumn(7).width=22; ws.getColumn(8).width=14; ws.getColumn(9).width=20;
- const fileName='BangLuongTamTinh_'+targetMonth.replace('-','')+'.xlsx';
+ ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=20; ws.getColumn(4).width=12; ws.getColumn(5).width=16; ws.getColumn(6).width=16; ws.getColumn(7).width=20; ws.getColumn(8).width=14; ws.getColumn(9).width=20;
+ const fileName='DuKienTraTho_'+targetMonth.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
 }
 
@@ -386,7 +386,7 @@ async function exportExcelDep(){
  const colCount = 2 + dim + 6;
  createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
  const header=['STT','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TIỀN TĂNG CA','PHỤ CẤP DI CHUYỂN','CƠM','TỔNG LƯƠNG'];
- const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10;
  usersTho.forEach((u,idx)=>{
    const byDay={}; records.forEach(rec=>{if(rec.sdt===u.sdt&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}});
@@ -420,7 +420,7 @@ async function exportExcelDep(){
  rowTotal.getCell(2+dim+5).numFmt='#,##0';
  rowTotal.getCell(2+dim+6).numFmt='#,##0';
  rowTotal.height=22;
- ws.getColumn(1).width=6; ws.getColumn(2).width=26; for(let i=3;i<3+dim;i++) ws.getColumn(i).width=4; ws.getColumn(2+dim+1).width=13; ws.getColumn(2+dim+2).width=17; ws.getColumn(2+dim+3).width=17; ws.getColumn(2+dim+4).width=22; ws.getColumn(2+dim+5).width=14; ws.getColumn(2+dim+6).width=18;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=26; for(let i=3;i<3+dim;i++) ws.getColumn(i).width=4; ws.getColumn(2+dim+1).width=12; ws.getColumn(2+dim+2).width=16; ws.getColumn(2+dim+3).width=16; ws.getColumn(2+dim+4).width=20; ws.getColumn(2+dim+5).width=14; ws.getColumn(2+dim+6).width=18;
  const fileName='BangCong_NguyenMoc_'+bangThang.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
 }
@@ -432,7 +432,7 @@ async function exportTheoNgayExcel(){
  const colCount=15;
  createHeader(ws,colCount,'BÁO CÁO CUỐI NGÀY '+fmtDateDDMMYYYY(theoDoiNgay));
  const header=['STT','HỌ TÊN','SĐT','BỘ PHẬN','MÃ DỰ ÁN','GIỜ VÀO','VỊ TRÍ VÀO CA','GIỜ RA','VỊ TRÍ RA CA','TĂNG CA (GIỜ)','TỔNG GIỜ LÀM','TIỀN TĂNG CA','PHỤ CẤP DI CHUYỂN','CƠM','GHI CHÚ RA CA'];
- const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+ const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
  let rIdx=10; let tongTC=0,tongTienTC=0,tongDC=0,tongCom=0,tongGio=0;
  recs.forEach((r,idx)=>{
   const u=getUsers().find(x=>x.sdt===r.sdt);
@@ -443,7 +443,7 @@ async function exportTheoNgayExcel(){
   const gioLam=(r.gioVao&&r.gioRa)?Math.round((gioRaPhut(r.gioRa)-gioRaPhut(r.gioVao)-(r.tangCaGio||0)*60)/60*100)/100:'';
   const row=ws.getRow(rIdx);
   [idx+1,u?.hoTen||'',fmtPhone(u?.sdt||''),u?.boPhan||'',(r.maDuAn||[]).join('\n'),r.gioVao||'',vtVao,r.gioRa||'',vtRa,r.tangCaGio||0,gioLam,r.tangCaTien||0,dc,com,r.ghiChu||''].forEach((v,i)=>{
-   const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; if(i===4||i===6||i===8||i===14)c.font={name:'Arial',size:9}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:i===4||i===14}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
+   const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; if(i===4)c.font={name:'Arial',size:9}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:i===4||i===14}; c.border={top:{style:'thin',color:{argb:'FFB0BEC5'}},left:{style:'thin',color:{argb:'FFB0BEC5'}},bottom:{style:'thin',color:{argb:'FFB0BEC5'}},right:{style:'thin',color:{argb:'FFB0BEC5'}}};
    if(i===11||i===12||i===13) c.numFmt='#,##0'; if(i===10) c.numFmt='0.00';
   });
   if(rIdx%2===0){for(let i=1;i<=colCount;i++) ws.getRow(rIdx).getCell(i).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE3F2FD'}};}
@@ -459,7 +459,7 @@ async function exportTheoNgayExcel(){
  rowTotal.getCell(14).value={formula:'SUM(N10:N'+(rIdx-1)+')',result:tongCom};
  rowTotal.getCell(12).numFmt='#,##0'; rowTotal.getCell(13).numFmt='#,##0'; rowTotal.getCell(14).numFmt='#,##0'; rowTotal.getCell(11).numFmt='0.00';
  rowTotal.height=22;
- ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=16; ws.getColumn(4).width=20; ws.getColumn(5).width=28; ws.getColumn(6).width=11; ws.getColumn(7).width=26; ws.getColumn(8).width=11; ws.getColumn(9).width=26; ws.getColumn(10).width=18; ws.getColumn(11).width=18; ws.getColumn(12).width=17; ws.getColumn(13).width=22; ws.getColumn(14).width=14; ws.getColumn(15).width=50;
+ ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=16; ws.getColumn(4).width=20; ws.getColumn(5).width=28; ws.getColumn(6).width=10; ws.getColumn(7).width=26; ws.getColumn(8).width=10; ws.getColumn(9).width=26; ws.getColumn(10).width=12; ws.getColumn(11).width=13; ws.getColumn(12).width=16; ws.getColumn(13).width=20; ws.getColumn(14).width=14; ws.getColumn(15).width=50;
  const fileName='BaoCaoCuoiNgay_'+theoDoiNgay+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
 }
@@ -477,9 +477,9 @@ async function exportAllExcel(){
   const colCount=12;
   createHeader(ws,colCount,'DANH SÁCH THỢ - NGUYỄN MỘC');
   const header=['STT','HỌ TÊN','BỘ PHẬN','SĐT','NGÀY SINH','CCCD','NGÀY CẤP','NƠI Ở','NGÂN HÀNG','SỐ TÀI KHOẢN','LƯƠNG 1 NGÀY','NGÀY VÀO LÀM'];
-  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   let rIdx=10; usersTho.forEach((u,idx)=>{const row=ws.getRow(rIdx); [idx+1,u.hoTen,u.boPhan||'',fmtPhone(u.sdt),fmtDateDDMMYYYY(u.ngaySinh||''),u.cccd||'',fmtDateDDMMYYYY(u.ngayCap||''),u.noiO||'',u.taiKhoan?.nganHang||'',u.taiKhoan?.soTK||'',u.donGia||0,fmtDateDDMMYYYY(u.ngayVaoLam||'')].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; if(i===10) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=28; rIdx++;});
-  ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=18; ws.getColumn(4).width=18; ws.getColumn(5).width=13; ws.getColumn(6).width=18; ws.getColumn(7).width=12; ws.getColumn(8).width=26; ws.getColumn(9).width=20; ws.getColumn(10).width=22; ws.getColumn(11).width=18; ws.getColumn(12).width=18;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=18; ws.getColumn(4).width=18; ws.getColumn(5).width=12; ws.getColumn(6).width=18; ws.getColumn(7).width=12; ws.getColumn(8).width=26; ws.getColumn(9).width=20; ws.getColumn(10).width=22; ws.getColumn(11).width=18; ws.getColumn(12).width=16;
  }
  // Sheet 2 - Bảng công
  {
@@ -487,25 +487,25 @@ async function exportAllExcel(){
   const colCount=2+dim+6;
   createHeader(ws,colCount,'BẢNG CHẤM CÔNG THÁNG '+String(m).padStart(2,'0')+'/'+y);
   const header=['STT','HỌ TÊN',...Array.from({length:dim},(_,i)=>String(i+1)),'TỔNG CÔNG','LƯƠNG 1 NGÀY','TIỀN TĂNG CA','PHỤ CẤP DI CHUYỂN','CƠM','TỔNG LƯƠNG'];
-  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   let rIdx=10; let sumTong=0,sumTien=0,sumTC=0,sumDC=0,sumCom=0;
   usersTho.forEach((u,idx)=>{const byDay={}; records.forEach(rec=>{if(rec.sdt===u.sdt&&rec.ngayCong.startsWith(bangThang)){byDay[Number(rec.ngayCong.slice(8,10))]=rec;}}); let tong=0,tienTC=0,tienDC=0,tienCom=0; Object.values(byDay).forEach(rr=>{if(rr.trangThai==='da_duyet'){tong++;tienTC+=(rr.tangCaTien||0);(rr.phuCap||[]).forEach(p=>{if(p.ten.startsWith('Xăng xe'))tienDC+=p.thanhTien||0;if(p.ten.startsWith('Cơm'))tienCom+=p.thanhTien||0;});}}); sumTong+=tong; sumTC+=tienTC; sumDC+=tienDC; sumCom+=tienCom; sumTien+=tong*(u.donGia||0)+tienTC+tienDC+tienCom; const row=ws.getRow(rIdx); [idx+1,u.hoTen,...Array.from({length:dim},(_,i)=>{const rec=byDay[i+1]; if(!rec) return ''; if(rec.trangThai==='da_duyet') return 1; if(rec.trangThai==='cho_duyet') return 'C'; return 'X';}),tong,u.donGia,tienTC,tienDC,tienCom,{formula:colL(2+dim+1)+rIdx+'*'+colL(2+dim+2)+rIdx+'+'+colL(2+dim+3)+rIdx+'+'+colL(2+dim+4)+rIdx+'+'+colL(2+dim+5)+rIdx,result:tong*(u.donGia||0)+tienTC+tienDC+tienCom}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; if(i>=2+dim+1&&i<=2+dim+5) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row.height=28; rIdx++;});
   const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0B2'}}; c.alignment={horizontal:'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(2+dim+1).value={formula:'SUM('+colL(2+dim+1)+'10:'+colL(2+dim+1)+(rIdx-1)+')',result:sumTong}; rowTotal.getCell(2+dim+3).value={formula:'SUM('+colL(2+dim+3)+'10:'+colL(2+dim+3)+(rIdx-1)+')',result:sumTC}; rowTotal.getCell(2+dim+4).value={formula:'SUM('+colL(2+dim+4)+'10:'+colL(2+dim+4)+(rIdx-1)+')',result:sumDC}; rowTotal.getCell(2+dim+5).value={formula:'SUM('+colL(2+dim+5)+'10:'+colL(2+dim+5)+(rIdx-1)+')',result:sumCom}; rowTotal.getCell(2+dim+6).value={formula:'SUM('+colL(2+dim+6)+'10:'+colL(2+dim+6)+(rIdx-1)+')',result:sumTien}; rowTotal.getCell(2+dim+3).numFmt='#,##0'; rowTotal.getCell(2+dim+4).numFmt='#,##0'; rowTotal.getCell(2+dim+5).numFmt='#,##0'; rowTotal.getCell(2+dim+6).numFmt='#,##0'; rowTotal.height=22;
-  ws.getColumn(1).width=6; ws.getColumn(2).width=26; for(let i=3;i<3+dim;i++) ws.getColumn(i).width=4; ws.getColumn(2+dim+1).width=13; ws.getColumn(2+dim+2).width=17; ws.getColumn(2+dim+3).width=17; ws.getColumn(2+dim+4).width=22; ws.getColumn(2+dim+5).width=14; ws.getColumn(2+dim+6).width=18;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=26; for(let i=3;i<3+dim;i++) ws.getColumn(i).width=4; ws.getColumn(2+dim+1).width=12; ws.getColumn(2+dim+2).width=16; ws.getColumn(2+dim+3).width=16; ws.getColumn(2+dim+4).width=20; ws.getColumn(2+dim+5).width=14; ws.getColumn(2+dim+6).width=18;
  }
  // Sheet 3 - Dự kiến trả thợ
  {
-  const ws=wb.addWorksheet('BẢNG LƯƠNG TẠM TÍNH');
+  const ws=wb.addWorksheet('DỰ KIẾN TRẢ THỢ');
   const colCount=9;
-  createHeader(ws,colCount,'BẢNG LƯƠNG TẠM TÍNH THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
+  createHeader(ws,colCount,'DỰ KIẾN TRẢ THỢ THÁNG '+targetMonth.slice(5)+'/'+targetMonth.slice(0,4));
   const header=['STT','HỌ TÊN','BỘ PHẬN','TỔNG CÔNG','LƯƠNG 1 NGÀY','TIỀN TĂNG CA','PHỤ CẤP DI CHUYỂN','CƠM','TỔNG LƯƠNG'];
-  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:false}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
+  const row9=ws.getRow(9); header.forEach((h,i)=>{const c=row9.getCell(i+1); c.value=h; c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); row9.height=22;
   const recs=records.filter(r=>r.trangThai==='da_duyet' && r.ngayCong.startsWith(targetMonth));
   const byTho={}; recs.forEach(r=>{const a=byTho[r.sdt]||(byTho[r.sdt]={cong:0,tc:0,dc:0,com:0});a.cong++;a.tc+=(r.tangCaTien||0);(r.phuCap||[]).forEach(p=>{if(p.ten.startsWith('Xăng xe'))a.dc+=p.thanhTien||0;if(p.ten.startsWith('Cơm'))a.com+=p.thanhTien||0;});});
   let rIdx=10; let tongTho=0,tongCong=0,tongTien=0,tongTC=0,tongDC=0,tongCom=0;
   usersTho.forEach((u,idx)=>{const a=byTho[u.sdt]; if(!a)return; const cong=a.cong; const tien=cong*(u.donGia||0)+a.tc+a.dc+a.com; const row=ws.getRow(rIdx); [tongTho+1,u.hoTen,u.boPhan||'',cong,u.donGia||0,a.tc,a.dc,a.com,{formula:'D'+rIdx+'*E'+rIdx+'+F'+rIdx+'+G'+rIdx+'+H'+rIdx,result:tien}].forEach((v,i)=>{const c=row.getCell(i+1); c.value=v; c.font={name:'Arial',size:11}; c.alignment={horizontal:i===1?'left':'center',vertical:'middle',wrapText:true}; if(i>=4) c.numFmt='#,##0'; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};}); rIdx++; tongTho++; tongCong+=cong; tongTien+=tien; tongTC+=a.tc; tongDC+=a.dc; tongCom+=a.com; row.height=28;});
   const rowTotal=ws.getRow(rIdx); ws.mergeCells(rIdx,1,rIdx,3); for(let i=1;i<=colCount;i++){const c=rowTotal.getCell(i); c.font={name:'Arial',size:11,bold:true}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBBDEFB'}}; c.alignment={horizontal:'center',vertical:'middle',wrapText:true}; c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}};} rowTotal.getCell(1).value='TỔNG CỘNG'; rowTotal.getCell(3).value=tongTho+' thợ'; rowTotal.getCell(4).value=rIdx>10?{formula:'SUM(D10:D'+(rIdx-1)+')',result:tongCong}:0; rowTotal.getCell(5).value=''; rowTotal.getCell(6).value=rIdx>10?{formula:'SUM(F10:F'+(rIdx-1)+')',result:tongTC}:0; rowTotal.getCell(7).value=rIdx>10?{formula:'SUM(G10:G'+(rIdx-1)+')',result:tongDC}:0; rowTotal.getCell(8).value=rIdx>10?{formula:'SUM(H10:H'+(rIdx-1)+')',result:tongCom}:0; rowTotal.getCell(9).value=rIdx>10?{formula:'SUM(I10:I'+(rIdx-1)+')',result:tongTien}:0; rowTotal.getCell(6).numFmt='#,##0'; rowTotal.getCell(7).numFmt='#,##0'; rowTotal.getCell(8).numFmt='#,##0'; rowTotal.getCell(9).numFmt='#,##0'; rowTotal.height=22;
-  ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=20; ws.getColumn(4).width=13; ws.getColumn(5).width=17; ws.getColumn(6).width=17; ws.getColumn(7).width=22; ws.getColumn(8).width=14; ws.getColumn(9).width=20;
+  ws.getColumn(1).width=6; ws.getColumn(2).width=26; ws.getColumn(3).width=20; ws.getColumn(4).width=12; ws.getColumn(5).width=16; ws.getColumn(6).width=16; ws.getColumn(7).width=20; ws.getColumn(8).width=14; ws.getColumn(9).width=20;
  }
  const fileName='NguyenMoc_TatCa_'+bangThang.replace('-','')+'.xlsx';
  const buf=await wb.xlsx.writeBuffer(); const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=fileName; a.click(); URL.revokeObjectURL(url); toast('Đã xuất '+fileName);
@@ -532,7 +532,7 @@ function openThoForm(sdt){
  editingSdt=sdt||null;const users=getUsers();const u=sdt?users.find(x=>x.sdt===sdt):null;
  document.getElementById('bottomSheet').innerHTML=`<div style="max-height:70vh;overflow:auto"><h3>${u?'Sửa thợ':'Thêm thợ'}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>Họ tên *</label><input id="f_hoTen" class="input" value="${u?.hoTen||''}"></div><div class="field"><label>SĐT *</label><input id="f_sdt" class="input" value="${u?fmtPhone(u.sdt):''}" oninput="this.value=fmtPhoneInput(this.value)"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>Đơn giá</label><input id="f_donGia" class="input" type="number" value="${u?.donGia||''}"></div><div class="field"><label>Ngày vào làm</label><input id="f_ngayVao" type="date" class="input" value="${u?.ngayVaoLam||todayYMD()}"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>Bộ phận</label><input id="f_boPhan" class="input" value="${u?.boPhan||''}"></div><div class="field"><label>Ngày sinh</label><input id="f_ngaySinh" type="date" class="input" value="${u?.ngaySinh||''}"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>CCCD</label><input id="f_cccd" class="input" inputmode="numeric" maxlength="12" value="${u?.cccd||''}"></div><div class="field"><label>Ngày cấp CCCD</label><input id="f_ngayCap" type="date" class="input" value="${u?.ngayCap||''}"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>Nơi ở</label><input id="f_noiO" class="input" value="${u?.noiO||''}"></div><div class="field"><label>Ngân hàng</label><input id="f_nganHang" class="input" value="${u?.taiKhoan?.nganHang||''}"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label>Số tài khoản</label><input id="f_soTK" class="input" inputmode="numeric" value="${u?.taiKhoan?.soTK||''}"></div><div class="field"><label>Chủ tài khoản</label><input id="f_chuTK" class="input" value="${u?.taiKhoan?.chuTK||''}"></div></div><button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="saveTho()">Lưu</button></div>`;openSheet();
 }
-function saveTho(){const hoTen=document.getElementById('f_hoTen').value.trim();const sdt=normalizePhone(document.getElementById('f_sdt').value);const donGia=parseInt(document.getElementById('f_donGia').value||'0');const ngayVao=document.getElementById('f_ngayVao').value;const boPhan=document.getElementById('f_boPhan').value;const ngaySinh=document.getElementById('f_ngaySinh').value;const cccd=document.getElementById('f_cccd').value.trim();const ngayCap=document.getElementById('f_ngayCap').value;const noiO=document.getElementById('f_noiO').value.trim();const taiKhoan={nganHang:document.getElementById('f_nganHang').value.trim(),soTK:document.getElementById('f_soTK').value.trim(),chuTK:document.getElementById('f_chuTK').value.trim()};const users=getUsers();let user;if(editingSdt){user=users.find(u=>u.sdt===editingSdt);user.hoTen=hoTen;user.sdt=sdt;user.donGia=donGia;user.ngayVaoLam=ngayVao;user.boPhan=boPhan;user.ngaySinh=ngaySinh;user.cccd=cccd;user.ngayCap=ngayCap;user.noiO=noiO;user.taiKhoan=taiKhoan;}else{user={hoTen,sdt,vaiTro:'Tho',trangThai:'hoat_dong',donGia,quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:ngayVao,boPhan,ngaySinh,cccd,ngayCap,noiO,taiKhoan};users.push(user);}user.updatedAt=new Date().toISOString();LocalDB.save(KEYS.users,users);syncNow(true);closeSheet();toast('Lưu thành công');render();}
+function saveTho(){const hoTen=document.getElementById('f_hoTen').value.trim();const sdt=normalizePhone(document.getElementById('f_sdt').value);const donGia=parseInt(document.getElementById('f_donGia').value||'0');const ngayVao=document.getElementById('f_ngayVao').value;const boPhan=document.getElementById('f_boPhan').value;const ngaySinh=document.getElementById('f_ngaySinh').value;const cccd=document.getElementById('f_cccd').value.trim();const ngayCap=document.getElementById('f_ngayCap').value;const noiO=document.getElementById('f_noiO').value.trim();const taiKhoan={nganHang:document.getElementById('f_nganHang').value.trim(),soTK:document.getElementById('f_soTK').value.trim(),chuTK:document.getElementById('f_chuTK').value.trim()};const users=getUsers();let user;if(editingSdt){user=users.find(u=>u.sdt===editingSdt);user.hoTen=hoTen;user.sdt=sdt;user.donGia=donGia;user.ngayVaoLam=ngayVao;user.boPhan=boPhan;user.ngaySinh=ngaySinh;user.cccd=cccd;user.ngayCap=ngayCap;user.noiO=noiO;user.taiKhoan=taiKhoan;}else{user={hoTen,sdt,vaiTro:'Tho',trangThai:'hoat_dong',donGia,quyen:[],anhDataUrl:'',matKhau:'123456',ngayVaoLam:ngayVao,boPhan,ngaySinh,cccd,ngayCap,noiO,taiKhoan};users.push(user);}LocalDB.save(KEYS.users,users);closeSheet();toast('Lưu thành công');render();}
 function toggleKhoa(ma){const users=getUsers();const u=users.find(x=>x.sdt===ma);u.trangThai=u.trangThai==='hoat_dong'?'khoa':'hoat_dong';LocalDB.save(KEYS.users,users);render();}
 let duKienNgay=todayYMD();
 function setDuKienThang(ym){const [y,m]=ym.split('-').map(Number);const t=new Date();duKienNgay=(y===t.getFullYear()&&m===t.getMonth()+1)?todayYMD():ym+'-'+String(new Date(y,m,0).getDate()).padStart(2,'0');render();}
@@ -553,126 +553,8 @@ function renderDuKien(el,user){
   if(!Object.keys(groups).length)html+=`<div class="card" style="text-align:center;color:var(--light)">Chưa có công đã duyệt trong tháng ${targetMonth}</div>`;
   content.innerHTML=html;
 }
-window.fmtPhoneInput=fmtPhoneInput;window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.vaoCa=vaoCa;window.openRaCaForm=openRaCaForm;window.xacNhanRaCa=xacNhanRaCa;window.pcDoi=pcDoi;window.capNhatTienTC=capNhatTienTC;window.capNhatTienPC=capNhatTienPC;window.renderTheoDoiCa=renderTheoDoiCa;window.toggleChoDuyet=toggleChoDuyet;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.openExportSheet=openExportSheet;window.exportExcelByChoice=exportExcelByChoice;window.exportExcelDep=exportExcelDep;window.exportDsThoExcel=exportDsThoExcel;window.exportDuKienExcel=exportDuKienExcel;window.exportAllExcel=exportAllExcel;window.exportTheoNgayExcel=exportTheoNgayExcel;window.syncNow=syncNow;window.syncStartRealtime=syncStartRealtime;
+window.fmtPhoneInput=fmtPhoneInput;window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.vaoCa=vaoCa;window.openRaCaForm=openRaCaForm;window.xacNhanRaCa=xacNhanRaCa;window.pcDoi=pcDoi;window.capNhatTienTC=capNhatTienTC;window.capNhatTienPC=capNhatTienPC;window.renderTheoDoiCa=renderTheoDoiCa;window.toggleChoDuyet=toggleChoDuyet;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.openExportSheet=openExportSheet;window.exportExcelByChoice=exportExcelByChoice;window.exportExcelDep=exportExcelDep;window.exportDsThoExcel=exportDsThoExcel;window.exportDuKienExcel=exportDuKienExcel;window.exportAllExcel=exportAllExcel;window.exportTheoNgayExcel=exportTheoNgayExcel;
 render();
-
-
-// ============================================================
-// NGUYỄN MỘC — Đồng bộ phía app (paste vào cuối file v1.html, TRƯỚC thẻ </script>)
-// Điền SYNC_URL (URL Web App sau khi Deploy Code.gs) + SYNC_KEY (cùng chuỗi trong Code.gs)
-// ĐỒNG BỘ REALTIME 2 ĐẦU:
-// - App → Sheet: đẩy lên ngay khi thợ/QL bấm nút (vào ca / ra ca / duyệt / sửa thợ).
-// - Sheet → App: app tự kéo về mỗi 30 giây (Sheets không đẩy được nên app phải tự hỏi).
-// Nguyên tắc: last-write-wins theo updatedAt — bản ghi nào sửa sau thì thắng.
-// GPS (vĩ độ/kinh độ) + Mật khẩu/Quyền CHỈ lưu trong app, không lên Sheet → khi gộp,
-// luôn giữ bản local của các trường này (server không có nên không ghi đè).
-// Mất mạng: push lỗi → lưu vào hàng đợi, lần đồng bộ sau tự gửi lại.
-// ============================================================
-
-const SYNC_URL = 'https://script.google.com/macros/s/AKfycbxvGpMP9GXuQM6Nl2e316FnleRjvKf2b4X_T1FtEdzxJucHVlvWRPx3HGKxGD2INvNM/exec'; // VD: 'https://script.google.com/macros/s/XXXX/exec'
-const SYNC_KEY = '0983351744'; // PHẢI trùng SYNC_KEY trong Code.gs
-const SYNC_QUEUE_KEY = 'nm2_sync_queue';
-const SYNC_META_KEY = 'nm2_sync_meta'; // {lastSync: ISO}
-const SYNC_POLL_MS = 30000; // tự kéo về mỗi 30 giây
-let syncInFlight = false; // chống 2 lần đồng bộ chạy chồng lên nhau
-
-function syncMeta() {
-  try { return JSON.parse(localStorage.getItem(SYNC_META_KEY) || '{}'); }
-  catch (e) { return {}; }
-}
-function setSyncMeta(m) { localStorage.setItem(SYNC_META_KEY, JSON.stringify(m)); }
-
-async function syncCall(action, data) {
-  const res = await fetch(SYNC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: SYNC_KEY, action, data })
-  });
-  const out = await res.json();
-  if (!out.ok) throw new Error(out.error || 'sync failed');
-  return out;
-}
-
-// Các trường CHỈ lưu trong app — gộp thì luôn giữ bản local, không lấy bản server
-const KEEP_LOCAL_USER = ['matKhau', 'quyen', 'anhDataUrl'];
-const KEEP_LOCAL_RECORD = ['viDo', 'kinhDo', 'doChinhXac', 'viDoRa', 'kinhDoRa', 'doChinhXacRa'];
-
-// Gộp 2 danh sách theo khóa — bản nào updatedAt mới hơn thì thắng,
-// trừ các trường chỉ-lưu-trong-app thì luôn giữ bản local
-function syncMerge(local, remote, keyFn, keepFields) {
-  const byKey = {};
-  local.forEach(x => { byKey[keyFn(x)] = x; });
-  remote.forEach(x => {
-    const k = keyFn(x);
-    const cur = byKey[k];
-    if (!cur) { byKey[k] = x; return; }
-    if (String(x.updatedAt || '') > String(cur.updatedAt || '')) {
-      const merged = Object.assign({}, x);
-      keepFields.forEach(f => { if (cur[f] !== undefined) merged[f] = cur[f]; });
-      byKey[k] = merged;
-    }
-  });
-  return Object.values(byKey);
-}
-
-async function syncNow(quiet) {
-  if (!SYNC_URL) { if (!quiet) toast('Chưa cấu hình SYNC_URL'); return; }
-  if (syncInFlight) return; // đang đồng bộ thì bỏ qua lần này
-  syncInFlight = true;
-  if (!quiet) toast('Đang đồng bộ...');
-  try {
-    // 1. Kéo dữ liệu server về, gộp với local (bản mới hơn thắng)
-    const pulled = await syncCall('pull');
-    const users = syncMerge(getUsers(), pulled.data.users || [], u => u.sdt, KEEP_LOCAL_USER);
-    const records = syncMerge(getRecords(), pulled.data.records || [], r => r.maBanGhi, KEEP_LOCAL_RECORD);
-    const changed = users.length !== getUsers().length || records.length !== getRecords().length ||
-      JSON.stringify(users) !== JSON.stringify(getUsers()) || JSON.stringify(records) !== JSON.stringify(getRecords());
-    LocalDB.save(KEYS.users, users);
-    LocalDB.save(KEYS.records, records);
-    // 2. Đẩy toàn bộ local (đã gộp) lên server — server upsert theo khóa
-    const pushed = await syncCall('push', { users, records });
-    // 3. Gửi lại hàng đợi cũ (nếu có)
-    const queue = JSON.parse(localStorage.getItem(SYNC_QUEUE_KEY) || '[]');
-    if (queue.length) {
-      await syncCall('push', { users: [], records: queue });
-      localStorage.setItem(SYNC_QUEUE_KEY, '[]');
-    }
-    setSyncMeta({ lastSync: new Date().toISOString() });
-    if (!quiet) toast('Đồng bộ xong (' + (pushed.result.records.updated + pushed.result.records.inserted) + ' ca, ' + (pushed.result.users.updated + pushed.result.users.inserted) + ' nhân sự)');
-    if (changed) render(); // chỉ vẽ lại khi có thay đổi (tránh nhấp nháy khi poll)
-    else if (!quiet) render();
-  } catch (err) {
-    // Mất mạng / server lỗi → lưu toàn bộ local vào hàng đợi, lần sau gửi lại
-    const queue = JSON.parse(localStorage.getItem(SYNC_QUEUE_KEY) || '[]');
-    const byKey = {};
-    queue.concat(getRecords()).forEach(r => { byKey[r.maBanGhi] = r; });
-    localStorage.setItem(SYNC_QUEUE_KEY, JSON.stringify(Object.values(byKey)));
-    if (!quiet) toast('Mất mạng — đã lưu hàng đợi, sẽ đồng bộ lại sau');
-  } finally {
-    syncInFlight = false;
-  }
-}
-
-// Đẩy nhanh 1 bản ghi (gọi sau khi vào ca / ra ca / duyệt / sửa thợ)
-// Không chặn UI nếu lỗi — bản ghi đã lưu local, syncNow() sẽ gửi lại sau.
-async function syncPushOne(record) {
-  if (!SYNC_URL) return;
-  try {
-    await syncCall('push', { users: [], records: [record] });
-  } catch (e) { /* để syncNow() gửi lại sau */ }
-}
-
-// Bật đồng bộ realtime: đồng bộ 1 lần khi mở app + tự kéo về mỗi 30 giây
-function syncStartRealtime() {
-  if (!SYNC_URL) return;
-  if (navigator.onLine) syncNow(true);
-  setInterval(() => { if (navigator.onLine) syncNow(true); }, SYNC_POLL_MS);
-  // Có mạng lại sau khi mất mạng → đồng bộ ngay
-  window.addEventListener('online', () => syncNow(true));
-}
-
-
-syncStartRealtime();
 </script>
 </body>
 </html>
