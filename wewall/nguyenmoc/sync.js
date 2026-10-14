@@ -6,7 +6,7 @@ const SYNC_POLL_MS = 30000;
 let syncInFlight = false;
 function syncMeta(){try{return JSON.parse(localStorage.getItem(SYNC_META_KEY)||'{}')}catch(e){return{}}}
 function setSyncMeta(m){localStorage.setItem(SYNC_META_KEY,JSON.stringify(m))}
-async function syncCall(action,data){const res=await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:SYNC_KEY,action,data})});const out=await res.json();if(!out.ok)throw new Error(out.error||'sync failed');return out}
+async function syncCall(action,data){const res=await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:SYNC_KEY,action,data})});const out=await res.json();if(!out.ok)throw new Error(out.error||'sync failed');return out}
 const KEEP_LOCAL_USER=['matKhau','quyen','anhDataUrl'];
 const KEEP_LOCAL_RECORD=['viDo','kinhDo','doChinhXac','viDoRa','kinhDoRa','doChinhXacRa'];
 function syncMerge(local,remote,keyFn,keepFields){const byKey={};local.forEach(x=>{byKey[keyFn(x)]=x});remote.forEach(x=>{const k=keyFn(x);const cur=byKey[k];if(!cur){byKey[k]=x;return}if(String(x.updatedAt||'')>String(cur.updatedAt||'')){const merged=Object.assign({},x);keepFields.forEach(f=>{if(cur[f]!==undefined)merged[f]=cur[f]});byKey[k]=merged}});return Object.values(byKey)}
