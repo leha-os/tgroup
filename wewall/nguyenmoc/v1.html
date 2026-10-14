@@ -139,6 +139,7 @@ function seedIfNeeded(){
 LocalDB.save(KEYS.users,users);
  LocalDB.save(KEYS.cauhinh,{GIO_MO_CHAM_CONG:'05:00',CONG_TOI_DA_NGAY:1});
  const records=[];
+ const DEMO_TAT=true; // Tat sinh du lieu mau - chi dung du lieu that
  const GHICHU_DEMO=['Lắp xong biển A, mai hàn khung tiếp','Hoàn thành mái che, bàn giao cho khách','Sửa chữa xong, mai qua sơn tiếp','Đang thi công 70%, mai tiếp tục','Lắp đặt xong, chờ khách nghiệm thu','Hỗ trợ QC, xong việc','Đi 2 công trình, xong công trình 1, mai qua công trình 2','Hoàn thành dán decal, khách đã kiểm tra','Lắp LED xong, test sáng bình thường','Sơn xong 2 lớp, mai sơn lót tiếp','Hàn xong khung, mai lắp alu','Mài + sơn xong, bàn giao','Lắp xong khung sắt, mai lắp mica'];
  const thoList=users.filter(u=>u.vaiTro==='Tho');
  const qlDuyet=fmtNguoiDuyet(users.find(u=>u.vaiTro==='QuanLy')||{});
@@ -155,12 +156,12 @@ LocalDB.save(KEYS.users,users);
   }
   return {maBanGhi:genId('BG')+'_'+records.length,sdt:tho.sdt,ngayCong,gioVao,gioRa,thoiDiemGui:new Date(Date.now()-Math.random()*86400000*3).toISOString(),trangThai:homNay?'dang_lam':st,nguoiDuyet:(!homNay&&st!=='cho_duyet')?qlDuyet:'',thoiDiemDuyet:(!homNay&&st!=='cho_duyet')?new Date().toISOString():'',lyDoTuChoi:st==='tu_choi'?'Sai vị trí':'',viDo:10.762622+Math.random()*0.02,kinhDo:106.660172+Math.random()*0.02,doChinhXac:5+Math.random()*40,viDoRa:homNay?null:(10.762622+Math.random()*0.02),kinhDoRa:homNay?null:(106.660172+Math.random()*0.02),doChinhXacRa:homNay?null:(5+Math.random()*40),maDuAn:(()=>{const a=DM_MA_DU_AN[Math.floor(Math.random()*DM_MA_DU_AN.length)];const b=Math.random()<0.4?DM_MA_DU_AN[Math.floor(Math.random()*DM_MA_DU_AN.length)]:null;return b&&b!==a?[a,b]:[a];})(),phuCap,tangCaGio:tcGio,tangCaTien:tinhTienTangCa(tho.donGia,tcGio,ngayCong),tangCaLyDo:coTC?'Hỗ trợ QC':'',ghiChu:homNay?'':GHICHU_DEMO[Math.floor(Math.random()*GHICHU_DEMO.length)]};
  }
- for(let d=10;d>=1;d--){
+ if(!DEMO_TAT)for(let d=10;d>=1;d--){
   const dt=new Date();dt.setDate(dt.getDate()-d);const ymd=dt.toISOString().slice(0,10);
   thoList.forEach(tho=>{if(Math.random()<0.15)return;const st=d===1?(Math.random()<0.5?'cho_duyet':'da_duyet'):(Math.random()<0.08?'tu_choi':'da_duyet');records.push(taoCaDemo(tho,ymd,st,false));});
  }
  // Hôm nay: tho dau tien dang lam (de demo nut RA CA), so khac da ra ca cho duyet / dang lam
- thoList.forEach((tho,idx)=>{
+ if(!DEMO_TAT)thoList.forEach((tho,idx)=>{
   if(idx===0){records.push(taoCaDemo(tho,todayYMD(),'dang_lam',true));return;}
   if(Math.random()<0.2)return;
   if(Math.random()<0.5){records.push(taoCaDemo(tho,todayYMD(),'cho_duyet',false));}
