@@ -226,7 +226,8 @@ function capNhatTienTC(){const sess=getSession();if(!sess)return;const el=docume
 let rcComTruaAuto=0;
 function capNhatTienPC(){const com=document.getElementById('rc_tien_com');if(com)com.textContent=fmtMoney((rcComTruaAuto||0)*DM_PHU_CAP[0].gia);const x1=document.getElementById('rc_tien_xang1');if(x1)x1.textContent=fmtMoney(document.getElementById('rc_xang1')?.checked?DM_PHU_CAP[1].gia:0);const tc=parseFloat(document.getElementById('rc_tc')?.value||'0');const ctc=(isNaN(tc)?0:tc)>2?1:0;const sl=document.getElementById('rc_ctc_sl');if(sl)sl.textContent='Tự động: '+ctc+' suất';const ct=document.getElementById('rc_tien_ctc');if(ct)ct.textContent=fmtMoney(ctc*DM_PHU_CAP[3].gia);}
 function xacNhanRaCa(gioRa){
- if(!ghichu){toast('Nhập ghi chú tình trạng công việc');return;}
+ const sess=getSession();const ghichu=(document.getElementById('rc_ghichu')||{}).value||'';
+ if(!ghichu.trim()){toast('Nhập ghi chú tình trạng công việc');return;}
  const recs=getRecords();const rec=recs.find(r=>r.sdt===sess.user.sdt&&r.ngayCong===todayYMD());if(!rec||rec.gioRa)return;
  const save=(lat,lng,acc)=>{
   rec.viDoRa=lat;rec.kinhDoRa=lng;rec.doChinhXacRa=acc;
