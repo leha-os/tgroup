@@ -27,7 +27,7 @@ const recordsM=(pulled.data.records||[]).map(x=>{const cur=byLocal[x.maBanGhi];i
 // 3. Báo mã đã bị xóa trên Sheet cho backend chặn vĩnh viễn (kẻo máy chạy app cũ đẩy lại)
 const serverKeys={};(pulled.data.records||[]).forEach(x=>{if(x.maBanGhi)serverKeys[x.maBanGhi]=1});
 const deletedKeys=records.filter(r=>r.maBanGhi&&!serverKeys[r.maBanGhi]).map(r=>r.maBanGhi);
-if(deletedKeys.length){try{await syncCall('tombstone',{keys:deletedKeys})}catch(e){}}
+if(deletedKeys.length&&meta.lastSync){try{await syncCall('tombstone',{keys:deletedKeys})}catch(e){}}
 const changed=usersM.length!==users.length||recordsM.length!==records.length||JSON.stringify(usersM)!==JSON.stringify(users)||JSON.stringify(recordsM)!==JSON.stringify(records);
 LocalDB.save(KEYS.users,usersM);LocalDB.save(KEYS.records,recordsM);if(changed)render();
 setSyncMeta({lastSync:new Date().toISOString(),lastPush:new Date().toISOString()});
