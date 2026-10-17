@@ -15,7 +15,8 @@ const meta=syncMeta();const lastPush=meta.lastPush||'';
 const users=getUsers(),records=getRecords();
 // 1. Đẩy trước: chỉ bản ghi mới/thay đổi từ lần đẩy trước — dòng đã xóa trên Sheet không bị đẩy lại
 let _pu=0,_pi=0;
-for(let i=0;i<users.length;i+=15){const r=await syncCall('push',{users:users.slice(i,i+15),records:[]});_pu+=((r.result.users||{}).updated||0)+((r.result.users||{}).inserted||0)}
+const usersDelta=lastPush?users.filter(u=>String(u.updatedAt||'')>lastPush):users;
+for(let i=0;i<usersDelta.length;i+=15){const r=await syncCall('push',{users:usersDelta.slice(i,i+15),records:[]});_pu+=((r.result.users||{}).updated||0)+((r.result.users||{}).inserted||0)}
 const recDelta=records.filter(r=>String(r.updatedAt||'')>lastPush);
 for(let i=0;i<recDelta.length;i+=15){const r=await syncCall('push',{users:[],records:recDelta.slice(i,i+15)});_pi+=r.result.records.updated+r.result.records.inserted}
 const queue=JSON.parse(localStorage.getItem(SYNC_QUEUE_KEY)||'[]');if(queue.length){await syncCall('push',{users:[],records:queue});localStorage.setItem(SYNC_QUEUE_KEY,'[]')}
