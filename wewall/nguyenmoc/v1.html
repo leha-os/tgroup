@@ -186,7 +186,7 @@ function getSession(){const s=LocalDB.load(KEYS.session);if(!s)return null;if(ne
 function setSession(user){LocalDB.save(KEYS.session,{user,han:new Date(Date.now()+7*24*3600*1000).toISOString()})}
 function clearSession(){localStorage.removeItem(KEYS.session)}
 function addAudit(h,a,c){const arr=LocalDB.load(KEYS.audit)||[];arr.unshift({thoiDiem:nowStr(),nguoiThucHien:(getSession()?.user?.sdt||'system'),hanhDong:h,maBanGhi:a,chiTiet:c});LocalDB.save(KEYS.audit,arr)}
-function hasPerm(u,p){if(!u)return false;if(u.vaiTro==='GiamDoc')return true;return(u.quyen||[]).includes(p)}
+function hasPerm(u,p){if(!u)return false;if(u.vaiTro==='GiamDoc')return true;if(u.vaiTro==='QuanLy'&&!(u.quyen&&u.quyen.length))return['duyet_cong','thong_ke','dashboard','bang_cong','sua_cong'].includes(p);return(u.quyen||[]).includes(p)}
 function copyText(t){if(!t)return;const done=()=>toast('Đã copy');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();done();});}else{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();done();}}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 let demoBanner=false,currentView='duyet',thoTab='chamcong';
@@ -212,7 +212,7 @@ async function vaoCa(){if(!await nmConfirm('Bạn xác nhận đã vào ca?'))re
  const sess=getSession();if(!sess)return;const user=sess.user;const today=todayYMD();const recs=getRecords();const daVao=recs.find(r=>r.sdt===user.sdt&&r.ngayCong===today);if(daVao){await nmAlert('Không hợp lệ. Bạn đã VÀO CA lúc '+(daVao.gioVao||'')+'.');return;}
  const now=new Date();const gioVao=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
  const save=(lat,lng,acc)=>{const nr={maBanGhi:genId('BG'),sdt:user.sdt,ngayCong:today,gioVao,gioRa:'',thoiDiemGui:nowStr(),trangThai:'dang_lam',nguoiDuyet:'',thoiDiemDuyet:'',lyDoTuChoi:'',viDo:lat,kinhDo:lng,doChinhXac:acc,viDoRa:null,kinhDoRa:null,doChinhXacRa:null,maDuAn:[],phuCap:[],tangCaGio:0,tangCaTien:0,tangCaLyDo:'',ghiChu:'',updatedAt:new Date().toISOString()};recs.unshift(nr);LocalDB.save(KEYS.records,recs);(window.syncPushOne?syncPushOne(nr):0);toast('Đã vào ca lúc '+gioVao);render();};
- if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>{toast('Không lấy được vị trí. Hãy bật Định vị trên điện thoại rồi vào ca lại.');save(null,null,null);},{enableHighAccuracy:true,timeout:10000,maximumAge:60000});}else{toast('Thiết bị không hỗ trợ định vị.');save(null,null,null);}
 }
 let raCaPhuCap={};
 function openRaCaForm(){
@@ -245,7 +245,7 @@ function xacNhanRaCa(gioRa){
   const ct=DM_PHU_CAP.find(p=>p.ten==='Cơm');if(rec.gioVao<='11:30'&&gioRa>'11:30'&&ct)rec.phuCap.push({ten:ct.ten,gia:ct.gia,soLuong:1,thanhTien:ct.gia}); // Cơm tự động 1 suất, ra ca lúc/trước 11:30 thì 0
   rec.updatedAt=new Date().toISOString();LocalDB.save(KEYS.records,recs);(window.syncPushOne?syncPushOne(rec):0);closeSheet();toast('Đã ra ca lúc '+gioRa);render();
  };
- if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>{toast('Không lấy được vị trí. Hãy bật Định vị trên điện thoại rồi vào ca lại.');save(null,null,null);},{enableHighAccuracy:true,timeout:10000,maximumAge:60000});}else{toast('Thiết bị không hỗ trợ định vị.');save(null,null,null);}
 }
 const MENU=[{id:'duyet',label:'DUYỆT CÔNG',perm:'duyet_cong'},{id:'theodoi',label:'HÔM NAY',perm:'thong_ke'},{id:'dashboard',label:'TỔNG QUAN THÁNG',perm:'dashboard'},{id:'dstho',label:'DANH SÁCH THỢ',perm:'nhan_su'}];
 function renderQuanLy(user){
@@ -562,7 +562,7 @@ function renderDuKien(el,user){
 window.fmtPhoneInput=fmtPhoneInput;window.doLogin=doLogin;window.demoLogin=demoLogin;window.logout=logout;window.switchView=switchView;window.vaoCa=vaoCa;window.openRaCaForm=openRaCaForm;window.xacNhanRaCa=xacNhanRaCa;window.pcDoi=pcDoi;window.capNhatTienTC=capNhatTienTC;window.capNhatTienPC=capNhatTienPC;window.renderTheoDoiCa=renderTheoDoiCa;window.toggleChoDuyet=toggleChoDuyet;window.duyetOne=duyetOne;window.duyetAll=duyetAll;window.chonLoai=chonLoai;window.openBottomSheetLoai=openBottomSheetLoai;window.closeSheet=closeSheet;window.openSheet=openSheet;window.openThoForm=openThoForm;window.saveTho=saveTho;window.toggleKhoa=toggleKhoa;window.renderBangCong=renderBangCong;window.renderDuKien=renderDuKien;window.openExportSheet=openExportSheet;window.exportExcelByChoice=exportExcelByChoice;window.exportExcelDep=exportExcelDep;window.exportDsThoExcel=exportDsThoExcel;window.exportDuKienExcel=exportDuKienExcel;window.exportAllExcel=exportAllExcel;window.exportTheoNgayExcel=exportTheoNgayExcel;if(window.syncNow){window.syncNow=syncNow;window.syncStartRealtime=syncStartRealtime;}
 render();
 </script>
-<script src="sync.js?v=20261018_0650"></script>
+<script src="sync.js?v=20261018_0700"></script>
 
 <style>
 .nm-modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
