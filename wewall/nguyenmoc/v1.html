@@ -242,7 +242,7 @@ function xacNhanRaCa(gioRa){
   raCaPhuCap[1]=document.getElementById('rc_xang1')?.checked?1:0; // Xăng xe điểm 1: tick chọn, không chọn số lượng
   raCaPhuCap[3]=rec.tangCaGio>2?1:0; // Cơm tăng ca: tự động 1 suất khi TC trên 2h, không chọn số lượng
   rec.phuCap=DM_PHU_CAP.map((p,i)=>({ten:p.ten,gia:p.gia,soLuong:raCaPhuCap[i]||0,thanhTien:(raCaPhuCap[i]||0)*p.gia})).filter(p=>p.soLuong>0);
-  const ct=DM_PHU_CAP.find(p=>p.ten==='Cơm');if(gioRa>'11:30'&&ct)rec.phuCap.push({ten:ct.ten,gia:ct.gia,soLuong:1,thanhTien:ct.gia}); // Cơm tự động 1 suất, ra ca lúc/trước 11:30 thì 0
+  const ct=DM_PHU_CAP.find(p=>p.ten==='Cơm');if(rec.gioVao<='11:30'&&gioRa>'11:30'&&ct)rec.phuCap.push({ten:ct.ten,gia:ct.gia,soLuong:1,thanhTien:ct.gia}); // Cơm tự động 1 suất, ra ca lúc/trước 11:30 thì 0
   rec.updatedAt=new Date().toISOString();LocalDB.save(KEYS.records,recs);(window.syncPushOne?syncPushOne(rec):0);closeSheet();toast('Đã ra ca lúc '+gioRa);render();
  };
  if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>save(p.coords.latitude,p.coords.longitude,p.coords.accuracy),()=>save(null,null,null),{enableHighAccuracy:true,timeout:5000});}else save(null,null,null);
