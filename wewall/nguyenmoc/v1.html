@@ -98,7 +98,6 @@ function fmtTaiKhoan(tk){if(!tk)return'—';if(typeof tk==='string')return tk;co
 function todayYMD(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function monthKey(d=new Date()){return d.toISOString().slice(0,7);}
 function genId(p){return p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);}
-async function resetAllData(){ if(!await nmConfirm('Reset toàn bộ dữ liệu và load lại danh sách thợ mới?')) return; localStorage.clear(); location.reload(); }
 // ===== CẤU HÌNH TẠM (DEMO v2.1) — chị cập nhật số thật sau =====
 // Giá tăng ca TẠM: 30.000đ/giờ (chưa có quy định chính thức)
 const TAM={HE_SO_TANG_CA:1.5,HE_SO_TANG_CA_CN:2.0,HE_SO_TANG_CA_CN_NGAY:1.5,GIO_HC_BAT_DAU:'07:30',GIO_HC_KET_THUC:'17:00',GIO_TANG_CA_BAT_DAU:'17:00'}; // Chị chốt 17/10: giờ HC 7:30-17:00 T2-T7; TC tính từ 17:00 & CN; T2-T7 sau 17h ×1,5; CN 7:30-17:00 ×1,5, CN sau 17h ×2,0; tiền TC = giờ TC × (lương ngày/8) × hệ số
@@ -193,7 +192,7 @@ let demoBanner=false,currentView='duyet',thoTab='chamcong';
 function render(){const s=getSession();if(!s){renderLogin();return}const u=s.user;if(u.vaiTro==='Tho'&&(!u.quyen||u.quyen.length===0)){renderTho(u);}else{renderQuanLy(u);}}
 function renderLogin(){
  const app=document.getElementById('app');
- app.innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px">CHẤM CÔNG THỢ</div><div class="field"><input id="loginId" class="input" placeholder="Nhập số điện thoại" oninput="this.value=fmtPhoneInput(this.value)"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button><div style="margin-top:12px"><a href="javascript:void(0)" onclick="resetAllData()" style="font-size:12px;color:#999">Xóa dữ liệu cũ</a></div></div></div>`;
+ app.innerHTML=`<div class="login-brand"><h1>NGUYỄN MỘC</h1><p>CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI NGUYỄN MỘC</p></div><div class="login-wrap"><div class="card" style="text-align:center"><div style="font-weight:900;margin:8px 0 14px">CHẤM CÔNG THỢ</div><div class="field"><input id="loginId" class="input" placeholder="Nhập số điện thoại" oninput="this.value=fmtPhoneInput(this.value)"></div><div class="field"><input id="loginPw" class="input" type="password" placeholder="Mật khẩu"></div><div id="loginErr" class="err" style="text-align:left"></div><button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()">Đăng nhập</button></div></div>`;
 }
 function doLogin(){
  const id=document.getElementById('loginId').value.trim();const pw=document.getElementById('loginPw').value;const users=getUsers();let u=null;
